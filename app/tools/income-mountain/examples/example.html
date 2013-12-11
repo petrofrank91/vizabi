@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Income Mountain Viz</title>
+    </head>
+
+    <body>
+        <div id="income_mountain"></div>
+        <div id="income_mountain2"></div>
+    </body>
+
+
+    <script type="text/javascript" src="../start.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../d3.v3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../entities/entities.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../layout_manager/layout_manager.js" charset="utf-8"></script>
+    <script type="text/javascript" src="data_loader.js" charset="utf-8"></script>
+    <script type="text/javascript" src="data_operations.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/Gettext.js" charset="utf-8"></script>
+    <!--- script type="text/javascript" src="https://raw.github.com/thiago-gapminder/blablablabla/master/gapminder.js" charset="utf-8"></script> -->
+    <!--- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
+    <script src="svg_graphics.js"></script>
+    <script src="../viz_tools/header/header.js"></script>
+    <script src="../viz_tools/dropdown/dropdown.js"></script>
+    <script src="viz.js"></script>
+    <script src="labels.js"></script>
+    <script src="../time_slider/svg_graphics.js"></script>
+    <script src="../time_slider/viz.js"></script>
+    <script src="../time_slider/glue.js"></script>
+    <script src="glue.js"></script>
+    <link type="text/css" href="style.css" rel="stylesheet" charset="utf-8">
+    <link type="text/css" href="../../gapminder.css" rel="stylesheet" charset="utf-8">
+    <script type="text/javascript" src="../../i18n/sv.js" charset="utf-8"></script>
+
+
+    <script type="text/javascript">
+        var gettext = (typeof json_locale_data !== "undefined") ? new Gettext({ domain: 'incMountain', locale_data: json_locale_data }) : undefined;
+
+        var o = gapminder.income_mountain({
+            div: "#income_mountain",
+            geo: ["EUR", "AME", "AFR"],
+            year: 1900,
+//            state: {
+//                geo: ["EUR","AME","AFR","EUR"],
+//                year:
+//            }
+            height: "100%",
+            width: "100%",
+            i18n: gettext
+        });
+
+//        var i = gapminder.income_mountain({
+//            div: "#income_mountain2",
+//            geo: ["EUR","AME"],
+//            height: 250,
+//            width: 450,
+//            stack: true,
+//            fullscreen: true
+//        });
+    </script>
+
+</html>

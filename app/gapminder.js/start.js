@@ -1,4 +1,11 @@
-
+var gapminder = {
+    data_manager: {},
+    viz: {tools: {}},
+    tools: {},
+    graphics: {},
+    positions: {},
+    version: "0.1.0"
+};
 
 /**
  * Created with IntelliJ IDEA.
