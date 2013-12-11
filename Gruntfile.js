@@ -13,19 +13,29 @@ module.exports = function (grunt) {
     // load all grunt tasks
     require('load-grunt-tasks')(grunt);
 
-    grunt.initConfig({
+    // which project to work with, supplied through --project=foo
+    var project = grunt.option('tool') || 'defaultproject';
+
+    // configurable paths
+    var yeomanConfig = {
+        app: 'app',
+        project: 'app/apps/' + project,
+        common: 'app/common',
+        dist: 'dist',
+        distproject: 'dist/apps/' + project,
+        distcommon: 'dist/common'
+    };
+
+    var gruntConfig = {
         // configurable paths
-        yeoman: {
-            app: 'app',
-            dist: 'dist'
-        },
+        yeoman: yeomanConfig,
         watch: {
             compass: {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
+                files: ['<%= yeoman.common %>/styles/{,*/}*.{scss,sass}', '<%= yeoman.project %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['compass:server', 'autoprefixer']
             },
             styles: {
-                files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
+                files: ['<%= yeoman.common %>/styles/{,*/}*.css', '<%= yeoman.project %>/styles/{,*/}*.css'],
                 tasks: ['copy:styles', 'autoprefixer']
             },
             livereload: {
@@ -34,9 +44,12 @@ module.exports = function (grunt) {
                 },
                 files: [
                     '<%= yeoman.app %>/*.html',
-                    '.tmp/styles/{,*/}*.css',
-                    '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-                    '<%= yeoman.app %>/images/{,*/}*.{gif,jpeg,jpg,png,svg,webp}'
+                    '.tmp/<%= yeoman.common %>}/styles/{,*/}*.css',
+                    '.tmp/<%= yeoman.project %>}/styles/{,*/}*.css',
+                    '{.tmp,<%= yeoman.project %>}/scripts/{,*/}{,*/}{,*/}*.js',
+                    '{.tmp,<%= yeoman.common %>}/scripts/{,*/}{,*/}{,*/}*.js',
+                    '<%= yeoman.project %>/images/{,*/}{,*/}{,*/}*.{gif,jpg,jpeg,png,svg,webp}',
+                    '<%= yeoman.common %>/images/{,*/}{,*/}{,*/}*.{gif,jpg,jpeg,png,svg,webp}'
                 ]
             }
         },
@@ -95,8 +108,10 @@ module.exports = function (grunt) {
             },
             all: [
                 'Gruntfile.js',
-                '<%= yeoman.app %>/scripts/{,*/}*.js',
-                '!<%= yeoman.app %>/scripts/vendor/*',
+                '<%= yeoman.common %>/scripts/{,*/}*.js',
+                '!<%= yeoman.common %>/scripts/vendor/*',
+                '<%= yeoman.project %>/scripts/{,*/}*.js',
+                '!<%= yeoman.project %>/scripts/vendor/*',
                 'test/spec/{,*/}*.js'
             ]
         },
@@ -189,16 +204,22 @@ module.exports = function (grunt) {
                 assetsDirs: ['<%= yeoman.dist %>']
             },
             html: ['<%= yeoman.dist %>/{,*/}*.html'],
-            css: ['<%= yeoman.dist %>/styles/{,*/}*.css']
+            css: ['<%= yeoman.dist %>/{,*/}{,*/}styles/{,*/}{,*/}*.css'],
         },
         imagemin: {
             dist: {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= yeoman.app %>/images',
+                        cwd: '<%= yeoman.project %>/images',
                         src: '{,*/}*.{gif,jpeg,jpg,png}',
-                        dest: '<%= yeoman.dist %>/images'
+                        dest: '<%= yeoman.distproject %>/images'
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.common %>/images',
+                        src: '{,*/}*.{gif,jpeg,jpg,png}',
+                        dest: '<%= yeoman.distcommon %>/images'
                     }
                 ]
             }
@@ -224,11 +245,12 @@ module.exports = function (grunt) {
             //
             // dist: {
             //     files: {
-            //         '<%= yeoman.dist %>/styles/main.css': [
+            //         '<%= yeoman.dist %>/common/styles/main.css': [
             //             '.tmp/styles/{,*/}*.css',
-            //             '<%= yeoman.app %>/styles/{,*/}*.css'
+            //             '<%= yeoman.project %>/styles/{,*/}*.css',
+            //             '<%= yeoman.common %>/styles/{,*/}*.css'
             //         ]
-            //     }
+            //     },
             // }
         },
         htmlmin: {
@@ -261,14 +283,24 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         dot: true,
-                        cwd: '<%= yeoman.app %>',
-                        dest: '<%= yeoman.dist %>',
+                        cwd: '<%= yeoman.common %>',
+                        dest: '<%= yeoman.distcommon %>',
                         src: [
                             '*.{ico,png,txt}',
                             '.htaccess',
                             'images/{,*/}*.{webp,gif}',
                             'styles/fonts/{,*/}*.*',
                             'bower_components/sass-bootstrap/fonts/*.*'
+                        ]
+                    },
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= yeoman.project %>',
+                        dest: '<%= yeoman.distproject %>',
+                        src: [
+                            'styles/{,*/}{,*/}*.css',
+                            'styles/*.ico'
                         ]
                     }
                 ]
@@ -307,7 +339,18 @@ module.exports = function (grunt) {
                 'htmlmin'
             ]
         }
-    });
+    };
+
+    // import app-specific config
+    var appConfig = grunt.file.readJSON('app/tools/' + project + '/grunt-config.json');
+
+    // merge the gruntConfig with the app-specific config
+    gruntConfig = grunt.util._.extend({}, gruntConfig, appConfig)
+
+    // init grunt configuration
+    grunt.initConfig(gruntConfig);
+
+    //grunt.renameTask('regarde', 'watch');
 
     grunt.registerTask('serve', function (target) {
         if (target === 'dist') {
