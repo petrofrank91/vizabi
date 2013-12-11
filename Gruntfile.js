@@ -75,14 +75,16 @@ module.exports = function (grunt) {
         },
         clean: {
             dist: {
-                files: [{
-                    dot: true,
-                    src: [
-                        '.tmp',
-                        '<%= yeoman.dist %>/*',
-                        '!<%= yeoman.dist %>/.git*'
-                    ]
-                }]
+                files: [
+                    {
+                        dot: true,
+                        src: [
+                            '.tmp',
+                            '<%= yeoman.dist %>/*',
+                            '!<%= yeoman.dist %>/.git*'
+                        ]
+                    }
+                ]
             },
             server: '.tmp'
         },
@@ -137,25 +139,27 @@ module.exports = function (grunt) {
                 browsers: ['last 1 version']
             },
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: '.tmp/styles/',
-                    src: '{,*/}*.css',
-                    dest: '.tmp/styles/'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '.tmp/styles/',
+                        src: '{,*/}*.css',
+                        dest: '.tmp/styles/'
+                    }
+                ]
             }
         },
         // not used since Uglify task does concat,
         // but still available if needed
         /*concat: {
-            dist: {}
-        },*/
+         dist: {}
+         },*/
         // not enabled since usemin task does concat and uglify
         // check index.html to edit your build targets
         // enable this task if you prefer defining your build targets here
         /*uglify: {
-            dist: {}
-        },*/
+         dist: {}
+         },*/
         'bower-install': {
             app: {
                 html: '<%= yeoman.app %>/index.html',
@@ -189,22 +193,26 @@ module.exports = function (grunt) {
         },
         imagemin: {
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/images',
-                    src: '{,*/}*.{gif,jpeg,jpg,png}',
-                    dest: '<%= yeoman.dist %>/images'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>/images',
+                        src: '{,*/}*.{gif,jpeg,jpg,png}',
+                        dest: '<%= yeoman.dist %>/images'
+                    }
+                ]
             }
         },
         svgmin: {
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>/images',
-                    src: '{,*/}*.svg',
-                    dest: '<%= yeoman.dist %>/images'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>/images',
+                        src: '{,*/}*.svg',
+                        dest: '<%= yeoman.dist %>/images'
+                    }
+                ]
             }
         },
         cssmin: {
@@ -227,39 +235,43 @@ module.exports = function (grunt) {
             dist: {
                 options: {
                     /*removeCommentsFromCDATA: true,
-                    // https://github.com/yeoman/grunt-usemin/issues/44
-                    //collapseWhitespace: true,
-                    collapseBooleanAttributes: true,
-                    removeAttributeQuotes: true,
-                    removeRedundantAttributes: true,
-                    useShortDoctype: true,
-                    removeEmptyAttributes: true,
-                    removeOptionalTags: true*/
+                     // https://github.com/yeoman/grunt-usemin/issues/44
+                     //collapseWhitespace: true,
+                     collapseBooleanAttributes: true,
+                     removeAttributeQuotes: true,
+                     removeRedundantAttributes: true,
+                     useShortDoctype: true,
+                     removeEmptyAttributes: true,
+                     removeOptionalTags: true*/
                 },
-                files: [{
-                    expand: true,
-                    cwd: '<%= yeoman.app %>',
-                    src: '*.html',
-                    dest: '<%= yeoman.dist %>'
-                }]
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= yeoman.app %>',
+                        src: '*.html',
+                        dest: '<%= yeoman.dist %>'
+                    }
+                ]
             }
         },
         // Put files not handled in other tasks here
         copy: {
             dist: {
-                files: [{
-                    expand: true,
-                    dot: true,
-                    cwd: '<%= yeoman.app %>',
-                    dest: '<%= yeoman.dist %>',
-                    src: [
-                        '*.{ico,png,txt}',
-                        '.htaccess',
-                        'images/{,*/}*.{webp,gif}',
-                        'styles/fonts/{,*/}*.*',
-                        'bower_components/sass-bootstrap/fonts/*.*'
-                    ]
-                }]
+                files: [
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= yeoman.app %>',
+                        dest: '<%= yeoman.dist %>',
+                        src: [
+                            '*.{ico,png,txt}',
+                            '.htaccess',
+                            'images/{,*/}*.{webp,gif}',
+                            'styles/fonts/{,*/}*.*',
+                            'bower_components/sass-bootstrap/fonts/*.*'
+                        ]
+                    }
+                ]
             },
             styles: {
                 expand: true,
@@ -312,8 +324,8 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('server', function () {
-      grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
-      grunt.task.run(['serve']);
+        grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
+        grunt.task.run(['serve']);
     });
 
     grunt.registerTask('test', [
