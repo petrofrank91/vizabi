@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vizabi Bubble Chart Print Tool: Alpha Edition</title>
+
+    <link rel="stylesheet" href="../../assets/css/bubbleChartStyles.css">
+    <link rel="stylesheet" href="../../libs/jquery-ui.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css">
+
+    <script type="text/javascript" src="../../libs/jquery-ui.custom/js/jquery-1.9.1.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/jquery-ui.custom/js/jquery-ui-1.10.3.custom.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/d3/d3.v3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/queuejs/queue.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="../../src/start.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/dataCube.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loader/readerSingleCSV.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loader/readerMultipleJSON.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loader/readerMultipleCSV.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loader/readerMultiCSV.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loaderFactory.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/components/settingsButton.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/bubbleChart/bubbleChartModel.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/bubbleChart/bubbleChart.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/bubbleChart/viz/vizBubble.js" chartset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/bubbleChart/viz/vizBubblePrint.js" chartset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/bubbleChart/bubbleChartDataHelper.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/chartGrid/chartGrid.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/components/timeslider.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="../../src/dataCube/dataCubei18nLayer.js" charset="utf-8"></script>
+    <script type="text/javascript" src="data/fakei18n/i18n.js"></script>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div id = "selectBox" style="width:20px;height:20px;">
+<select id="languageSelect" style="font-size:8px;position:relative;top:20px;left:30px">
+    <option value="af">Afrikaans</option>
+    <option value="am">Amharic</option>
+    <option value="ar">Arabic</option>
+    <option value="eu">Basque</option>
+    <option value="bn">Bengali</option>
+    <option value="dz">Bhutani</option>
+    <option value="br">Breton</option>
+    <option value="bg">Bulgarian</option>
+    <option value="km">Cambodian</option>
+    <option value="ca">Catalan</option>
+    <option value="zh">Chinese</option>
+    <option value="hr">Croatian</option>
+    <option value="cs">Czech</option>
+    <option value="da">Danish</option>
+    <option value="nl">Dutch</option>
+    <option value="en">English</option>
+    <option value="et">Estonian</option>
+    <option value="fo">Faeroese</option>
+    <option value="fa">Farsi (Persian)</option>
+    <option value="fi">Finnish</option>
+    <option value="fr">French</option>
+    <option value="de">Frisian</option>
+    <option value="gl">Galician</option>
+    <option value="gd">Gaelic (Scottish)</option>
+    <option value="de">German</option>
+    <option value="el">Greek</option>
+    <option value="kl">Greenlandic</option>
+    <option value="gu">Gujarati</option>
+    <option value="he">Hebrew</option>
+    <option value="hi">Hindi</option>
+    <option value="hu">Hungarian</option>
+    <option value="is">Icelandic</option>
+    <option value="id">Indonesian</option>
+    <option value="ga">Irish</option>
+    <option value="it">Italian</option>
+    <option value="ja">Japanese</option>
+    <option value="kn">Kannada</option>
+    <option value="ko">Korean</option>
+    <option value="lo">Laothian</option>
+    <option value="lv">Latvian (Lettish)</option>
+    <option value="ln">Lingala</option>
+    <option value="lt">Lithuanian</option>
+    <option value="mk">Macedonian</option>
+    <option value="ms">Malay</option>
+    <option value="ml">Malayalam</option>
+    <option value="mt">Maltese</option>
+    <option value="mr">Marathi</option>
+    <option value="ne">Nepali</option>
+    <option value="no">Norwegian</option>
+    <option value="pl">Polish</option>
+    <option value="pt">Portuguese</option>
+    <option value="ro">Romanian</option>
+    <option value="ru">Russian</option>
+    <option value="sr">Serbian</option>
+    <option value="si">Sinhalese</option>
+    <option value="sk">Slovak</option>
+    <option value="sl">Slovenian</option>
+    <option value="es">Spanish</option>
+    <option value="sw">Swahili (Kiswahili)</option>
+    <option value="sv">Swedish</option>
+    <option value="ta">Tamil</option>
+    <option value="te">Telugu</option>
+    <option value="th">Thai</option>
+    <option value="to">Tonga</option>
+    <option value="tr">Turkish</option>
+    <option value="uk">Ukrainian</option>
+    <option value="ur">Urdu</option>
+    <option value="vi">Vietnamese</option>
+    <option value="wae">Wallon</option>
+    <option value="cy">Welsh</option>
+    <option value="zu">Zulu</option>
+</select>
+</div>
+<script>
+    var renderDiv = "chart-1";
+    var chartState;
+    var app;
+
+    if (window.history.state === null) {
+        var URL = window.location.href.toString();
+        // When a new tab is opened
+        if (URL.indexOf("#?") !== -1) {
+            console.log("URL contains the character");
+            var model = JSON.parse(URL.substr(URL.indexOf("#?") + 2, URL.length));
+            history.pushState(model, "", "#?" + JSON.stringify(model));
+            chartState = model;
+        }
+        else {
+            chartState = {
+                dataPath: "data/",
+                year: 2012,
+                xIndicator : "gdp",
+                yIndicator : "lex",
+                sizeIndicator : "pop",
+                entity : "unstates",
+                fileFormat: "multipleCSV",
+                xAxisScale: "log",
+                xAxisTickValues: [500,600, 700, 800, 900,1000,2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000,20000, 30000, 40000, 50000, 92000],
+                //xAxisTickValues: [500,1000,2000, 5000, 10000, 20000, 50000],
+                language : "en",
+                minYValue: 45,
+                maxYValue: 85,
+                isInteractive: false
+            };
+        }
+
+        app = new gapminder.bubbleChart(renderDiv, chartState);
+
+        app.registerStateBindCallback(function(model) {
+            var currentState = window.history.state;
+
+            if (!currentState) {
+                history.pushState(model, "", "#?" + JSON.stringify(model));
+            }
+            else {
+                history.replaceState(model, "", "#?" + JSON.stringify(model));
+            }
+        });
+
+    }
+    else {
+        chartState = window.history.state;
+        app = new gapminder.bubbleChart(renderDiv, chartState);
+
+        app.registerStateBindCallback(function(model) {
+            var currentState = window.history.state;
+
+            if (!currentState) {
+                history.pushState(model, "", "#?" + JSON.stringify(model));
+            }
+            else {
+                history.replaceState(model, "", "#?" + JSON.stringify(model));
+            }
+        });
+    }
+    
+    $("#languageSelect").val(chartState.language);   
+
+    $("#languageSelect").change(function() {
+        $( "#languageSelect option:selected" ).each(function() {
+            app.setState({language: this.value.toString()});
+        });
+    });
+
+</script>
+</body>
+</html>

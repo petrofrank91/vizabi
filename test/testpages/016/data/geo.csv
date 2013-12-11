@@ -1,0 +1,323 @@
+id,name,kind
+BRA001011,Rondonia,bra_kind
+BRA001012,Acre,bra_kind
+BRA001013,Amazonas,bra_kind
+BRA001014,Roraima,bra_kind
+BRA001015,Para,bra_kind
+BRA001016,Amapa,bra_kind
+BRA001017,Tocantins,bra_kind
+BRA002021,Maranhao,bra_kind
+BRA002022,Piaui,bra_kind
+BRA002023,Ceara,bra_kind
+BRA002024,Rio Grande do Norte,bra_kind
+BRA002025,Paraiba,bra_kind
+BRA002026,Pernambuco,bra_kind
+BRA002027,Alagoas,bra_kind
+BRA002028,Sergipe,bra_kind
+BRA002029,Bahia,bra_kind
+BRA003031,Minas Gerais,bra_kind
+BRA003032,Espirito Santo,bra_kind
+BRA003033,Rio de Janeiro,bra_kind
+BRA003035,Sao Paulo,bra_kind
+BRA004041,Parana,bra_kind
+BRA004042,Santa Catarina,bra_kind
+BRA004043,Rio Grande do Sul,bra_kind
+BRA005050,Mato Grosso do Sul,bra_kind
+BRA005051,Mato Grosso,bra_kind
+BRA005052,Goias,bra_kind
+BRA005053,Distrito Federal,bra_kind
+IND001,Jammu & Kashmir,ind_kind
+IND002,Himachal Pradesh,ind_kind
+IND003,Punjab,ind_kind
+IND004,Chandigarh,ind_kind
+IND005,Uttarakhand,ind_kind
+IND006,Haryana,ind_kind
+IND007,Delhi,ind_kind
+IND008,Rajasthan,ind_kind
+IND009,Uttar Pradesh,ind_kind
+IND010,Bihar,ind_kind
+IND011,Sikkim,ind_kind
+IND012,Arunachal Pradesh,ind_kind
+IND013,Nagaland,ind_kind
+IND014,Manipur,ind_kind
+IND015,Mizoram,ind_kind
+IND016,Tripura,ind_kind
+IND017,Meghalaya,ind_kind
+IND018,Assam,ind_kind
+IND019,West Bengal,ind_kind
+IND020,Jharkhand,ind_kind
+IND021,Orissa,ind_kind
+IND022,Chhattisgarh,ind_kind
+IND023,Madhya Pradesh,ind_kind
+IND024,Gujarat,ind_kind
+IND025,Daman & Diu,ind_kind
+IND026,Dadra & Nagar Haveli,ind_kind
+IND027,Maharashtra,ind_kind
+IND028,Andhra Pradesh,ind_kind
+IND029,Karnataka,ind_kind
+IND030,Goa,ind_kind
+IND031,Lakshadweep,ind_kind
+IND032,Kerala,ind_kind
+IND033,Tamil Nadu,ind_kind
+IND034,Pondicherry,ind_kind
+IND035,Andaman & Nicobar Islands,ind_kind
+_ABK,Abkhazia,rest
+AFG,Afghanistan,rest
+_AKR,Akrotiri and Dhekelia,rest
+ALB,Albania,rest
+DZA,Algeria,rest
+ASM,American Samoa,rest
+AND,Andorra,rest
+AGO,Angola,rest
+AIA,Anguilla,rest
+ATG,Antigua and Barbuda,rest
+ARG,Argentina,rest
+ARM,Armenia,rest
+ABW,Aruba,rest
+AUS,Australia,rest
+AUT,Austria,rest
+AZE,Azerbaijan,rest
+BHS,Bahamas,rest
+BHR,Bahrain,rest
+BGD,Bangladesh,rest
+BRB,Barbados,rest
+BLR,Belarus,rest
+BEL,Belgium,rest
+BLZ,Belize,rest
+BEN,Benin,rest
+BMU,Bermuda,rest
+BTN,Bhutan,rest
+BOL,Bolivia,rest
+BIH,Bosnia and Herzegovina,rest
+BWA,Botswana,rest
+BRA,Brazil,bra_kind
+VGB,British Virgin Islands,rest
+BRN,Brunei,rest
+BGR,Bulgaria,rest
+BFA,Burkina Faso,rest
+BDI,Burundi,rest
+KHM,Cambodia,rest
+CMR,Cameroon,rest
+CAN,Canada,rest
+CPV,Cape Verde,rest
+CYM,Cayman Islands,rest
+CAF,Central African Republic,rest
+TCD,Chad,rest
+_CIS,Channel Islands,rest
+CHL,Chile,rest
+CHN,China,rest
+CXR,Christmas Island,rest
+CCK,Cocos Island,rest
+COL,Colombia,rest
+COM,Comoros,rest
+COD,"Congo, Dem. Rep.",rest
+COG,"Congo, Rep.",rest
+COK,Cook Is,rest
+CRI,Costa Rica,rest
+CIV,Cote d'Ivoire,rest
+HRV,Croatia,rest
+CUB,Cuba,rest
+CYP,Cyprus,rest
+CZE,Czech Republic,rest
+_CSK,Czechoslovakia,rest
+DNK,Denmark,rest
+DJI,Djibouti,rest
+DMA,Dominica,rest
+DOM,Dominican Republic,rest
+_DDR,East Germany,rest
+ECU,Ecuador,rest
+EGY,Egypt,rest
+SLV,El Salvador,rest
+GNQ,Equatorial Guinea,rest
+ERI,Eritrea,rest
+_EAE,Eritrea and Ethiopia,rest
+EST,Estonia,rest
+ETH,Ethiopia,rest
+FRO,Faeroe Islands,rest
+FLK,Falkland Is (Malvinas),rest
+FJI,Fiji,rest
+FIN,Finland,rest
+FRA,France,rest
+GUF,French Guiana,rest
+PYF,French Polynesia,rest
+GAB,Gabon,rest
+GMB,Gambia,rest
+GEO,Georgia,rest
+DEU,Germany,rest
+GHA,Ghana,rest
+GIB,Gibraltar,rest
+GRC,Greece,rest
+GRL,Greenland,rest
+GRD,Grenada,rest
+GLP,Guadeloupe,rest
+GUM,Guam,rest
+GTM,Guatemala,rest
+GBG,Guernsey,rest
+GIN,Guinea,rest
+GNB,Guinea-Bissau,rest
+GUY,Guyana,rest
+HTI,Haiti,rest
+HOS,Holy See,rest
+HND,Honduras,rest
+HKG,"Hong Kong, China",rest
+HUN,Hungary,rest
+ISL,Iceland,rest
+IND,India,ind_kind
+IDN,Indonesia,rest
+IRN,Iran,rest
+IRQ,Iraq,rest
+IRL,Ireland,rest
+GBM,Isle of Man,rest
+ISR,Israel,rest
+ITA,Italy,rest
+JAM,Jamaica,rest
+JPN,Japan,rest
+JEY,Jersey,rest
+JOR,Jordan,rest
+KAZ,Kazakhstan,rest
+KEN,Kenya,rest
+KIR,Kiribati,rest
+PRK,North Korea,rest
+KOR,South Korea,rest
+_KOU,"United Korea (former)",rest
+_UNK,Kosovo,rest
+KWT,Kuwait,rest
+KGZ,Kyrgyz Republic,rest
+LAO,Lao,rest
+LVA,Latvia,rest
+LBN,Lebanon,rest
+LSO,Lesotho,rest
+LBR,Liberia,rest
+LBY,Libya,rest
+LIE,Liechtenstein,rest
+LTU,Lithuania,rest
+LUX,Luxembourg,rest
+MAC,"Macao, China",rest
+MKD,"Macedonia, FYR",rest
+MDG,Madagascar,rest
+MWI,Malawi,rest
+MYS,Malaysia,rest
+MDV,Maldives,rest
+MLI,Mali,rest
+MLT,Malta,rest
+MHL,Marshall Islands,rest
+MTQ,Martinique,rest
+MRT,Mauritania,rest
+MUS,Mauritius,rest
+MYT,Mayotte,rest
+MEX,Mexico,rest
+FSM,"Micronesia, Fed. Sts.",rest
+MDA,Moldova,rest
+MCO,Monaco,rest
+MNG,Mongolia,rest
+MNE,Montenegro,rest
+MSR,Montserrat,rest
+MAR,Morocco,rest
+MOZ,Mozambique,rest
+MMR,Myanmar,rest
+NAM,Namibia,rest
+NRU,Nauru,rest
+NPL,Nepal,rest
+NLD,Netherlands,rest
+ANT,Netherlands Antilles,rest
+NCL,New Caledonia,rest
+NZL,New Zealand,rest
+_NGO,Ngorno-Karabakh,rest
+NIC,Nicaragua,rest
+NER,Niger,rest
+NGA,Nigeria,rest
+NIU,Niue,rest
+NFK,Norfolk Island,rest
+_NCY,Northern Cyprus,rest
+MNP,Northern Mariana Islands,rest
+NOR,Norway,rest
+OMN,Oman,rest
+PAK,Pakistan,rest
+PLW,Palau,rest
+PAN,Panama,rest
+PNG,Papua New Guinea,rest
+PRY,Paraguay,rest
+PER,Peru,rest
+PHL,Philippines,rest
+PCN,Pitcairn,rest
+POL,Poland,rest
+PRT,Portugal,rest
+PRI,Puerto Rico,rest
+QAT,Qatar,rest
+REU,Reunion,rest
+ROU,Romania,rest
+RUS,Russia,rest
+RWA,Rwanda,rest
+_STB,St. Barthélemy,rest
+SHN,St. Helena,rest
+KNA,St. Kitts and Nevis,rest
+LCA,St. Lucia,rest
+_STM,St. Martin,rest
+VCT,St. Vincent and the Grenadines,rest
+SPM,St.-Pierre-et-Miquelon,rest
+WSM,Samoa,rest
+SMR,San Marino,rest
+STP,Sao Tome and Principe,rest
+SAU,Saudi Arabia,rest
+SEN,Senegal,rest
+SRB,Serbia,rest
+SCG,Serbia and Montenegro,rest
+_SRBEK,Serbia excluding Kosovo,rest
+SYC,Seychelles,rest
+SLE,Sierra Leone,rest
+SGP,Singapore,rest
+SVK,Slovak Republic,rest
+SVN,Slovenia,rest
+SLB,Solomon Islands,rest
+SOM,Somalia,rest
+_SOL,Somaliland,rest
+ZAF,South Africa,rest
+_SOS,South Ossetia,rest
+ESP,Spain,rest
+LKA,Sri Lanka,rest
+SDN,Sudan,rest
+SUR,Suriname,rest
+SJM,Svalbard,rest
+SWZ,Swaziland,rest
+SWE,Sweden,rest
+CHE,Switzerland,rest
+SYR,Syria,rest
+TWN,Taiwan,rest
+TJK,Tajikistan,rest
+TZA,Tanzania,rest
+THA,Thailand,rest
+TLS,Timor-Leste,rest
+TGO,Togo,rest
+TKL,Tokelau,rest
+TON,Tonga,rest
+_TRA,Transnistria,rest
+TTO,Trinidad and Tobago,rest
+TUN,Tunisia,rest
+TUR,Turkey,rest
+TKM,Turkmenistan,rest
+TCA,Turks and Caicos Islands,rest
+TUV,Tuvalu,rest
+UGA,Uganda,rest
+UKR,Ukraine,rest
+ARE,United Arab Emirates,rest
+GBR,United Kingdom,rest
+USA,United States,rest
+URY,Uruguay,rest
+_USSR,USSR,rest
+UZB,Uzbekistan,rest
+WLF,Wallis et Futuna,rest
+VUT,Vanuatu,rest
+VEN,Venezuela,rest
+PSE,West Bank and Gaza,rest
+_BRD,West Germany,rest
+ESH,Western Sahara,rest
+VNM,Vietnam,rest
+VIR,Virgin Islands (U.S.),rest
+_NOY,North Yemen (former),rest
+_SOY,South Yemen (former),rest
+YEM,Yemen,rest
+_YUG,Yugoslavia,rest
+ZMB,Zambia,rest
+ZWE,Zimbabwe,rest
+ALA,Åland,rest
+SDS,South Sudan,rest

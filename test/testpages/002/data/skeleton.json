@@ -1,0 +1,11 @@
+{
+    "indicators": [
+        {"id": "mort", "info": {"name": "Mortality Rate"}, "categories": ["unstates"]},
+        {"id": "pop",  "info": {"name": "Population"}, "categories": ["unstates"]},
+        {"id": "tfr1", "info": {"name": "Total Fertility Rate 1"}, "categories": ["unstates"]},
+        {"id": "tfr2", "info": {"name": "Total Fertility Rate 2"}, "categories": ["unstates"]}
+],
+    "categories": [
+        {"id": "unstates", "about": "Countries which are Official UN States", "count": 180, "things": [] }
+    ]
+}

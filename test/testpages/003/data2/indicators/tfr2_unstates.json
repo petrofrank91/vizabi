@@ -1,0 +1,19 @@
+{
+    "info":
+    {
+        "measure_id": "tfr2",
+        "measure_name": "total fertility rate 2"
+    },
+    "trends":
+    {
+        "Afghanistan":
+        {
+            "1960":2, "1980": 1
+        },
+        "Norway":
+        {
+            "1960":2, "1980": 1
+        }
+
+    }
+}

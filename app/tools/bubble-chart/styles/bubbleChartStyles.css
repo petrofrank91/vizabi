@@ -1,0 +1,69 @@
+body {
+  font-family: 'Open Sans', Helvetica, sans-serif;
+}
+.ui-slider-handle {
+  height: 18px !important;
+}
+.ui-slider {
+  height: 12px !important;
+}
+
+#settingsButton {
+    float: right
+}
+
+#label-year {
+  font-weight: bold;
+  font-size: 70px;
+  font: 500 196px "Helvetica Neue";
+  fill: #ddd;
+}
+
+.chart .axisLabel {
+  font-size: 27px;
+  font-style : italic;
+  fill: #708090;
+}
+
+.chart .axisLabel .print {
+    fill: gray;
+}
+
+.chart .axis line {
+    fill: black;
+    shape-rendering: "crispEdges";
+    opacity: 0;
+}
+
+.chart .axis .tick.major text {
+  font-size: 30px;
+  fill: #708090;
+  stroke-width: 0px;
+}
+
+.chart .axis path {
+  /*fill: black;*/
+  shape-rendering: "crispEdges";
+  stroke-width: 6;
+  fill: gray;
+}
+
+.chart .axis text {
+  font-size: 17px;
+  /*fill: black;*/
+}
+
+.chart .axis.print text{
+    font-style: italic;
+    font-weight: 500;
+}
+
+.print .tick.major  line {
+    stroke-dasharray: 2,2;
+}
+
+.axis.print .domain {
+    stroke: black;
+    stroke-width: 4.5
+}
+

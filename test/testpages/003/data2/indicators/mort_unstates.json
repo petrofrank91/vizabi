@@ -1,0 +1,18 @@
+{
+    "info":
+    {
+        "measure_id": "mort",
+        "measure_name": "mortality rates"
+    },
+    "trends":
+    {
+        "Afghanistan":
+        {
+            "1960": 4, "1980": 6
+        },
+        "Norway":
+        {
+            "1960": 4, "1980": 10
+        }
+    }
+}

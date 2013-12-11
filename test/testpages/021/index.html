@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vizabi Test Pages: 021</title>
+
+    <link rel="stylesheet" href="../../assets/css/lineChartStyles.css">
+    <link rel="stylesheet" href="../../libs/jquery-ui.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css">
+
+    <script type="text/javascript" src="../../libs/jquery-ui.custom/js/jquery-1.9.1.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/jquery-ui.custom/js/jquery-ui-1.10.3.custom.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/d3/d3.v3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/queuejs/queue.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="../../src/start.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="../../src/dataCube/dataCube.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loader/readerSingleCSV.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loader/readerMultipleJSON.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loader/readerMultipleCSV.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loader/readerMultiCSV.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loaderFactory.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/components/settingsButton.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/lineChart/lineChartModel.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/lineChart/viz/vizLine.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/lineChart/lineChart.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/lineChart/lineChartDataHelper.js" charset="utf-8"></script>
+
+
+    <script type="text/javascript" src="../../src/charts/chartGrid/chartGrid.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/components/timeslider.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="../../src/dataCube/dataCubei18nLayer.js" charset="utf-8"></script>
+</head>
+<body>
+<div style="font-family: 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;" align="center">Description: A simple line chart with aim to re-use as much as possible of the bubble chart code </div>
+<script>
+
+
+    var chartState = {
+        dataPath: "data/",
+        year: 1994,
+        yIndicator: "pop",
+        category : ["geo"],
+        fileFormat: "multiCSV",
+        language : "en",
+        isInteractive: true
+    };
+
+    var renderDiv = "chart-1";
+
+    var app = new gapminder.lineChart(renderDiv, chartState);
+</script>
+</body>
+</html>

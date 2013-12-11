@@ -1,0 +1,14 @@
+{
+    "countries" : [
+        {
+            "id" : "AF",
+            "name" : "Afghanistan",
+            "region" : "Asia"
+        },
+        {
+            "id" : "NO",
+            "name" : "Norway",
+            "region" : "Europe"
+        }
+    ]
+}

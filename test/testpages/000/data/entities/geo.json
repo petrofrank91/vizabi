@@ -1,0 +1,14 @@
+{
+    "countries" : [
+        {
+            "id" : "IRN",
+            "name" : "Iran",
+            "region" : "ASI"
+        },
+        {
+            "id" : "SWE",
+            "name" : "Sweden",
+            "region" : "EUR"
+        }
+    ]
+}

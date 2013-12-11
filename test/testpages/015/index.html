@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brazilian Sub-national Data</title>
+
+    <link rel="stylesheet" href="../../assets/css/bubbleChartStyles.css">
+    <link rel="stylesheet" href="../../libs/jquery-ui.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css">
+
+    <script type="text/javascript" src="../../libs/jquery-ui.custom/js/jquery-1.9.1.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/jquery-ui.custom/js/jquery-ui-1.10.3.custom.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/d3/d3.v3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/queuejs/queue.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="../../src/start.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/utils/util.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/dataCube.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loader/readerSingleCSV.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loader/readerMultipleJSON.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loader/readerMultipleCSV.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loader/readerMultiCSV.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/loaderFactory.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/dataCube/dataCubei18nLayer.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/components/settingsButton.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/bubbleChart/bubbleChartModel.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/bubbleChart/bubbleChart.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/bubbleChart/viz/vizBubble.js" chartset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/bubbleChart/bubbleChartDataHelper.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/charts/chartGrid/chartGrid.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../src/components/timeslider.js" charset="utf-8"></script>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div id="chartInfo"></div><div id="chartFooter"></div>
+</div>
+<script>
+    var renderDiv = "chart-1";
+    var chartState;
+    var app;
+
+    if (window.history.state === null) {
+        var URL = window.location.href.toString();
+        // When a new tab is opened
+        if (URL.indexOf("#?") !== -1) {
+            var model = JSON.parse(URL.substr(URL.indexOf("#?") + 2, URL.length));
+            history.pushState(model, "", "#?" + JSON.stringify(model));
+            chartState = model;
+        }
+        else {
+            chartState = {
+                isInteractive: true,
+                dataPath: "data/",
+                year: 2000,
+                fileFormat: "multiCSV",
+                category: ["bra1"],
+                xAxisScale: "log",
+                xAxisTickValues: [1000, 1500, 2000, 2500, 3000, 4000, 5000, 7000, 10000, 15000, 20000, 25000, 30000, 40000 ],
+                minXValue: 1000,
+                maxXValue: 40000,
+                language : "en",
+                xIndicator: "gdp_per_cap",
+                yIndicator: "imr",
+                sizeIndicator: "pop",
+                speed: 0.02
+                //minYValue: 0,
+                //maxYValue: 100
+            };
+        }
+    }
+    else {
+        chartState = window.history.state;
+    }
+
+    app = new gapminder.bubbleChart(renderDiv, chartState);
+    app.registerStateBindCallback(function(model) {
+        var currentState = window.history.state;
+
+        if (!currentState) {
+            history.pushState(model, "", "#?" + JSON.stringify(model));
+        }
+        else {
+            history.replaceState(model, "", "#?" + JSON.stringify(model));
+        }
+    });
+</script>
+</body>
+</html>
