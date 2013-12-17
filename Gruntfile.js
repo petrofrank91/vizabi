@@ -24,7 +24,7 @@ module.exports = function (grunt) {
     var yeomanConfig = {
         app: 'app',
         project: 'app/' + project,
-        initPage: 'test/' + project + "/human-acceptance/",
+        projecthats: 'test/' + project + "/human-acceptance/",
         common: 'app/common',
         dist: 'dist',
         distproject: 'dist/apps/' + project,
@@ -74,8 +74,8 @@ module.exports = function (grunt) {
                     },*/
                     base: [
                         '.tmp',
-                        //'<%= yeoman.app %>'
-                        //'<%= yeoman.initPage %>'
+                        '<%= yeoman.app %>',
+                        '<%= yeoman.projecthats %>'
                     ]
                 }
             },
