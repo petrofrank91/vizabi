@@ -8,8 +8,8 @@
     "jquery-ui": "~1.10.3",
     "queue-async": "~1.0.4",
     "d3": "~3.3.13",
-    "select2": "3.4.5",
-    "rm-jstat": "0.0.0"
+    "select2": "~3.4.5",
+    "rm-jstat": "master"
   },
   "devDependencies": {}
 }
