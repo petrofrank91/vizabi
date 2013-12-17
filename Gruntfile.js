@@ -14,17 +14,23 @@ module.exports = function (grunt) {
     require('load-grunt-tasks')(grunt);
 
     // which project to work with, supplied through --project=foo
-    var project = grunt.option('tool') || 'defaultproject';
+    var project;
+    var tool_project = grunt.option('tool');
+    if (tool_project) {
+        project = 'tools/' + tool_project;
+    }
 
     // configurable paths
     var yeomanConfig = {
         app: 'app',
-        project: 'app/apps/' + project,
+        project: 'app/' + project,
+        initPage: 'test/' + project + "/human-acceptance/",
         common: 'app/common',
         dist: 'dist',
         distproject: 'dist/apps/' + project,
         distcommon: 'dist/common'
     };
+
 
     var gruntConfig = {
         // configurable paths
@@ -63,9 +69,13 @@ module.exports = function (grunt) {
             livereload: {
                 options: {
                     open: true,
+                    /*open: {
+                        target: 'http://<%= connect.options.hostname %>:100'//<%= connect.test.options.port %>'
+                    },*/
                     base: [
                         '.tmp',
-                        '<%= yeoman.app %>'
+                        //'<%= yeoman.app %>'
+                        //'<%= yeoman.initPage %>'
                     ]
                 }
             },
@@ -169,7 +179,7 @@ module.exports = function (grunt) {
         /*concat: {
          dist: {}
          },*/
-        // not enabled since usemin task does concat and uglify
+        // not enabled since usemin taskdoes concat and uglify
         // check index.html to edit your build targets
         // enable this task if you prefer defining your build targets here
         /*uglify: {
@@ -204,7 +214,7 @@ module.exports = function (grunt) {
                 assetsDirs: ['<%= yeoman.dist %>']
             },
             html: ['<%= yeoman.dist %>/{,*/}*.html'],
-            css: ['<%= yeoman.dist %>/{,*/}{,*/}styles/{,*/}{,*/}*.css'],
+            css: ['<%= yeoman.dist %>/{,*/}{,*/}styles/{,*/}{,*/}*.css']
         },
         imagemin: {
             dist: {
@@ -342,10 +352,10 @@ module.exports = function (grunt) {
     };
 
     // import app-specific config
-    var appConfig = grunt.file.readJSON('app/tools/' + project + '/grunt-config.json');
+    var appConfig = grunt.file.readJSON('app/' + project + '/grunt-config.json');
 
     // merge the gruntConfig with the app-specific config
-    gruntConfig = grunt.util._.extend({}, gruntConfig, appConfig)
+    gruntConfig = grunt.util._.extend({}, gruntConfig, appConfig);
 
     // init grunt configuration
     grunt.initConfig(gruntConfig);

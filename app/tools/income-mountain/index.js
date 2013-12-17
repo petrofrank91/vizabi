@@ -7,5 +7,5 @@ import "incomeMountain";
 import "labels";
 import "new/glue";
 import "../viz_tools/";
-import "../layoutManager/";
+import "../layout-manager/";
 import "../temp_timeslider/";

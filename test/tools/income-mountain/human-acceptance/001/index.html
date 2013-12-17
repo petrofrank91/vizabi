@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Income Mountain Viz</title>
+    </head>
+
+    <body>
+        <div id="income_mountain"></div>
+        <div id="income_mountain2"></div>
+    </body>
+
+
+    <script type="text/javascript" src="../../../../../app/gapminder.js/start.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../../../app/bower_components/d3/d3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../../../app/common/scripts/libs/entities.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../../../app/vizabi-components/layout-manager/layout-manager.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../../../app/tools/income-mountain/scripts/data-loader.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../../../../app/tools/income-mountain/scripts/data-operations.js" charset="utf-8"></script>
+    <script src="../../../../../app/tools/income-mountain/scripts/svg-graphics.js"></script>
+    <script src="../../../../../app/widgets/header/header.js"></script>
+    <script src="../../../../../app/widgets/dropdown/dropdown.js"></script>
+    <script src="../../../../../app/widgets/time-slider/viz.js"></script>
+    <script src="../../../../../app/tools/income-mountain/scripts/labels.js"></script>
+    <script src="../../../../../app/widgets/time-slider/viz.js"></script>
+    <script src="../../../../../app/tools/income-mountain/scripts/glue.js"></script>
+    <link type="text/css" href="../../../../../app/tools/income-mountain/styles/style.css" rel="stylesheet" charset="utf-8">
+
+    <!--<link type="text/css" href="../../gapminder.css" rel="stylesheet" charset="utf-8">
+    <script type="text/javascript" src="../../i18n/sv.js" charset="utf-8"></script>-->
+    <script type="text/javascript" src="../../../../../app/common/scripts/libs/gettext.js" charset="utf-8"></script>
+
+
+
+    <script type="text/javascript">
+        var gettext = (typeof json_locale_data !== "undefined") ? new Gettext({ domain: 'incMountain', locale_data: json_locale_data }) : undefined;
+
+        var o = gapminder.income_mountain({
+            div: "#income_mountain",
+            geo: ["EUR", "AME", "AFR"],
+            year: 1900,
+//            state: {
+//                geo: ["EUR","AME","AFR","EUR"],
+//                year:
+//            }
+            height: "100%",
+            width: "100%",
+            i18n: gettext
+        });
+
+//        var i = gapminder.income_mountain({
+//            div: "#income_mountain2",
+//            geo: ["EUR","AME"],
+//            height: 250,
+//            width: 450,
+//            stack: true,
+//            fullscreen: true
+//        });
+    </script>
+
+</html>

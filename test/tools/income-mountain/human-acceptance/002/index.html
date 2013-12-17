@@ -23,35 +23,33 @@
     <div id="testing"></div>
     <div id="container"><h1>Related test</h1></div>
 </body>
-<script src='../../d3.v3.js' charset='utf-8'></script>
-<!-- <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script> -->
-<script src="../../libs/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="../../libs/select2/select2.min.js"></script>
-<script src="../start.js"></script>
-<script src="../../libs/jstat/jstat-0.1.0.min.js"></script>
-<!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
-<script src="incomeMountain.js"></script>
-<script src="../helpers/miscFunctions.js"></script>
-<script src="../entities/entities.js" charset="utf-8"></script>
-<script src="../layoutManager/layoutManager.js"></script>
-<script src="axis.js"></script>
-<script src="labels.js"></script>
-<script src="about.js"></script>
-<script src="data_loader.js"></script>
-<script src="data_operations.js"></script>
-<script src="../viz_tools/header/header.js"></script>
-<script src="../viz_tools/dropdown/dropdown.js"></script>
-<script src="../viz_tools/dropdown/select_box_window.js"></script>
-<script src="../viz_tools/dropdown/svg_graphics.js"></script>
-<script src="../temp_timeSlider/timeSlider1.js"></script>
-<script src="../temp_timeSlider/glue.js"></script>
-<script src="new/glue.js"></script>
-<script src="../relatedPage/relatedPage.js"></script>
-<link rel="stylesheet" href="style.css" type="text/css">
-<link rel="stylesheet" href="../viz_tools/header/style.css" type="text/css">
-<link rel="stylesheet" href="../viz_tools/dropdown/style.css" type="text/css">
-<link rel="stylesheet" href="../temp_timeSlider/style.css" type="text/css">
-<link rel="stylesheet" href="../../libs/select2/select2.css" type="text/css">
+<script type="text/javascript" src="../../../../../app/bower_components/d3/d3.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../../../app/bower_components/jquery/jquery.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../../../app/bower_components/select2/select2.js"></script>
+<script type="text/javascript" src="../../../../../app/gapminder.js/start.js" charset="utf-8"></script>
+<!--<script src="../../libs/jstat/jstat-0.1.0.min.js"></script>-->
+<script src="../../../../../app/tools/income-mountain/scripts/incomeMountain.js"></script>
+<script src="../../../../../app/common/scripts/helpers/miscFunctions.js"></script>
+<script src="../../../../../app/common/scripts/libs/entities.js" charset="utf-8"></script>
+<script src="../../../../../app/vizabi-components/layout-manager/layout-manager.js"></script>
+<script src="../../../../../app/tools/income-mountain/scripts/axis.js"></script>
+<script src="../../../../../app/tools/income-mountain/scripts/labels.js"></script>
+<script src="../../../../../app/tools/income-mountain/scripts/about.js"></script>
+<script src="../../../../../app/tools/income-mountain/scripts/data-loader.js"></script>
+<script src="../../../../../app/tools/income-mountain/scripts/data-operations.js"></script>
+<script src="../../../../../app/widgets/header/header.js"></script>
+<script src="../../../../../app/widgets/dropdown/dropdown.js"></script>
+<script src="../../../../../app/widgets/dropdown/select_box_window.js"></script>
+<script src="../../../../../app/widgets/dropdown/svg_graphics.js"></script>
+<script src="../../../../../app/widgets/time-slider/timeSlider1.js"></script>
+<script src="../../../../../app/widgets/time-slider/glue.js"></script>
+<script src="../../../../../app/tools/income-mountain/scripts/glue.js"></script>
+<script src="../../../../../app/tools/income-mountain/scripts/related-page.js"></script>
+<link rel="stylesheet" href="../../../../../app/tools/income-mountain/styles/style.css" type="text/css">
+<link rel="stylesheet" href="../../../../../app/widgets/header/style.css" type="text/css">
+<link rel="stylesheet" href="../../../../../app/widgets/dropdown/style.css" type="text/css">
+<link rel="stylesheet" href="../../../../../app/widgets/time-slider/style.css" type="text/css">
+<link rel="stylesheet" href="../../../../../app/bower_components/select2/select2.css" type="text/css">
 <script type="text/javascript">
     function loadURL() {
         var search = location.search.substring(1);
@@ -121,7 +119,7 @@
         // // fullscreen
         // var fs = drawIncomeMountain("#fullscreen", window.innerWidth-20, window.innerHeight-20);
 
-        // fs.layoutManager.fullscreen();
+        // fs.layout-manager.fullscreen();
         drawIncomeMountain("#fullscreen");
     } else {
         deleteDiv('#fullscreen');
