@@ -56,10 +56,10 @@ gapminder.components.timeSlider = function (callback) {
             clearInterval(timer);
             playing = false;
             sliderStateChangeCallback({enableHistory: true});
-            playButton.attr("src", "../../assets/img/bubble/play.png");
+            playButton.attr("src", "/tools/bubble-chart/images/play.png");
         }
         else {
-            playButton.attr("src", "../../assets/img/bubble/pause.png");
+            playButton.attr("src", "/tools/bubble-chart/images/pause.png");
             timer = setInterval(function() {
                 playingOnInterval();
             }, 40);

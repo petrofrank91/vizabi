@@ -54,8 +54,6 @@ gapminder.vizBubble = function(callback) {
             vizBubblePrint.registerClickEventListerners();
             vizBubblePrint.registerAlignButtonsEventListeners();
         }
-
-
     };
 
     var updateLayout = function () {

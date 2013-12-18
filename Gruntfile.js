@@ -13,11 +13,20 @@ module.exports = function (grunt) {
     // load all grunt tasks
     require('load-grunt-tasks')(grunt);
 
-    // which project to work with, supplied through --project=foo
+    // which project to work with
     var project;
     var tool_project = grunt.option('tool');
+    var vizabi_components_project = grunt.option('vizabi-component');
+    var widget_projects = grunt.option('widget');
+
     if (tool_project) {
         project = 'tools/' + tool_project;
+    }
+    else if (vizabi_components_project) {
+        project = 'vizabi-components/' + vizabi_components_project;
+    }
+    else if (widget_projects) {
+        project = 'widgets/' + widget_projects;
     }
 
     // configurable paths
@@ -31,6 +40,7 @@ module.exports = function (grunt) {
         distcommon: 'dist/common'
     };
 
+    grunt.log.write(yeomanConfig.projecthats);
 
     var gruntConfig = {
         // configurable paths

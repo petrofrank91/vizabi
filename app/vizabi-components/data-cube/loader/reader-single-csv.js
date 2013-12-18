@@ -35,6 +35,7 @@ gapminder.data.readerSingleCSV = function() {
     };
 
     var loadEntity = function (entity, callback) {
+        console.log(csvDataPath);
         d3.csv(csvDataPath + csvFileName + ".csv", function (error, rows) {
             console.log("Loading entity ", entity, " ...");
 
@@ -121,7 +122,7 @@ gapminder.data.readerSingleCSV = function() {
     };
 
     var loadSkeleton = function(path, setSkeletonCallback, fileName, entity) {
-        d3.csv(path + fileName, function(error, rows) {
+        d3.csv(path + fileName + ".csv", function(error, rows) {
             var row = rows[0];
             for (var column in row) {
                 if (row.hasOwnProperty(column)) {
@@ -162,7 +163,6 @@ gapminder.data.readerSingleCSV = function() {
 
     var indicatorsLoaded = function()  {
         if (typeof readIsCompletedCallback === 'function') {
-            console.log(indicators, entityMeta);
             readIsCompletedCallback(loadedIndicators, indicators, entityMeta, {}, [], timeUnit);
         }
     };

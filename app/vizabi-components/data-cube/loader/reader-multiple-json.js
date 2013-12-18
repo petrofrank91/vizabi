@@ -30,6 +30,7 @@ gapminder.data.readerMultipleJSON = function () {
     };
 
     var loadEntity = function (entity, callback) {
+        console.log(jsonPath);
         d3.json(jsonPath + "entities/" + entity + ".json" , function(errorEntity, entityJson) {
 
             var countries = entityJson.countries;

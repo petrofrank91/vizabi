@@ -216,7 +216,7 @@ gapminder.bubbleChart = function(renderDiv,state) {
         setDivId("playImage", "image-" + renderDiv);
         var playImage = document.createElement("img");
         playImage.className = "play-button";
-        playImage.src = "../../assets/img/bubble/play.png";
+        playImage.src = "/tools/bubble-chart/images/play.png";
         imageParent.appendChild(playImage);
 
         var sliderWidgetDiv = document.createElement("div");

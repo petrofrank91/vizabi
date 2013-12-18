@@ -1,7 +1,7 @@
 import "start.js"
 import "charts/"
 import "components/"
-import "dataCube/"
+import "data-cube/"
 import "utils/"
 
 
