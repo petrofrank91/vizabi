@@ -9,14 +9,23 @@ In order to get the repo up and running, run the following commands:
     bower install
 
 ## Development Process
-### Grunt build process
+
 When you work with each type of `app` (`tool`, `vizabi-component` and `widget`), you can provide each of the
 mentioned types with their references to fire up Grunt server which has its built-in LiveReload task, watching changes
 and applying them instantly for styles and to reload the pages for changes in Javascript code.
 
-    grunt serve --tool=toolref
-    grunt serve --widget=widgetId
-    grunt serve --vizabi-component=componentId
+###Development Process (with Grunt)
+
+Depending on which type of app you are developing with Vizabi, you need to run grunt serve -appType = appId
+
+    grunt serve --appType = appId
+
+**NOTE**: For a reference of all supported appType and appIds, see the Vizabi apps reference Ids in below.
+
+
+When you run the command, browser will open and goes to the `human-acceptance` test index page. At the same time,
+grunt `watch` task will look for changes you make and then will reload the page or apply styles
+instantly. So you can develop and check your human-acceptance test while you are developing to make sure all tests pass.
 
 ### Vizabi apps reference IDs
 
@@ -24,7 +33,7 @@ Here is a table regarding the reference IDs and the associated tool types in Viz
 
 
     |-------------------------------------------|
-    | ID                   | Type               |
+    | appID                | appType            |
     |----------------------|--------------------|
     | income-mountain      | tool               |
     | bubble-chart         | tool               |
