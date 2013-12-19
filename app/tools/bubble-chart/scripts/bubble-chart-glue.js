@@ -48,7 +48,7 @@ gapminder.bubbleChart = function(renderDiv,state) {
         initializeLayers(scatterChartModelUpdate);
         initializeScatterChart(appSVG, renderDiv);
         initializeTimeSlider(isInteractive);
-        setTrailsCheckBoxBinding();
+        //setTrailsCheckBoxBinding();
     };
 
 
@@ -178,6 +178,7 @@ gapminder.bubbleChart = function(renderDiv,state) {
 
         if (model.get("isInteractive")) {
             createTrails(appRenderDiv);
+            setTrailsCheckBoxBinding();
         }
     };
 
