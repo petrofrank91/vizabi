@@ -23,9 +23,14 @@ Depending on which type of app you are developing with Vizabi, you need to run g
 **NOTE**: For a reference of all supported appType and appIds, see the Vizabi apps reference Ids in below.
 
 
-When you run the command, browser will open and goes to the `human-acceptance` test index page. At the same time,
-grunt `watch` task will look for changes you make and then will reload the page or apply styles
-instantly. So you can develop and check your human-acceptance test while you are developing to make sure all tests pass.
+When you run the command, browser will open and goes to the `human-acceptance` test index page.
+
+
+When developing for Vizabi, you mainly have a Human Acceptane Test (HAT) page and inside that you are working with your instance of
+visualization. For each app, its related HATS reside in `test/*appType*/*appID*/human-acceptance/*hatnum*` folder. You can pass `hatnum` option to Grunt so that you
+will code in your HAT index page and  At the same time, grunt `watch` task will look for changes you make and then will reload the page or apply styles instantly. So you can develop and check your human-acceptance test while you are developing to make sure all tests pass.
+
+    grunt serve --appType = appId -hatnum=hat-folder-number
 
 ### Vizabi apps reference IDs
 
