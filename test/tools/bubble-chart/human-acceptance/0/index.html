@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vizabi Test Pages: 000</title>
+
+    <link rel="stylesheet" href="../../../../../app/tools/bubble-chart/styles/bubble-chart.css">
+    <link rel="stylesheet" href="../../libs/jquery-ui.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css">
+
+    <script type="text/javascript" src="../../libs/jquery-ui.custom/js/jquery-1.9.1.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/jquery-ui.custom/js/jquery-ui-1.10.3.custom.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/d3/d3.v3.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../../libs/queuejs/queue.js" charset="utf-8"></script>
+
+    <script type="text/javascript" src="../../vizabi.js"></script>
+
+    <script>
+        var chartState = {
+            dataPath: "data/",
+            year: 1960,
+            xIndicator : "tfr1",
+            yIndicator : "mort",
+            sizeIndicator : "pop",
+            entity : "unstates",
+            isInteractive: true,
+            fileFormat: "multipleJSON"
+        };
+
+        var renderDiv = "chart-1";
+
+        var app = new gapminder.bubbleChart(renderDiv, chartState);
+    </script>
+</head>
+<body>
+<div id="chartInfo"></div><div id="chartFooter"></div>
+<div style="font-family: 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;" align="center">Description: Vizabi Test Pages 000: Smashed Version of Vizabi will load the application</div>
+</body>
+</html>

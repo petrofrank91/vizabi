@@ -14,7 +14,6 @@ gapminder.bubbleChart = function(renderDiv,state) {
 
     var setInitialState = function (state) {
         model = new gapminder.bubbleChartModel();
-
         model.setInit(state, function() {
             isInteractive = model.get("isInteractive");
             setUpSubviews();
