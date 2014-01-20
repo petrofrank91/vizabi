@@ -18,6 +18,7 @@ module.exports = function (grunt) {
     var tool_project = grunt.option('tool');
     var vizabi_components_project = grunt.option('vizabi-component');
     var widget_projects = grunt.option('widget');
+    var hatnum = grunt.option('hatnum');
 
     if (tool_project) {
         project = 'tools/' + tool_project;
@@ -33,14 +34,12 @@ module.exports = function (grunt) {
     var yeomanConfig = {
         app: 'app',
         project: 'app/' + project,
-        projecthats: 'test/' + project + "/human-acceptance/",
+        projecthats: 'test/' + project + "/human-acceptance/" + hatnum,
         common: 'app/common',
         dist: 'dist',
         distproject: 'dist/apps/' + project,
         distcommon: 'dist/common'
     };
-
-    grunt.log.write(yeomanConfig.projecthats);
 
     var gruntConfig = {
         // configurable paths
