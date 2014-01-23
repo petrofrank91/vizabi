@@ -1,6 +1,7 @@
 gapminder.bubbleChartModel =  function () {
 
     var dataHelper;
+    var validator;
 
     var stateAttributes = {
         s : {},
@@ -45,8 +46,8 @@ gapminder.bubbleChartModel =  function () {
     var initialize = function(callback, args) {
         dataHelper = new gapminder.data.bubbleChartDataHelper(get("fileFormat"), get("entity"), get("fileName"), get("dataPath"));
         dataHelper.initialize(callback, args);
+        validator = new gapminder.bubbleChartModelValidator();
     };
-
 
     var setInit = function(changedState, modelAndDataReadyCallback) {
         console.log("BUBBLE MODEL SET STATE: ", changedState);
@@ -72,7 +73,6 @@ gapminder.bubbleChartModel =  function () {
     };
 
 
-
     var set = function(changedState, modelAndDataReadyCallback) {
         console.log("BUBBLE MODEL SET STATE: ", changedState);
 
@@ -96,8 +96,11 @@ gapminder.bubbleChartModel =  function () {
         processWithCallback(this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback);
     };
 
+
     var processWithCallback = function (model, dataNeedsToBeLoaded, changedStateAttributes, modelAndDataIsReadyCallback) {
-        var isStateValid = isValidState();
+        //var isStateValid = isValidState();
+        var isStateValid = validator.isMissingIndicators(model);
+
 
         if (dataNeedsToBeLoaded && typeof modelAndDataIsReadyCallback === 'function') {
             dataHelper.validateState(model, changedStateAttributes, modelAndDataIsReadyCallback, isStateValid);
@@ -128,22 +131,7 @@ gapminder.bubbleChartModel =  function () {
         return stateAttributes;
     };
 
-    var isValidState = function () {
-       var xIndicator = get("xIndicator");
-       var yIndicator = get("yIndicator");
-       var sizeIndicator = get("sizeIndicator");
-       var dataPath = get("dataPath");
-
-       if (xIndicator && yIndicator && sizeIndicator && dataPath) {
-           return true;
-       }
-        else {
-           return false;
-       }
-    };
-
-
-    var setIndicatorForInvalidState = function (changedState, x, y, size) {
+    var setIndicatorsForMissingIndicatorsState = function (changedState, x, y, size) {
         stateAttributes.xIndicator = x;
         stateAttributes.yIndicator = y;
         stateAttributes.sizeIndicator = size;
@@ -158,7 +146,7 @@ gapminder.bubbleChartModel =  function () {
         get: get,
         getDataHelper: getDataHelper,
         getAttributes: getAttributes,
-        setIndicatorForInvalidState: setIndicatorForInvalidState,
+        setIndicatorForInvalidState: setIndicatorsForMissingIndicatorsState,
         initialize: initialize,
         setInit: setInit
     };

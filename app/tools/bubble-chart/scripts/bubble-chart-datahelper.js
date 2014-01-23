@@ -108,7 +108,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         var dataPath = model.get("dataPath");
 
         if (!isValid) {
-            setValidStateParams(model, changedState, loadNestedData);
+            setValidState(model, changedState, loadNestedData);
         }
         else {
             loadNestedData(model,changedState);
@@ -219,12 +219,13 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         return indicatorsToLoad;
     };
 
-    var setValidStateParams = function (model, changedState, setValidModelCallback) {
+    var setValidState = function (model, changedState, setValidModelCallback) {
         var dataPath = model.get("dataPath");
 
         console.warn("State is invalid. Loading indicators from " + dataPath + "indicators.csv");
         
-        changedState = Object.extend(true,changedState, model.setIndicatorForInvalidState(changedState, skeleton.indicators[0].id, skeleton.indicators[1].id, skeleton.indicators[2].id));
+        changedState = Object.extend(true,changedState, 
+            model.setIndicatorForInvalidState(changedState, skeleton.indicators[0].id, skeleton.indicators[1].id, skeleton.indicators[2].id));
         loadNestedData(model, changedState);
     };
 

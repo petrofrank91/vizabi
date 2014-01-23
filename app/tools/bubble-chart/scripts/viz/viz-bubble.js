@@ -155,10 +155,8 @@ gapminder.vizBubble = function(callback) {
             .attr("r", function(d,i) {
                 return bubbleSizeScale(d.size);
             });
-
+        
         bubbles.exit().remove();
-
-
     };
 
     var drawTrails = function () {
