@@ -9,7 +9,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
     var xAxisInfo;
     var dataHelperModel;
     var dataSetInfo;
-    var renderCallback;
+    var dataIsReadyCallback;
     var chartFooter;
     var regionsList;
     var timeUnit;
@@ -89,7 +89,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         });
     };
 
-    var get = function(indicator, entity, year, appModel, category) {
+    var get = function (indicator, entity, year, appModel, category) {
         var prevYear = appModel.get("prevYear");
         var nextYear = appModel.get("nextYear");
         var fraction = appModel.get("fraction");
@@ -100,24 +100,11 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         }
     };
 
-    var validateState = function(model, changedState, callback, isValid) {
+    var loadData = function (model, changedState, callback) {
+        dataIsReadyCallback = callback;
         dataHelperModel = model;
-        renderCallback = callback;
-        var fileName = model.get("fileName");
-        var entity = model.get("entity");
         var dataPath = model.get("dataPath");
-
-        if (!isValid) {
-            setValidState(model, changedState, loadNestedData);
-        }
-        else {
-            loadNestedData(model,changedState);
-        }
-    };
-
-    var loadNestedData = function (model, changedState) {
-        var dataPath = model.get("dataPath");
-        var indicatorsToLoad = getIndicatorsToLoad(model, dataPath, changedState);
+        var indicatorsToLoad = getIndicatorsToLoad(model);
         console.log("Indicators to Load ", indicatorsToLoad);
 
         dataCube.loadNestedData(model, changedState, dataIsReady, indicatorsToLoad);
@@ -145,8 +132,8 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
 
         setDatasetAndChartInfo(chartInfo);
         setAxesNameAndInfo();
-
-        renderCallback();
+        console.log(isAnyBubblesOutOfScope());
+        if (typeof dataIsReadyCallback === 'function') {dataIsReadyCallback();}
     };
 
     var setTimeUnit = function () {
@@ -219,15 +206,6 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         return indicatorsToLoad;
     };
 
-    var setValidState = function (model, changedState, setValidModelCallback) {
-        var dataPath = model.get("dataPath");
-
-        console.warn("State is invalid. Loading indicators from " + dataPath + "indicators.csv");
-        
-        changedState = Object.extend(true,changedState, 
-            model.setIndicatorForInvalidState(changedState, skeleton.indicators[0].id, skeleton.indicators[1].id, skeleton.indicators[2].id));
-        loadNestedData(model, changedState);
-    };
 
     var getScopeOfIndicators = function (indicator, isMax) {
         var index = 0;
@@ -413,14 +391,63 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
 
     };
 
+    var getIndicatorValuesForAllEntitiesWithinYear = function (indicator, year) {
+        var values = [];
+
+        for (var category in indicators[timeUnit]) {
+            if (indicators[timeUnit].hasOwnProperty(category)) {
+                for (var countryName in indicators[timeUnit][category][indicator]["years"]) {
+                    if (indicators[timeUnit][category][indicator]["years"].hasOwnProperty(countryName)
+                        && indicators[timeUnit][category][indicator]["years"][countryName]["trends"].hasOwnProperty(year)) {
+                        var curEntityIndiValue = indicators[timeUnit][category][indicator]["years"][countryName]["trends"][year].v;
+                        values.push(curEntityIndiValue);
+                    }
+                }
+            }
+        }
+
+        return values;
+    };
+
     var getDataForYear = function(indicator, entity, year, category) {
         return indicators[timeUnit][category][indicator]["years"][entity]["trends"][year].v;
     };
 
-    //initialize();
+
+    var getScopeOfIndicatorForCurrentYear = function (indicator, model) {
+        var year = model.get("year");
+        var scope = {};
+        var indicatorValues = getIndicatorValuesForAllEntitiesWithinYear(indicator, year);
+
+        scope.min = Math.min.apply(null, indicatorValues);
+        scope.max = Math.max.apply(null, indicatorValues);
+
+        return scope;
+    };
+
+    var getSkeleton = function () {
+      return skeleton;
+    };
+
+    var isAnyBubblesOutOfScope = function () {
+        var xIndicator = dataHelperModel.get("xIndicator");
+        var xScope = getScopeOfIndicatorForCurrentYear(xIndicator, dataHelperModel);
+
+        var yIndicator = dataHelperModel.get("yIndicator");
+        var yScope = getScopeOfIndicatorForCurrentYear(yIndicator, dataHelperModel);
+
+        var minXValue = dataHelperModel.get("minXValue");
+        var maxXValue = dataHelperModel.get("maxXValue");
+
+        var minYValue = dataHelperModel.get("minYValue");
+        var maxYValue = dataHelperModel.get("maxYValue");
+
+        return  (xScope.min < minXValue || xScope.max > maxXValue
+                        || yScope.min < minYValue || yScope.max > maxYValue);
+    };
 
     return {
-        validateState: validateState,
+        loadData: loadData,
         getEntityMeta: getEntityMeta,
         getNestedData: getNestedData,
         getMaxOfXIndicator: getMaxOfXIndicator,
@@ -429,6 +456,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         getMinOfYIndicator: getMinOfYIndicator,
         getMinOfSizeIndicator: getMinOfSizeIndicator,
         getMaxOfSizeIndicator: getMaxOfSizeIndicator,
+        getScopeOfIndicatorForCurrentYear: getScopeOfIndicatorForCurrentYear,
         getMinYear: getMinYear,
         getMaxYear: getMaxYear,
         getChartInfo: getChartInfo,
@@ -441,6 +469,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         get: get,
         getName: getName,
         getDataForYear: getDataForYear,
-        initialize: initialize
+        initialize: initialize,
+        getSkeleton: getSkeleton
     };
 };

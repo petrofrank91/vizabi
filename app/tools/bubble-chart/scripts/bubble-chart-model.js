@@ -69,7 +69,7 @@ gapminder.bubbleChartModel =  function () {
         }
 
         console.log("What changed: ",  changedStateAttr);
-        initialize(processWithCallback, [this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback]);
+        initialize(checkIfDataNeedsToBeLoaded, [this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback]);
     };
 
 
@@ -93,17 +93,19 @@ gapminder.bubbleChartModel =  function () {
         }
 
         console.log("What changed: ",  changedStateAttr);
-        processWithCallback(this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback);
+        checkIfDataNeedsToBeLoaded(this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback);
     };
 
 
-    var processWithCallback = function (model, dataNeedsToBeLoaded, changedStateAttributes, modelAndDataIsReadyCallback) {
-        //var isStateValid = isValidState();
-        var isStateValid = validator.isMissingIndicators(model);
+    var checkIfDataNeedsToBeLoaded = function (model, dataNeedsToBeLoaded, changedStateAttributes, modelAndDataIsReadyCallback) {
 
+        //console.log("JUST SO YOU KNOW ..." + validator.isAnyBubblesOutOfScope(model));
 
         if (dataNeedsToBeLoaded && typeof modelAndDataIsReadyCallback === 'function') {
-            dataHelper.validateState(model, changedStateAttributes, modelAndDataIsReadyCallback, isStateValid);
+            // Wrong place
+            //dataHelper.validateState(model, changedStateAttributes, modelAndDataIsReadyCallback, isStateValid);
+            validator.validateState(model, changedStateAttributes, modelAndDataIsReadyCallback, dataHelper);
+
         }
         else if (typeof modelAndDataIsReadyCallback === 'function' ) {
             modelAndDataIsReadyCallback();
