@@ -206,7 +206,7 @@ gapminder.viz.chartGrid = function() {
         yearLabel
             .attr("x", g.node().getBBox().width / 2)
             .attr("y", g.node().getBBox().height / 2)
-            .text(vizState.get("year").toFixed(0));
+            .text(Math.floor(vizState.get("year")));
         return yScale;
     };
 
