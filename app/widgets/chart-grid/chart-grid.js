@@ -15,6 +15,8 @@ gapminder.viz.chartGrid = function() {
     var yDomain;
     var xScale;
     var yScale;
+    var xAxis;
+    var yAxis;
 
     var margin = {
         top: 20,
@@ -28,7 +30,8 @@ gapminder.viz.chartGrid = function() {
 
     var vizState;
     var yearLabel;
-
+    //var zoom;
+    var g;
 
     var initializeChartLayers = function(renderDiv) {
         chartRenderDiv = renderDiv + "-scatterChart";
@@ -44,7 +47,7 @@ gapminder.viz.chartGrid = function() {
             .classed("chart", true)
             .classed("scatter", true);
 
-        var g = svg.append("g")
+        g = svg.append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         yearLabel = g.append("text")
@@ -60,10 +63,10 @@ gapminder.viz.chartGrid = function() {
             .attr("class", "axisLabel");
 
         xAxisContainer = g.append("g")
-            .classed("axis", true);
+            .attr("class", "axis x");
 
         yAxisContainer = g.append("g")
-            .attr("class", "axis");
+            .attr("class", "axis y");
 
         grid = g.append("g")
             .attr("class", "grid");
@@ -98,6 +101,7 @@ gapminder.viz.chartGrid = function() {
 
         createXAxis();
         createYAxis();
+        //setZoom();
 
         return [xScale, yScale];
     };
@@ -130,7 +134,7 @@ gapminder.viz.chartGrid = function() {
             xScale = d3.scale.linear().domain(xDomain).range([0, availableWidth]);
         }
 
-        var xAxis = d3.svg.axis()
+        xAxis = d3.svg.axis()
             .scale(xScale)
             .tickFormat(function(d) {return "$" + d;})
             .ticks(10)
@@ -180,7 +184,7 @@ gapminder.viz.chartGrid = function() {
             yScale = d3.scale.linear().domain(yDomain).range([availableHeight, 0]);
         }
 
-        var yAxis = d3.svg.axis()
+        yAxis = d3.svg.axis()
             .scale(yScale)
             .orient("left")
             .ticks(10)
@@ -198,12 +202,11 @@ gapminder.viz.chartGrid = function() {
             .call(yAxis);
 
 
-        var g = d3.select("#" + chartRenderDiv).select("g").select(".axis");
+        var g = d3.select("#" + chartRenderDiv).select("g").select(".axis.x");
         yearLabel
             .attr("x", g.node().getBBox().width / 2)
             .attr("y", g.node().getBBox().height / 2)
             .text(vizState.get("year").toFixed(0));
-
         return yScale;
     };
 
@@ -223,6 +226,22 @@ gapminder.viz.chartGrid = function() {
     var getMargin = function() {
         return margin;
     };
+
+    var setZoom = function () {
+        var zoom = d3.behavior.zoom()
+            .x(xScale)
+            .y(yScale)
+            .scaleExtent([1, 10])
+            .on("zoom", zoomed);
+
+        g.call(zoom);
+    };
+
+    var zoomed = function () {
+        svg.select(".x.axis").call(xAxis);
+        svg.select(".y.axis").call(yAxis);
+    };
+
 
     return {
         initializeLayers: initializeChartLayers,
