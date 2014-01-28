@@ -1,25 +1,25 @@
-gapminder.bubbleChartModel =  function () {
+gapminder.bubbleChartModel = function() {
 
     var dataHelper;
     var validator;
 
     var stateAttributes = {
-        s : {},
-        opacity : 0.5,
-        speed : 0.1,
-        zoom : {},
-        trails : "none",
-        tSpeed : 300,
-        action : "multi",
-        enableHistory : true,
+        s: {},
+        opacity: 0.5,
+        speed: 0.1,
+        zoom: {},
+        trails: "none",
+        tSpeed: 300,
+        action: "multi",
+        enableHistory: true,
         year: undefined,
-        xIndicator : undefined,
-        yIndicator : undefined,
-        sizeIndicator : undefined,
+        xIndicator: undefined,
+        yIndicator: undefined,
+        sizeIndicator: undefined,
         entity: undefined,
-        fraction : undefined,
-        prevYear : undefined,
-        nextYear : undefined,
+        fraction: undefined,
+        prevYear: undefined,
+        nextYear: undefined,
         dataPath: undefined,
         fileFormat: undefined,
         fileName: undefined,
@@ -28,25 +28,25 @@ gapminder.bubbleChartModel =  function () {
         minYValue: undefined,
         maxYValue: undefined,
         xAxisScale: "linear",
-        yAxisScale:"linear",
+        yAxisScale: "linear",
         isInteractive: false,
         xAxisTickValues: undefined,
         yAxisTickValues: undefined,
         language: undefined,
-        minFontSize :undefined,
+        minFontSize: undefined,
         maxFontSize: undefined,
         minBubbleSize: undefined,
         maxBubbleSize: undefined,
-        positions : {},
+        positions: {},
         editMode: false,
         category: []
     };
 
 
-    var initialize = function(callback, args) {
-        dataHelper = new gapminder.data.bubbleChartDataHelper(get("fileFormat"), get("entity"), get("fileName"), get("dataPath"));
-        dataHelper.initialize(callback, args);
+    var initialize = function(args) {
         validator = new gapminder.bubbleChartModelValidator();
+        validator.initialize(get("fileFormat"), get("entity"),
+            get("fileName"), get("dataPath"), args);
     };
 
     var setInit = function(changedState, modelAndDataReadyCallback) {
@@ -68,8 +68,8 @@ gapminder.bubbleChartModel =  function () {
             }
         }
 
-        console.log("What changed: ",  changedStateAttr);
-        initialize(checkIfDataNeedsToBeLoaded, [this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback]);
+        console.log("What changed: ", changedStateAttr);
+        initialize([this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback]);
     };
 
 
@@ -92,28 +92,12 @@ gapminder.bubbleChartModel =  function () {
             }
         }
 
-        console.log("What changed: ",  changedStateAttr);
-        checkIfDataNeedsToBeLoaded(this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback);
+        console.log("What changed: ", changedStateAttr);
+        validator.validate(this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback);
     };
 
 
-    var checkIfDataNeedsToBeLoaded = function (model, dataNeedsToBeLoaded, changedStateAttributes, modelAndDataIsReadyCallback) {
-
-        //console.log("JUST SO YOU KNOW ..." + validator.isAnyBubblesOutOfScope(model));
-
-        if (dataNeedsToBeLoaded && typeof modelAndDataIsReadyCallback === 'function') {
-            // Wrong place
-            //dataHelper.validateState(model, changedStateAttributes, modelAndDataIsReadyCallback, isStateValid);
-            validator.validateState(model, changedStateAttributes, modelAndDataIsReadyCallback, dataHelper);
-
-        }
-        else if (typeof modelAndDataIsReadyCallback === 'function' ) {
-            modelAndDataIsReadyCallback();
-        }
-    };
-
-
-    var get = function (state) {
+    var get = function(state) {
         return stateAttributes[state];
     };
 
@@ -125,23 +109,25 @@ gapminder.bubbleChartModel =  function () {
         stateAttributes.nextYear = Math.ceil(year);
     };
 
-    var getDataHelper = function () {
-        return dataHelper;
+    var getDataHelper = function() {
+        return validator.getDataHelper();
     };
 
     var getAttributes = function() {
         return stateAttributes;
     };
 
-    var setIndicatorsForMissingIndicatorsState = function (changedState, x, y, size) {
+    var setIndicatorsForMissingIndicatorsState = function(changedState, x, y, size) {
         stateAttributes.xIndicator = x;
         stateAttributes.yIndicator = y;
         stateAttributes.sizeIndicator = size;
 
-        return {xIndicator: x, yIndicator: y, sizeIndicator:size};
+        return {
+            xIndicator: x,
+            yIndicator: y,
+            sizeIndicator: size
+        };
     };
-
-    //initialize();
 
     return {
         set: set,
@@ -154,10 +140,3 @@ gapminder.bubbleChartModel =  function () {
     };
 
 };
-
-
-
-
-
-
-

@@ -1,11 +1,12 @@
-gapminder.bubbleChartModelValidator = function () {
-	
-	var dataHelper;
+gapminder.bubbleChartModelValidator = function () {	
+	  var dataHelper;
     var bubbleChartModel;
     var readyToRenderCallback;
 
-    var initialize = function () {
-        //dataHelper = new gapminder.data.bubbleChartDataHelper();
+    var initialize = function (fileFormat, entity, fileName, dataPath, args) {
+        dataHelper = new gapminder.data.bubbleChartDataHelper(fileFormat, entity, 
+          fileName, dataPath);
+        dataHelper.initialize(validateAndProcessCallback, args);
     };
 
     var isMissingIndicators = function (model) {
@@ -54,11 +55,8 @@ gapminder.bubbleChartModelValidator = function () {
 
         if (!isStateValid) {
             setValidState(model, changedState);
-            //loadNestedData(model, changedState);
         }
-        //else {
         dataHelper.loadData(model,changedState, modelIsValidAndProcessWithCallback);
-        //}
     };
 
     var setValidState = function (model, changedState) {
@@ -77,12 +75,26 @@ gapminder.bubbleChartModelValidator = function () {
       }
     };
 
+    var validateAndProcessCallback = function (model, dataNeedsToBeLoaded, changedStateAttributes, modelAndDataIsReadyCallback) {
+        if (dataNeedsToBeLoaded && typeof modelAndDataIsReadyCallback === 'function') {
+            validateState(model, changedStateAttributes, modelAndDataIsReadyCallback, dataHelper);
+        }
+        else if (typeof modelAndDataIsReadyCallback === 'function' ) {
+            modelAndDataIsReadyCallback();
+        }
+    };
 
-    initialize();
+    var getDataHelper = function () {
+        return dataHelper;
+    };
+
 
     return {
-		isMissingIndicators: isMissingIndicators,
-		isAnyBubblesOutOfScope: isAnyBubblesOutOfScope,
-        validateState: validateState
-	};
+  		isMissingIndicators: isMissingIndicators,
+  		isAnyBubblesOutOfScope: isAnyBubblesOutOfScope,
+      validateState: validateState,
+      validate: validateAndProcessCallback,
+      getDataHelper: getDataHelper,
+      initialize: initialize
+	  };
 };
