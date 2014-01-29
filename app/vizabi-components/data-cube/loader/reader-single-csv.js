@@ -78,8 +78,8 @@ gapminder.data.readerSingleCSV = function() {
         d3.csv(csvDataPath + csvFileName + ".csv", function(error, rows) {
             console.log("loading ", csvFileName, ".csv");
             var indicatorValues = loadIndicator(entity, indicator, rows).indValues ;
-            var years = loadIndicator(entity, indicator, rows).years;
-
+            var years = loadIndicator(entity, indicator, rows).yearValues;
+            console.log("calling ...");    
             setSkeletonInfo(entity, indicator);
             updateEntityScope(entity,indicator);
             updateDataScope(indicator, entity, indicatorValues, years);
@@ -180,7 +180,6 @@ gapminder.data.readerSingleCSV = function() {
 
                 var minYear = Math.min.apply(Math,yearsForEntity);
                 var maxYear = Math.max.apply(Math,yearsForEntity);
-
                 indicators[timeUnit][category][indicator]["years"][entity]["scope"] = {};
                 indicators[timeUnit][category][indicator]["years"][entity]["scope"]["time"] = {};
                 indicators[timeUnit][category][indicator]["years"][entity]["scope"]["value"] = {};
