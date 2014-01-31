@@ -364,7 +364,11 @@ module.exports = function (grunt) {
     var appConfig = grunt.file.readJSON('app/' + project + '/grunt-config.json');
 
     // merge the gruntConfig with the app-specific config
-    gruntConfig = grunt.util._.extend({}, gruntConfig, appConfig);
+	var _ = require('lodash');
+	gruntConfig = _.merge(gruntConfig, appConfig);
+
+	// uncomment to output merged config for debugging
+    //console.log(gruntConfig, gruntConfig.concat.dist);
 
     // init grunt configuration
     grunt.initConfig(gruntConfig);
