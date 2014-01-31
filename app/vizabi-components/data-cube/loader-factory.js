@@ -30,11 +30,11 @@ gapminder.dataCube.loaderFacotry = function (dataFormat) {
     };
 
     var loadCategory = function (indicatorsToLoad) {
-      reader.loadCategory(indicatorsToLoad);
+        reader.loadCategory(indicatorsToLoad);
     };
 
     var loadIndicators = function (indicatorsToLoad, callback) {
-      reader.loadIndicators(indicatorsToLoad, callback);
+        reader.loadIndicators(indicatorsToLoad, callback);
     };
 
 
@@ -45,6 +45,6 @@ gapminder.dataCube.loaderFacotry = function (dataFormat) {
         initialize: initialize,
         loadSkeleton: loadSkeleton,
         loadCategory: loadCategory,
-        loadIndicators:loadIndicators
+        loadIndicators: loadIndicators
     };
 };

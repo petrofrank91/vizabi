@@ -4,7 +4,7 @@ gapminder.data.i18nHelper = function () {
     var entityMeta;
     var languageCode;
 
-    var updateLanguage = function(language, callback, model, indicatorsToLoad, entity) {
+    var updateLanguage = function (language, callback, model, indicatorsToLoad, entity) {
         languageCode = language;
         updatedEntitiesReadyCallback = callback;
         var fakei18n = new gapminder.fakeI18n();

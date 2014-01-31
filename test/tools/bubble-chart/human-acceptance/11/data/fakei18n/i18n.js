@@ -6,20 +6,22 @@ gapminder.fakeI18n = function () {
 
         var regions = {};
 
-        (function(entity) {
+        (function (entity) {
             d3.csv("data/fakei18n/regions.csv", function (error, rows) {
-                for (var i=0; i < rows.length; i++) {
+                for (var i = 0; i < rows.length; i++) {
                     regions[rows[i].code] = rows[i].region;
                 }
 
-                (function(entity) {
-                    d3.csv("data/fakei18n/unstates_" + languageCode +".csv", function (error, rows) {
+                (function (entity) {
+                    d3.csv("data/fakei18n/unstates_" + languageCode + ".csv", function (error, rows) {
 
-                        for (var i=0; i < rows.length; i++) {
-                            meta.push({id: rows[i].code ,  region: regions[rows[i].code], name:rows[i][languageCode], parent: entity});
+                        for (var i = 0; i < rows.length; i++) {
+                            meta.push({id: rows[i].code, region: regions[rows[i].code], name: rows[i][languageCode], parent: entity});
                         }
 
-                        entitiesMeta = d3.nest().key(function(d){ return d.id; }).map(meta);
+                        entitiesMeta = d3.nest().key(function (d) {
+                            return d.id;
+                        }).map(meta);
                         setEntityCallback(entitiesMeta, callback, model, indicatorsToLoad, entity);
 
                     });

@@ -12,7 +12,7 @@ gapminder.data_manager.income_mountain.loader = function dm_income_mountain(prop
 
     // Loads csv with data for the Income Mountain
     var load_csv = function load_csv(geo, callback) {
-        d3.csv(path + geo + extension, function(csv_data) {
+        d3.csv(path + geo + extension, function (csv_data) {
             if (typeof callback === "function") {
                 callback(csv_data);
             }
@@ -27,17 +27,17 @@ gapminder.data_manager.income_mountain.loader = function dm_income_mountain(prop
 
         for (var i = 0; i < geo_list.length; i++) {
             if (!income_mountain_data[geo_list[i]]) {
-                (function(geo) {
-                    load_csv(geo, function(csv_data) {
+                (function (geo) {
+                    load_csv(geo, function (csv_data) {
                         // Store the loaded data
                         if (gapminder.entities.get_region(geo) === geo) {
                             income_mountain_data[geo] = nest(csv_data);
                         } else {
                             income_mountain_data[geo] = gdpGiniPopToObject(csv_data);
                         }
-                        
+
                         data_box[geo] = income_mountain_data[geo];
-                        
+
                         // Run any supplied callback function
                         if (typeof callback === "function") {
                             callback(csv_data);
@@ -59,14 +59,14 @@ gapminder.data_manager.income_mountain.loader = function dm_income_mountain(prop
         var geo_max_height = 0;
 
         var data_stick = d3.nest()
-            .key(function(d) {
+            .key(function (d) {
                 return d.year;
             })
-            .rollup(function(d) {
+            .rollup(function (d) {
                 var year_data = [];
                 var year_max_height = 0;
-                
-                d.forEach(function(p) {
+
+                d.forEach(function (p) {
                     year_max_height = Math.max(year_max_height, p.height);
 
                     year_data.push({
@@ -76,7 +76,7 @@ gapminder.data_manager.income_mountain.loader = function dm_income_mountain(prop
                         y0: 0
                     });
                 });
-                
+
                 year_data.year_max_height = year_max_height;
                 geo_max_height = Math.max(geo_max_height, year_max_height);
 
@@ -93,8 +93,10 @@ gapminder.data_manager.income_mountain.loader = function dm_income_mountain(prop
         var geo_max_height = 0;
 
         var countryDataSet = d3.nest()
-            .key(function(d) { return d.year; })
-            .rollup(function(d) {
+            .key(function (d) {
+                return d.year;
+            })
+            .rollup(function (d) {
                 var year_data = calculateNormalDensity(d[0].mean, d[0].variance, d[0].population);
                 geo_max_height = Math.max(geo_max_height, year_data.year_max_height);
                 return year_data;
@@ -105,8 +107,7 @@ gapminder.data_manager.income_mountain.loader = function dm_income_mountain(prop
         return countryDataSet;
     }
 
-    function calculateNormalDensity(mean, variance, population)
-    {
+    function calculateNormalDensity(mean, variance, population) {
         var year_data = [];
         var year_max_height = 0;
 
@@ -119,8 +120,7 @@ gapminder.data_manager.income_mountain.loader = function dm_income_mountain(prop
 
         var logIncomeRange = d3.range(start, stop, step);
 
-        var densityArray = logIncomeRange.map(function(d)
-        {
+        var densityArray = logIncomeRange.map(function (d) {
             year_data.push({
                 height: norm.density(d) * population,
                 x: d,

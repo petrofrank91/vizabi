@@ -11,7 +11,7 @@ gapminder.components.settingsButton = function (changeCallback, model) {
         }).appendTo("#" + renderDiv);
 
         $("<div>", {
-            id : "dialog-form"     
+            id: "dialog-form"
         }).appendTo("#" + renderDiv);
 
         $("#dialog-form").dialog({
@@ -32,22 +32,22 @@ gapminder.components.settingsButton = function (changeCallback, model) {
             type: "text"
         }).appendTo("#dialog-form");
 
-        var fontSlider  = $("<div>", {
+        var fontSlider = $("<div>", {
             id: "font-slider",
-            style:"margin-bottom: 12px; margin-top: 20px"
+            style: "margin-bottom: 12px; margin-top: 20px"
         }).appendTo("#dialog-form");
 
         var fontValues = {};
-        fontValues.min = model.get("minFontSize") || 7;
-        fontValues.max = model.get("maxFontSize") || 25;
-        
+        fontValues.min = model.get("minFontSize") || 7;
+        fontValues.max = model.get("maxFontSize") || 25;
+
         $(fontSlider).slider({
             range: true,
             min: 1,
             max: 50,
             values: [ fontValues.min, fontValues.max],
-            slide: function( event, ui ) {
-                $("#fontRangeValue").val(ui.values[0] + "px" + "-" + ui.values[ 1 ] + "px" );
+            slide: function (event, ui) {
+                $("#fontRangeValue").val(ui.values[0] + "px" + "-" + ui.values[ 1 ] + "px");
                 modelChangeCallback({minFontSize: ui.values[0], maxFontSize: ui.values[1]});
             }
         });
@@ -56,8 +56,8 @@ gapminder.components.settingsButton = function (changeCallback, model) {
             $(fontSlider).slider("option", "disabled", true);
         }
 
-        $( "#fontRangeValue" ).val( $( "#font-slider" ).slider( "values", 0 ) + " px" +
-            " - " + $( "#font-slider" ).slider( "values", 1 ) + " px" );
+        $("#fontRangeValue").val($("#font-slider").slider("values", 0) + " px" +
+            " - " + $("#font-slider").slider("values", 1) + " px");
 
         var labelForSizeRange = $("<label>", {
             for: "rangeValue"
@@ -70,29 +70,29 @@ gapminder.components.settingsButton = function (changeCallback, model) {
             type: "text"
         }).appendTo("#dialog-form");
 
-        var sizeSlider  = $("<div>", {
+        var sizeSlider = $("<div>", {
             id: "size-slider",
-            style:"margin-bottom: 12px; margin-top: 20px"
+            style: "margin-bottom: 12px; margin-top: 20px"
         }).appendTo("#dialog-form");
 
-        
+
         var sizeValues = {};
-        sizeValues.min = model.get("minBubbleSize") || 1;
-        sizeValues.max = model.get("maxBubbleSize") || 30;
+        sizeValues.min = model.get("minBubbleSize") || 1;
+        sizeValues.max = model.get("maxBubbleSize") || 30;
 
         $(sizeSlider).slider({
             range: true,
             min: 0,
             max: 100,
             values: [sizeValues.min, sizeValues.max],
-            slide: function( event, ui ) {
+            slide: function (event, ui) {
                 $("#sizeRangeValue").val(ui.values[ 0 ] + " px - " + ui.values[ 1 ] + " - px");
                 modelChangeCallback({minBubbleSize: ui.values[0], maxBubbleSize: ui.values[1]});
             }
         });
 
-        $( "#sizeRangeValue" ).val( $( "#size-slider" ).slider( "values", 0 ) + "px" +
-            " -" + $( "#size-slider" ).slider( "values", 1 ) + "px");
+        $("#sizeRangeValue").val($("#size-slider").slider("values", 0) + "px" +
+            " -" + $("#size-slider").slider("values", 1) + "px");
 
         var editModeSetting = $("<div>", {
             id: "editModeSetting"
@@ -100,7 +100,7 @@ gapminder.components.settingsButton = function (changeCallback, model) {
 
 
         $("<input>", {
-            id : "editMode",
+            id: "editMode",
             type: "radio",
             name: "edit",
             value: "editOn"
@@ -113,10 +113,10 @@ gapminder.components.settingsButton = function (changeCallback, model) {
         editLabel.html("Edit Mode");
 
         $("<input>", {
-            id : "nonEditMode",
+            id: "nonEditMode",
             type: "radio",
             name: "edit",
-            value : "editOff",
+            value: "editOff",
             //checked: "checked"
         }).appendTo(editModeSetting);
 
@@ -126,7 +126,7 @@ gapminder.components.settingsButton = function (changeCallback, model) {
 
         nonEditLabel.html("Locked Mode");
 
-       
+
         var isEditMode = model.get("editMode");
         if (isEditMode) {
             $("#editMode").attr("checked", "checked");
@@ -137,22 +137,22 @@ gapminder.components.settingsButton = function (changeCallback, model) {
         $(editModeSetting).buttonset();
 
 
-        $("#editModeSetting input[name='edit']").click(function() {
-            if($('input:radio[name=edit]:checked').val() === "editOn") {
-               modelChangeCallback({editMode: true});
+        $("#editModeSetting input[name='edit']").click(function () {
+            if ($('input:radio[name=edit]:checked').val() === "editOn") {
+                modelChangeCallback({editMode: true});
             }
             else {
-               modelChangeCallback({editMode: false});
+                modelChangeCallback({editMode: false});
             }
         });
 
         if (isInteractive) {
-            $("#editModeSetting > input:radio").button({disabled:true});
+            $("#editModeSetting > input:radio").button({disabled: true});
         }
 
         $("#settingsButton")
             .button()
-            .click(function() {
+            .click(function () {
                 $("#dialog-form").dialog("open");
             });
     };

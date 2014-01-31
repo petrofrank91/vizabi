@@ -1,4 +1,4 @@
-gapminder.data.readerMultiCSV = function() {
+gapminder.data.readerMultiCSV = function () {
 
     var datasetInfo;
     var chartFooter = "";
@@ -17,7 +17,7 @@ gapminder.data.readerMultiCSV = function() {
     };
     var dataLoadQueue;
 
-    var initialize = function(indicatorsTemplate, model, dataPath, indicatorsToLoadObj, dataReadyCallback, changedState, language) {
+    var initialize = function (indicatorsTemplate, model, dataPath, indicatorsToLoadObj, dataReadyCallback, changedState, language) {
         readIsCompleteCallback = dataReadyCallback;
         csvDataPath = dataPath;
         indicatorsToLoad = indicatorsToLoadObj;
@@ -27,38 +27,38 @@ gapminder.data.readerMultiCSV = function() {
 
         if (changedState.dataPath) {
             dataLoadQueue
-                .defer(function(callback) {
+                .defer(function (callback) {
                     loadDataSetInfo(callback);
                 })
-                .defer(function(callback) {
+                .defer(function (callback) {
                     loadChartNotes(callback);
                 });
         }
     };
 
-    var loadDataSetInfo = function(callback) {
-        d3.csv(csvDataPath + "dataset.csv", function(dataError, dataRows) {
+    var loadDataSetInfo = function (callback) {
+        d3.csv(csvDataPath + "dataset.csv", function (dataError, dataRows) {
             datasetInfo = dataRows[0].info;
             callback();
         });
     };
 
-    var loadChartNotes = function(callback) {
-        d3.csv(csvDataPath + "notes.csv", function(notesError, notesRows) {
-            notesRows.map(function(noteRow) {
-                    chartFooter += noteRow.text + "," + noteRow.link + "\n";
+    var loadChartNotes = function (callback) {
+        d3.csv(csvDataPath + "notes.csv", function (notesError, notesRows) {
+            notesRows.map(function (noteRow) {
+                chartFooter += noteRow.text + "," + noteRow.link + "\n";
             });
 
             callback();
         });
     };
 
-    var loadIndicators = function(indicatorsToLoad) {
+    var loadIndicators = function (indicatorsToLoad) {
         for (var category in indicatorsToLoad) {
             if (indicatorsToLoad.hasOwnProperty(category)) {
-                indicatorsToLoad[category].forEach(function(indicator) {
-                    (function(entity, indicator) {
-                        dataLoadQueue.defer(function(callback) {
+                indicatorsToLoad[category].forEach(function (indicator) {
+                    (function (entity, indicator) {
+                        dataLoadQueue.defer(function (callback) {
                             loadIndicatorsFromFile(indicator, entity, callback);
                         });
                     })(category, indicator);
@@ -69,16 +69,16 @@ gapminder.data.readerMultiCSV = function() {
         dataLoadQueue.await(indicatorsLoaded);
     };
 
-    var indicatorsLoaded = function() {
+    var indicatorsLoaded = function () {
         if (typeof readIsCompleteCallback === 'function') {
             readIsCompleteCallback(skeleton, indicators, entityMeta, [datasetInfo, chartFooter], regions, timeUnit);
         }
     };
 
-    var loadIndicatorsFromFile = function(indicator, category, callback) {
-        d3.csv(csvDataPath + indicator + "__" + category + ".csv", function(error, rows) {
+    var loadIndicatorsFromFile = function (indicator, category, callback) {
+        d3.csv(csvDataPath + indicator + "__" + category + ".csv", function (error, rows) {
 
-            d3.csv(csvDataPath + "indicators.csv", function(indError, indRows) {
+            d3.csv(csvDataPath + "indicators.csv", function (indError, indRows) {
                 var indicatorValues,
                     years;
 
@@ -106,8 +106,7 @@ gapminder.data.readerMultiCSV = function() {
     };
 
 
-
-    var loadIndicatorInTimeDownFormat = function(rows, category,indicator) {
+    var loadIndicatorInTimeDownFormat = function (rows, category, indicator) {
         var indicatorValues = [];
         var years = [];
 
@@ -136,7 +135,7 @@ gapminder.data.readerMultiCSV = function() {
         };
     };
 
-    var loadIndicatorInTimeRightFormat = function(rows, category,indicator) {
+    var loadIndicatorInTimeRightFormat = function (rows, category, indicator) {
         var indicatorValues = [];
         var years = [];
 
@@ -175,12 +174,12 @@ gapminder.data.readerMultiCSV = function() {
             if (entitiesForIndicators.hasOwnProperty(entity) && !$.isEmptyObject(entitiesForIndicators[entity]["trends"])) {
 
                 var yearKeys = Object.keys(entitiesForIndicators[entity]["trends"]);
-                var yearsForEntity = (yearKeys).map(function(year) {
-                    return parseInt(year,10);
+                var yearsForEntity = (yearKeys).map(function (year) {
+                    return parseInt(year, 10);
                 });
 
-                var minYear = Math.min.apply(Math,yearsForEntity);
-                var maxYear = Math.max.apply(Math,yearsForEntity);
+                var minYear = Math.min.apply(Math, yearsForEntity);
+                var maxYear = Math.max.apply(Math, yearsForEntity);
 
                 indicators[timeUnit][category][indicator]["years"][entity]["scope"] = {};
                 indicators[timeUnit][category][indicator]["years"][entity]["scope"]["time"] = {};
@@ -195,7 +194,7 @@ gapminder.data.readerMultiCSV = function() {
 
     };
 
-    var setSkeletonInfo = function(categoryId, indicator) {
+    var setSkeletonInfo = function (categoryId, indicator) {
         for (var i = 0; i < skeleton.categories.length; i++) {
             if (skeleton.categories[i].id === categoryId) {
                 skeleton.categories[i].things.push(indicator);
@@ -203,8 +202,8 @@ gapminder.data.readerMultiCSV = function() {
         }
     };
 
-    var loadCategoryFromFile = function(category, callback) {
-        d3.csv(csvDataPath + "categories.csv", function(catError, catRows) {
+    var loadCategoryFromFile = function (category, callback) {
+        d3.csv(csvDataPath + "categories.csv", function (catError, catRows) {
             var parentHeader;
             for (var i = 0; i < catRows.length; i++) {
                 if (catRows[i].id === category) {
@@ -212,17 +211,17 @@ gapminder.data.readerMultiCSV = function() {
                 }
             }
 
-            d3.csv(csvDataPath + category + ".csv", function(error, rows) {
+            d3.csv(csvDataPath + category + ".csv", function (error, rows) {
                 loadCategory(category, rows, parentHeader, callback);
             });
         });
     };
 
-    var loadCategories = function(indicatorsToLoad) {
+    var loadCategories = function (indicatorsToLoad) {
         for (var category in indicatorsToLoad) {
             if (indicatorsToLoad.hasOwnProperty(category)) {
-                (function(category) {
-                    dataLoadQueue.defer(function(callback) {
+                (function (category) {
+                    dataLoadQueue.defer(function (callback) {
                         loadCategoryFromFile(category, callback);
                     });
                 })(category);
@@ -230,7 +229,7 @@ gapminder.data.readerMultiCSV = function() {
         }
     };
 
-    var loadCategory = function(category, rows, parentHeader, callback) {
+    var loadCategory = function (category, rows, parentHeader, callback) {
         console.log("Loading Category ", category, " ...");
 
         var regionsList = [];
@@ -250,11 +249,11 @@ gapminder.data.readerMultiCSV = function() {
             regionsList.push(rows[i][parentHeader]);
         }
 
-        entityMeta = d3.nest().key(function(d) {
+        entityMeta = d3.nest().key(function (d) {
             return d.id;
         }).map(entitiesData);
 
-        $.each(regionsList, function(i, region) {
+        $.each(regionsList, function (i, region) {
             if ($.inArray(region, regions) === -1) {
                 regions.push(region);
             }
@@ -263,7 +262,7 @@ gapminder.data.readerMultiCSV = function() {
         callback();
     };
 
-    var setIndicatorInfo = function(category, indicator, indicatorRows) {
+    var setIndicatorInfo = function (category, indicator, indicatorRows) {
         timeUnit = indicatorRows[1].time || "yearly";
 
         for (var i = 0; i < indicatorRows.length; i++) {
@@ -279,7 +278,7 @@ gapminder.data.readerMultiCSV = function() {
     };
 
 
-    var updateDataScope = function(indicator, category, indicatorValues, years) {
+    var updateDataScope = function (indicator, category, indicatorValues, years) {
         if (indicators[timeUnit][category][indicator]["scope"]["time"]) {
             indicators[timeUnit][category][indicator]["scope"].value = [Math.min.apply(Math, indicatorValues),
                 Math.max.apply(Math, indicatorValues)
@@ -289,25 +288,25 @@ gapminder.data.readerMultiCSV = function() {
     };
 
 
-    var loadSkeleton = function(path, setSkeletonCallback) {
+    var loadSkeleton = function (path, setSkeletonCallback) {
         var q = new queue();
-        q.defer(function(callback) {
+        q.defer(function (callback) {
             loadSkeletonIndicator(path, callback);
         })
-            .defer(function(callback) {
+            .defer(function (callback) {
                 loadSkeletonCategory(path, callback);
             })
-            .await(function() {
+            .await(function () {
                 setSkeletonCallback(skeleton);
             });
 
     };
 
-    var loadSkeletonIndicator = function(path, callback) {
+    var loadSkeletonIndicator = function (path, callback) {
         csvDataPath = path;
-        d3.csv(csvDataPath + "indicators.csv", function(error, rows) {
+        d3.csv(csvDataPath + "indicators.csv", function (error, rows) {
             if (rows[0].availability) {
-                rows.forEach(function(rowObject) {
+                rows.forEach(function (rowObject) {
                     var indicator = {};
                     indicator["id"] = rowObject.id;
                     indicator["info"] = {};
@@ -323,10 +322,10 @@ gapminder.data.readerMultiCSV = function() {
         });
     };
 
-    var loadSkeletonCategory = function(path, callback) {
+    var loadSkeletonCategory = function (path, callback) {
 
-        d3.csv(csvDataPath + "categories.csv", function(error, rows) {
-            rows.forEach(function(rowObject) {
+        d3.csv(csvDataPath + "categories.csv", function (error, rows) {
+            rows.forEach(function (rowObject) {
                 var category = {};
                 category["id"] = rowObject.id;
                 category["name"] = rowObject.name;

@@ -6,22 +6,22 @@
     </title>
 </head>
 <body>
-    <button type="button" id="button-fs" onclick='toFullscreen()'>Fullscreen mode</button>
-    <div id="w900-h500"><h1>900x500</h1></div>
-    <div id="w900-h1000"><h1>900x1000</h1></div>
-    <div id="w1200-h500"><h1>1200x500</h1></div>
-    <div id="w1800-h1000"><h1>1800x1000</h1></div>
-    <div id="w1400-h890"><h1>1400x890</h1></div>
-    <div id="w300-h300"><h1>300x300</h1></div>
-    <div id="w600-h250"><h1>600x250</h1></div>
-    <div id="fullscreen"><h1></h1></div>
-    <div id="iphone"><h1>iPhone (320x480)</h1></div>
-    <div id="iphone4"><h1>iPhone 4 (640x960)</h1></div>
-    <div id="iphone4-landscape"><h1>iPhone 4 Landscape (960x438)</h1></div>
-    <div id="iphone5"><h1>iPhone 5 (640x1136)</h1></div>
-    <div id="p100-p100"><h1>100%x100%</h1></div>
-    <div id="testing"></div>
-    <div id="container"><h1>Related test</h1></div>
+<button type="button" id="button-fs" onclick='toFullscreen()'>Fullscreen mode</button>
+<div id="w900-h500"><h1>900x500</h1></div>
+<div id="w900-h1000"><h1>900x1000</h1></div>
+<div id="w1200-h500"><h1>1200x500</h1></div>
+<div id="w1800-h1000"><h1>1800x1000</h1></div>
+<div id="w1400-h890"><h1>1400x890</h1></div>
+<div id="w300-h300"><h1>300x300</h1></div>
+<div id="w600-h250"><h1>600x250</h1></div>
+<div id="fullscreen"><h1></h1></div>
+<div id="iphone"><h1>iPhone (320x480)</h1></div>
+<div id="iphone4"><h1>iPhone 4 (640x960)</h1></div>
+<div id="iphone4-landscape"><h1>iPhone 4 Landscape (960x438)</h1></div>
+<div id="iphone5"><h1>iPhone 5 (640x1136)</h1></div>
+<div id="p100-p100"><h1>100%x100%</h1></div>
+<div id="testing"></div>
+<div id="container"><h1>Related test</h1></div>
 </body>
 <script type="text/javascript" src="../../../../../app/bower_components/d3/d3.js" charset="utf-8"></script>
 <script type="text/javascript" src="../../../../../app/bower_components/jquery/jquery.js" charset="utf-8"></script>
@@ -57,10 +57,10 @@
 
         if (search) {
             urlParams = JSON.parse(
-                '{"' + search.replace(/&/g, '","').replace(/=/g,'":"') + '"}',
-                function(key, value) {
-                    return key === "" ? value : decodeURIComponent(value);
-                }
+                    '{"' + search.replace(/&/g, '","').replace(/=/g, '":"') + '"}',
+                    function (key, value) {
+                        return key === "" ? value : decodeURIComponent(value);
+                    }
             );
         }
 
@@ -77,7 +77,30 @@
         window.location = url;
     }
 
-    var data = [{"height":813.2624916960312,"x":1,"y":0.0007666811231263037,"y0":0},{"height":7619.904618098876,"x":1.6,"y":0.00718345809670379,"y0":0},{"height":54967.22491022995,"x":2.2,"y":0.05181885819106797,"y0":0},{"height":307194.47636612115,"x":2.8,"y":0.2895992481682085,"y0":0},{"height":1345706.7509619996,"x":3.4,"y":1.2686284855884125,"y0":0},{"height":4692155.417500208,"x":4,"y":4.423402065266777,"y0":0},{"height":13178721.953545759,"x":4.6,"y":12.423882143688251,"y0":0},{"height":29977193.55546743,"x":5.2,"y":28.260184943916702,"y0":0},{"height":55297607.91554614,"x":5.8,"y":52.130317795026116,"y0":0},{"height":80807801.80249232,"x":6.4,"y":76.17936014004529,"y0":0},{"height":86204460.34718415,"x":7,"y":81.26691339181872,"y0":0},{"height":60980643.7492444,"x":7.6,"y":57.48784545704859,"y0":0},{"height":29351827.493813746,"x":8.2,"y":27.670638076319463,"y0":0},{"height":10870235.317230554,"x":8.8,"y":10.247619073494034,"y0":0},{"height":3329747.2406761036,"x":9.4,"y":3.139028764113263,"y0":0},{"height":843356.2215321356,"x":10,"y":0.795051169483277,"y0":0},{"height":175125.86369777122,"x":10.6,"y":0.16509515099886715,"y0":0},{"height":29760.562759162578,"x":11.2,"y":0.028055962145114827,"y0":0},{"height":4110.753375618484,"x":11.8,"y":0.0038753010831002323,"y0":0},{"height":455.6169984892635,"x":12.4,"y":0.0004295205492493619,"y0":0},{"height":39.99405948424316,"x":13,"y":0.00003770331320680208,"y0":0},{"height":2.754069380019033,"x":13.6,"y":0.0000025963240983084174,"y0":0}];
+    var data = [
+        {"height": 813.2624916960312, "x": 1, "y": 0.0007666811231263037, "y0": 0},
+        {"height": 7619.904618098876, "x": 1.6, "y": 0.00718345809670379, "y0": 0},
+        {"height": 54967.22491022995, "x": 2.2, "y": 0.05181885819106797, "y0": 0},
+        {"height": 307194.47636612115, "x": 2.8, "y": 0.2895992481682085, "y0": 0},
+        {"height": 1345706.7509619996, "x": 3.4, "y": 1.2686284855884125, "y0": 0},
+        {"height": 4692155.417500208, "x": 4, "y": 4.423402065266777, "y0": 0},
+        {"height": 13178721.953545759, "x": 4.6, "y": 12.423882143688251, "y0": 0},
+        {"height": 29977193.55546743, "x": 5.2, "y": 28.260184943916702, "y0": 0},
+        {"height": 55297607.91554614, "x": 5.8, "y": 52.130317795026116, "y0": 0},
+        {"height": 80807801.80249232, "x": 6.4, "y": 76.17936014004529, "y0": 0},
+        {"height": 86204460.34718415, "x": 7, "y": 81.26691339181872, "y0": 0},
+        {"height": 60980643.7492444, "x": 7.6, "y": 57.48784545704859, "y0": 0},
+        {"height": 29351827.493813746, "x": 8.2, "y": 27.670638076319463, "y0": 0},
+        {"height": 10870235.317230554, "x": 8.8, "y": 10.247619073494034, "y0": 0},
+        {"height": 3329747.2406761036, "x": 9.4, "y": 3.139028764113263, "y0": 0},
+        {"height": 843356.2215321356, "x": 10, "y": 0.795051169483277, "y0": 0},
+        {"height": 175125.86369777122, "x": 10.6, "y": 0.16509515099886715, "y0": 0},
+        {"height": 29760.562759162578, "x": 11.2, "y": 0.028055962145114827, "y0": 0},
+        {"height": 4110.753375618484, "x": 11.8, "y": 0.0038753010831002323, "y0": 0},
+        {"height": 455.6169984892635, "x": 12.4, "y": 0.0004295205492493619, "y0": 0},
+        {"height": 39.99405948424316, "x": 13, "y": 0.00003770331320680208, "y0": 0},
+        {"height": 2.754069380019033, "x": 13.6, "y": 0.0000025963240983084174, "y0": 0}
+    ];
 
     function drawIncomeMountain(id, width, height) {
         function i18n(str1, str2) {
@@ -140,7 +163,9 @@
 
         // Related page test
         drawIncomeMountain("#testing");
-        relatedPage('container', 'testing', [["32", "\/opaa\/p3media\/file\/image?preset=select2-thumb&id=59", "Snapshot"]]);
+        relatedPage('container', 'testing', [
+            ["32", "\/opaa\/p3media\/file\/image?preset=select2-thumb&id=59", "Snapshot"]
+        ]);
     }
 
 </script>

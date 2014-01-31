@@ -24,20 +24,22 @@ gapminder.dataCube = function () {
     };
 
     var dataIsReady = function (skeletonObj, indicatorsObj, entitiesObj, chartInfo, regions, timeUnitVal) {
-        skeleton = Object.extend(true,skeleton, skeletonObj);
-        indicators = Object.extend(true,indicators, indicatorsObj);
-        entityMeta = Object.extend(true,entityMeta, entitiesObj);
+        skeleton = Object.extend(true, skeleton, skeletonObj);
+        indicators = Object.extend(true, indicators, indicatorsObj);
+        entityMeta = Object.extend(true, entityMeta, entitiesObj);
 
         timeUnit = timeUnitVal;
 
-        if (regions) {regionsList = regions;}
+        if (regions) {
+            regionsList = regions;
+        }
 
         interpolateDataValues();
         dataIsReadyCallback(entityMeta, indicators, chartInfo, regions, timeUnit);
     };
 
     var loadSkeleton = function (dataPath, loadCallback, fileName, entity) {
-        skeleton = loader.loadSkeleton(dataPath, function(skeletonObj) {
+        skeleton = loader.loadSkeleton(dataPath, function (skeletonObj) {
             skeleton = skeletonObj;
             loadCallback(skeleton);
         }, fileName, entity);
@@ -96,9 +98,9 @@ gapminder.dataCube = function () {
 
 
     var languageUpdated = function (entitiesMetaObj, language) {
-        entityMeta = Object.extend(true,entityMeta, entitiesMetaObj);
+        entityMeta = Object.extend(true, entityMeta, entitiesMetaObj);
 
-        console.log("%cUpdating Bubble Labels with Language Code "  + language + "...", "color: #bada55");
+        console.log("%cUpdating Bubble Labels with Language Code " + language + "...", "color: #bada55");
         dataIsReadyCallback(entityMeta, indicators);
     };
 
@@ -119,11 +121,11 @@ gapminder.dataCube = function () {
                                     }
                                 }
 
-                                for (var s=0; s < yearData.length;s++) {
-                                    for (var bb = yearData[s] + 1; bb <= yearData[s+1] - 1; bb++) {
+                                for (var s = 0; s < yearData.length; s++) {
+                                    for (var bb = yearData[s] + 1; bb <= yearData[s + 1] - 1; bb++) {
                                         curEntityIndiValue[bb] = {};
                                         curEntityIndiValue[bb].n = [];
-                                        curEntityIndiValue[bb].v = curEntityIndiValue[yearData[s]].v + (curEntityIndiValue[yearData[s+1]].v - curEntityIndiValue[yearData[s]].v) * (bb- yearData[s])/(yearData[s+1] - yearData[s]);
+                                        curEntityIndiValue[bb].v = curEntityIndiValue[yearData[s]].v + (curEntityIndiValue[yearData[s + 1]].v - curEntityIndiValue[yearData[s]].v) * (bb - yearData[s]) / (yearData[s + 1] - yearData[s]);
                                     }
 
                                 }

@@ -9,7 +9,7 @@ gapminder.data.readerMultipleJSON = function () {
     var jsonPath;
     var dataLoadQueue;
 
-    var initialize =  function (indicatorsTemplate, model, dataPath, indicatorsToLoad, callback, changedState, language, fileName, timeUnitToken) {
+    var initialize = function (indicatorsTemplate, model, dataPath, indicatorsToLoad, callback, changedState, language, fileName, timeUnitToken) {
         readIsCompletedCallback = callback;
         indicators = indicatorsTemplate;
         jsonPath = dataPath;
@@ -19,8 +19,8 @@ gapminder.data.readerMultipleJSON = function () {
     var loadEntities = function (indicatorsToLoad) {
         for (var entity in indicatorsToLoad) {
             if (indicatorsToLoad.hasOwnProperty(entity)) {
-                (function(entity) {
-                    dataLoadQueue.defer(function(callback) {
+                (function (entity) {
+                    dataLoadQueue.defer(function (callback) {
                         loadEntity(entity, callback);
                     });
                 })(entity);
@@ -31,25 +31,26 @@ gapminder.data.readerMultipleJSON = function () {
 
     var loadEntity = function (entity, callback) {
         console.log(jsonPath);
-        d3.json(jsonPath + "entities/" + entity + ".json" , function(errorEntity, entityJson) {
+        d3.json(jsonPath + "entities/" + entity + ".json", function (errorEntity, entityJson) {
 
             var countries = entityJson.countries;
-            for (var i=0; i < countries.length; i++)
-            {
-                entitiesData.push({id: countries[i].name, region: countries[i].region , name:countries[i].name, parent: entity});
+            for (var i = 0; i < countries.length; i++) {
+                entitiesData.push({id: countries[i].name, region: countries[i].region, name: countries[i].name, parent: entity});
             }
 
-            entityMeta = d3.nest().key(function(d){ return d.id; }).map(entitiesData);
+            entityMeta = d3.nest().key(function (d) {
+                return d.id;
+            }).map(entitiesData);
             callback();
         });
     };
 
-    var loadIndicatorData = function(indicatorsToLoad) {
+    var loadIndicatorData = function (indicatorsToLoad) {
         for (var entity in indicatorsToLoad) {
             if (indicatorsToLoad.hasOwnProperty(entity)) {
-                indicatorsToLoad[entity].forEach(function(indicator) {
-                    (function(entity){
-                        dataLoadQueue.defer(function(callback) {
+                indicatorsToLoad[entity].forEach(function (indicator) {
+                    (function (entity) {
+                        dataLoadQueue.defer(function (callback) {
                             loadJSONFile(indicator, entity, callback);
                         });
                     })(entity);
@@ -60,7 +61,7 @@ gapminder.data.readerMultipleJSON = function () {
         dataLoadQueue.await(indicatorsLoaded);
     };
 
-    var loadJSONFile = function(indicator, entityName, callback) {
+    var loadJSONFile = function (indicator, entityName, callback) {
         d3.json(jsonPath + "indicators/" + indicator + "_" + entityName + ".json", function (errorIndicator, json) {
             if (errorIndicator) {
                 console.log("There was a problem rendering", indicator, ".json file");
@@ -84,7 +85,7 @@ gapminder.data.readerMultipleJSON = function () {
             setSkeletonInfo(entity, indicator);
             updateDataScope(indicator, entityName);
 
-            callback(null,indicators);
+            callback(null, indicators);
         });
     };
 
@@ -96,8 +97,8 @@ gapminder.data.readerMultipleJSON = function () {
         for (var year in data[entityObj]) {
             if (data[entityObj].hasOwnProperty(year)) {
                 indicators[timeUnit][entityName][json.info.measure_id]["years"][entityObj]["trends"][year] = {};
-                indicators[timeUnit][entityName][json.info.measure_id]["years"][entityObj]["trends"][year].v =  data[entityObj][year];
-                indicators[timeUnit][entityName][json.info.measure_id]["years"][entityObj]["trends"][year].n =  [];
+                indicators[timeUnit][entityName][json.info.measure_id]["years"][entityObj]["trends"][year].v = data[entityObj][year];
+                indicators[timeUnit][entityName][json.info.measure_id]["years"][entityObj]["trends"][year].n = [];
             }
         }
     };
@@ -105,12 +106,12 @@ gapminder.data.readerMultipleJSON = function () {
 
     var updateEntityScope = function (entityName, json, entityObj) {
         var yearKeys = Object.keys(indicators[timeUnit][entityName][json.info.measure_id]["years"][entityObj]["trends"]);
-        var years = (yearKeys).map(function(year) {
-            return parseInt(year,10);
+        var years = (yearKeys).map(function (year) {
+            return parseInt(year, 10);
         });
 
-        var minYear = Math.min.apply(Math,years);
-        var maxYear = Math.max.apply(Math,years);
+        var minYear = Math.min.apply(Math, years);
+        var maxYear = Math.max.apply(Math, years);
         indicators[timeUnit][entityName][json.info.measure_id]["years"][entityObj]["scope"] = {};
         indicators[timeUnit][entityName][json.info.measure_id]["years"][entityObj]["scope"]["time"] = {};
         indicators[timeUnit][entityName][json.info.measure_id]["years"][entityObj]["scope"]["value"] = {};
@@ -128,7 +129,7 @@ gapminder.data.readerMultipleJSON = function () {
             var indicatorValues = indicatorValuesAndYears[0];
             var indicatorValueMin = Math.min.apply(Math, indicatorValues);
             var indicatorValueMax = Math.max.apply(Math, indicatorValues);
-            indicators[timeUnit][entity][indicator]["scope"].value =[indicatorValueMin,
+            indicators[timeUnit][entity][indicator]["scope"].value = [indicatorValueMin,
                 indicatorValueMax];
 
             var indicatorYears = indicatorValuesAndYears[1];
@@ -138,7 +139,7 @@ gapminder.data.readerMultipleJSON = function () {
         }
     };
 
-    var getIndicatorValuesAndCorrespondingYears = function(indicatorObject) {
+    var getIndicatorValuesAndCorrespondingYears = function (indicatorObject) {
         var indicatorValues = [];
         var yearsValues = [];
 
@@ -146,7 +147,7 @@ gapminder.data.readerMultipleJSON = function () {
             if (indicatorObject.hasOwnProperty(entity)) {
                 for (var yearValue in indicatorObject[entity]["trends"]) {
                     if (indicatorObject[entity]["trends"].hasOwnProperty(yearValue)) {
-                        var indicatorForEntity  = indicatorObject[entity]["trends"];
+                        var indicatorForEntity = indicatorObject[entity]["trends"];
                         indicatorValues.push(indicatorForEntity[yearValue].v);
                         yearsValues.push(yearValue);
                     }
@@ -158,42 +159,42 @@ gapminder.data.readerMultipleJSON = function () {
     };
 
 
-    var indicatorsLoaded = function(err, results) {
+    var indicatorsLoaded = function (err, results) {
         if (typeof readIsCompletedCallback === 'function') {
-            readIsCompletedCallback(loadedIndicators, indicators,entityMeta, {}, [], timeUnit);
+            readIsCompletedCallback(loadedIndicators, indicators, entityMeta, {}, [], timeUnit);
 
         }
     };
 
-    var loadSkeleton = function(path, setSkeletonCallback) {
+    var loadSkeleton = function (path, setSkeletonCallback) {
         var q = new queue();
-        q.defer(function(callback) {
+        q.defer(function (callback) {
             loadSkeletonIndicator(path, callback);
         })
-            .defer(function(callback) {
+            .defer(function (callback) {
                 loadSkeletonCategory(path, callback);
             })
-            .await(function() {
+            .await(function () {
                 setSkeletonCallback(skeleton);
             });
 
     };
 
     var loadSkeletonIndicator = function (path, callback) {
-        d3.json(path + "skeleton.json", function(error, data) {
+        d3.json(path + "skeleton.json", function (error, data) {
             skeleton.indicators = data.indicators;
             callback();
         });
     };
 
     var loadSkeletonCategory = function (path, callback) {
-        d3.json(path + "skeleton.json", function(error, data) {
+        d3.json(path + "skeleton.json", function (error, data) {
             skeleton.indicators = data.indicators;
             callback();
         });
     };
 
-    var setSkeletonInfo = function(categoryId, indicator) {
+    var setSkeletonInfo = function (categoryId, indicator) {
         for (var i = 0; i < skeleton.categories.length; i++) {
             if (skeleton.categories[i].id === categoryId) {
                 skeleton.categories[i].things.push(indicator);

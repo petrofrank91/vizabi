@@ -1,4 +1,4 @@
-gapminder.viz.chartGrid = function() {
+gapminder.viz.chartGrid = function () {
 
     var svg;
     var chartRenderDiv;
@@ -33,7 +33,7 @@ gapminder.viz.chartGrid = function() {
     //var zoom;
     var g;
 
-    var initializeChartLayers = function(renderDiv) {
+    var initializeChartLayers = function (renderDiv) {
         chartRenderDiv = renderDiv + "-scatterChart";
 
         svg = d3.select("#" + renderDiv)
@@ -78,10 +78,10 @@ gapminder.viz.chartGrid = function() {
             .attr("class", "linkLayer");
 
         labelLayer = g.append("g")
-            .attr("class","labelLayer");
+            .attr("class", "labelLayer");
     };
 
-    var updateLayout = function(vizStateObj) {
+    var updateLayout = function (vizStateObj) {
         vizState = vizStateObj;
         var isInteractive = vizState.get("isInteractive");
 
@@ -106,7 +106,7 @@ gapminder.viz.chartGrid = function() {
         return [xScale, yScale];
     };
 
-    var createXAxis = function() {
+    var createXAxis = function () {
         var xLabelText = vizState.getDataHelper().getAxisNames()[0];
         if (!xLabelText) {
             xLabelText = vizState.get("xIndicator");
@@ -118,7 +118,7 @@ gapminder.viz.chartGrid = function() {
             .attr("font-size", "30px")
             .text(xLabelText)
             .append("svg:title")
-            .text(function() {
+            .text(function () {
                 return vizState.getDataHelper().getAxisInfo()[0];
             });
 
@@ -136,7 +136,9 @@ gapminder.viz.chartGrid = function() {
 
         xAxis = d3.svg.axis()
             .scale(xScale)
-            .tickFormat(function(d) {return "$" + d;})
+            .tickFormat(function (d) {
+                return "$" + d;
+            })
             .ticks(10)
             .tickSize(-availableHeight, 0, 0)
             .tickPadding(5)
@@ -155,7 +157,7 @@ gapminder.viz.chartGrid = function() {
         return xScale;
     };
 
-    var createYAxis = function() {
+    var createYAxis = function () {
         var yLabelText = vizState.getDataHelper().getAxisNames()[1];
 
         if (!yLabelText) {
@@ -167,7 +169,7 @@ gapminder.viz.chartGrid = function() {
             .attr("font-size", "30px")
             .text(yLabelText)
             .append("svg:title")
-            .text(function() {
+            .text(function () {
                 return vizState.getDataHelper().getAxisInfo()[1];
             });
 
@@ -211,19 +213,19 @@ gapminder.viz.chartGrid = function() {
     };
 
 
-    var getAvailableHeightAndWidth = function() {
+    var getAvailableHeightAndWidth = function () {
         return [availableHeight, availableWidth];
     };
 
-    var getXAxisContainer = function() {
+    var getXAxisContainer = function () {
         return xAxisContainer;
     };
 
-    var getXLabel = function() {
+    var getXLabel = function () {
         return xLabel;
     };
 
-    var getMargin = function() {
+    var getMargin = function () {
         return margin;
     };
 

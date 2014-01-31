@@ -1,4 +1,4 @@
-gapminder.data.readerSingleCSV = function() {
+gapminder.data.readerSingleCSV = function () {
     var indicators = {};
     var entityMeta = {};
     var loadedIndicators = [];
@@ -13,7 +13,7 @@ gapminder.data.readerSingleCSV = function() {
         categories: []
     };
 
-    var initialize = function(indicatorsTemplate, model, dataPath, indicatorsToLoad, callback, changedState, language, fileName) {
+    var initialize = function (indicatorsTemplate, model, dataPath, indicatorsToLoad, callback, changedState, language, fileName) {
         indicators = indicatorsTemplate;
         readIsCompletedCallback = callback;
         csvDataPath = dataPath;
@@ -21,12 +21,12 @@ gapminder.data.readerSingleCSV = function() {
         dataLoadQueue = new queue();
     };
 
-    var loadEntities = function(indicatorsToLoad) {
+    var loadEntities = function (indicatorsToLoad) {
 
         for (var entity in indicatorsToLoad) {
             if (indicatorsToLoad.hasOwnProperty(entity)) {
-                (function(entity) {
-                    dataLoadQueue.defer(function(callback) {
+                (function (entity) {
+                    dataLoadQueue.defer(function (callback) {
                         loadEntity(entity, callback);
                     });
                 })(entity);
@@ -48,7 +48,7 @@ gapminder.data.readerSingleCSV = function() {
                 });
             }
 
-            entityMeta = d3.nest().key(function(d) {
+            entityMeta = d3.nest().key(function (d) {
                 return d.id;
             }).map(entitiesData);
 
@@ -56,14 +56,14 @@ gapminder.data.readerSingleCSV = function() {
         });
     };
 
-    var loadIndicatorData = function(indicatorsToLoad) {
+    var loadIndicatorData = function (indicatorsToLoad) {
 
         for (var entity in indicatorsToLoad) {
             if (indicatorsToLoad.hasOwnProperty(entity)) {
 
-                indicatorsToLoad[entity].forEach(function(indicator) {
-                    (function(entity, indicator) {
-                        dataLoadQueue.defer(function(callback) {
+                indicatorsToLoad[entity].forEach(function (indicator) {
+                    (function (entity, indicator) {
+                        dataLoadQueue.defer(function (callback) {
                             loadCSVFile(indicator, entity, callback);
                         });
                     })(entity, indicator);
@@ -74,14 +74,14 @@ gapminder.data.readerSingleCSV = function() {
         dataLoadQueue.await(indicatorsLoaded);
     };
 
-    var loadCSVFile = function(indicator, entity, callback) {
-        d3.csv(csvDataPath + csvFileName + ".csv", function(error, rows) {
+    var loadCSVFile = function (indicator, entity, callback) {
+        d3.csv(csvDataPath + csvFileName + ".csv", function (error, rows) {
             console.log("loading ", csvFileName, ".csv");
-            var indicatorValues = loadIndicator(entity, indicator, rows).indValues ;
+            var indicatorValues = loadIndicator(entity, indicator, rows).indValues;
             var years = loadIndicator(entity, indicator, rows).yearValues;
-            console.log("calling ...");    
+            console.log("calling ...");
             setSkeletonInfo(entity, indicator);
-            updateEntityScope(entity,indicator);
+            updateEntityScope(entity, indicator);
             updateDataScope(indicator, entity, indicatorValues, years);
 
             callback(null, indicators);
@@ -108,12 +108,12 @@ gapminder.data.readerSingleCSV = function() {
         }
 
         return {
-            indValues : indicatorValues,
+            indValues: indicatorValues,
             yearValues: years
         };
     };
 
-    var setSkeletonInfo = function(categoryId, indicator) {
+    var setSkeletonInfo = function (categoryId, indicator) {
         for (var i = 0; i < skeleton.categories.length; i++) {
             if (skeleton.categories[i].id === categoryId) {
                 skeleton.categories[i].things.push(indicator);
@@ -121,8 +121,8 @@ gapminder.data.readerSingleCSV = function() {
         }
     };
 
-    var loadSkeleton = function(path, setSkeletonCallback, fileName, entity) {
-        d3.csv(path + fileName + ".csv", function(error, rows) {
+    var loadSkeleton = function (path, setSkeletonCallback, fileName, entity) {
+        d3.csv(path + fileName + ".csv", function (error, rows) {
             var row = rows[0];
             for (var column in row) {
                 if (row.hasOwnProperty(column)) {
@@ -143,7 +143,7 @@ gapminder.data.readerSingleCSV = function() {
                         category["about"] = "";
                         category["count"] = rows.length - 1;
                         category["things"] = [];
-                        
+
                         skeleton.categories.push(category);
                     }
                 }
@@ -153,7 +153,7 @@ gapminder.data.readerSingleCSV = function() {
         });
     };
 
-    var updateDataScope = function(indicator, entity, indicatorValues, years) {
+    var updateDataScope = function (indicator, entity, indicatorValues, years) {
         if (indicators[timeUnit][entity][indicator]["scope"]["time"]) {
             indicators[timeUnit][entity][indicator]["scope"].value = [Math.min.apply(Math, indicatorValues),
                 Math.max.apply(Math, indicatorValues)];
@@ -161,7 +161,7 @@ gapminder.data.readerSingleCSV = function() {
         }
     };
 
-    var indicatorsLoaded = function()  {
+    var indicatorsLoaded = function () {
         if (typeof readIsCompletedCallback === 'function') {
             readIsCompletedCallback(loadedIndicators, indicators, entityMeta, {}, [], timeUnit);
         }
@@ -174,12 +174,12 @@ gapminder.data.readerSingleCSV = function() {
             if (entitiesForIndicators.hasOwnProperty(entity) && !$.isEmptyObject(entitiesForIndicators[entity]["trends"])) {
 
                 var yearKeys = Object.keys(entitiesForIndicators[entity]["trends"]);
-                var yearsForEntity = (yearKeys).map(function(year) {
-                    return parseInt(year,10);
+                var yearsForEntity = (yearKeys).map(function (year) {
+                    return parseInt(year, 10);
                 });
 
-                var minYear = Math.min.apply(Math,yearsForEntity);
-                var maxYear = Math.max.apply(Math,yearsForEntity);
+                var minYear = Math.min.apply(Math, yearsForEntity);
+                var maxYear = Math.max.apply(Math, yearsForEntity);
                 indicators[timeUnit][category][indicator]["years"][entity]["scope"] = {};
                 indicators[timeUnit][category][indicator]["years"][entity]["scope"]["time"] = {};
                 indicators[timeUnit][category][indicator]["years"][entity]["scope"]["value"] = {};

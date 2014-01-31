@@ -1,10 +1,10 @@
 gapminder.components.timeSlider = function (callback) {
 
     var sliderAttributes = {
-        year : undefined,
-        slider : "",
-        timeSliderDiv : "",
-        sliderScale : undefined
+        year: undefined,
+        slider: "",
+        timeSliderDiv: "",
+        sliderScale: undefined
     };
 
     var timeSliderState;
@@ -15,7 +15,7 @@ gapminder.components.timeSlider = function (callback) {
     var sliderStateChangeCallback = callback;
 
 
-    var initialize = function(state, timeSliderDiv) {
+    var initialize = function (state, timeSliderDiv) {
         timeSliderState = state;
         sliderAttributes.timeSliderDiv = $(".G_widget_slider", "#" + timeSliderDiv);
         sliderAttributes.sliderScale = $(".G_widget_slider_scale ", "#" + timeSliderDiv);
@@ -37,7 +37,9 @@ gapminder.components.timeSlider = function (callback) {
             .style("font-size", "12px");
 
         labels
-            .style("left", function(d,i){return scale(d) - 12 + "px";})
+            .style("left", function (d, i) {
+                return scale(d) - 12 + "px";
+            })
             .style("position", "absolute")
             .text(String);
 
@@ -47,12 +49,12 @@ gapminder.components.timeSlider = function (callback) {
         sliderAttributes.slider = $(sliderAttributes.timeSliderDiv).slider({
             min: timeSliderState.getDataHelper().getMinYear(),
             max: timeSliderState.getDataHelper().getMaxYear(),
-            step : 0.1
+            step: 0.1
         });
     };
 
     var playHandler = function () {
-        if(playing) {
+        if (playing) {
             clearInterval(timer);
             playing = false;
             sliderStateChangeCallback({enableHistory: true});
@@ -60,31 +62,31 @@ gapminder.components.timeSlider = function (callback) {
         }
         else {
             playButton.attr("src", "/tools/bubble-chart/images/pause.png");
-            timer = setInterval(function() {
+            timer = setInterval(function () {
                 playingOnInterval();
             }, 40);
             playing = true;
         }
     };
 
-    var playingOnInterval = function() {
+    var playingOnInterval = function () {
         var year = parseFloat(timeSliderState.get("year"));
         var newYear = (year + parseFloat(timeSliderState.get("speed"))).toFixed(2);
 
         var hasNotReachEndOfSlider = newYear <= timeSliderState.getDataHelper().getMaxYear();
         if (hasNotReachEndOfSlider) {
-            sliderStateChangeCallback({year: newYear, enableHistory: false, action : "year"});
+            sliderStateChangeCallback({year: newYear, enableHistory: false, action: "year"});
         }
         else {
             stopHandler();
-            sliderStateChangeCallback({year: Math.floor(newYear), enableHistory: false, action : "year"});
+            sliderStateChangeCallback({year: Math.floor(newYear), enableHistory: false, action: "year"});
         }
 
         sliderAttributes.slider = $(sliderAttributes.timeSliderDiv)
             .slider({value: year});
     };
 
-    var stopHandler =  function () {
+    var stopHandler = function () {
         clearInterval(timer);
         playing = false;
         timer = undefined;
@@ -99,35 +101,35 @@ gapminder.components.timeSlider = function (callback) {
     };
 
     var setPlayButtonClickEvent = function () {
-        playButton.click(function() {
+        playButton.click(function () {
             playHandler();
         });
     };
 
     var setSliderEvents = function () {
         sliderAttributes.slider = $(sliderAttributes.timeSliderDiv).slider({
-            slide: function(e, ui) {
+            slide: function (e, ui) {
                 // Just set the new state
-                sliderStateChangeCallback({year: ui.value, enableHistory : false, action: "year"});
+                sliderStateChangeCallback({year: ui.value, enableHistory: false, action: "year"});
             },
-            change: function(e, ui) {
-                sliderChangeEventListener(e,ui);
+            change: function (e, ui) {
+                sliderChangeEventListener(e, ui);
             }
         });
     };
 
-    var sliderChangeEventListener = function (e,ui) {
-        if("originalEvent" in e) {
+    var sliderChangeEventListener = function (e, ui) {
+        if ("originalEvent" in e) {
             var year = ui.value;
             var prevYear = Math.floor(year);
             var nextYear = Math.ceil(year);
             var yearFraction = year - Math.floor(year);
 
             if (yearFraction < 0.5) {
-                sliderStateChangeCallback({year: prevYear, enableHistory : true, action: "year"});
+                sliderStateChangeCallback({year: prevYear, enableHistory: true, action: "year"});
             }
-            else{
-                sliderStateChangeCallback({year: nextYear, enableHistory : true, action: "year"});
+            else {
+                sliderStateChangeCallback({year: nextYear, enableHistory: true, action: "year"});
             }
         }
     };
@@ -141,7 +143,7 @@ gapminder.components.timeSlider = function (callback) {
     };
 
     return {
-        initialize : initialize,
+        initialize: initialize,
         setupListeners: setUpListenersForPlayAndSlideChangesEvents,
         update: update
     };

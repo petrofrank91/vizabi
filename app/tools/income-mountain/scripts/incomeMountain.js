@@ -1,8 +1,8 @@
 gapminder.viz.incomeMountain = function incomeMountain(svg, drawFunc) {
     'use strict';
-    
+
     var group;
-    
+
     var height = 440;
     var width = 900;
 
@@ -40,15 +40,21 @@ gapminder.viz.incomeMountain = function incomeMountain(svg, drawFunc) {
         var shape = group.append('g')
             .attr('id', name + '-income-mountain')
             .selectAll('.mountains_still')
-            .data(mountain_info.data, function(d) { return d; });
+            .data(mountain_info.data, function (d) {
+                return d;
+            });
 
         shape.enter().append('path').attr('class', 'mountains_still')
             .attr('id', name)
             .attr('fill', color)
             .attr('d', area);
 
-        shape.on('mouseover', function() { onMouseOver(this); })
-            .on('mouseout', function() { onMouseOut(this); });
+        shape.on('mouseover', function () {
+            onMouseOver(this);
+        })
+            .on('mouseout', function () {
+                onMouseOut(this);
+            });
     };
 
     function clear() {
@@ -58,9 +64,15 @@ gapminder.viz.incomeMountain = function incomeMountain(svg, drawFunc) {
     function area(points) {
         return d3.svg.area()
             .interpolate('basis')
-            .x(function(d) { return scaleGDP(Math.exp(d.x)); })
-            .y0(function(d) { return height - d.y0; })
-            .y1(function(d) { return height - (d.y0 + d.y); })
+            .x(function (d) {
+                return scaleGDP(Math.exp(d.x));
+            })
+            .y0(function (d) {
+                return height - d.y0;
+            })
+            .y1(function (d) {
+                return height - (d.y0 + d.y);
+            })
             (points);
     };
 
@@ -96,7 +108,7 @@ gapminder.viz.incomeMountain = function incomeMountain(svg, drawFunc) {
     function onMouseOver(param) {
         if (typeof mouseOverFunc === "function") mouseOverFunc(param);
     }
-    
+
     function setOnMouseOver(callback) {
         if (typeof callback === "function") mouseOverFunc = callback;
     }
@@ -104,11 +116,11 @@ gapminder.viz.incomeMountain = function incomeMountain(svg, drawFunc) {
     function onMouseOut(param) {
         if (typeof mouseOutFunc === "function") mouseOutFunc(param);
     }
-    
+
     function setOnMouseOut(callback) {
         if (typeof callback === "function") mouseOutFunc = callback;
     }
-    
+
     return {
         g: group,
         x: scaleGDP,

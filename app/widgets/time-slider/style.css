@@ -12,7 +12,7 @@
 .timeline text {
     font-family: "Arial Rounded MT Bold";
     opacity: 0.6;
-    -webkit-user-select: none; /* Chrome/Safari */        
+    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
     /* add unselectable as attribute if we will support IE9 */
@@ -64,7 +64,7 @@
 }
 
 .moveable_button path {
-    stroke: #3C6170; 
+    stroke: #3C6170;
     stroke-width: 2px;
     stroke-miterlimit: 10;
     fill: #3C6170;
@@ -87,7 +87,7 @@
     fill: #3C6170;
     text-anchor: middle;
     font-size: 40px;
-    -webkit-user-select: none; /* Chrome/Safari */        
+    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
     /* add unselectable as attribute if we will support IE9 */

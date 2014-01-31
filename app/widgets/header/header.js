@@ -1,6 +1,6 @@
-gapminder.viz.tools.txt = function(svg, text, fontsize, cssClass) {
+gapminder.viz.tools.txt = function (svg, text, fontsize, cssClass) {
     'use strict';
-    
+
     var group = svg.append('g');
     var txt = group.append('text').text(text);
 
@@ -29,7 +29,7 @@ gapminder.viz.tools.txt = function(svg, text, fontsize, cssClass) {
             txt.attr('class', newClass);
         }
     }
-   
+
     return {
         g: group,
         setText: setText,
