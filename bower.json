@@ -9,7 +9,8 @@
     "queue-async": "~1.0.4",
     "d3": "~3.3.13",
     "select2": "~3.4.5",
-    "rm-jstat": "master"
+    "rm-jstat": "master",
+    "requirejs": "~2.1.10"
   },
   "devDependencies": {}
 }
