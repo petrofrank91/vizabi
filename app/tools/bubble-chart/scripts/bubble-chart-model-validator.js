@@ -1,28 +1,28 @@
-gapminder.bubbleChartModelValidator = function () {	
-	  var dataHelper;
+gapminder.bubbleChartModelValidator = function () {
+    var dataHelper;
     var bubbleChartModel;
     var readyToRenderCallback;
 
     var initialize = function (fileFormat, entity, fileName, dataPath, args) {
-        dataHelper = new gapminder.data.bubbleChartDataHelper(fileFormat, entity, 
-          fileName, dataPath);
+        dataHelper = new gapminder.data.bubbleChartDataHelper(fileFormat, entity,
+            fileName, dataPath);
         dataHelper.initialize(validateAndProcessCallback, args);
     };
 
     var isMissingIndicators = function (model) {
-       bubbleChartModel = model;
-       var xIndicator = model.get("xIndicator");
-       var yIndicator = model.get("yIndicator");
-       var sizeIndicator = model.get("sizeIndicator");
-       var dataPath = model.get("dataPath");
+        bubbleChartModel = model;
+        var xIndicator = model.get("xIndicator");
+        var yIndicator = model.get("yIndicator");
+        var sizeIndicator = model.get("sizeIndicator");
+        var dataPath = model.get("dataPath");
 
-       if (xIndicator && yIndicator && sizeIndicator && dataPath) {
-           return true;
-       }
+        if (xIndicator && yIndicator && sizeIndicator && dataPath) {
+            return true;
+        }
         else {
-           return false;
-       }
-    };	
+            return false;
+        }
+    };
 
     var isAnyBubblesOutOfScope = function () {
         var xIndicator = bubbleChartModel.get("xIndicator");
@@ -38,11 +38,11 @@ gapminder.bubbleChartModelValidator = function () {
         var maxYValue = bubbleChartModel.get("maxYValue");
 
         return  ((xScope.min < minXValue || xScope.max > maxXValue)
-                && (yScope.min < minYValue || yScope.max > maxYValue));
+            && (yScope.min < minYValue || yScope.max > maxYValue));
     };
 
 
-    var validateState = function(model, changedState , callback, dataHelperObj) {
+    var validateState = function (model, changedState, callback, dataHelperObj) {
         dataHelper = dataHelperObj;
         bubbleChartModel = model;
         readyToRenderCallback = callback;
@@ -56,7 +56,7 @@ gapminder.bubbleChartModelValidator = function () {
         if (!isStateValid) {
             setValidState(model, changedState);
         }
-        dataHelper.loadData(model,changedState, modelIsValidAndProcessWithCallback);
+        dataHelper.loadData(model, changedState, modelIsValidAndProcessWithCallback);
     };
 
     var setValidState = function (model, changedState) {
@@ -70,16 +70,16 @@ gapminder.bubbleChartModelValidator = function () {
     };
 
     var modelIsValidAndProcessWithCallback = function () {
-      if (typeof readyToRenderCallback === "function") {
-          readyToRenderCallback();
-      }
+        if (typeof readyToRenderCallback === "function") {
+            readyToRenderCallback();
+        }
     };
 
     var validateAndProcessCallback = function (model, dataNeedsToBeLoaded, changedStateAttributes, modelAndDataIsReadyCallback) {
         if (dataNeedsToBeLoaded && typeof modelAndDataIsReadyCallback === 'function') {
             validateState(model, changedStateAttributes, modelAndDataIsReadyCallback, dataHelper);
         }
-        else if (typeof modelAndDataIsReadyCallback === 'function' ) {
+        else if (typeof modelAndDataIsReadyCallback === 'function') {
             modelAndDataIsReadyCallback();
         }
     };
@@ -90,11 +90,11 @@ gapminder.bubbleChartModelValidator = function () {
 
 
     return {
-  		isMissingIndicators: isMissingIndicators,
-  		isAnyBubblesOutOfScope: isAnyBubblesOutOfScope,
-      validateState: validateState,
-      validate: validateAndProcessCallback,
-      getDataHelper: getDataHelper,
-      initialize: initialize
-	  };
+        isMissingIndicators: isMissingIndicators,
+        isAnyBubblesOutOfScope: isAnyBubblesOutOfScope,
+        validateState: validateState,
+        validate: validateAndProcessCallback,
+        getDataHelper: getDataHelper,
+        initialize: initialize
+    };
 };

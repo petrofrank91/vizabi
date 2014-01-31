@@ -1,4 +1,4 @@
-gapminder.bubbleChart = function(renderDiv,state) {
+gapminder.bubbleChart = function (renderDiv, state) {
 
     var isInteractive;
     var scatterChart;
@@ -14,25 +14,29 @@ gapminder.bubbleChart = function(renderDiv,state) {
 
     var setInitialState = function (state) {
         model = new gapminder.bubbleChartModel();
-        model.setInit(state, function() {
+        model.setInit(state, function () {
             isInteractive = model.get("isInteractive");
             setUpSubviews();
             setUpModelAndUpdate();
-            if (modelBindCallback) {modelBindCallback(model.getAttributes());}
+            if (modelBindCallback) {
+                modelBindCallback(model.getAttributes());
+            }
         });
     };
 
 
-    var setState = function(state) {
-        model.set(state, function() {
+    var setState = function (state) {
+        model.set(state, function () {
             isInteractive = model.get("isInteractive");
             setUpModelAndUpdate();
-            if (modelBindCallback) {modelBindCallback(model.getAttributes());}
+            if (modelBindCallback) {
+                modelBindCallback(model.getAttributes());
+            }
         });
     };
 
-    var setUpModelAndUpdate = function() {
-        var year =   model.get("year");
+    var setUpModelAndUpdate = function () {
+        var year = model.get("year");
         var trails = model.get("trails");
 
         if (isInteractive) {
@@ -43,13 +47,12 @@ gapminder.bubbleChart = function(renderDiv,state) {
     };
 
 
-    var setUpSubviews =  function() {
+    var setUpSubviews = function () {
         initializeLayers(scatterChartModelUpdate);
         initializeScatterChart(appSVG, renderDiv);
         initializeTimeSlider(isInteractive);
         //setTrailsCheckBoxBinding();
     };
-
 
 
     var initializeScatterChart = function (svg, renderDiv) {
@@ -58,8 +61,7 @@ gapminder.bubbleChart = function(renderDiv,state) {
     };
 
     var initializeTimeSlider = function (isInteractive) {
-        if (isInteractive)
-        {
+        if (isInteractive) {
             createTimeSlider();
             timeSlider = new gapminder.components.timeSlider(timeSliderModelUpdate);
             timeSlider.initialize(model, getDivId("slider"));
@@ -69,37 +71,45 @@ gapminder.bubbleChart = function(renderDiv,state) {
 
 
     var scatterChartModelUpdate = function (state) {
-        model.set(state, function() {
+        model.set(state, function () {
             scatterChart.update(model);
-            if (modelBindCallback) {modelBindCallback(model.getAttributes());}
+            if (modelBindCallback) {
+                modelBindCallback(model.getAttributes());
+            }
         });
 
     };
 
     var timeSliderModelUpdate = function (state) {
-        model.set(state, function() {
+        model.set(state, function () {
 
             timeSlider.update(model);
             scatterChart.update(model);
-            if (modelBindCallback) {modelBindCallback(model.getAttributes());}
+            if (modelBindCallback) {
+                modelBindCallback(model.getAttributes());
+            }
         });
     };
 
 
-    var setTrailsCheckBoxBinding = function() {
+    var setTrailsCheckBoxBinding = function () {
         document.getElementsByClassName("ui-trails")[0].onclick = function () {
             if (this.checked) {
-                model.set({trails : "standard"}, setUpModelAndUpdate);
-                if (modelBindCallback) {modelBindCallback(model.getAttributes());}
+                model.set({trails: "standard"}, setUpModelAndUpdate);
+                if (modelBindCallback) {
+                    modelBindCallback(model.getAttributes());
+                }
             }
             else {
-                model.set({trails : "none"}, setUpModelAndUpdate);
-                if (modelBindCallback) {modelBindCallback(model.getAttributes());}
+                model.set({trails: "none"}, setUpModelAndUpdate);
+                if (modelBindCallback) {
+                    modelBindCallback(model.getAttributes());
+                }
             }
         };
     };
 
-    var registerModelBindCallback = function(callback) {
+    var registerModelBindCallback = function (callback) {
         modelBindCallback = callback;
     };
 
@@ -134,42 +144,42 @@ gapminder.bubbleChart = function(renderDiv,state) {
 
         var leftAlign = document.createElement("input");
         leftAlign.id = "leftAlign";
-        leftAlign.setAttribute("name","setting");
-        leftAlign.setAttribute("value","leftAlign");
-        leftAlign.setAttribute("type" , "radio");
+        leftAlign.setAttribute("name", "setting");
+        leftAlign.setAttribute("value", "leftAlign");
+        leftAlign.setAttribute("type", "radio");
         alignButtons.appendChild(leftAlign);
 
         var leftLabel = document.createElement("label");
         leftLabel.setAttribute("for", "leftAlign");
         leftLabel.style.fontSize = "6px;";
-        leftLabel.innerHtml= "LEFT";
+        leftLabel.innerHtml = "LEFT";
         alignButtons.appendChild(leftLabel);
 
 
         var midAlign = document.createElement("input");
         midAlign.id = "leftAlign";
-        midAlign.setAttribute("name","setting");
-        midAlign.setAttribute("value","midAlign");
-        midAlign.setAttribute("type" , "radio");
+        midAlign.setAttribute("name", "setting");
+        midAlign.setAttribute("value", "midAlign");
+        midAlign.setAttribute("type", "radio");
         alignButtons.appendChild(midAlign);
 
         var midLabel = document.createElement("label");
         midLabel.setAttribute("for", "midAlign");
         midLabel.style.fontSize = "6px;";
-        midLabel.innerHtml= "CENTER";
+        midLabel.innerHtml = "CENTER";
         alignButtons.appendChild(midLabel);
 
         var rightAlign = document.createElement("input");
         rightAlign.id = "rightAlign";
-        rightAlign.setAttribute("name","setting");
-        rightAlign.setAttribute("value","rightAlign");
-        rightAlign.setAttribute("type" , "radio");
+        rightAlign.setAttribute("name", "setting");
+        rightAlign.setAttribute("value", "rightAlign");
+        rightAlign.setAttribute("type", "radio");
         alignButtons.appendChild(rightAlign);
 
         var rightLabel = document.createElement("label");
         rightLabel.setAttribute("for", "midAlign");
         rightLabel.style.fontSize = "6px;";
-        rightLabel.innerHtml= "RIGHT";
+        rightLabel.innerHtml = "RIGHT";
         alignButtons.appendChild(rightLabel);
 
         $("#alignButtons").buttonset();
@@ -198,7 +208,7 @@ gapminder.bubbleChart = function(renderDiv,state) {
         trailsDiv.appendChild(trailsCheckBox);
     };
 
-    var createTimeSlider = function() {
+    var createTimeSlider = function () {
         var appRenderDiv = document.getElementById(renderDiv);
 
         setDivId("slider", "slider-" + renderDiv);
@@ -227,22 +237,20 @@ gapminder.bubbleChart = function(renderDiv,state) {
         var sliderWidgetScale = document.createElement("div");
         sliderWidgetScale.className = "G_widget_slider_scale";
         sliderWidgetScale.style.marginLeft = "50px";
-        sliderWidgetScale.style.marginTop ="10px";
+        sliderWidgetScale.style.marginTop = "10px";
         sliderWidgetScale.style.position = "relative";
         sliderDiv.appendChild(sliderWidgetScale);
     };
 
-    var getDivId = function (divName)
-    {
+    var getDivId = function (divName) {
         return placeholderDivIds[divName];
     };
 
-    var setDivId = function (divName, divId)
-    {
+    var setDivId = function (divName, divId) {
         placeholderDivIds[divName] = divId;
     };
 
-   setInitialState(state);
+    setInitialState(state);
 
     return {
         setVizabiState: setInitialState,

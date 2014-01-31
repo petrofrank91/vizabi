@@ -17,65 +17,65 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
 
     var colorScale = d3.scale.category20();
     var colors = {
-        America : {
-            fill : "#80EC00",
-            stroke : "#038000"
+        America: {
+            fill: "#80EC00",
+            stroke: "#038000"
         },
-        Europe : {
-            fill:  "#FFE800",
-            stroke : "#CF6112"
+        Europe: {
+            fill: "#FFE800",
+            stroke: "#CF6112"
         },
-        Africa : {
-            fill : "#00D6EA",
-            stroke : "#07579C"
+        Africa: {
+            fill: "#00D6EA",
+            stroke: "#07579C"
         },
-        Asia : {
-            fill : "#FF5973",
-            stroke : "#960570"
+        Asia: {
+            fill: "#FF5973",
+            stroke: "#960570"
         },
         bra: {
-            fill : "#80EC00",
-            stroke : "#038000"
+            fill: "#80EC00",
+            stroke: "#038000"
         },
         ind: {
-            fill : "#FF5973",
-            stroke : "#960570"
+            fill: "#FF5973",
+            stroke: "#960570"
         },
         ind_kind: {
-            fill : "#D6CBBA",
-            stroke : "#D6CBBA"
+            fill: "#D6CBBA",
+            stroke: "#D6CBBA"
         },
         bra_kind: {
-            fill : "#FFFF00",
-            stroke : "#000000"
+            fill: "#FFFF00",
+            stroke: "#000000"
         },
         rest: {
-            fill : "#D6CBBA",
-            stroke : "#D6CBBA"
+            fill: "#D6CBBA",
+            stroke: "#D6CBBA"
         },
         IND: {
-            fill : "#FF5973",
-            stroke : "#960570"
+            fill: "#FF5973",
+            stroke: "#960570"
         },
         BRA: {
-            fill : "#FFFF00",
-            stroke : "#000000"
+            fill: "#FFFF00",
+            stroke: "#000000"
         },
-        AME : {
-            fill : "#80EC00",
-            stroke : "#038000"
+        AME: {
+            fill: "#80EC00",
+            stroke: "#038000"
         },
-        EUR : {
-            fill:  "#FFE800",
-            stroke : "#CF6112"
+        EUR: {
+            fill: "#FFE800",
+            stroke: "#CF6112"
         },
-        AFR : {
-            fill : "#00D6EA",
-            stroke : "#07579C"
+        AFR: {
+            fill: "#00D6EA",
+            stroke: "#07579C"
         },
-        ASI : {
-            fill : "#FF5973",
-            stroke : "#960570"
+        ASI: {
+            fill: "#FF5973",
+            stroke: "#960570"
         }
     };
 
@@ -83,7 +83,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         var options = {dataFormat: fileFormat, entity: entityName, fileName: fileName, dataPath: dataPathUri};
 
         dataCube = new gapminder.dataCube();
-        dataCube.initialize (options, function (skeletonObj) {
+        dataCube.initialize(options, function (skeletonObj) {
             skeleton = skeletonObj;
             callback(args[0], args[1], args[2], args[3]);
         });
@@ -124,16 +124,20 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
     };
 
     var dataIsReady = function (entityObj, indicatorsObj, chartInfo, regions) {
-        indicators = Object.extend(true,indicators, indicatorsObj);
-        entityMeta = Object.extend(true,entityMeta, entityObj);
+        indicators = Object.extend(true, indicators, indicatorsObj);
+        entityMeta = Object.extend(true, entityMeta, entityObj);
 
         setTimeUnit();
-        if (regions) {regionsList = regions;}
+        if (regions) {
+            regionsList = regions;
+        }
 
         setDatasetAndChartInfo(chartInfo);
         setAxesNameAndInfo();
         console.log(isAnyBubblesOutOfScope());
-        if (typeof dataIsReadyCallback === 'function') {dataIsReadyCallback();}
+        if (typeof dataIsReadyCallback === 'function') {
+            dataIsReadyCallback();
+        }
     };
 
     var setTimeUnit = function () {
@@ -145,7 +149,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
     };
 
 
-   var getIndicatorsToLoad = function (model) {
+    var getIndicatorsToLoad = function (model) {
         var dataPath = model.get("dataPath");
         var entity = model.get("entity");
         var indicatorsToLoad = {};
@@ -156,18 +160,18 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         if (categories.length === 0) {
             categories.push(entity);
         }
-        
-        for (var i=0; i < categories.length; i++) {
+
+        for (var i = 0; i < categories.length; i++) {
             indicatorsToLoad[categories[i]] = [];
             if (skeletonCategories && skeletonCategories.length > 0) {
-                for (var j=0; j < skeletonCategories.length; j++) {
+                for (var j = 0; j < skeletonCategories.length; j++) {
                     if (categories[i] === skeletonCategories[j].id) {
                         var loadedIndicators = skeletonCategories[j].things;
                         if (loadedIndicators.length > 0) {
                             // Check which indicators are already loaded
-                            for (k=0; k < indicators.length; k++) {
+                            for (k = 0; k < indicators.length; k++) {
                                 var indicatorLoaded = false;
-                                for (var m=0; m < loadedIndicators.length; m++) {
+                                for (var m = 0; m < loadedIndicators.length; m++) {
                                     if (loadedIndicators[m] === indicators[k]) {
                                         indicatorLoaded = true;
                                     }
@@ -180,7 +184,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
                         }
                         else {
                             // No indicator for this category loaded; load all of them
-                            for (var k=0; k < indicators.length; k++) {
+                            for (var k = 0; k < indicators.length; k++) {
                                 indicatorsToLoad[categories[i]].push(indicators[k]);
                             }
                         }
@@ -188,7 +192,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
                 }
             }
             else {
-                for (var k=0; k < indicators.length; k++) {
+                for (var k = 0; k < indicators.length; k++) {
                     indicatorsToLoad[categories[i]].push(indicators[k]);
                 }
             }
@@ -212,12 +216,14 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         var indicatorName = dataHelperModel.get(indicator);
         var scopeOfIndicators = [];
 
-        if (isMax) {index = 1;}
+        if (isMax) {
+            index = 1;
+        }
 
         for (var entity in indicators[timeUnit]) {
             if (indicators[timeUnit].hasOwnProperty(entity)) {
                 for (var ind in indicators[timeUnit][entity]) {
-                    if (ind === indicatorName ) {
+                    if (ind === indicatorName) {
                         scopeOfIndicators.push(indicators[timeUnit][entity][ind]["scope"]["value"][index]);
                     }
                 }
@@ -240,7 +246,9 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         var index = 0;
         var scopeOfIndicators = [];
 
-        if (isMax) {index=1;}
+        if (isMax) {
+            index = 1;
+        }
 
         for (var entity in indicators[timeUnit]) {
             if (indicators[timeUnit].hasOwnProperty(entity)) {
@@ -259,7 +267,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         var currentEntities = [];
         var category = dataHelperModel.get("entity") || dataHelperModel.get("category");
 
-        
+
         for (var entityId in entityMeta) {
             if (entityMeta.hasOwnProperty(entityId)) {
                 currentEntities[entityId] = [];
@@ -304,7 +312,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         return getScopeOfIndicators("yIndicator", true);
     };
 
-    var getMinOfYIndicator = function() {
+    var getMinOfYIndicator = function () {
         return getScopeOfIndicators("yIndicator", false);
     };
 
@@ -312,7 +320,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         return getScopeOfIndicators("sizeIndicator", false);
     };
 
-    var getMaxOfSizeIndicator = function() {
+    var getMaxOfSizeIndicator = function () {
         return getScopeOfIndicators("sizeIndicator", true);
     };
 
@@ -328,25 +336,25 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         return dataSetInfo;
     };
 
-    var getChartFooter = function() {
+    var getChartFooter = function () {
         return chartFooter;
     };
 
-    var getAxisNames = function() {
+    var getAxisNames = function () {
         return [xAxisName, yAxisName];
     };
 
-    var getAxisInfo = function() {
+    var getAxisInfo = function () {
         return [xAxisInfo, yAxisInfo];
     };
 
-    var getColor  = function(id, type, category) {
+    var getColor = function (id, type, category) {
         //var region = entityMeta[category][id][0].region;
         var region = entityMeta[id][0].region;
         if (colors[region]) {
             return colors[region][type];
         }
-        else if (regionsList.length > 0 ) {
+        else if (regionsList.length > 0) {
             return colorScale(regionsList.indexOf(region));
         }
         else {
@@ -354,11 +362,11 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         }
     };
 
-    var interpolateValueBetweenYears = function(prevNumber, nextNumber, fraction) {
+    var interpolateValueBetweenYears = function (prevNumber, nextNumber, fraction) {
         return prevNumber + (nextNumber - prevNumber) * fraction;
     };
 
-    var getName = function(id, category) {
+    var getName = function (id, category) {
         //return entityMeta[category][id][0].name;
         return entityMeta[id][0].name;
     };
@@ -409,7 +417,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         return values;
     };
 
-    var getDataForYear = function(indicator, entity, year, category) {
+    var getDataForYear = function (indicator, entity, year, category) {
         return indicators[timeUnit][category][indicator]["years"][entity]["trends"][year].v;
     };
 
@@ -426,7 +434,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
     };
 
     var getSkeleton = function () {
-      return skeleton;
+        return skeleton;
     };
 
     var isAnyBubblesOutOfScope = function () {
@@ -443,7 +451,7 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         var maxYValue = dataHelperModel.get("maxYValue");
 
         return  (xScope.min < minXValue || xScope.max > maxXValue
-                        || yScope.min < minYValue || yScope.max > maxYValue);
+            || yScope.min < minYValue || yScope.max > maxYValue);
     };
 
     return {

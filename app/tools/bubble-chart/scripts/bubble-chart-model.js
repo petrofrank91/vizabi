@@ -1,4 +1,4 @@
-gapminder.bubbleChartModel = function() {
+gapminder.bubbleChartModel = function () {
 
     var dataHelper;
     var validator;
@@ -43,13 +43,13 @@ gapminder.bubbleChartModel = function() {
     };
 
 
-    var initialize = function(args) {
+    var initialize = function (args) {
         validator = new gapminder.bubbleChartModelValidator();
         validator.initialize(get("fileFormat"), get("entity"),
             get("fileName"), get("dataPath"), args);
     };
 
-    var setInit = function(changedState, modelAndDataReadyCallback) {
+    var setInit = function (changedState, modelAndDataReadyCallback) {
         console.log("BUBBLE MODEL SET STATE: ", changedState);
 
         var changedStateAttr = {};
@@ -73,7 +73,7 @@ gapminder.bubbleChartModel = function() {
     };
 
 
-    var set = function(changedState, modelAndDataReadyCallback) {
+    var set = function (changedState, modelAndDataReadyCallback) {
         console.log("BUBBLE MODEL SET STATE: ", changedState);
 
         var changedStateAttr = {};
@@ -97,11 +97,11 @@ gapminder.bubbleChartModel = function() {
     };
 
 
-    var get = function(state) {
+    var get = function (state) {
         return stateAttributes[state];
     };
 
-    var updateFraction = function() {
+    var updateFraction = function () {
         var year = stateAttributes.year;
 
         stateAttributes.fraction = year - Math.floor(year);
@@ -109,15 +109,15 @@ gapminder.bubbleChartModel = function() {
         stateAttributes.nextYear = Math.ceil(year);
     };
 
-    var getDataHelper = function() {
+    var getDataHelper = function () {
         return validator.getDataHelper();
     };
 
-    var getAttributes = function() {
+    var getAttributes = function () {
         return stateAttributes;
     };
 
-    var setIndicatorsForMissingIndicatorsState = function(changedState, x, y, size) {
+    var setIndicatorsForMissingIndicatorsState = function (changedState, x, y, size) {
         stateAttributes.xIndicator = x;
         stateAttributes.yIndicator = y;
         stateAttributes.sizeIndicator = size;

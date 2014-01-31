@@ -1,4 +1,4 @@
-gapminder.vizBubble = function(callback) {
+gapminder.vizBubble = function (callback) {
     var svg;
     var scatterContainer;
     var labelLayer;
@@ -24,13 +24,13 @@ gapminder.vizBubble = function(callback) {
     var vizData;
     var isInteractive;
 
-    var labelAngel  = "-0.5";
+    var labelAngel = "-0.5";
     var labelPositionInteractive = "_50";
 
     var vizChart;
     var vizBubblePrint;
 
-    var update = function(state) {
+    var update = function (state) {
         vizState = state;
 
         updateLayout();
@@ -71,35 +71,41 @@ gapminder.vizBubble = function(callback) {
 
     var setBubbleAndFontSizeScale = function () {
         if (!vizState.get("minBubbleSize") && !vizState.get("maxBubbleSize")) {
-            bubbleSizeScale = d3.scale.sqrt().domain([vizState.getDataHelper().getMinOfSizeIndicator(), vizState.getDataHelper().getMaxOfSizeIndicator()]).range([1,30]).exponent(0.5);
+            bubbleSizeScale = d3.scale.sqrt().domain([vizState.getDataHelper().getMinOfSizeIndicator(), vizState.getDataHelper().getMaxOfSizeIndicator()]).range([1, 30]).exponent(0.5);
         }
         else {
-            bubbleSizeScale = d3.scale.sqrt().domain([vizState.getDataHelper().getMinOfSizeIndicator(), vizState.getDataHelper().getMaxOfSizeIndicator()]).range([vizState.get("minBubbleSize"),vizState.get("maxBubbleSize")]).exponent(0.5);
+            bubbleSizeScale = d3.scale.sqrt().domain([vizState.getDataHelper().getMinOfSizeIndicator(), vizState.getDataHelper().getMaxOfSizeIndicator()]).range([vizState.get("minBubbleSize"), vizState.get("maxBubbleSize")]).exponent(0.5);
         }
 
         if (!vizState.get("minFontSize") && !vizState.get("maxFontSize")) {
-            fontSizeScale = d3.scale.sqrt().domain([0,10e8]).range([7,25]).exponent(0.5);
+            fontSizeScale = d3.scale.sqrt().domain([0, 10e8]).range([7, 25]).exponent(0.5);
         }
         else {
-            fontSizeScale = d3.scale.sqrt().domain([0,10e8]).range([vizState.get("minFontSize"),vizState.get("maxFontSize")]).exponent(0.5);
+            fontSizeScale = d3.scale.sqrt().domain([0, 10e8]).range([vizState.get("minFontSize"), vizState.get("maxFontSize")]).exponent(0.5);
         }
     };
 
-    var updateEntityLayers = function() {
+    var updateEntityLayers = function () {
         countryLayers = vizState.getDataHelper().getEntityLayerObject();
 
         var entityLayers = d3.select("#" + chartRenderDiv + " .scatterContainer").selectAll(".entityLayer")
-            .data(countryLayers, function(d) {return d.id;});
+            .data(countryLayers, function (d) {
+                return d.id;
+            });
 
         var entityLayer = entityLayers
             .enter()
             .append("g")
             .attr("class", "entityLayer")
-            .attr("name", function(d) {return d.id;})
-            .attr("id", function(d) {return d.id;});
+            .attr("name", function (d) {
+                return d.id;
+            })
+            .attr("id", function (d) {
+                return d.id;
+            });
 
         entityLayers
-            .sort(function(a,b) {
+            .sort(function (a, b) {
                 return b.max - a.max;
             });
 
@@ -108,7 +114,7 @@ gapminder.vizBubble = function(callback) {
     };
 
 
-    var renderCurrentBubbles = function() {
+    var renderCurrentBubbles = function () {
         var year = vizState.get("year");
         var s = vizState.get("s");
         var opacity = vizState.get("opacity");
@@ -117,21 +123,27 @@ gapminder.vizBubble = function(callback) {
         var currentEntities = vizState.getDataHelper().getDataObject(year);
 
         var bubbles = d3.select("#" + chartRenderDiv).selectAll(".entityLayer")
-            .data(countryLayers, function(d) {
+            .data(countryLayers, function (d) {
                 return d.id;
             })
-            .selectAll(".currentEntity").data(function(d) {
+            .selectAll(".currentEntity").data(function (d) {
                 var id = d.id;
                 return currentEntities[id];
             });
 
         bubbles.enter().append("circle")
             .attr("class", "currentEntity")
-            .attr("name", function(d){return d.id;})
-            .attr("stroke-width","0.8pt")
-            .attr("stroke",function(d){return vizState.getDataHelper().getColor(d.id, "stroke", d.category);})
-            .attr("fill",function(d){return vizState.getDataHelper().getColor(d.id, "fill", d.category);})
-            .attr("pointer-events","all")
+            .attr("name", function (d) {
+                return d.id;
+            })
+            .attr("stroke-width", "0.8pt")
+            .attr("stroke", function (d) {
+                return vizState.getDataHelper().getColor(d.id, "stroke", d.category);
+            })
+            .attr("fill", function (d) {
+                return vizState.getDataHelper().getColor(d.id, "fill", d.category);
+            })
+            .attr("pointer-events", "all")
             .attr("cursor", "pointer");
 
 
@@ -146,16 +158,16 @@ gapminder.vizBubble = function(callback) {
         }
 
         bubbles
-            .attr("cx",function(d,i) {
+            .attr("cx", function (d, i) {
                 return xScale(d.x);
             })
-            .attr("cy",function(d,i) {
+            .attr("cy", function (d, i) {
                 return yScale(d.y);
             })
-            .attr("r", function(d,i) {
+            .attr("r", function (d, i) {
                 return bubbleSizeScale(d.size);
             });
-        
+
         bubbles.exit().remove();
     };
 
@@ -167,7 +179,7 @@ gapminder.vizBubble = function(callback) {
         for (var entity in entities) {
             if (entities.hasOwnProperty(entity)) {
                 var entityObj = entities[entity][0];
-                var layerData = {id : entityObj.id, children : []};
+                var layerData = {id: entityObj.id, children: []};
                 entityLayersData.push(layerData);
 
                 var selectedBubbles = vizState.get("s");
@@ -180,13 +192,13 @@ gapminder.vizBubble = function(callback) {
                     var trailLayerBubble = {id: "trailLayerBubble", data: []};
                     var trailLayerLine = {color: "#000", id: "trailLayerLine", data: []};
                     var children = layerData.children;
-                    children.push(trailLayerLine,trailLayerBubble);
+                    children.push(trailLayerLine, trailLayerBubble);
 
                     var trailStart = parseInt(selected.start);
 
                     //When moving into history, adjust trailStart
                     var year = vizState.get("year");
-                    if(year < trailStart) {
+                    if (year < trailStart) {
                         trailStart = Math.ceil(year);
                     }
 
@@ -197,16 +209,16 @@ gapminder.vizBubble = function(callback) {
 
                     //Prevent extra bubble from being drawn on full year
                     var rangeOfTrailEntities;
-                    if(vizState.get("fraction") === 0) {
-                        rangeOfTrailEntities = d3.range(trailStart, trailEnd,1);
+                    if (vizState.get("fraction") === 0) {
+                        rangeOfTrailEntities = d3.range(trailStart, trailEnd, 1);
                     }
-                    else{
-                        rangeOfTrailEntities = d3.range(trailStart, trailEnd+1,1);
+                    else {
+                        rangeOfTrailEntities = d3.range(trailStart, trailEnd + 1, 1);
                     }
 
                     var trailBubbleData = [];
 
-                    var trailEntities = rangeOfTrailEntities.map(function(year) {
+                    var trailEntities = rangeOfTrailEntities.map(function (year) {
                         var o = {};
 
                         o.x = vizState.getDataHelper().getDataForYear(vizState.get("xIndicator"), id, year, entityObj.parent);
@@ -245,22 +257,31 @@ gapminder.vizBubble = function(callback) {
         }
 
 
-
         var trailContainers = d3.select("#" + chartRenderDiv).selectAll(".entityLayer")
-            .data(entityLayersData, function(d){return d.id;})
-            .selectAll(".trailContainer").data(function(d){return d.children;}, function(d){return d.id;});
+            .data(entityLayersData, function (d) {
+                return d.id;
+            })
+            .selectAll(".trailContainer").data(function (d) {
+                return d.children;
+            }, function (d) {
+                return d.id;
+            });
 
         trailContainers.enter()
             .insert("svg:g", "circle")
-            .attr("name", function(d){return d.id;})
+            .attr("name", function (d) {
+                return d.id;
+            })
             .attr("class", "trailContainer")
-            .each(function(d) {
-                if(d.id === "trailLayerLine") {
+            .each(function (d) {
+                if (d.id === "trailLayerLine") {
                     d3.select(this).append("svg:path")
                         .attr("class", "trailPath")
-                        .attr("fill","none")
-                        .attr("stroke-width","1.5pt")
-                        .attr("stroke", function(d){return d.color;});
+                        .attr("fill", "none")
+                        .attr("stroke-width", "1.5pt")
+                        .attr("stroke", function (d) {
+                            return d.color;
+                        });
                 }
             });
 
@@ -268,28 +289,38 @@ gapminder.vizBubble = function(callback) {
             .remove();
 
         var line = d3.svg.line()
-            .x(function(d) { return xScale(d.x); })
-            .y(function(d) { return yScale(d.y); });
+            .x(function (d) {
+                return xScale(d.x);
+            })
+            .y(function (d) {
+                return yScale(d.y);
+            });
 
         var trailPath = trailContainers
-            .filter(function(d){
+            .filter(function (d) {
                 return d.id === "trailLayerLine";
             })
             .select(".trailPath");
 
         trailPath.
-            attr("d", function(d){return line(d.data);})
+            attr("d", function (d) {
+                return line(d.data);
+            })
             .attr("stroke-opacity", 0.6);
 
-        var trailBubbles = trailContainers.filter(function(d){return d.id == "trailLayerBubble"})
+        var trailBubbles = trailContainers.filter(function (d) {
+            return d.id == "trailLayerBubble"
+        })
             .selectAll(".trailEntity")
-            .data(function(d){return d.data;});
+            .data(function (d) {
+                return d.data;
+            });
 
 
         trailBubbles.enter()
             .append("svg:circle")
             .attr("class", "trailEntity")
-            .attr("stroke-width","0.5pt")
+            .attr("stroke-width", "0.5pt")
             .attr("cursor", "pointer")
             .attr("fill-opacity", 0.6)
             .attr("stroke-opacity", 0.6)
@@ -298,15 +329,19 @@ gapminder.vizBubble = function(callback) {
             .on("mouseout", bubbleOutHandler);
 
         trailBubbles
-            .attr("stroke",function(d){return vizState.getDataHelper().getColor(d.id, "stroke");})
-            .attr("fill",function(d){return vizState.getDataHelper().getColor(d.id, "fill");})
-            .attr("cx",function(d,i) {
+            .attr("stroke", function (d) {
+                return vizState.getDataHelper().getColor(d.id, "stroke");
+            })
+            .attr("fill", function (d) {
+                return vizState.getDataHelper().getColor(d.id, "fill");
+            })
+            .attr("cx", function (d, i) {
                 return xScale(d.x);
             })
-            .attr("cy",function(d,i) {
+            .attr("cy", function (d, i) {
                 return yScale(d.y);
             })
-            .attr("r", function(d,i) {
+            .attr("r", function (d, i) {
                 return bubbleSizeScale(d.size);
             });
 
@@ -326,23 +361,23 @@ gapminder.vizBubble = function(callback) {
 
         for (var id in selected) {
             if (selected.hasOwnProperty(id)) {
-                if ((entity && entityMeta[id][0].parent !== entity)  ||
+                if ((entity && entityMeta[id][0].parent !== entity) ||
                     (category.length > 0 && category.indexOf(entityMeta[id][0].parent) === -1)) {
-                        delete selected[id];
+                    delete selected[id];
                 }
             }
         }
 
-        circles.each(function(d,i){
-            if(Object.isEmptyObject(selected)){
+        circles.each(function (d, i) {
+            if (Object.isEmptyObject(selected)) {
                 d3.select(this).attr("fill-opacity", 0.9);
                 d3.select(this).attr("stroke-opacity", 0.9);
             }
 
-            else{
+            else {
                 var id = d.id;
 
-                if(id in selected){
+                if (id in selected) {
                     d3.select(this).attr("fill-opacity", 0.9);
                     d3.select(this).attr("stroke-opacity", 0.9);
                 }
@@ -381,7 +416,7 @@ gapminder.vizBubble = function(callback) {
         this.highlightNode = this.overNode.cloneNode(true);
 
         var highlightNode = d3.select(this.highlightNode)
-            .attr("pointer-events","none")
+            .attr("pointer-events", "none")
             .attr("class", "highlightNode")
             .attr("fill", "none")
             .attr("r", nodeR + 5)
@@ -396,7 +431,7 @@ gapminder.vizBubble = function(callback) {
             .select(".labelLayer")
             .append("g")
             .attr("class", "highlightLabel")
-            .attr("pointer-events","none");
+            .attr("pointer-events", "none");
 
         var rectNode = this.highlightLabel
             .append("rect")
@@ -410,7 +445,7 @@ gapminder.vizBubble = function(callback) {
             .attr("class", "entityLabel")
             .attr("text-anchor", "middle")
             //.attr("dominant-baseline","central")
-            .text(function() {
+            .text(function () {
                 var text;
                 currentEntity ? text = vizState.getDataHelper().getName(d.id, d.category) : text = vizState.getDataHelper().getName(d.id) + ", " + d.year;
                 return text;
@@ -426,8 +461,8 @@ gapminder.vizBubble = function(callback) {
         rectNode
             .attr("width", textNodeBBoxWidth + paddingWidth)
             .attr("height", textNodeBBoxHeight + paddingHeight)
-            .attr("x", -textNodeBBoxWidth/2 - paddingWidth/2)
-            .attr("y", -textNodeBBoxHeight/2 - paddingWidth/2)
+            .attr("x", -textNodeBBoxWidth / 2 - paddingWidth / 2)
+            .attr("y", -textNodeBBoxHeight / 2 - paddingWidth / 2)
             .attr("fill", "#fff")
             .attr("stroke", nodeFill)
             .attr("stroke-width", "3px")
@@ -436,18 +471,18 @@ gapminder.vizBubble = function(callback) {
 
         var bbox = this.highlightLabel.node().getBBox();
 
-        var preferredX = nodeX + bbox.width/2 + nodeR + 5;
-        var preferredY = nodeY - bbox.height/2 - nodeR - 5;
+        var preferredX = nodeX + bbox.width / 2 + nodeR + 5;
+        var preferredY = nodeY - bbox.height / 2 - nodeR - 5;
         var coordinates = fitWithinLabelConstraints(bbox, preferredX, preferredY);
 
         this.highlightLabel
-            .attr("transform", "translate(" + coordinates.x + "," + coordinates.y +")");
+            .attr("transform", "translate(" + coordinates.x + "," + coordinates.y + ")");
 
         this.xValueLabel = d3.select("#" + chartRenderDiv).select(".labelLayer")
             .append("g")
-            .attr("transform", "translate(" + nodeX + "," + (availableHeight + 15) +")")
+            .attr("transform", "translate(" + nodeX + "," + (availableHeight + 15) + ")")
             .attr("class", "xValueLabel")
-            .attr("pointer-events","none");
+            .attr("pointer-events", "none");
 
         var rectNodeX = this.xValueLabel
             .append("rect")
@@ -459,7 +494,7 @@ gapminder.vizBubble = function(callback) {
             .attr("stroke", "#999");
 
         var numFormat2 = d3.format(",g");
-        var numberFormat = function(d) {
+        var numberFormat = function (d) {
             return numFormat2(d.toPrecision(2));
         };
 
@@ -469,8 +504,8 @@ gapminder.vizBubble = function(callback) {
             .attr("text-anchor", "middle")
             .attr("font-weight", "bold")
 
-            .attr("dominant-baseline","central")
-            .text(function() {
+            .attr("dominant-baseline", "central")
+            .text(function () {
                 return numberFormat(d.x);
             });
 
@@ -478,16 +513,16 @@ gapminder.vizBubble = function(callback) {
         var xValueTextHeight = xValueText.node().getBBox().height;
 
         rectNodeX
-            .attr("width", xValueTextWidth+paddingWidth)
-            .attr("height", xValueTextHeight+paddingHeight)
-            .attr("x", -xValueTextWidth/2-paddingWidth/2)
-            .attr("y", -xValueTextHeight/2-paddingWidth/2);
+            .attr("width", xValueTextWidth + paddingWidth)
+            .attr("height", xValueTextHeight + paddingHeight)
+            .attr("x", -xValueTextWidth / 2 - paddingWidth / 2)
+            .attr("y", -xValueTextHeight / 2 - paddingWidth / 2);
 
         this.yValueLabel = d3.select("#" + chartRenderDiv).select(".labelLayer")
             .append("g")
-            .attr("transform", "translate(" + -6 + "," + nodeY +")")
+            .attr("transform", "translate(" + -6 + "," + nodeY + ")")
             .attr("class", "yValueLabel")
-            .attr("pointer-events","none");
+            .attr("pointer-events", "none");
 
         var rectNodeY = this.yValueLabel
             .append("rect")
@@ -503,8 +538,8 @@ gapminder.vizBubble = function(callback) {
             .attr("class", "yValueLabelTex")
             .attr("text-anchor", "end")
             .attr("font-weight", "bold")
-            .attr("dominant-baseline","central")
-            .text(function() {
+            .attr("dominant-baseline", "central")
+            .text(function () {
                 return numberFormat(d.y);
             });
 
@@ -514,13 +549,12 @@ gapminder.vizBubble = function(callback) {
         rectNodeY
             .attr("width", yValueTextWidth + paddingWidth)
             .attr("height", yValueTextHeight + paddingHeight)
-            .attr("x", -yValueTextWidth - paddingWidth/2)
-            .attr("y", -yValueTextHeight/2 - paddingWidth/2);
+            .attr("x", -yValueTextWidth - paddingWidth / 2)
+            .attr("y", -yValueTextHeight / 2 - paddingWidth / 2);
     };
 
 
-
-    var bubbleOutHandler = function(name, i) {
+    var bubbleOutHandler = function (name, i) {
 
         d3.select("#" + chartRenderDiv).selectAll(".highlightNode").remove();
         d3.select("#" + chartRenderDiv).selectAll(".highlightLabel").remove();
@@ -530,69 +564,71 @@ gapminder.vizBubble = function(callback) {
 
     };
 
-    var fitWithinLabelConstraints = function (bbox,x,y) {
+    var fitWithinLabelConstraints = function (bbox, x, y) {
 
         var coordinates = {x: x, y: y};
         var padding = 5;
 
-        var minX = bbox.width/2 + padding;
-        var maxX = availableWidth - (bbox.width/2) - padding;
-        var minY = bbox.height/2 + padding;
-        var maxY = availableHeight - (bbox.height/2) - padding;
+        var minX = bbox.width / 2 + padding;
+        var maxX = availableWidth - (bbox.width / 2) - padding;
+        var minY = bbox.height / 2 + padding;
+        var maxY = availableHeight - (bbox.height / 2) - padding;
 
-        if(x < minX){
+        if (x < minX) {
             coordinates.x = minX;
         }
-        if(x > maxX){
+        if (x > maxX) {
             coordinates.x = maxX;
         }
-        if(y < minY){
+        if (y < minY) {
             coordinates.y = minY;
         }
-        if(y > maxY){
+        if (y > maxY) {
             coordinates.y = maxY;
         }
 
         return coordinates;
     };
 
-    var dragMove = function (d,i) {
-            var preferredX = d3.event.x;
-            var preferredY = d3.event.y;
+    var dragMove = function (d, i) {
+        var preferredX = d3.event.x;
+        var preferredY = d3.event.y;
 
-            var bbox = d3.select(this).node().getBBox();
-            var labelCoordinates = fitWithinLabelConstraints(bbox, preferredX, preferredY);
+        var bbox = d3.select(this).node().getBBox();
+        var labelCoordinates = fitWithinLabelConstraints(bbox, preferredX, preferredY);
 
-            var radius = bubbleSizeScale(d.size);
-            var bubbleX = xScale(d.x);
-            var bubbleY = yScale(d.y);
+        var radius = bubbleSizeScale(d.size);
+        var bubbleX = xScale(d.x);
+        var bubbleY = yScale(d.y);
 
-            var x = labelCoordinates.x - bubbleX;
-            var y = labelCoordinates.y - bubbleY;
+        var x = labelCoordinates.x - bubbleX;
+        var y = labelCoordinates.y - bubbleY;
 
-            var angle = Math.atan2(y,x);
-            var distance = Math.sqrt((Math.pow(x,2)+Math.pow(y,2)));
+        var angle = Math.atan2(y, x);
+        var distance = Math.sqrt((Math.pow(x, 2) + Math.pow(y, 2)));
 
-            var perimeterX = bubbleX + radius * Math.cos(angle);
-            var perimeterY = bubbleY + radius * Math.sin(angle);
+        var perimeterX = bubbleX + radius * Math.cos(angle);
+        var perimeterY = bubbleY + radius * Math.sin(angle);
 
-            d.labelPos = angle + "_" + (distance-radius);
+        d.labelPos = angle + "_" + (distance - radius);
 
-            var labelLink = d3.selectAll(".labelLink")
-                .filter(function(a){return a.id === d.id;})
-                .attr("x1", perimeterX)
-                .attr("y1", perimeterY)
-                .attr("x2", labelCoordinates.x)
-                .attr("y2", labelCoordinates.y);
+        var labelLink = d3.selectAll(".labelLink")
+            .filter(function (a) {
+                return a.id === d.id;
+            })
+            .attr("x1", perimeterX)
+            .attr("y1", perimeterY)
+            .attr("x2", labelCoordinates.x)
+            .attr("y2", labelCoordinates.y);
 
-            d3.select(this).attr("transform", "translate(" + labelCoordinates.x + "," + labelCoordinates.y + ")");
+        d3.select(this).attr("transform", "translate(" + labelCoordinates.x + "," + labelCoordinates.y + ")");
     };
 
-    var dragEnd = function(d,i) {
+    var dragEnd = function (d, i) {
         var selected = vizState.get("s");
         selected[d.id].labelPos = d.labelPos;
 
-        vizStateChangeCallback({s:selected}, vizData);
+        vizStateChangeCallback({s: selected}, vizData);
     };
 
     var addLabelsToSelectedBubbles = function (selectedEntities, year) {
@@ -610,7 +646,7 @@ gapminder.vizBubble = function(callback) {
                 o.y = vizState.getDataHelper().get(vizState.get("yIndicator"), entityId, year, vizState, category);
                 o.size = vizState.getDataHelper().get(vizState.get("sizeIndicator"), entityId, year, vizState, category);
 
-                if("labelPos" in entity) {
+                if ("labelPos" in entity) {
                     o.labelPos = selectedEntities[entityId].labelPos;
                 }
                 else {
@@ -626,12 +662,12 @@ gapminder.vizBubble = function(callback) {
         return labelsData;
     };
 
-    var bubbleClickHandler = function (d,i) {
+    var bubbleClickHandler = function (d, i) {
         var currentYear = vizState.get("year");
         var selected = vizState.get("s");
         var id = d.id;
 
-        if(id in selected) {
+        if (id in selected) {
             delete selected[id];
         }
         else {
@@ -661,7 +697,9 @@ gapminder.vizBubble = function(callback) {
         var labels = d3.select("#" + chartRenderDiv)
             .select(".labelLayer")
             .selectAll(".labelNode")
-            .data(labelsData, function(d){return d.id;});
+            .data(labelsData, function (d) {
+                return d.id;
+            });
 
         var dragInteractive = d3.behavior.drag()
             .on("drag", dragMove)
@@ -670,11 +708,11 @@ gapminder.vizBubble = function(callback) {
         var labelContainer = labels.enter()
             .append("g")
             .attr("class", "labelNode")
-            .attr("cursor","pointer")
+            .attr("cursor", "pointer")
             .call(dragInteractive);
 
         labelContainer.append("rect")
-            .attr("cursor","pointer")
+            .attr("cursor", "pointer")
             .attr("class", "labelBG");
 
 
@@ -682,15 +720,17 @@ gapminder.vizBubble = function(callback) {
             .append("text")
             .attr("class", "labelText")
             .attr("text-anchor", "middle")
-            .attr("dominant-baseline","central")
-            .attr("font-family","'Helvetica', sans-serif")
+            .attr("dominant-baseline", "central")
+            .attr("font-family", "'Helvetica', sans-serif")
             .attr("x", "0")
             .attr("y", "0")
-            .attr("font-size","23px")
+            .attr("font-size", "23px")
             .attr("pointer-events", "none")
-            .text(function(d) {return d.name;});
+            .text(function (d) {
+                return d.name;
+            });
 
-        labels.each(function(d) {
+        labels.each(function (d) {
 
             var bbox = d3.select(this).select(".labelText").node().getBBox();
             var width = bbox.width;
@@ -700,10 +740,10 @@ gapminder.vizBubble = function(callback) {
             var paddingHeight = 8;
 
             d3.select(this).select(".labelBG")
-                .attr("width", width+paddingWidth)
-                .attr("height", height+paddingHeight)
-                .attr("x", -width/2-paddingWidth/2)
-                .attr("y", -height/2-paddingWidth/2)
+                .attr("width", width + paddingWidth)
+                .attr("height", height + paddingHeight)
+                .attr("x", -width / 2 - paddingWidth / 2)
+                .attr("y", -height / 2 - paddingWidth / 2)
                 .attr("fill", "#fff")
                 .attr("stroke", "#999")
                 .attr("stroke-width", "2px")
@@ -711,7 +751,7 @@ gapminder.vizBubble = function(callback) {
                 .attr("rx", "5px");
 
 
-            var angle = -1/4 * Math.PI;
+            var angle = -1 / 4 * Math.PI;
             var distanceFromPerimeter = 50;
 
             var labelPos = d.labelPos;
@@ -720,7 +760,7 @@ gapminder.vizBubble = function(callback) {
 
             var radius = bubbleSizeScale(d.size);
             var bubbleX = xScale(d.x);
-            var bubbleY =  yScale(d.y);
+            var bubbleY = yScale(d.y);
 
             var perimeterX = bubbleX + radius * Math.cos(angle);
             var perimeterY = bubbleY + radius * Math.sin(angle);
@@ -739,13 +779,15 @@ gapminder.vizBubble = function(callback) {
             d.linkEndX = labelCoordinates.x;
             d.linkEndY = labelCoordinates.y;
 
-            d3.select(this).attr("transform", "translate(" + labelCoordinates.x + "," + labelCoordinates.y +")");
+            d3.select(this).attr("transform", "translate(" + labelCoordinates.x + "," + labelCoordinates.y + ")");
         });
 
         labels.exit().remove();
 
         var labelLinks = d3.select("#" + chartRenderDiv).select(".linkLayer").selectAll(".labelLink")
-            .data(labelsData, function(d){return d.id;});
+            .data(labelsData, function (d) {
+                return d.id;
+            });
 
         labelLinks.enter().append("svg:line")
             .attr("class", "labelLink")
@@ -753,10 +795,18 @@ gapminder.vizBubble = function(callback) {
             .attr("stroke-width", "1px");
 
         labelLinks
-            .attr("x1", function(d) { return d.linkStartX; })
-            .attr("y1", function(d) { return d.linkStartY; })
-            .attr("x2", function(d) { return d.linkEndX; })
-            .attr("y2", function(d) { return d.linkEndY; });
+            .attr("x1", function (d) {
+                return d.linkStartX;
+            })
+            .attr("y1", function (d) {
+                return d.linkStartY;
+            })
+            .attr("x2", function (d) {
+                return d.linkEndX;
+            })
+            .attr("y2", function (d) {
+                return d.linkEndY;
+            });
 
         labelLinks.exit().remove();
     };
@@ -765,7 +815,6 @@ gapminder.vizBubble = function(callback) {
         document.getElementById("chartInfo").innerHTML = vizState.getDataHelper().getChartInfo();
         document.getElementById("chartFooter").innerHTML = "<b>Source</b>:" + vizState.getDataHelper().getChartFooter();
     };
-
 
 
     return {
