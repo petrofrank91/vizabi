@@ -1,6 +1,10 @@
 require.config({
     paths: {
 
+        // packages
+        'bubble-chart-package': '../../tools/bubble-chart/scripts/bubble-chart-package',
+        'vizabi-package': '../../vizabi.js/vizabi-package',
+
         // common deps
         'd3': '../../bower_components/d3/d3',
         'jquery': '../../bower_components/jquery/jquery',
@@ -62,11 +66,11 @@ define.amd.jQuery = true;
 
 require([
     'jquery',
-    '../../tools/bubble-chart/scripts/bubble-chart-only-vizabi',
+    'vizabi-package'
     //'project/app',
     //'domReady',
     //'tools',
-], function ($, gapminder, domReady) {
+], function ($, vizabi, domReady) {
 
     console.log('@main');
 
@@ -85,7 +89,7 @@ require([
 
     var renderDiv = "chart-1";
 
-    var app = new gapminder.bubbleChart(renderDiv, chartState);
+    var app = new vizabi.bubbleChart(renderDiv, chartState);
 
     /*
      // Create a new tool view
