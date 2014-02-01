@@ -41,7 +41,7 @@ require.config({
         'chart-grid': "../../widgets/chart-grid/chart-grid",
 
         /* aliases to project-specific files */
-        //'tool': '../../tools/{{project}}/scripts', // replaced in main-processed.js
+        'project': '../../{{project}}/scripts' // variable replaced by grunt task and ends up in main-processed.js
 
     },
     shim: {
