@@ -32,7 +32,7 @@ module.exports = function (grunt) {
 
     // configurable paths
 	var paths = {
-        projecthats: 'test/' + project + "/human-acceptance/" + hatnum,
+        hat: 'test/' + project + "/human-acceptance/" + hatnum,
 		app: {
 			base: 'app',
             project: 'app/' + project,
@@ -74,6 +74,7 @@ module.exports = function (grunt) {
                     livereload: '<%= connect.options.livereload %>'
                 },
                 files: [
+                    '<%= yeoman.hat %>/*.html',
                     '<%= yeoman.app.base %>/*.html',
 					'{<%= yeoman.tmp.project %>,<%= yeoman.app.project %>}/styles/{,*/}{,*/}{,*/}*.css',
 					'{<%= yeoman.tmp.project %>,<%= yeoman.app.project %>}/scripts/{,*/}{,*/}{,*/}*.js',
@@ -85,7 +86,9 @@ module.exports = function (grunt) {
 					'<%= yeoman.app.common %>/images/{,*/}{,*/}{,*/}*.{gif,jpg,jpeg,png,svg,webp}'
                 ],
                 tasks: [
-                    'livereload',
+                    'copy:index',
+                    'replace:templateincludes',
+                    'replace:requirejs'
                 ]
             }
         },
@@ -105,7 +108,7 @@ module.exports = function (grunt) {
                     base: [
                         '<%= yeoman.tmp.base %>',
                         '<%= yeoman.app.base %>',
-                        '<%= yeoman.projecthats %>'
+                        '<%= yeoman.hat %>'
                     ]
                 }
             },
@@ -231,6 +234,7 @@ module.exports = function (grunt) {
 				options: {
 					variables: {
 						'{{project}}': project,
+						'{{hatnum}}': hatnum,
 					},
 					prefix: ''
 				},
@@ -242,8 +246,9 @@ module.exports = function (grunt) {
 				options: {
 					variables: {
 						'{{project}}': project,
-						//'<!-- @@app-include:"_parts/header.html" -->': '<%= grunt.file.read("' + paths.app.project + '/templates/_parts/header.html") %>',
-						//'<!-- @@app-include:"_parts/footer.html" -->': '<%= grunt.file.read("' + paths.app.project + '/templates/_parts/footer.html") %>',
+						'{{hatnum}}': hatnum,
+						'<!-- @@hat-include:"css.html" -->': '<%= grunt.file.read("' + paths.hat + '/css.html") %>',
+						'<!-- @@hat-include:"body.html" -->': '<%= grunt.file.read("' + paths.hat + '/body.html") %>',
 					},
 					prefix: ''
 				},
@@ -254,12 +259,12 @@ module.exports = function (grunt) {
 			requirejs: {
 				options: {
 					variables: {
-						'<!-- @@requirejs-script-tag -->': '<script data-main="common/scripts/main-processed" src="common/scripts/vendor/require.js"></script>',
+						'<!-- @@requirejs-script-tag -->': '<script data-main="common/scripts/main-processed" src="bower_components/requirejs/require.js"></script>',
 					},
 					prefix: ''
 				},
 				files: [
-                    {expand: true, flatten: true, src: ['<%= yeoman.dist.base %>/index.html'], dest: 'dist/'}
+                    {expand: true, flatten: true, src: ['<%= yeoman.app.base %>/index.html'], dest: '<%= yeoman.app.base %>/'}
 				]
 			},
 			requirejsdist: {
@@ -270,7 +275,7 @@ module.exports = function (grunt) {
 					prefix: ''
 				},
 				files: [
-                    {expand: true, flatten: true, src: ['<%= yeoman.dist.base %>/index.html'], dest: 'dist/'}
+                    {expand: true, flatten: true, src: ['<%= yeoman.dist.base %>/index.html'], dest: '<%= yeoman.dist.base %>/'}
 				]
 			},
         },
@@ -417,6 +422,10 @@ module.exports = function (grunt) {
         },
         // Put files not handled in other tasks here
         copy: {
+            index: {
+                src: '<%= yeoman.app.base %>/index-template.html',
+                dest: '<%= yeoman.app.base %>/index.html',
+            },
             dist: {
                 files: [
                     {
@@ -506,6 +515,7 @@ module.exports = function (grunt) {
 
         grunt.task.run([
             'clean:server',
+            'copy:index',
 			'replace:mainjs',
 			'replace:templateincludes',
 			'replace:requirejs',
@@ -533,6 +543,7 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
+        'copy:index',
 		'replace:mainjs',
 		'replace:templateincludes',
 		'replace:requirejsdist',
