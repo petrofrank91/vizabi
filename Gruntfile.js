@@ -31,8 +31,9 @@ module.exports = function (grunt) {
     }
 
     // configurable paths
+    var hatPath = 'test/' + project + "/human-acceptance/" + hatnum;
 	var paths = {
-        hat: 'test/' + project + "/human-acceptance/" + hatnum,
+        hat: hatPath,
 		app: {
 			base: 'app',
             project: 'app/' + project,
@@ -44,9 +45,9 @@ module.exports = function (grunt) {
             common: '.tmp/common'
         },
         dist: {
-			base: 'dist',
-            project: 'dist/' + project,
-            common: 'dist/common'
+			base: 'dist/' + hatPath,
+            project: 'dist/' + hatPath + '/' + project,
+            common: 'dist/' + hatPath + '/common'
         }
     };
 
