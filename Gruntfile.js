@@ -587,7 +587,13 @@ module.exports = function (grunt) {
 		'replace:wrapperjsdist',
         'useminPrepare',
         'requirejs',
-        'concurrent:dist', // runs various tasks concurrently, see configuration above
+        //'concurrent:dist', // runs various tasks concurrently, see configuration above. currently disabled since the stage server chokes here. instead running the tasks synchronously:
+            'compass:dist',
+            'copy:styles',
+            'imagemin',
+            'svgmin',
+            'htmlmin',
+            //'uglify', // comment out to simplify debugging
         'autoprefixer',
         //'modernizr', // disabled due to https://github.com/Modernizr/grunt-modernizr/issues/45
         'copy:dist',
