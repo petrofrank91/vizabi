@@ -149,6 +149,16 @@ module.exports = function (grunt) {
                     }
                 ]
             },
+            postbuild: {
+                files: [
+                    {
+                        dot: true,
+                        src: [
+                            '<%= yeoman.dist.base %>/index-template.html'
+                        ]
+                    }
+                ]
+            },
             server: '<%= yeoman.tmp.base %>'
         },
         jshint: {
@@ -225,7 +235,7 @@ module.exports = function (grunt) {
 		uglify: {
 			dist: {
 				files: [
-					{src: '<%= yeoman.dist.common %>/scripts/amd-app.js', dest: '<%= yeoman.dist.base %>/scripts/amd-app.js'},
+					{src: '<%= yeoman.dist.base %>/scripts/vizabi.js', dest: '<%= yeoman.dist.base %>/scripts/vizabi.js'},
 				]
 			}
 		},
@@ -270,12 +280,12 @@ module.exports = function (grunt) {
 			requirejsdist: {
 				options: {
 					variables: {
-						'<!-- @@requirejs-script-tag -->': '<script src="common/scripts/amd-app.js"></script>',
+						'<!-- @@requirejs-script-tag -->': '<script src="scripts/vizabi.js"></script>',
 					},
 					prefix: ''
 				},
 				files: [
-                    {expand: true, flatten: true, src: ['<%= yeoman.dist.base %>/index.html'], dest: '<%= yeoman.dist.base %>/'}
+                    {expand: true, flatten: true, src: ['<%= yeoman.app.base %>/index.html'], dest: '<%= yeoman.app.base %>/'}
 				]
 			},
         },
@@ -292,7 +302,7 @@ module.exports = function (grunt) {
 					// path to require.js or almond.js - without ".js"
 					name: '../../../<%= yeoman.app.base %>/bower_components/almond/almond',
 					// the resulting file
-					out: '<%= yeoman.dist.base %>/common/scripts/amd-app.js',
+					out: '<%= yeoman.dist.base %>/scripts/vizabi.js',
 					// none since this is done be a different grunt task
                     optimize: 'none',
 					// generate source maps that help local debugging
@@ -345,10 +355,10 @@ module.exports = function (grunt) {
         },
         usemin: {
             options: {
-                assetsDirs: ['<%= yeoman.dist.base %>']
+                assetsDirs: ['<%= yeoman.dist.base %>'],
             },
-            html: ['<%= yeoman.dist.base %>/{,*/}*.html'],
-            css: ['<%= yeoman.dist.base %>/{,*/}{,*/}styles/{,*/}{,*/}*.css']
+            html: ['<%= yeoman.dist.base %>/index.html'],
+            css: ['<%= yeoman.dist.base %>/styles/{,*/}*.css']
         },
         imagemin: {
             dist: {
@@ -436,21 +446,44 @@ module.exports = function (grunt) {
                         src: [
                             '*.{ico,png,txt}',
                             '.htaccess',
-                            'images/{,*/}*.{webp,gif}',
+                            'images/{,*/}*.{gif,jpg,jpeg,png,svg,webp}',
+                            'styles/vizabi.css',
                             'styles/fonts/{,*/}*.*',
+                            'bower_components/jquery-ui/themes/base/',
                             'bower_components/sass-bootstrap/fonts/*.*'
                         ]
                     },
+                    // HAT data
+                    {
+                        expand: true,
+                        dot: true,
+						cwd: '<%= yeoman.hat %>',
+						dest: '<%= yeoman.dist.base %>',
+                        src: [
+                            'data/{,*/}*',
+                        ]
+                    },
+                    // Project stylesheets
                     {
                         expand: true,
                         dot: true,
 						cwd: '<%= yeoman.app.project %>',
 						dest: '<%= yeoman.dist.project %>',
                         src: [
-                            'styles/{,*/}{,*/}*.css',
+                            //'styles/{,*/}{,*/}*.css',
                             'styles/*.ico'
                         ]
-                    }
+                    },
+                    // jQuery UI theme - for relative urls to work (https://github.com/GoalSmashers/clean-css/issues/129#issuecomment-32153443)
+                    {
+                        expand: true,
+                        dot: true,
+						cwd: '<%= yeoman.app.base %>/bower_components/jquery-ui/themes/base',
+						dest: '<%= yeoman.dist.base %>/styles',
+                        src: [
+                            'images/{,*/}*.{gif,jpg,jpeg,png,svg,webp}',
+                        ]
+                    },
                 ]
             },
             styles: {
@@ -553,8 +586,11 @@ module.exports = function (grunt) {
         'autoprefixer',
         //'modernizr', // disabled due to https://github.com/Modernizr/grunt-modernizr/issues/45
         'copy:dist',
+        'concat:generated',
+        'cssmin:generated',
         'rev',
-        'usemin'
+        'usemin',
+        'clean:postbuild'
     ]);
 
     grunt.registerTask('default', [

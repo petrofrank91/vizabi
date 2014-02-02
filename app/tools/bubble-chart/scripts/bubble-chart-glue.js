@@ -229,7 +229,7 @@ define(['bubble-chart-model', 'viz-bubble', 'time-slider-jQueryUI', 'settings-bu
             setDivId("playImage", "image-" + renderDiv);
             var playImage = document.createElement("img");
             playImage.className = "play-button";
-            playImage.src = "/tools/bubble-chart/images/play.png";
+            playImage.src = "tools/bubble-chart/images/play.png"; // TODO: Do not include src here, the className is enough. Move src to css as url()
             imageParent.appendChild(playImage);
 
             var sliderWidgetDiv = document.createElement("div");

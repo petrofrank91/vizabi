@@ -60,10 +60,10 @@ define([], function () {
                 clearInterval(timer);
                 playing = false;
                 sliderStateChangeCallback({enableHistory: true});
-                playButton.attr("src", "/tools/bubble-chart/images/play.png");
+                playButton.attr("src", "tools/bubble-chart/images/play.png"); // TODO: Do not include src here, the className is enough. Move src to css as url()
             }
             else {
-                playButton.attr("src", "/tools/bubble-chart/images/pause.png");
+                playButton.attr("src", "tools/bubble-chart/images/pause.png"); // TODO: Do not include src here, the className is enough. Move src to css as url()
                 timer = setInterval(function () {
                     playingOnInterval();
                 }, 40);
@@ -92,7 +92,7 @@ define([], function () {
             clearInterval(timer);
             playing = false;
             timer = undefined;
-            playButton.attr("src", "../../assets/img/bubble/play.png");
+            playButton.attr("src", "tools/bubble-chart/images/play.png"); // TODO: Do not include src here, the className is enough. Move src to css as url()
         };
 
 
