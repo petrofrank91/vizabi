@@ -1,4 +1,4 @@
-define([], function () {
+define(['queue-async'], function (queue) {
 
     var readerMultipleCSV = function () {
         var indicators = {};
