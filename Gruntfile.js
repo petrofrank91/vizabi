@@ -301,6 +301,11 @@ module.exports = function (grunt) {
 					include: 'main-processed',
 					// path to require.js or almond.js - without ".js"
 					name: '../../../<%= yeoman.app.base %>/bower_components/almond/almond',
+                    // wrapper content that allows vizabi.js to be included using both a script-tag or as an amd module
+                    wrap: {
+                        "startFile": "<%= yeoman.app.base %>/vizabi.js/wrap.start",
+                        "endFile": "<%= yeoman.app.base %>/vizabi.js/wrap.end"
+                    },
 					// the resulting file
 					out: '<%= yeoman.dist.base %>/scripts/vizabi.js',
 					// none since this is done be a different grunt task
@@ -311,7 +316,6 @@ module.exports = function (grunt) {
                     // http://requirejs.org/docs/errors.html#sourcemapcomments
                     preserveLicenseComments: false,
                     useStrict: true,
-                    wrap: true,
 					// makes inline require() statements work in the built file
                     findNestedDependencies: true,
 					// performs some post build analysis (configuration taken from grunt-contrib-requirejs readme)

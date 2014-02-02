@@ -1,4 +1,4 @@
-define(['bubble-chart-model', 'viz-bubble', 'time-slider-jQueryUI', 'settings-button'], function (bubbleChartModel, vizBubble, timeSlider, settingsButton) {
+define(['jquery', 'bubble-chart-model', 'viz-bubble', 'time-slider-jQueryUI', 'settings-button'], function ($, bubbleChartModel, vizBubble, timeSlider, settingsButton) {
 
     // supposed to be available at window.vizabi.bubbleChart
     var bubbleChart = function (renderDiv, state) {

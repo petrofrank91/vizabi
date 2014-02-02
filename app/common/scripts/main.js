@@ -65,44 +65,16 @@ require.config({
 define.amd.jQuery = true;
 
 require([
-    'jquery',
+    //'jquery',
     'vizabi-package'
     //'project/app',
-    //'domReady',
     //'tools',
-], function ($, vizabi, domReady) {
+], function ($, vizabi) {
 
-    console.log('@main');
+    if (typeof(console) !== "undefined" && console.log) console.log('@vizabi amd loaded');
 
     //domReady(function () {
     //console.log('@domReady');
-    var chartState = {
-        dataPath: "data/",
-        year: 1960,
-        xIndicator: "tfr1",
-        yIndicator: "mort",
-        sizeIndicator: "pop",
-        entity: "unstates",
-        isInteractive: true,
-        fileFormat: "multipleJSON"
-    };
-
-    var renderDiv = "chart-1";
-
-    var app = new vizabi.bubbleChart(renderDiv, chartState);
-
-    /*
-     // Create a new tool view
-     var view = new toolView({
-     });
-
-     // Render the view internally
-     view.render();
-
-     // Add the rendered div element to the DOM
-     view.$el.appendTo($('div.container'));
-     */
-
     //});
 
 });

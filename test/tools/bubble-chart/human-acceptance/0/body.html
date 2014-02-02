@@ -1,20 +1,22 @@
+<!-- @@requirejs-script-tag -->
+
 <script>
-    /*
-     var chartState = {
-     dataPath: "data/",
-     year: 1960,
-     xIndicator : "tfr1",
-     yIndicator : "mort",
-     sizeIndicator : "pop",
-     entity : "unstates",
-     isInteractive: true,
-     fileFormat: "multipleJSON"
-     };
 
-     var renderDiv = "chart-1";
+    var chartState = {
+        dataPath: "data/",
+        year: 1960,
+        xIndicator: "tfr1",
+        yIndicator: "mort",
+        sizeIndicator: "pop",
+        entity: "unstates",
+        isInteractive: true,
+        fileFormat: "multipleJSON"
+    };
 
-     var app = new gapminder.bubbleChart(renderDiv, chartState);
-     */
+    var renderDiv = "chart-1";
+
+    var app = new vizabi.bubbleChart(renderDiv, chartState);
+
 </script>
 
 <div id="chartInfo"></div>
@@ -24,4 +26,3 @@
      align="center">Description: Vizabi Test Pages 000: Smashed Version of Vizabi will load the application
 </div>
 
-<!-- @@requirejs-script-tag -->
