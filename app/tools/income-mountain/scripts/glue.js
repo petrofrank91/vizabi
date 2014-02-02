@@ -3,7 +3,7 @@
 
 // Implementation of the Income Mountain that glues all the visualization
 // components together.
-gapminder.im = function(divId, options) {
+gapminder.im = function (divId, options) {
     var div;
     var svg;
 
@@ -67,13 +67,16 @@ gapminder.im = function(divId, options) {
             console.error(errMsg.noStateSpecified);
             return false;
         }
-console.log(st);
+        console.log(st);
         i18n = st.i18n || i18n;
 
         state.year = +st.year || state.year;
         state.geo = st.geo || state.geo;
         console.log(state.stack);
-        if (!state.stack) { state.stack = (st.stack === true || st.stack === 'true'); };
+        if (!state.stack) {
+            state.stack = (st.stack === true || st.stack === 'true');
+        }
+        ;
         console.log(state.stack);
         state.fullscreen =
             (st.fullscreen === true || st.fullscreen === 'true');
@@ -85,7 +88,7 @@ console.log(st);
 
     function modifyUrl() {
         var serializedState = [];
-        
+
         for (var s in state) {
             if (state.hasOwnProperty(s)) {
                 serializedState.push(
@@ -174,7 +177,7 @@ console.log(st);
             {div: div, svg: svg},
             i18n('incMountain',
                 'Data by: Van Zanden et al., UNU-WIDER, ' +
-                'UN Pop. & Gapminder...'),
+                    'UN Pop. & Gapminder...'),
             'zandenData.html'
         );
 
@@ -200,7 +203,7 @@ console.log(st);
     }
 
     function initComponentMountains() {
-        components.mountains = gapminder.viz.incomeMountain(svg, function() {
+        components.mountains = gapminder.viz.incomeMountain(svg, function () {
             incomeMountainOptions.mountainPixelsHeight = components.mountains.getHeight()
             draw();
         });
@@ -222,7 +225,7 @@ console.log(st);
     function initDataHandlers() {
         dataHandlers.loader = gapminder.data_manager.income_mountain.loader(
             state, components.mountains.x);
-        
+
         dataHandlers.operations =
             gapminder.data_manager.income_mountain.operations(
                 state,
@@ -231,7 +234,7 @@ console.log(st);
     }
 
     function initData() {
-        state.geo = state.geo.filter(function(e, pos, self) {
+        state.geo = state.geo.filter(function (e, pos, self) {
             return self.indexOf(e) === pos;
         });
 
@@ -239,7 +242,7 @@ console.log(st);
 
         incomeMountainOptions.cachedData = dataHandlers.loader.load(
             state.geo,
-            function() {
+            function () {
                 if (!--num_geos) {
                     ready = true;
                     draw();
@@ -254,7 +257,7 @@ console.log(st);
 
         incomeMountainOptions.cachedData = dataHandlers.loader.load(
             state.geo,
-            function() {
+            function () {
                 if (!--num_geos) {
                     ready = true;
                     draw();
@@ -273,7 +276,7 @@ console.log(st);
     function countMissingGeoData() {
         var count = 0;
 
-        state.geo.forEach(function(d) {
+        state.geo.forEach(function (d) {
             if (!incomeMountainOptions.cachedData[d]) count++;
         })
 
@@ -281,13 +284,15 @@ console.log(st);
     }
 
     function draw() {
-        if (!ready) { return; }
+        if (!ready) {
+            return;
+        }
         dataHandlers.operations.get_year();
         dataHandlers.operations.calculate_max_height();
         dataHandlers.operations.order();
 
         components.mountains.clear();   // remove any old paths
-        
+
         for (var i = 0; i < incomeMountainOptions.drawData.length; i++) {
             dataHandlers.operations.fix_mountain_height(
                 incomeMountainOptions.drawData[i].data,
@@ -304,10 +309,19 @@ console.log(st);
 
     // Time slider binding
     function bindTimeSlider() {
-        var play = function() { draw(); };
-        var whileSliding = function() { draw(); };
-        var stoppedSliding = function() { modifyUrl(); };
-        var stop = function() { draw(); modifyUrl(); };
+        var play = function () {
+            draw();
+        };
+        var whileSliding = function () {
+            draw();
+        };
+        var stoppedSliding = function () {
+            modifyUrl();
+        };
+        var stop = function () {
+            draw();
+            modifyUrl();
+        };
 
         components.timeSlider.on_play(play);
         components.timeSlider.on_slide(whileSliding, stoppedSliding);
@@ -316,7 +330,7 @@ console.log(st);
 
     // Binds labels action
     function onClickLabels() {
-        var onClick = function(geo) {
+        var onClick = function (geo) {
             state.geo.splice(state.geo.indexOf(geo), 1);
             select_dropdown.update(state.geo);
             loadGeo();
@@ -329,7 +343,7 @@ console.log(st);
     }
 
     function bindDropdown() {
-        var action = function() {
+        var action = function () {
             //components.aboutData.show();
             $(select_dropdown.div.node()).show();
             svg.style('opacity', 0.5)
@@ -398,17 +412,17 @@ console.log(st);
     // Select 'hack'
     select_dropdown.update(state.geo);
 
-    select_dropdown.on_click(function(menu) {
+    select_dropdown.on_click(function (menu) {
         ready = false;
         $(select_dropdown.div.node()).hide();
         svg.style('opacity', 1)
 
         state.geo = [];
-        
+
         var values = select_dropdown.values();
         console.log(values);
-        
-        values.forEach(function(d) {
+
+        values.forEach(function (d) {
             if (d.id) {
                 state.geo.push(d.id);
             } else {
@@ -421,23 +435,23 @@ console.log(st);
         modifyUrl();
     });
 
-    select_dropdown.on_cancel(function() {
+    select_dropdown.on_cancel(function () {
         $(select_dropdown.div.node()).hide();
         svg.style('opacity', 1)
     });
 
     if (navigator.userAgent.match(/iPhone/)) {
         div.style('position', 'relative');
-        
-        select_dropdown.menu.on('change', function() {
+
+        select_dropdown.menu.on('change', function () {
             ready = false;
             svg.style('opacity', 1)
 
             state.geo = [];
-            
+
             var values = select_dropdown.values();
-            
-            values.forEach(function(d) {
+
+            values.forEach(function (d) {
                 if (d.id) {
                     state.geo.push(d.id);
                 } else {
@@ -465,7 +479,7 @@ console.log(st);
     layManager.update();
     modifyUrl();
 
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
         console.log(layManager.getComponent('dropdown'));
     })
 

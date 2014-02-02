@@ -1,9 +1,11 @@
 body {
     font-family: 'Open Sans', Helvetica, sans-serif;
 }
+
 .ui-slider-handle {
     height: 18px !important;
 }
+
 .ui-slider {
     height: 12px !important;
 }
@@ -24,7 +26,7 @@ body {
 
 .chart .axisLabel {
     font-size: 27px;
-    font-style : italic;
+    font-style: italic;
 }
 
 .chart .axisLabel .print {
@@ -42,13 +44,13 @@ body {
     fill: black;
 }
 
-.chart .axis.print text{
+.chart .axis.print text {
     font-style: italic;
     font-weight: 500;
 }
 
-.print .tick.major  line {
-    stroke-dasharray: 2,2;
+.print .tick.major line {
+    stroke-dasharray: 2, 2;
 }
 
 .axis.print .domain {

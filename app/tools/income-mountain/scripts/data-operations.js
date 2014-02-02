@@ -1,11 +1,11 @@
-gapminder.data_manager.income_mountain.operations = function(state, incomeMountainState) {
+gapminder.data_manager.income_mountain.operations = function (state, incomeMountainState) {
     "use strict";
-    
+
     // Should this be at loader?
     function get_year() {
         var data = [];
         var year = Math.floor(state.year);
-        
+
         for (var i = 0; i < state.geo.length; i++) {
             var geo = state.geo[i];
 
@@ -60,7 +60,7 @@ gapminder.data_manager.income_mountain.operations = function(state, incomeMounta
                     if (incomeMountainState.cachedData[geo][year]) {
                         var points = incomeMountainState.cachedData[geo][year];
 
-                        points.forEach(function(p, j) {
+                        points.forEach(function (p, j) {
                             if (!points_max[j]) points_max[j] = 0;
                             points_max[j] += p.height;
                         });
@@ -84,13 +84,13 @@ gapminder.data_manager.income_mountain.operations = function(state, incomeMounta
 
         incomeMountainState.maxHeight = max_height;
     }
-    
+
     // Adjust the data, giving it a 'transition' effect when showing data
     // between years. Data is increased linearly from year Y to year Y+1.
     function transition(geo, current_data) {
         var future_year = Math.ceil(state.year);
         var factor = state.year % 1;
-        
+
         if (incomeMountainState.cachedData[geo][future_year]) {
             var future_data = incomeMountainState.cachedData[geo][future_year];
 
@@ -100,27 +100,33 @@ gapminder.data_manager.income_mountain.operations = function(state, incomeMounta
             }
         }
     }
-    
+
     // Orders the mountain for drawing (smaller mountain on front)
     function order_mountains() {
         if (state.stack) return;
-        
+
         var length = incomeMountainState.drawData.length;
-        
+
         for (var i = 0; i < length; i++) {
-            incomeMountainState.drawData.sort(function(a, b) {
+            incomeMountainState.drawData.sort(function (a, b) {
                 return b.data.year_max_height - a.data.year_max_height;
             });
         }
     }
-    
+
     // To be called when the income mountain is supposed to stacked
     function stack_mountains() {
         return d3.layout.stack()
             .offset("zero")
-            .values(function(d) { return d.data; })
-            .x(function(d) { return d.x; })
-            .y(function(d) { return d.y; });
+            .values(function (d) {
+                return d.data;
+            })
+            .x(function (d) {
+                return d.x;
+            })
+            .y(function (d) {
+                return d.y;
+            });
     }
 
     return {

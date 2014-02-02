@@ -1,5 +1,5 @@
 // About data
-gapminder.tools.aboutData = function(elements, text, url) {
+gapminder.tools.aboutData = function (elements, text, url) {
     if (!elements) {
         console.error('About data needs elements');
         return;
@@ -32,7 +32,7 @@ gapminder.tools.aboutData = function(elements, text, url) {
             .style('vertical-align', 'middle')
             .style('margin', '0 auto');
     }
-    
+
     function insertDiv(d) {
         placeholderDiv[0][0].appendChild(d[0][0]);
     }

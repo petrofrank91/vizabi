@@ -6,10 +6,10 @@ rect.select {
 
 text.select {
     font-family: "Arial Rounded MT Bold";
-    font-size: 16px; 
+    font-size: 16px;
     fill: #7394A6;
     text-anchor: start;
-    -webkit-user-select: none; /* Chrome/Safari */        
+    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
 }

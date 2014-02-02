@@ -14,16 +14,22 @@
     <script type="text/javascript" src="tools/bubble-chart/scripts/start.js" charset="utf-8"></script>
     <script type="text/javascript" src="common/scripts/helpers/util.js" charset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-model.js" charset="utf-8"></script>
+    <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-model-validator.js"
+            charset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-glue.js" charset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-datahelper.js" charset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/viz/viz-bubble.js" chartset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/viz/viz-bubble-print.js" chartset="utf-8"></script>
 
     <script type="text/javascript" src="vizabi-components/data-cube/data-cube.js" charset="utf-8"></script>
-    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multiple-json.js" charset="utf-8"></script>
-    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-single-csv.js" charset="utf-8"></script>
-    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multiple-csv.js" charset="utf-8"></script>
-    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multi-csv.js" charset="utf-8"></script>
+    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multiple-json.js"
+            charset="utf-8"></script>
+    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-single-csv.js"
+            charset="utf-8"></script>
+    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multiple-csv.js"
+            charset="utf-8"></script>
+    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multi-csv.js"
+            charset="utf-8"></script>
     <script type="text/javascript" src="vizabi-components/data-cube/loader-factory.js" charset="utf-8"></script>
     <script type="text/javascript" src="vizabi-components/data-cube/data-cube-i18n-layer.js" charset="utf-8"></script>
 
@@ -32,7 +38,8 @@
     <script type="text/javascript" src="widgets/chart-grid/chart-grid.js" chartset="utf-8"></script>
 </head>
 <body>
-<div id="chartInfo"></div><div id="chartFooter"></div>
+<div id="chartInfo"></div>
+<div id="chartFooter"></div>
 </div>
 <script>
     var renderDiv = "chart-1";
@@ -57,7 +64,7 @@
                 category: ["geo"],
                 xAxisScale: "log",
                 xAxisTickValues: [500, 1000, 1500, 2000, 3000, 5000, 7000, 10000, 15000, 30000, 40000, 60000, 80000 ],
-                language : "en",
+                language: "en",
                 speed: 0.1
             };
         }
@@ -67,7 +74,7 @@
     }
 
     app = new gapminder.bubbleChart(renderDiv, chartState);
-    app.registerStateBindCallback(function(model) {
+    app.registerStateBindCallback(function (model) {
         var currentState = window.history.state;
 
         if (!currentState) {

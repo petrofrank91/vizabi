@@ -50,11 +50,11 @@ function relatedPage(containerDiv, divToInsert, relatedArray) {
         .style("font-family", "Arial Rounded MT Bold")
         .text("HIDE >");
 
-    hideButton.on('click', function() {
+    hideButton.on('click', function () {
         hide();
     })
 
-    relatedArray.forEach(function(d) {
+    relatedArray.forEach(function (d) {
         var relatedItem = relatedPage.append("div")
             .style("border", "1px #b9b9b9 solid")
             .style('width', '80%')
@@ -90,7 +90,7 @@ function relatedPage(containerDiv, divToInsert, relatedArray) {
 
     function hide() {
         isDisplayed = false;
-        $(relatedPage.node()).fadeOut('fast', function() {
+        $(relatedPage.node()).fadeOut('fast', function () {
             mainPage.style('width', '100%');
             window.dispatchEvent(new Event('resize'));
         });
@@ -99,18 +99,18 @@ function relatedPage(containerDiv, divToInsert, relatedArray) {
 
     function show() {
         isDisplayed = true;
-        $(relatedPage.node()).fadeIn('fast', function() {
+        $(relatedPage.node()).fadeIn('fast', function () {
             mainPage.style('width', '85%');
             window.dispatchEvent(new Event('resize'));
         })
     }
 
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
         relatedPage.style('min-height', mainPage.property('offsetHeight') + 'px');
         window.dispatchEvent(new Event('layout-resize'));
     });
 
-    window.addEventListener('orientationchange', function() {
+    window.addEventListener('orientationchange', function () {
         if (isDisplayed) {
             show();
         } else {

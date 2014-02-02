@@ -2,7 +2,7 @@ svg.header {
     font-family: "Arial Rounded MT Bold";
     font-size: 28px;
     fill: #7394A6;
-    -webkit-user-select: none; /* Chrome/Safari */        
+    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
 }
@@ -20,10 +20,10 @@ rect.select {
 
 text.select {
     font-family: "Arial Rounded MT Bold";
-    font-size: 16px; 
+    font-size: 16px;
     fill: #7394A6;
     text-anchor: start;
-    -webkit-user-select: none; /* Chrome/Safari */        
+    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
 }
@@ -37,16 +37,16 @@ polygon.select {
     font-size: 26px;
     cursor: default;
     opacity: 0.1;
-    -webkit-user-select: none; /* Chrome/Safari */        
+    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */    
+    -ms-user-select: none; /* IE10+ */
 }
 
 .label_still {
     font-family: "Arial Rounded MT Bold";
     font-size: 26px;
     cursor: default;
-    -webkit-user-select: none; /* Chrome/Safari */        
+    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
 }
@@ -55,7 +55,7 @@ polygon.select {
     font-family: "Arial Rounded MT Bold";
     font-size: 26px;
     cursor: default;
-    -webkit-user-select: none; /* Chrome/Safari */        
+    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
 }
@@ -70,7 +70,7 @@ polygon.select {
     font-size: 16px;
     text-anchor: middle;
     fill: #FDFDFD;
-    -webkit-user-select: none; /* Chrome/Safari */        
+    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
 }
@@ -96,7 +96,7 @@ polygon.select {
 .axis_text {
     font-family: "Arial Rounded MT Bold";
     font-size: 20px;
-    -webkit-user-select: none; /* Chrome/Safari */        
+    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
 }

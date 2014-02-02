@@ -11,7 +11,7 @@ function axisGenerator(svg, i18n) {
     var group;
 
     var width = 880;
-    
+
     var axis;
 
     var errMsg = {
@@ -42,8 +42,8 @@ function axisGenerator(svg, i18n) {
             .tickValues([365, 3650, 36500])
             .tickSize(5, 0, 2)
             .tickPadding(2.5)
-            .tickFormat(function(d) {
-                return d/365 + ' ' + i18n('incMountain', '$/day');
+            .tickFormat(function (d) {
+                return d / 365 + ' ' + i18n('incMountain', '$/day');
             });
 
         axis = group.append('g')
@@ -67,7 +67,7 @@ function axisGenerator(svg, i18n) {
     }
 
     function setWidth(w) {
-        width = w;   
+        width = w;
     }
 
     makeAxis();

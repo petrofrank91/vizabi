@@ -1,23 +1,23 @@
-gapminder.lineChartModel =  function () {
+gapminder.lineChartModel = function () {
 
     var dataHelper;
 
     var stateAttributes = {
-        s : {},
-        opacity : 0.5,
-        speed : 0.1,
-        zoom : {},
-        trails : "none",
-        tSpeed : 300,
-        action : "multi",
-        enableHistory : true,
+        s: {},
+        opacity: 0.5,
+        speed: 0.1,
+        zoom: {},
+        trails: "none",
+        tSpeed: 300,
+        action: "multi",
+        enableHistory: true,
         year: undefined,
-        xIndicator : undefined,
-        yIndicator : undefined,
+        xIndicator: undefined,
+        yIndicator: undefined,
         entity: undefined,
-        fraction : undefined,
-        prevYear : undefined,
-        nextYear : undefined,
+        fraction: undefined,
+        prevYear: undefined,
+        nextYear: undefined,
         dataPath: undefined,
         fileFormat: undefined,
         fileName: undefined,
@@ -26,24 +26,24 @@ gapminder.lineChartModel =  function () {
         minYValue: undefined,
         maxYValue: undefined,
         xAxisScale: "linear",
-        yAxisScale:"linear",
+        yAxisScale: "linear",
         isInteractive: false,
         xAxisTickValues: undefined,
         yAxisTickValues: undefined,
         language: undefined,
-        positions : {},
+        positions: {},
         editMode: false,
         category: []
     };
 
 
-    var initialize = function(callback, args) {
+    var initialize = function (callback, args) {
         dataHelper = new gapminder.data.lineChartDataHelper(get("fileFormat"), get("entity"), get("fileName"), get("dataPath"));
         dataHelper.initialize(callback, args);
     };
 
 
-    var setInit = function(changedState, modelAndDataReadyCallback) {
+    var setInit = function (changedState, modelAndDataReadyCallback) {
         console.log("BUBBLE MODEL SET STATE: ", changedState);
 
         var changedStateAttr = {};
@@ -62,14 +62,13 @@ gapminder.lineChartModel =  function () {
             }
         }
 
-        console.log("What changed: ",  changedStateAttr);
+        console.log("What changed: ", changedStateAttr);
         initialize(processWithCallback, [this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback]);
         //processWithCallback(this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback);
     };
 
 
-
-    var set = function(changedState, modelAndDataReadyCallback) {
+    var set = function (changedState, modelAndDataReadyCallback) {
         console.log("BUBBLE MODEL SET STATE: ", changedState);
 
         var changedStateAttr = {};
@@ -88,7 +87,7 @@ gapminder.lineChartModel =  function () {
             }
         }
 
-        console.log("What changed: ",  changedStateAttr);
+        console.log("What changed: ", changedStateAttr);
         //if (modelIsNotSet) {modelIsNotSet=false; initialize();}
         processWithCallback(this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback);
     };
@@ -100,7 +99,7 @@ gapminder.lineChartModel =  function () {
             //dataHelper.load(model, changedStateAttributes, modelAndDataIsReadyCallback, isStateValid);
             dataHelper.validateState(model, changedStateAttributes, modelAndDataIsReadyCallback, isStateValid);
         }
-        else if (typeof modelAndDataIsReadyCallback === 'function' ) {
+        else if (typeof modelAndDataIsReadyCallback === 'function') {
             modelAndDataIsReadyCallback();
         }
     };
@@ -110,7 +109,7 @@ gapminder.lineChartModel =  function () {
         return stateAttributes[state];
     };
 
-    var updateFraction = function() {
+    var updateFraction = function () {
         var year = stateAttributes.year;
 
         stateAttributes.fraction = year - Math.floor(year);
@@ -122,7 +121,7 @@ gapminder.lineChartModel =  function () {
         return dataHelper;
     };
 
-    var getAttributes = function() {
+    var getAttributes = function () {
         return stateAttributes;
     };
 
@@ -131,7 +130,7 @@ gapminder.lineChartModel =  function () {
         var yIndicator = get("yIndicator");
         var dataPath = get("dataPath");
 
-        if ((xIndicator ||  yIndicator) && dataPath) {
+        if ((xIndicator || yIndicator) && dataPath) {
             return true;
         }
         else {
@@ -145,7 +144,7 @@ gapminder.lineChartModel =  function () {
         stateAttributes.yIndicator = y;
         stateAttributes.sizeIndicator = size;
 
-        return {xIndicator: x, yIndicator: y, sizeIndicator:size};
+        return {xIndicator: x, yIndicator: y, sizeIndicator: size};
     };
 
     //initialize();

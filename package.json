@@ -26,6 +26,10 @@
     "load-grunt-tasks": "~0.1.0",
     "time-grunt": "~0.1.1",
     "jshint-stylish": "~0.1.3",
+    "lodash": "~2.4.1",
+    "rjs-build-analysis": "0.0.3",
+    "grunt-replace": "~0.5.1",
+    "grunt-contrib-requirejs": "~0.4.1",
     "grunt-smash": "~0.1.0"
   },
   "engines": {
