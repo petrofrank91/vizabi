@@ -1,4 +1,4 @@
-define(['jquery', 'jquery.ui'], function ($) {
+define(['jquery.ui'], function ($) {
 
     var settingsButton = function (changeCallback, model) {
 

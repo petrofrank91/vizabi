@@ -46,8 +46,9 @@ require.config({
     },
     shim: {
         // simple shims
-        'jquery': {'exports': 'jQuery'},
         'd3': {exports: "d3"},
+        'jquery': {'exports': 'jQuery'},
+        'jquery.ui': {deps: ["jquery"], exports: "jQuery"},
         'queue-async': {exports: "queue"},
 
         // jQuery UI Slider dependency chain START
