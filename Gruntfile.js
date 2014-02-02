@@ -88,7 +88,7 @@ module.exports = function (grunt) {
                 tasks: [
                     'copy:index',
                     'replace:templateincludes',
-                    'replace:requirejs'
+                    'replace:wrapperjs'
                 ]
             }
         },
@@ -235,7 +235,7 @@ module.exports = function (grunt) {
 		uglify: {
 			dist: {
 				files: [
-					{src: '<%= yeoman.dist.base %>/scripts/vizabi.js', dest: '<%= yeoman.dist.base %>/scripts/vizabi.js'},
+					{src: '<%= yeoman.dist.base %>/scripts/vizabi-amd.js', dest: '<%= yeoman.dist.base %>/scripts/vizabi-amd.js'},
 				]
 			}
 		},
@@ -266,26 +266,26 @@ module.exports = function (grunt) {
 					{expand: true, flatten: true, src: ['<%= yeoman.app.base %>/index.html'], dest: '<%= yeoman.app.base %>/'}
 				]
 			},
-			requirejs: {
+			wrapperjs: {
 				options: {
 					variables: {
-						'<!-- @@requirejs-script-tag -->': '<script data-main="common/scripts/main-processed" src="bower_components/requirejs/require.js"></script>',
+						'{{vizabi-script-tag-attributes}}': 'data-main="common/scripts/main-processed" src="bower_components/requirejs/require.js"',
 					},
 					prefix: ''
 				},
 				files: [
-                    {expand: true, flatten: true, src: ['<%= yeoman.app.base %>/index.html'], dest: '<%= yeoman.app.base %>/'}
+                    {expand: true, flatten: true, src: ['<%= yeoman.app.base %>/vizabi.js/vizabi.js'], dest: '<%= yeoman.tmp.base %>/scripts/'}
 				]
 			},
-			requirejsdist: {
+			wrapperjsdist: {
 				options: {
 					variables: {
-						'<!-- @@requirejs-script-tag -->': '<script src="scripts/vizabi.js"></script>',
+						'{{vizabi-script-tag-attributes}}': 'src="scripts/vizabi-amd.js"',
 					},
 					prefix: ''
 				},
 				files: [
-                    {expand: true, flatten: true, src: ['<%= yeoman.app.base %>/index.html'], dest: '<%= yeoman.app.base %>/'}
+                    {expand: true, flatten: true, src: ['<%= yeoman.app.base %>/vizabi.js/vizabi.js'], dest: '<%= yeoman.dist.base %>/scripts/'}
 				]
 			},
         },
@@ -307,7 +307,7 @@ module.exports = function (grunt) {
                         "endFile": "<%= yeoman.app.base %>/vizabi.js/wrap.end"
                     },
 					// the resulting file
-					out: '<%= yeoman.dist.base %>/scripts/vizabi.js',
+					out: '<%= yeoman.dist.base %>/scripts/vizabi-amd.js',
 					// none since this is done be a different grunt task
                     optimize: 'none',
 					// generate source maps that help local debugging
@@ -522,7 +522,7 @@ module.exports = function (grunt) {
                 'imagemin',
                 'svgmin',
                 'htmlmin',
-				'uglify',
+				//'uglify', // comment out to simplify debugging
             ]
         },
         bower: {
@@ -555,7 +555,7 @@ module.exports = function (grunt) {
             'copy:index',
 			'replace:mainjs',
 			'replace:templateincludes',
-			'replace:requirejs',
+			'replace:wrapperjs',
             'concurrent:server', // runs various tasks concurrently, see configuration above
             'autoprefixer',
             'connect:livereload',
@@ -583,7 +583,7 @@ module.exports = function (grunt) {
         'copy:index',
 		'replace:mainjs',
 		'replace:templateincludes',
-		'replace:requirejsdist',
+		'replace:wrapperjsdist',
         'useminPrepare',
         'requirejs',
         'concurrent:dist', // runs various tasks concurrently, see configuration above
@@ -592,7 +592,7 @@ module.exports = function (grunt) {
         'copy:dist',
         'concat:generated',
         'cssmin:generated',
-        'rev',
+        //'rev',
         'usemin',
         'clean:postbuild'
     ]);

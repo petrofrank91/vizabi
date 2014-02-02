@@ -66,13 +66,33 @@ require.config({
 define.amd.jQuery = true;
 
 require([
-    //'jquery',
     'vizabi-package'
-    //'project/app',
-    //'tools',
-], function ($, vizabi) {
+], function (vizabi) {
 
-    if (typeof(console) !== "undefined" && console.log) console.log('@vizabi amd loaded');
+    //if (typeof(console) !== "undefined" && console.log) console.log('@vizabi amd loaded', window.vizabi, vizabi);
+
+    // attach vizabi to global scope if window.vizabi is already available - this is only true in the case of google maps style inclusion so we consider it safe
+    if (typeof (window.vizabi) !== "undefined") {
+        window.vizabi = vizabi;
+        window.vizabi.ready = function(callback) {
+            callback();
+        }
+    }
+
+    // dispatch event that vizabi is loaded
+    var fireEvent = function (event) {
+        if (document.createEventObject) {
+            // dispatch for IE
+            var evt = document.createEventObject();
+            return this.fireEvent('on' + event, evt)
+        } else {
+            // dispatch for firefox + others
+            var evt = document.createEvent("HTMLEvents");
+            evt.initEvent(event, true, true); // event type,bubbling,cancelable
+            return !this.dispatchEvent(evt);
+        }
+    };
+    fireEvent.call(window.document, 'vizabiLoaded');
 
     //domReady(function () {
     //console.log('@domReady');
