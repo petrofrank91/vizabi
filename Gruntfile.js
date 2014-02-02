@@ -303,8 +303,8 @@ module.exports = function (grunt) {
 					name: '../../../<%= yeoman.app.base %>/bower_components/almond/almond',
                     // wrapper content that allows vizabi.js to be included using both a script-tag or as an amd module
                     wrap: {
-                        "startFile": "<%= yeoman.app.base %>/vizabi.js/wrap.start",
-                        "endFile": "<%= yeoman.app.base %>/vizabi.js/wrap.end"
+                        "startFile": "<%= yeoman.app.base %>/vizabi.js/wrap.start.js",
+                        "endFile": "<%= yeoman.app.base %>/vizabi.js/wrap.end.js"
                     },
 					// the resulting file
 					out: '<%= yeoman.dist.base %>/scripts/vizabi.js',
