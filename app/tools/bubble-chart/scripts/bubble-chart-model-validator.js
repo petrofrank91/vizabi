@@ -1,4 +1,4 @@
-define(['bubble-chart-datahelper'], function (bubbleChartDataHelper) {
+define(['util', 'bubble-chart-datahelper'], function (util, bubbleChartDataHelper) {
 
     var bubbleChartModelValidator = function () {
         var dataHelper;
@@ -66,7 +66,7 @@ define(['bubble-chart-datahelper'], function (bubbleChartDataHelper) {
             var skeleton = dataHelper.getSkeleton();
             console.warn("State is invalid. Loading indicators from " + dataPath + "indicators.csv");
 
-            changedState = Object.extend(true, changedState,
+            changedState = util.extend(true, changedState,
                 model.setIndicatorForInvalidState(changedState, skeleton.indicators[0].id, skeleton.indicators[1].id, skeleton.indicators[2].id));
 
         };
