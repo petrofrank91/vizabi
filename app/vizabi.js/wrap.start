@@ -20,6 +20,11 @@
         // file name. Do this after creating the global so that if an AMD module wants
         // to call noConflict to hide this version of vizabi, it will work.
         if (typeof define === "function" && define.amd) {
+			// We globally define an empty 'vizabi-package' module to work around the fact
+			// that the vizabi module depends on that package, it is available within the
+		    // factory method, but it is not detected by r.js at build time...
+			define("vizabi-package", function(){});
+			// In your AMD app, use 'vizabi' module to include the vizabi object
             define("vizabi", [], factory);
         } else {
             // Otherwise expose vizabi to the global object as usual
