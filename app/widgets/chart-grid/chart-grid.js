@@ -122,8 +122,27 @@ gapminder.viz.chartGrid = function() {
                 return vizState.getDataHelper().getAxisInfo()[0];
             });
 
+        var xDomain = [];
         if (vizState.get("minXValue") !== undefined && vizState.get("maxXValue") !== undefined) {
-            xDomain = [vizState.get("minXValue"), vizState.get("maxXValue")];
+            var updatedMinX = vizState.get("updatedMinXValue");
+            var minX = vizState.get("minXValue");
+
+            if (updatedMinX && updatedMinX < minX) {
+                xDomain[0] = updatedMinX;
+            }
+            else {
+                xDomain[0] = minX;
+            }
+
+            var maxX = vizState.get("maxXValue");
+            var updatedMaxX = vizState.get("updatedMaxXValue");
+            
+            if (updatedMaxX && updatedMaxX > maxX) {
+                xDomain[1] = updatedMaxX;
+            }
+            else {
+                xDomain[1] = maxX;
+            }
         } else {
             xDomain = [vizState.getDataHelper().getMinOfXIndicator(), vizState.getDataHelper().getMaxOfXIndicator()];
         }
@@ -171,8 +190,21 @@ gapminder.viz.chartGrid = function() {
                 return vizState.getDataHelper().getAxisInfo()[1];
             });
 
+        var yDomain = [];
         if (vizState.get("minYValue") !== undefined && vizState.get("maxYValue") !== undefined) {
-            yDomain = [vizState.get("minYValue"), vizState.get("maxYValue")];
+            if (vizState.get("updatedMinYValue")) {
+                yDomain[0] = vizState.get("updatedMinYValue");
+            }
+            else {
+                yDomain[0] = vizState.get("minYValue");
+            }
+            
+            if (vizState.get("updatedMaxYValue")) {
+                yDomain[1] = vizState.get("updatedMaxYValue");
+            }
+            else {
+                yDomain[1] = vizState.get("maxYValue");
+            }
         } else {
             yDomain = [vizState.getDataHelper().getMinOfYIndicator(), vizState.getDataHelper().getMaxOfYIndicator()];
         }

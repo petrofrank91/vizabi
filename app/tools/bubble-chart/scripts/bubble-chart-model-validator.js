@@ -25,20 +25,39 @@ gapminder.bubbleChartModelValidator = function () {
     };	
 
     var isAnyBubblesOutOfScope = function () {
-        var xIndicator = bubbleChartModel.get("xIndicator");
-        var xScope = dataHelper.getScopeOfIndicatorForCurrentYear(xIndicator, bubbleChartModel);
+        if (bubbleChartModel.get("minXValue") &&  bubbleChartModel.get("maxXValue")
+            || (bubbleChartModel.get("minYValue") &&  bubbleChartModel.get("maxYValue"))) {
+            if (bubbleChartModel.get("autoZoom")) {
+                  var xIndicator = bubbleChartModel.get("xIndicator");
+                  var xScope = dataHelper.getScopeOfIndicatorForCurrentYear(xIndicator, bubbleChartModel);
 
-        var yIndicator = bubbleChartModel.get("yIndicator");
-        var yScope = dataHelper.getScopeOfIndicatorForCurrentYear(yIndicator, bubbleChartModel);
+                  var yIndicator = bubbleChartModel.get("yIndicator");
+                  var yScope = dataHelper.getScopeOfIndicatorForCurrentYear(yIndicator, bubbleChartModel);
 
-        var minXValue = bubbleChartModel.get("minXValue");
-        var maxXValue = bubbleChartModel.get("maxXValue");
+                  var minXValue = bubbleChartModel.get("minXValue");
+                  var maxXValue = bubbleChartModel.get("maxXValue");
 
-        var minYValue = bubbleChartModel.get("minYValue");
-        var maxYValue = bubbleChartModel.get("maxYValue");
+                  var minYValue = bubbleChartModel.get("minYValue");
+                  var maxYValue = bubbleChartModel.get("maxYValue");
 
-        return  ((xScope.min < minXValue || xScope.max > maxXValue)
-                && (yScope.min < minYValue || yScope.max > maxYValue));
+                  if  (xScope.min < minXValue) {
+                      bubbleChartModel.setUpdatedMiXValue(xScope.min);
+                      //bubbleChartModel.setMinXValue(xScope.min);
+                  }
+                  if (xScope.max < maxXValue) {
+                      bubbleChartModel.setUpdatedMaxXValue(xScope.max);
+                      //bubbleChartModel.setMaxXValue(xScope.max);
+                  }
+                  if (yScope.min < minYValue) {
+                      bubbleChartModel.setUpdatedMinYValue(yScope.min);
+                      //bubbleChartModel.setMinYValue(yScope.min);
+                  }
+                  if (yScope.max < maxYValue) {
+                      bubbleChartModel.setUpdatedMaxYValue(yScope.max);
+                      //bubbleChartModel.setMaxYValue(yScope.max);
+                  }
+            }
+        }
     };
 
 
@@ -71,6 +90,7 @@ gapminder.bubbleChartModelValidator = function () {
 
     var modelIsValidAndProcessWithCallback = function () {
       if (typeof readyToRenderCallback === "function") {
+          isAnyBubblesOutOfScope();
           readyToRenderCallback();
       }
     };
@@ -90,8 +110,8 @@ gapminder.bubbleChartModelValidator = function () {
 
 
     return {
-  		isMissingIndicators: isMissingIndicators,
-  		isAnyBubblesOutOfScope: isAnyBubblesOutOfScope,
+  	  isMissingIndicators: isMissingIndicators,
+  	  isAnyBubblesOutOfScope: isAnyBubblesOutOfScope,
       validateState: validateState,
       validate: validateAndProcessCallback,
       getDataHelper: getDataHelper,

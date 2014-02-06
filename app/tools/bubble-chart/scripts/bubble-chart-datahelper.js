@@ -132,7 +132,6 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
 
         setDatasetAndChartInfo(chartInfo);
         setAxesNameAndInfo();
-        console.log(isAnyBubblesOutOfScope());
         if (typeof dataIsReadyCallback === 'function') {dataIsReadyCallback();}
     };
 
@@ -397,10 +396,16 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
         for (var category in indicators[timeUnit]) {
             if (indicators[timeUnit].hasOwnProperty(category)) {
                 for (var countryName in indicators[timeUnit][category][indicator]["years"]) {
-                    if (indicators[timeUnit][category][indicator]["years"].hasOwnProperty(countryName)
-                        && indicators[timeUnit][category][indicator]["years"][countryName]["trends"].hasOwnProperty(year)) {
-                        var curEntityIndiValue = indicators[timeUnit][category][indicator]["years"][countryName]["trends"][year].v;
-                        values.push(curEntityIndiValue);
+                    if (indicators[timeUnit][category][indicator]["years"].hasOwnProperty(countryName)) {
+                        var curEntityIndiValue;
+                        if (year % 1 === 0 && indicators[timeUnit][category][indicator]["years"][countryName]["trends"].hasOwnProperty(year)) {
+                                curEntityIndiValue = indicators[timeUnit][category][indicator]["years"][countryName]["trends"][year].v;
+                                values.push(curEntityIndiValue);
+                        }
+                        else if (indicators[timeUnit][category][indicator]["years"][countryName]["trends"].hasOwnProperty(Math.floor(year))) {
+                                curEntityIndiValue = get(indicator, countryName, year, dataHelperModel, category);
+                                values.push(curEntityIndiValue);
+                        }
                     }
                 }
             }
@@ -427,23 +432,6 @@ gapminder.data.bubbleChartDataHelper = function (fileFormat, entityName, fileNam
 
     var getSkeleton = function () {
       return skeleton;
-    };
-
-    var isAnyBubblesOutOfScope = function () {
-        var xIndicator = dataHelperModel.get("xIndicator");
-        var xScope = getScopeOfIndicatorForCurrentYear(xIndicator, dataHelperModel);
-
-        var yIndicator = dataHelperModel.get("yIndicator");
-        var yScope = getScopeOfIndicatorForCurrentYear(yIndicator, dataHelperModel);
-
-        var minXValue = dataHelperModel.get("minXValue");
-        var maxXValue = dataHelperModel.get("maxXValue");
-
-        var minYValue = dataHelperModel.get("minYValue");
-        var maxYValue = dataHelperModel.get("maxYValue");
-
-        return  (xScope.min < minXValue || xScope.max > maxXValue
-                        || yScope.min < minYValue || yScope.max > maxYValue);
     };
 
     return {

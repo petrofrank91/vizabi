@@ -27,6 +27,10 @@ gapminder.bubbleChartModel = function() {
         maxXValue: undefined,
         minYValue: undefined,
         maxYValue: undefined,
+        updatedMinXValue: undefined,
+        updatedMaxXValue: undefined,
+        updatedMinYValue: undefined,
+        updatedMaxYValue: undefined,
         xAxisScale: "linear",
         yAxisScale: "linear",
         isInteractive: false,
@@ -39,7 +43,8 @@ gapminder.bubbleChartModel = function() {
         maxBubbleSize: undefined,
         positions: {},
         editMode: false,
-        category: []
+        category: [],
+        autoZoom: false
     };
 
 
@@ -129,6 +134,47 @@ gapminder.bubbleChartModel = function() {
         };
     };
 
+    var setUpdatedMiXValue = function (minX) {
+        if  (typeof minX === 'number') {
+            stateAttributes.updatedMinXValue = minX;
+        }
+    };
+
+    var setUpdatedMaxXValue = function (maxX) {
+        if  (typeof maxX === 'number') {
+            stateAttributes.updatedMaxXValue = maxX;
+        }
+    };
+
+    var setUpdatedMinYValue = function (minY) {
+        if  (typeof minY === 'number') {
+            stateAttributes.updatedMinYValue = minY;
+        }
+    };
+
+    var setUpdatedMaxYValue = function (maxY) {
+        if  (typeof maxY === 'number') {
+            stateAttributes.updatedMaxYValue = maxY;
+        }
+    };
+
+    var setMinXValue = function (value) {
+        stateAttributes.minXValue = value;
+    };
+
+    var setMaxXValue = function (value) {
+        stateAttributes.maxXValue = value;
+    };
+
+    var setMinYValue = function (value) {
+        stateAttributes.minYValue = value;
+    };
+
+    var setMaxYValue = function (value) {
+        stateAttributes.maxYValue = value;
+    };
+
+
     return {
         set: set,
         get: get,
@@ -136,7 +182,15 @@ gapminder.bubbleChartModel = function() {
         getAttributes: getAttributes,
         setIndicatorForInvalidState: setIndicatorsForMissingIndicatorsState,
         initialize: initialize,
-        setInit: setInit
+        setInit: setInit,
+        setUpdatedMiXValue: setUpdatedMiXValue,
+        setUpdatedMaxXValue: setUpdatedMaxXValue,
+        setUpdatedMinYValue: setUpdatedMinYValue,
+        setUpdatedMaxYValue: setUpdatedMaxYValue,
+        setMinXValue: setMinXValue,
+        setMaxXValue: setMaxXValue,
+        setMinYValue: setMinYValue,
+        setMaxYValue: setMaxYValue
     };
 
 };
