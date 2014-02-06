@@ -469,4 +469,8 @@ define(['d3', 'data-cube', 'util'], function (d3, dataCube, util) {
         initialize: initialize,
         getSkeleton: getSkeleton
     };
+
+
 };
+    return bubbleChartDataHelper;
+});

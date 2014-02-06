@@ -119,4 +119,7 @@ define(['util', 'bubble-chart-datahelper'], function (util, bubbleChartDataHelpe
       getDataHelper: getDataHelper,
       initialize: initialize
 	  };
+
 };
+    return bubbleChartModelValidator
+});
