@@ -1,7 +1,9 @@
-gapminder.bubbleChartModel = function() {
+define(['bubble-chart-model-validator'], function (bubbleChartModelValidator) {
 
-    var dataHelper;
-    var validator;
+    var bubbleChartModel = function () {
+
+        var dataHelper;
+        var validator;
 
     var stateAttributes = {
         s: {},
@@ -48,91 +50,91 @@ gapminder.bubbleChartModel = function() {
     };
 
 
-    var initialize = function(args) {
-        validator = new gapminder.bubbleChartModelValidator();
-        validator.initialize(get("fileFormat"), get("entity"),
-            get("fileName"), get("dataPath"), args);
-    };
-
-    var setInit = function(changedState, modelAndDataReadyCallback) {
-        console.log("BUBBLE MODEL SET STATE: ", changedState);
-
-        var changedStateAttr = {};
-        var dataNeedsToBeLoaded = false;
-        for (var attr in changedState) {
-            if (changedState.hasOwnProperty(attr) && (stateAttributes[attr]) !== changedState[attr]) {
-                stateAttributes[attr] = changedState[attr];
-                changedStateAttr[attr] = changedState[attr];
-
-                if (attr.indexOf("Indicator") >= 0 || attr.indexOf("language") || attr.indexOf("dataPath") || attr.indexOf("entity") || attr.indexOf("category")) {
-                    dataNeedsToBeLoaded = true;
-                }
-                if (attr === "year") {
-                    updateFraction();
-                }
-            }
-        }
-
-        console.log("What changed: ", changedStateAttr);
-        initialize([this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback]);
-    };
-
-
-    var set = function(changedState, modelAndDataReadyCallback) {
-        console.log("BUBBLE MODEL SET STATE: ", changedState);
-
-        var changedStateAttr = {};
-        var dataNeedsToBeLoaded = false;
-        for (var attr in changedState) {
-            if (changedState.hasOwnProperty(attr) && (stateAttributes[attr]) !== changedState[attr]) {
-                stateAttributes[attr] = changedState[attr];
-                changedStateAttr[attr] = changedState[attr];
-
-                if (attr.indexOf("Indicator") >= 0 || attr.indexOf("language") || attr.indexOf("dataPath") || attr.indexOf("entity") || attr.indexOf("category")) {
-                    dataNeedsToBeLoaded = true;
-                }
-                if (attr === "year") {
-                    updateFraction();
-                }
-            }
-        }
-
-        console.log("What changed: ", changedStateAttr);
-        validator.validate(this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback);
-    };
-
-
-    var get = function(state) {
-        return stateAttributes[state];
-    };
-
-    var updateFraction = function() {
-        var year = stateAttributes.year;
-
-        stateAttributes.fraction = year - Math.floor(year);
-        stateAttributes.prevYear = Math.floor(year);
-        stateAttributes.nextYear = Math.ceil(year);
-    };
-
-    var getDataHelper = function() {
-        return validator.getDataHelper();
-    };
-
-    var getAttributes = function() {
-        return stateAttributes;
-    };
-
-    var setIndicatorsForMissingIndicatorsState = function(changedState, x, y, size) {
-        stateAttributes.xIndicator = x;
-        stateAttributes.yIndicator = y;
-        stateAttributes.sizeIndicator = size;
-
-        return {
-            xIndicator: x,
-            yIndicator: y,
-            sizeIndicator: size
+        var initialize = function (args) {
+            validator = new bubbleChartModelValidator();
+            validator.initialize(get("fileFormat"), get("entity"),
+                get("fileName"), get("dataPath"), args);
         };
-    };
+
+        var setInit = function (changedState, modelAndDataReadyCallback) {
+            console.log("BUBBLE MODEL SET STATE: ", changedState);
+
+            var changedStateAttr = {};
+            var dataNeedsToBeLoaded = false;
+            for (var attr in changedState) {
+                if (changedState.hasOwnProperty(attr) && (stateAttributes[attr]) !== changedState[attr]) {
+                    stateAttributes[attr] = changedState[attr];
+                    changedStateAttr[attr] = changedState[attr];
+
+                    if (attr.indexOf("Indicator") >= 0 || attr.indexOf("language") || attr.indexOf("dataPath") || attr.indexOf("entity") || attr.indexOf("category")) {
+                        dataNeedsToBeLoaded = true;
+                    }
+                    if (attr === "year") {
+                        updateFraction();
+                    }
+                }
+            }
+
+            console.log("What changed: ", changedStateAttr);
+            initialize([this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback]);
+        };
+
+
+        var set = function (changedState, modelAndDataReadyCallback) {
+            console.log("BUBBLE MODEL SET STATE: ", changedState);
+
+            var changedStateAttr = {};
+            var dataNeedsToBeLoaded = false;
+            for (var attr in changedState) {
+                if (changedState.hasOwnProperty(attr) && (stateAttributes[attr]) !== changedState[attr]) {
+                    stateAttributes[attr] = changedState[attr];
+                    changedStateAttr[attr] = changedState[attr];
+
+                    if (attr.indexOf("Indicator") >= 0 || attr.indexOf("language") || attr.indexOf("dataPath") || attr.indexOf("entity") || attr.indexOf("category")) {
+                        dataNeedsToBeLoaded = true;
+                    }
+                    if (attr === "year") {
+                        updateFraction();
+                    }
+                }
+            }
+
+            console.log("What changed: ", changedStateAttr);
+            validator.validate(this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback);
+        };
+
+
+        var get = function (state) {
+            return stateAttributes[state];
+        };
+
+        var updateFraction = function () {
+            var year = stateAttributes.year;
+
+            stateAttributes.fraction = year - Math.floor(year);
+            stateAttributes.prevYear = Math.floor(year);
+            stateAttributes.nextYear = Math.ceil(year);
+        };
+
+        var getDataHelper = function () {
+            return validator.getDataHelper();
+        };
+
+        var getAttributes = function () {
+            return stateAttributes;
+        };
+
+        var setIndicatorsForMissingIndicatorsState = function (changedState, x, y, size) {
+            stateAttributes.xIndicator = x;
+            stateAttributes.yIndicator = y;
+            stateAttributes.sizeIndicator = size;
+
+            return {
+                xIndicator: x,
+                yIndicator: y,
+                sizeIndicator: size
+            };
+        };
 
     var setUpdatedMiXValue = function (minX) {
         if  (typeof minX === 'number') {
@@ -193,4 +195,7 @@ gapminder.bubbleChartModel = function() {
         setMaxYValue: setMaxYValue
     };
 
-};
+    };
+
+    return bubbleChartModel;
+});

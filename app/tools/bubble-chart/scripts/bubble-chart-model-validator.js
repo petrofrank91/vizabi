@@ -1,28 +1,30 @@
-gapminder.bubbleChartModelValidator = function () {	
-	  var dataHelper;
-    var bubbleChartModel;
-    var readyToRenderCallback;
+define(['util', 'bubble-chart-datahelper'], function (util, bubbleChartDataHelper) {
 
-    var initialize = function (fileFormat, entity, fileName, dataPath, args) {
-        dataHelper = new gapminder.data.bubbleChartDataHelper(fileFormat, entity, 
-          fileName, dataPath);
-        dataHelper.initialize(validateAndProcessCallback, args);
-    };
+    var bubbleChartModelValidator = function () {
+        var dataHelper;
+        var bubbleChartModel;
+        var readyToRenderCallback;
 
-    var isMissingIndicators = function (model) {
-       bubbleChartModel = model;
-       var xIndicator = model.get("xIndicator");
-       var yIndicator = model.get("yIndicator");
-       var sizeIndicator = model.get("sizeIndicator");
-       var dataPath = model.get("dataPath");
+        var initialize = function (fileFormat, entity, fileName, dataPath, args) {
+            dataHelper = new bubbleChartDataHelper(fileFormat, entity,
+                fileName, dataPath);
+            dataHelper.initialize(validateAndProcessCallback, args);
+        };
 
-       if (xIndicator && yIndicator && sizeIndicator && dataPath) {
-           return true;
-       }
-        else {
-           return false;
-       }
-    };	
+        var isMissingIndicators = function (model) {
+            bubbleChartModel = model;
+            var xIndicator = model.get("xIndicator");
+            var yIndicator = model.get("yIndicator");
+            var sizeIndicator = model.get("sizeIndicator");
+            var dataPath = model.get("dataPath");
+
+            if (xIndicator && yIndicator && sizeIndicator && dataPath) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        };
 
     var isAnyBubblesOutOfScope = function () {
         if (bubbleChartModel.get("minXValue") &&  bubbleChartModel.get("maxXValue")
@@ -61,32 +63,32 @@ gapminder.bubbleChartModelValidator = function () {
     };
 
 
-    var validateState = function(model, changedState , callback, dataHelperObj) {
-        dataHelper = dataHelperObj;
-        bubbleChartModel = model;
-        readyToRenderCallback = callback;
-        var isStateValid = isMissingIndicators(model);
+        var validateState = function (model, changedState, callback, dataHelperObj) {
+            dataHelper = dataHelperObj;
+            bubbleChartModel = model;
+            readyToRenderCallback = callback;
+            var isStateValid = isMissingIndicators(model);
 
 
-        var fileName = model.get("fileName");
-        var entity = model.get("entity");
-        var dataPath = model.get("dataPath");
+            var fileName = model.get("fileName");
+            var entity = model.get("entity");
+            var dataPath = model.get("dataPath");
 
-        if (!isStateValid) {
-            setValidState(model, changedState);
-        }
-        dataHelper.loadData(model,changedState, modelIsValidAndProcessWithCallback);
-    };
+            if (!isStateValid) {
+                setValidState(model, changedState);
+            }
+            dataHelper.loadData(model, changedState, modelIsValidAndProcessWithCallback);
+        };
 
-    var setValidState = function (model, changedState) {
-        var dataPath = model.get("dataPath");
-        var skeleton = dataHelper.getSkeleton();
-        console.warn("State is invalid. Loading indicators from " + dataPath + "indicators.csv");
+        var setValidState = function (model, changedState) {
+            var dataPath = model.get("dataPath");
+            var skeleton = dataHelper.getSkeleton();
+            console.warn("State is invalid. Loading indicators from " + dataPath + "indicators.csv");
 
-        changedState = Object.extend(true, changedState,
-            model.setIndicatorForInvalidState(changedState, skeleton.indicators[0].id, skeleton.indicators[1].id, skeleton.indicators[2].id));
+            changedState = util.extend(true, changedState,
+                model.setIndicatorForInvalidState(changedState, skeleton.indicators[0].id, skeleton.indicators[1].id, skeleton.indicators[2].id));
 
-    };
+        };
 
     var modelIsValidAndProcessWithCallback = function () {
       if (typeof readyToRenderCallback === "function") {
@@ -95,18 +97,18 @@ gapminder.bubbleChartModelValidator = function () {
       }
     };
 
-    var validateAndProcessCallback = function (model, dataNeedsToBeLoaded, changedStateAttributes, modelAndDataIsReadyCallback) {
-        if (dataNeedsToBeLoaded && typeof modelAndDataIsReadyCallback === 'function') {
-            validateState(model, changedStateAttributes, modelAndDataIsReadyCallback, dataHelper);
-        }
-        else if (typeof modelAndDataIsReadyCallback === 'function' ) {
-            modelAndDataIsReadyCallback();
-        }
-    };
+        var validateAndProcessCallback = function (model, dataNeedsToBeLoaded, changedStateAttributes, modelAndDataIsReadyCallback) {
+            if (dataNeedsToBeLoaded && typeof modelAndDataIsReadyCallback === 'function') {
+                validateState(model, changedStateAttributes, modelAndDataIsReadyCallback, dataHelper);
+            }
+            else if (typeof modelAndDataIsReadyCallback === 'function') {
+                modelAndDataIsReadyCallback();
+            }
+        };
 
-    var getDataHelper = function () {
-        return dataHelper;
-    };
+        var getDataHelper = function () {
+            return dataHelper;
+        };
 
 
     return {

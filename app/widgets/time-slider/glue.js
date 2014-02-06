@@ -1,12 +1,12 @@
-gapminder.tools.time_slider = function(properties) {
+gapminder.tools.time_slider = function (properties) {
     "use strict";
 
     var div;
     var svg;
-    
+
     var def = { width: 900, height: 500 };
     var viz_window = { width: 900, height: 500 };
-    
+
     var settings = {
         height: 80,
         width: 270,
@@ -16,9 +16,9 @@ gapminder.tools.time_slider = function(properties) {
         playing: false,
         sliding: false
     };
-    
+
     var interval;
-    
+
     var viz_components = {};
 
     var buttons = {};
@@ -27,16 +27,16 @@ gapminder.tools.time_slider = function(properties) {
     var localConfigs;
 
     var scale = 1;
-    
+
     var init = function init(properties) {
         div = properties.div;
         viz_components.time_slider = time_slider(properties);
-        
+
         state = properties.state;
         viz_window = properties.viz_window;
 
         localConfigs = properties.localConfigs;
-        
+
         // Get buttons and time information from the time_slider
         buttons = viz_components.time_slider.buttons;
         slide_moveable_button();
@@ -65,7 +65,7 @@ gapminder.tools.time_slider = function(properties) {
                 state.year = localConfigs.final_year;
                 settings.playing = false;
             }
-            
+
             viz_components.time_slider.update();
             slide_moveable_button();
         } else {
@@ -73,62 +73,62 @@ gapminder.tools.time_slider = function(properties) {
             toggle(buttons.pause_button);
             clearInterval(interval);
         }
-        
+
         if (typeof callback === "function") {
             callback(state.year);
         }
     };
-    
+
     var on_play = function on_play(callback) {
-        buttons.play_button.on("click", function() {
+        buttons.play_button.on("click", function () {
             settings.playing = true;
             toggle(buttons.play_button);
             toggle(buttons.pause_button);
-            
+
             // Playing speed (higher, tested on ios7)
             if ((navigator.userAgent.match(/iPhone/i)) ||
-            (navigator.userAgent.match(/iPod/i)) ||
-            (navigator.userAgent.match(/iPad/i))) {
+                (navigator.userAgent.match(/iPod/i)) ||
+                (navigator.userAgent.match(/iPad/i))) {
                 interval = setInterval(play, settings.play_interval * 2.5, callback);
             } else {
                 interval = setInterval(play, settings.play_interval, callback);
             }
         });
     };
-        
-    var on_stop = function on_stop(callback) {    
-        buttons.pause_button.on("click", function() {
+
+    var on_stop = function on_stop(callback) {
+        buttons.pause_button.on("click", function () {
             settings.playing = false;
             toggle(buttons.play_button);
             toggle(buttons.pause_button);
             clearInterval(interval);
-            
+
             if (typeof callback === "function") {
                 callback(state.year);
             }
         });
     };
-    
+
     var on_slide = function on_slide(callback, stopped_sliding) {
         // Bind clicks locally
-        buttons.moveable_button.on("mousedown", function() {
+        buttons.moveable_button.on("mousedown", function () {
             settings.sliding = true;
         });
-        
+
         if ((navigator.userAgent.match(/iPhone/i)) ||
             (navigator.userAgent.match(/iPod/i)) ||
             (navigator.userAgent.match(/iPad/i))) {
             console.log('here')
             // Get the touch event
-            buttons.moveable_button.on("touchstart", function() {
+            buttons.moveable_button.on("touchstart", function () {
                 settings.sliding = true;
             });
 
             // Touch movement
-            window.addEventListener("touchmove", function(event) {
+            window.addEventListener("touchmove", function (event) {
                 if (settings.sliding) {
                     if (settings.playing) settings.playing = false;
-                    
+
                     event.preventDefault();
                     // deslocamento
                     var find_where = displacement(event.pageX);
@@ -138,25 +138,25 @@ gapminder.tools.time_slider = function(properties) {
                     );
 
                     var x_date = 60 + find_where;
-                    
+
                     state.year = viz_components.time_slider
                         .timeline_x.invert(x_date).getFullYear();
 
                     // Update time-slider
                     viz_components.time_slider.update();
-                    
+
                     // Callback
                     if (typeof callback === "function") callback(state.year);
                 }
             })
-            
-            window.addEventListener("touchend", function() {
+
+            window.addEventListener("touchend", function () {
                 settings.sliding = false;
                 if (typeof stopped_sliding === "function") stopped_sliding(state.year);
             })
         } else {
             // Binds the mouse movement and release globally
-            window.addEventListener("mousemove", function(event) {
+            window.addEventListener("mousemove", function (event) {
                 if (settings.sliding) {
                     if (settings.playing) settings.playing = false;
 
@@ -168,7 +168,7 @@ gapminder.tools.time_slider = function(properties) {
                     );
 
                     var x_date = 60 + find_where;
-                    
+
                     state.year = viz_components.time_slider
                         .timeline_x.invert(x_date).getFullYear();
 
@@ -179,12 +179,12 @@ gapminder.tools.time_slider = function(properties) {
                     if (typeof callback === "function") callback(state.year);
                 }
             });
-    
+
             // If mouseup, stop sliding
-            window.addEventListener("mouseup", function() {
+            window.addEventListener("mouseup", function () {
                 settings.sliding = false;
                 if (typeof stopped_sliding === "function") stopped_sliding(state.year);
-            });  
+            });
         }
     };
 
@@ -230,7 +230,7 @@ gapminder.tools.time_slider = function(properties) {
         .clamp(true);
 
     init(properties);
-    
+
     return {
         g: viz_components.time_slider.g,
         on_play: on_play,

@@ -1,0 +1,32 @@
+<div id="chartInfo"></div>
+<div id="chartFooter"></div>
+
+<div style="font-family: 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;"
+     align="center">Description: Vizabi Test Pages 000: Smashed Version of Vizabi will load the application
+</div>
+
+<script src="scripts/vizabi.js" type="text/javascript"></script>
+<script>
+
+    function initialize() {
+
+        var chartState = {
+            dataPath: "data/",
+            year: 1960,
+            xIndicator: "tfr1",
+            yIndicator: "mort",
+            sizeIndicator: "pop",
+            entity: "unstates",
+            isInteractive: true,
+            fileFormat: "multipleJSON"
+        };
+
+        var renderDiv = "chart-1";
+
+        var app = new vizabi.bubbleChart(renderDiv, chartState);
+
+    }
+
+    vizabi.ready(initialize);
+
+</script>

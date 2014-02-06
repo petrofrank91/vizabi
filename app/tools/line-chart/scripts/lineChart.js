@@ -1,4 +1,4 @@
-gapminder.lineChart = function(renderDiv,state) {
+gapminder.lineChart = function (renderDiv, state) {
 
     var isInteractive;
     var chartLabelDiv;
@@ -12,25 +12,29 @@ gapminder.lineChart = function(renderDiv,state) {
     var setInitialState = function (state) {
         model = new gapminder.lineChartModel();
 
-        model.setInit(state, function() {
+        model.setInit(state, function () {
             isInteractive = model.get("isInteractive");
             setUpSubviews();
             setUpModelAndUpdate();
-            if (modelBindCallback) {modelBindCallback(model.getAttributes());}
+            if (modelBindCallback) {
+                modelBindCallback(model.getAttributes());
+            }
         });
     };
 
 
-    var setState = function(state) {
-        model.set(state, function() {
+    var setState = function (state) {
+        model.set(state, function () {
             isInteractive = model.get("isInteractive");
             setUpModelAndUpdate();
-            if (modelBindCallback) {modelBindCallback(model.getAttributes());}
+            if (modelBindCallback) {
+                modelBindCallback(model.getAttributes());
+            }
         });
     };
 
-    var setUpModelAndUpdate = function() {
-        var year =   model.get("year");
+    var setUpModelAndUpdate = function () {
+        var year = model.get("year");
         var trails = model.get("trails");
 
         $("#" + chartLabelDiv).html(Math.round(year));
@@ -43,20 +47,19 @@ gapminder.lineChart = function(renderDiv,state) {
     };
 
 
-    var setUpSubviews =  function() {
-        $(document).ready(function() {
+    var setUpSubviews = function () {
+        $(document).ready(function () {
             initializeGuiElements(renderDiv);
-            initializeTimeSlider(isInteractive,renderDiv);
-            initializeLineChart(appSVG,renderDiv);
+            initializeTimeSlider(isInteractive, renderDiv);
+            initializeLineChart(appSVG, renderDiv);
             setTrailsCheckBoxBinding();
         });
     };
 
 
-    var initializeGuiElements = function(renderDiv) {
+    var initializeGuiElements = function (renderDiv) {
         gapminder.guiUtils.initializeLayers(renderDiv, scatterChartModelUpdate, model);
-        if (isInteractive)
-        {
+        if (isInteractive) {
             gapminder.guiUtils.createTrails(renderDiv);
         }
 
@@ -74,8 +77,7 @@ gapminder.lineChart = function(renderDiv,state) {
 
 
     var initializeTimeSlider = function (isInteractive, renderDiv) {
-        if (isInteractive)
-        {
+        if (isInteractive) {
             gapminder.guiUtils.createTimeSlider(renderDiv);
 
             timeSlider = new gapminder.timeSlider(timeSliderModelUpdate);
@@ -86,44 +88,51 @@ gapminder.lineChart = function(renderDiv,state) {
 
 
     var scatterChartModelUpdate = function (state) {
-        model.set(state, function() {
+        model.set(state, function () {
             lineChart.update(model);
-            if (modelBindCallback) {modelBindCallback(model.getAttributes());}
+            if (modelBindCallback) {
+                modelBindCallback(model.getAttributes());
+            }
         });
 
     };
 
     var timeSliderModelUpdate = function (state) {
-        model.set(state, function() {
+        model.set(state, function () {
 
             $("#" + chartLabelDiv).html(Math.round(model.get("year")));
             timeSlider.update(model);
             lineChart.update(model);
-            if (modelBindCallback) {modelBindCallback(model.getAttributes());}
+            if (modelBindCallback) {
+                modelBindCallback(model.getAttributes());
+            }
         });
     };
 
 
-    var setTrailsCheckBoxBinding = function() {
-        $(document).on('change', ".ui-trails", function() {
-            if($(this).is(':checked')) {
-                model.set({trails : "standard"}, setUpModelAndUpdate);
-                if (modelBindCallback) {modelBindCallback(model.getAttributes());}
+    var setTrailsCheckBoxBinding = function () {
+        $(document).on('change', ".ui-trails", function () {
+            if ($(this).is(':checked')) {
+                model.set({trails: "standard"}, setUpModelAndUpdate);
+                if (modelBindCallback) {
+                    modelBindCallback(model.getAttributes());
+                }
             }
             else {
-                model.set({trails : "none"}, setUpModelAndUpdate);
-                if (modelBindCallback) {modelBindCallback(model.getAttributes());}
+                model.set({trails: "none"}, setUpModelAndUpdate);
+                if (modelBindCallback) {
+                    modelBindCallback(model.getAttributes());
+                }
             }
         });
     };
 
-    var registerModelBindCallback = function(callback) {
+    var registerModelBindCallback = function (callback) {
         modelBindCallback = callback;
     };
 
 
-
-   setInitialState(state);
+    setInitialState(state);
 
     return {
         setVizabiState: setInitialState,

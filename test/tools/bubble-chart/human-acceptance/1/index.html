@@ -14,16 +14,21 @@
     <script type="text/javascript" src="tools/bubble-chart/scripts/start.js" charset="utf-8"></script>
     <script type="text/javascript" src="common/scripts/helpers/util.js" charset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-model.js" charset="utf-8"></script>
-    <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-model-validator.js" charset="utf-8"></script>
+    <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-model-validator.js"
+            charset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-glue.js" charset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-datahelper.js" charset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/viz/viz-bubble.js" chartset="utf-8"></script>
 
     <script type="text/javascript" src="vizabi-components/data-cube/data-cube.js" charset="utf-8"></script>
-    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multiple-json.js" charset="utf-8"></script>
-    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-single-csv.js" charset="utf-8"></script>
-    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multiple-csv.js" charset="utf-8"></script>
-    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multi-csv.js" charset="utf-8"></script>
+    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multiple-json.js"
+            charset="utf-8"></script>
+    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-single-csv.js"
+            charset="utf-8"></script>
+    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multiple-csv.js"
+            charset="utf-8"></script>
+    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multi-csv.js"
+            charset="utf-8"></script>
     <script type="text/javascript" src="vizabi-components/data-cube/loader-factory.js" charset="utf-8"></script>
     <script type="text/javascript" src="vizabi-components/data-cube/data-cube-i18n-layer.js" charset="utf-8"></script>
 
@@ -35,10 +40,10 @@
         var chartState = {
             dataPath: "data/",
             year: 1960,
-            xIndicator : "tfr1",
-            yIndicator : "mort",
-            sizeIndicator : "pop",
-            entity : "unstates",
+            xIndicator: "tfr1",
+            yIndicator: "mort",
+            sizeIndicator: "pop",
+            entity: "unstates",
             isInteractive: true,
             fileFormat: "multipleJSON"
         };
@@ -48,20 +53,25 @@
         var app = new gapminder.bubbleChart(renderDiv, chartState);
 
         function loadNewState() {
-          var chartState2 = {
-              xIndicator: "tfr2",
-              year: 1980
-          };
+            var chartState2 = {
+                xIndicator: "tfr2",
+                year: 1980
+            };
 
-           app.setState(chartState2);
+            app.setState(chartState2);
 
         }
 
     </script>
 </head>
 <body>
-<div id="chartInfo"></div><div id="chartFooter"></div>
-<div style="font-family: 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;" align="center">Description: Vizabi Test Pages: The simplest instance of Vizabi with default state in options object, and a setState funciton called form the button, to see that the view changes. TImesldier changes year, trails get turned of, Indicator change, values change</div>
+<div id="chartInfo"></div>
+<div id="chartFooter"></div>
+<div style="font-family: 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;"
+     align="center">Description: Vizabi Test Pages: The simplest instance of Vizabi with default state in options
+    object, and a setState funciton called form the button, to see that the view changes. TImesldier changes year,
+    trails get turned of, Indicator change, values change
+</div>
 <button onclick="loadNewState()">Click to Change xIndicator to Tfr2</button>
 </body>
 </html>

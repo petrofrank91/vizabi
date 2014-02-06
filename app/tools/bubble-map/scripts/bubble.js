@@ -1,6 +1,6 @@
 gapminder.viz.bubble_map.bubbles = function bubble(properties) {
     "use strict";
-    
+
     var svg = {};
     var group;
 
@@ -31,18 +31,34 @@ gapminder.viz.bubble_map.bubbles = function bubble(properties) {
 
         var circle = shape.append("circle")
             .attr("class", "bubbles")
-            .attr("id", function(d) { return d.id; })
-            .attr("fill", function(d) { return d.color; })
-            .attr("r", function(d) { return d.size; })
-            .attr("cx", function(d) { return d.coordinates[0]; })
-            .attr("cy", function(d) { return d.coordinates[1]; })
+            .attr("id", function (d) {
+                return d.id;
+            })
+            .attr("fill", function (d) {
+                return d.color;
+            })
+            .attr("r", function (d) {
+                return d.size;
+            })
+            .attr("cx", function (d) {
+                return d.coordinates[0];
+            })
+            .attr("cy", function (d) {
+                return d.coordinates[1];
+            })
             .attr("shape-rendering", "geometricPrecision");
-        
+
         shape.append("text")
             .attr("class", "bubbles")
-            .attr("x", function(d) { return d.coordinates[0]; })
-            .attr("y", function(d) { return d.coordinates[1] + d.size + 32; })
-            .text(function(d) { return d.text; });
+            .attr("x", function (d) {
+                return d.coordinates[0];
+            })
+            .attr("y", function (d) {
+                return d.coordinates[1] + d.size + 32;
+            })
+            .text(function (d) {
+                return d.text;
+            });
 
         if (bubble_settings.border) {
             circle.attr("class", "bubbles-border");
@@ -58,13 +74,13 @@ gapminder.viz.bubble_map.bubbles = function bubble(properties) {
                 gradient.attr("x1", "0%").attr("y1", "0%")
                     .attr("x2", "100%").attr("y2", "100%")
                     .attr("spreadMethod", "pad");
-                
+
                 // colors
                 gradient.append("stop")
                     .attr("offset", "0%")
                     .attr("stop-color", colors[color].from_color)
                     .attr("stop-opacity", 1);
-            
+
                 gradient.append("stop")
                     .attr("offset", "30%")
                     .attr("stop-color", colors[color].to_color)
@@ -74,13 +90,13 @@ gapminder.viz.bubble_map.bubbles = function bubble(properties) {
             }
         }
     }
-    
+
     function change_settings(new_settings) {
         settings = new_settings;
     }
-    
+
     init(properties);
-    
+
     return {
         svg: svg,
         g: group,

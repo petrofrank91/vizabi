@@ -1,27 +1,27 @@
 gapminder.bubble_map = function bubble_map(properties) {
     "use strict";
-    
+
     var name = "bubble_map";
-    
+
     var div;
     var svg;
 
     var width = 900;
     var height = 500;
-    
+
     var viz_window = {
         width: 0, height: 0
     }
-    
+
     var viz_components = {
         header: {}, bmap: {}, bubbles: {}, time_slider: {}
     };
 
     var data_handlers = {};
     var layout_manager;
-    
+
     var ready = false;
-    
+
     var state = {
         width: 900,
         height: 500,
@@ -35,7 +35,9 @@ gapminder.bubble_map = function bubble_map(properties) {
         border: true,
         gradient: true,
         gradient_colors: {},
-        i18n: { dgettext: function(str1, str2) { return str2; } }
+        i18n: { dgettext: function (str1, str2) {
+            return str2;
+        } }
     };
 
     function init(properties) {
@@ -43,12 +45,12 @@ gapminder.bubble_map = function bubble_map(properties) {
         state.height = properties.height || height;
         state.year = +properties.year || state.year;
         state.i18n = properties.i18n || state.i18n;
-        
+
         div = d3.select(properties.div).style("position", "relative");
         svg = div.append("svg").attr("id", properties.div + name)
             .attr("width", state.width).attr("height", state.height);
     }
-    
+
     function init_helpers() {
         layout_manager = gapminder.layout_manager(div, state, viz_window);
         data_handlers.loader = gapminder.data_manager.bubble_map.loader();
@@ -59,12 +61,12 @@ gapminder.bubble_map = function bubble_map(properties) {
             svg: svg,
             text: state.i18n.dgettext("popReg", "Billions of people per region")
         });
-        
+
         viz_components.bmap = gapminder.viz.bubble_map.bmap({
             svg: svg,
             top: 40
         });
-        
+
         viz_components.bubbles = gapminder.viz.bubble_map.bubbles({
             svg: viz_components.bmap.svg,
             border: state.border,
@@ -79,7 +81,7 @@ gapminder.bubble_map = function bubble_map(properties) {
             viz_window: viz_window
         });
     }
-    
+
     function bind_viz_positions() {
         // Excluded header since it is positioned at (0,0)
         layout_manager.add_layout({
@@ -106,19 +108,19 @@ gapminder.bubble_map = function bubble_map(properties) {
             ]
         });
     }
-    
+
     function load_data() {
         // Load map
-        data_handlers.loader.load_map(state, function() {
+        data_handlers.loader.load_map(state, function () {
             viz_components.bmap.draw(state.map_data); // unqueue!!
         });
 
         // Load population data
         data_handlers.loader.load_population(state);
     }
-    
+
     function bind_time_slider() {
-        var draw_routine = function() {
+        var draw_routine = function () {
             fill_bubbles();
             viz_components.bubbles.draw(state.bubble_data);
         };
@@ -127,12 +129,12 @@ gapminder.bubble_map = function bubble_map(properties) {
         viz_components.time_slider.on_stop(draw_routine);
         viz_components.time_slider.on_slide(draw_routine);
     };
-    
+
     function update_positions() {
         layout_manager.update();
         layout_manager.reposition();
     }
-    
+
     function transition(data) {
         var past = data[Math.floor(+state.year)];
         var future = data[Math.ceil(+state.year)];
@@ -143,18 +145,18 @@ gapminder.bubble_map = function bubble_map(properties) {
     function fill_bubbles() {
         var min_scale = Math.min(viz_window.width / 900, viz_window.height / 500);
         var length = state.bubble_data.length;
-        
+
         for (var i = 0; i < length; i++) {
             var bubble = state.bubble_data[i];
-            
+
             // Update bubble size
             var population = transition(state.population_data[bubble.region]);
             bubble.size = Math.sqrt((population / state.bubble_pop) / Math.PI);
             bubble.size *= min_scale;
-            
+
             // Update bubble text (pop in billions)
             var pop_text = (population / 1000000000);
-            bubble.text =  pop_text < 0.5 ? pop_text.toFixed(2) : pop_text.toFixed(1);
+            bubble.text = pop_text < 0.5 ? pop_text.toFixed(2) : pop_text.toFixed(1);
         }
     };
 
@@ -173,7 +175,7 @@ gapminder.bubble_map = function bubble_map(properties) {
                     gapminder.entities.get_color(data.id));
             }
         }
-        
+
         fill_bubbles();
         viz_components.bubbles.draw(state.bubble_data, state.gradient_colors);
     };
@@ -185,10 +187,10 @@ gapminder.bubble_map = function bubble_map(properties) {
             size: 0,
             coordinates: viz_components.bmap.get_position(data),
             color: (state.gradient ? "url(#" + data.region + ")"
-                    : gapminder.entities.get_color(data.id))
+                : gapminder.entities.get_color(data.id))
         }
     };
-    
+
     function set_grad_colors(data, from, to) {
         state.gradient_colors[data.id] = {
             id: data.region,
@@ -199,7 +201,7 @@ gapminder.bubble_map = function bubble_map(properties) {
 
     function resize_bubbles() {
         var min_scale = Math.min(viz_window.width / 900, viz_window.height / 500);
-        
+
         for (var i = 0; i < state.bubble_data.length; i++) {
             var bubble = state.bubble_data[i];
             bubble.size *= min_scale;
@@ -207,7 +209,7 @@ gapminder.bubble_map = function bubble_map(properties) {
 
         viz_components.bubbles.draw(state.bubble_data);
     }
-    
+
     function resize() {
         resize_bubbles();
         update_positions();
@@ -222,7 +224,7 @@ gapminder.bubble_map = function bubble_map(properties) {
     update_positions();
     set_initial_bubbles(["PAN", "SWE", "THA", "UGA"]);
     resize_bubbles();
-    
+
     return {
         svg: svg,
         state: state

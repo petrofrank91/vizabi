@@ -21,7 +21,7 @@ function layoutManager(svg, defaultMeasures, currentMeasures) {
         // Parameter elements error
         missingSVG: "Layout Manager needs the svg element!",
         missingMeasures: "Layout Manager needs to know the viz default and" +
-                "current measures (width / height).",
+            "current measures (width / height).",
         malformedMeasureObj: "Object needs width and height attributes.",
 
         // Layout specific error
@@ -228,7 +228,7 @@ function layoutManager(svg, defaultMeasures, currentMeasures) {
 
         var componentName = bind[0];
         var anchorPointName = bind[1];
-        
+
         var point = getAnchorPoint(componentName, anchorPointName);
 
         if (padding) {
@@ -305,7 +305,7 @@ function layoutManager(svg, defaultMeasures, currentMeasures) {
         }
 
         return anchorPoints;
-     }
+    }
 
     // Calculates the new position of a component's anchor points
     function calculateNewPosition(component) {
@@ -327,7 +327,7 @@ function layoutManager(svg, defaultMeasures, currentMeasures) {
                 if (layout[selectedLayoutName].hasOwnProperty(comp)) {
                     if (comp === "stage") {
                         continue;
-                    }            
+                    }
 
                     var component = layout[selectedLayoutName][comp];
                     var newPosition = calculateNewPosition(component);
@@ -374,7 +374,7 @@ function layoutManager(svg, defaultMeasures, currentMeasures) {
     function listenFullScreen() {
         fullscreenResize();
 
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
             fullscreenResize();
         });
     }
@@ -388,7 +388,7 @@ function layoutManager(svg, defaultMeasures, currentMeasures) {
     function listenDiv() {
         divResize();
 
-        window.addEventListener('resize', function() {
+        window.addEventListener('resize', function () {
             divResize();
         });
     }
