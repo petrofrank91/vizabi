@@ -26,22 +26,41 @@ define(['util', 'bubble-chart-datahelper'], function (util, bubbleChartDataHelpe
             }
         };
 
-        var isAnyBubblesOutOfScope = function () {
-            var xIndicator = bubbleChartModel.get("xIndicator");
-            var xScope = dataHelper.getScopeOfIndicatorForCurrentYear(xIndicator, bubbleChartModel);
+    var isAnyBubblesOutOfScope = function () {
+        if (bubbleChartModel.get("minXValue") &&  bubbleChartModel.get("maxXValue")
+            || (bubbleChartModel.get("minYValue") &&  bubbleChartModel.get("maxYValue"))) {
+            if (bubbleChartModel.get("autoZoom")) {
+                  var xIndicator = bubbleChartModel.get("xIndicator");
+                  var xScope = dataHelper.getScopeOfIndicatorForCurrentYear(xIndicator, bubbleChartModel);
 
-            var yIndicator = bubbleChartModel.get("yIndicator");
-            var yScope = dataHelper.getScopeOfIndicatorForCurrentYear(yIndicator, bubbleChartModel);
+                  var yIndicator = bubbleChartModel.get("yIndicator");
+                  var yScope = dataHelper.getScopeOfIndicatorForCurrentYear(yIndicator, bubbleChartModel);
 
-            var minXValue = bubbleChartModel.get("minXValue");
-            var maxXValue = bubbleChartModel.get("maxXValue");
+                  var minXValue = bubbleChartModel.get("minXValue");
+                  var maxXValue = bubbleChartModel.get("maxXValue");
 
-            var minYValue = bubbleChartModel.get("minYValue");
-            var maxYValue = bubbleChartModel.get("maxYValue");
+                  var minYValue = bubbleChartModel.get("minYValue");
+                  var maxYValue = bubbleChartModel.get("maxYValue");
 
-            return  ((xScope.min < minXValue || xScope.max > maxXValue)
-                && (yScope.min < minYValue || yScope.max > maxYValue));
-        };
+                  if  (xScope.min < minXValue) {
+                      bubbleChartModel.setUpdatedMiXValue(xScope.min);
+                      //bubbleChartModel.setMinXValue(xScope.min);
+                  }
+                  if (xScope.max < maxXValue) {
+                      bubbleChartModel.setUpdatedMaxXValue(xScope.max);
+                      //bubbleChartModel.setMaxXValue(xScope.max);
+                  }
+                  if (yScope.min < minYValue) {
+                      bubbleChartModel.setUpdatedMinYValue(yScope.min);
+                      //bubbleChartModel.setMinYValue(yScope.min);
+                  }
+                  if (yScope.max < maxYValue) {
+                      bubbleChartModel.setUpdatedMaxYValue(yScope.max);
+                      //bubbleChartModel.setMaxYValue(yScope.max);
+                  }
+            }
+        }
+    };
 
 
         var validateState = function (model, changedState, callback, dataHelperObj) {
@@ -71,11 +90,12 @@ define(['util', 'bubble-chart-datahelper'], function (util, bubbleChartDataHelpe
 
         };
 
-        var modelIsValidAndProcessWithCallback = function () {
-            if (typeof readyToRenderCallback === "function") {
-                readyToRenderCallback();
-            }
-        };
+    var modelIsValidAndProcessWithCallback = function () {
+      if (typeof readyToRenderCallback === "function") {
+          isAnyBubblesOutOfScope();
+          readyToRenderCallback();
+      }
+    };
 
         var validateAndProcessCallback = function (model, dataNeedsToBeLoaded, changedStateAttributes, modelAndDataIsReadyCallback) {
             if (dataNeedsToBeLoaded && typeof modelAndDataIsReadyCallback === 'function') {
@@ -91,16 +111,15 @@ define(['util', 'bubble-chart-datahelper'], function (util, bubbleChartDataHelpe
         };
 
 
-        return {
-            isMissingIndicators: isMissingIndicators,
-            isAnyBubblesOutOfScope: isAnyBubblesOutOfScope,
-            validateState: validateState,
-            validate: validateAndProcessCallback,
-            getDataHelper: getDataHelper,
-            initialize: initialize
-        };
-    };
+    return {
+  	  isMissingIndicators: isMissingIndicators,
+  	  isAnyBubblesOutOfScope: isAnyBubblesOutOfScope,
+      validateState: validateState,
+      validate: validateAndProcessCallback,
+      getDataHelper: getDataHelper,
+      initialize: initialize
+	  };
 
-    return bubbleChartModelValidator;
-
+};
+    return bubbleChartModelValidator
 });

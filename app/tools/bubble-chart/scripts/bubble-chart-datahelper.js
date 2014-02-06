@@ -135,13 +135,10 @@ define(['d3', 'data-cube', 'util'], function (d3, dataCube, util) {
                 regionsList = regions;
             }
 
-            setDatasetAndChartInfo(chartInfo);
-            setAxesNameAndInfo();
-            console.log(isAnyBubblesOutOfScope());
-            if (typeof dataIsReadyCallback === 'function') {
-                dataIsReadyCallback();
-            }
-        };
+        setDatasetAndChartInfo(chartInfo);
+        setAxesNameAndInfo();
+        if (typeof dataIsReadyCallback === 'function') {dataIsReadyCallback();}
+    };
 
         var setTimeUnit = function () {
             for (var unit in indicators) {
@@ -405,17 +402,23 @@ define(['d3', 'data-cube', 'util'], function (d3, dataCube, util) {
         var getIndicatorValuesForAllEntitiesWithinYear = function (indicator, year) {
             var values = [];
 
-            for (var category in indicators[timeUnit]) {
-                if (indicators[timeUnit].hasOwnProperty(category)) {
-                    for (var countryName in indicators[timeUnit][category][indicator]["years"]) {
-                        if (indicators[timeUnit][category][indicator]["years"].hasOwnProperty(countryName)
-                            && indicators[timeUnit][category][indicator]["years"][countryName]["trends"].hasOwnProperty(year)) {
-                            var curEntityIndiValue = indicators[timeUnit][category][indicator]["years"][countryName]["trends"][year].v;
-                            values.push(curEntityIndiValue);
+        for (var category in indicators[timeUnit]) {
+            if (indicators[timeUnit].hasOwnProperty(category)) {
+                for (var countryName in indicators[timeUnit][category][indicator]["years"]) {
+                    if (indicators[timeUnit][category][indicator]["years"].hasOwnProperty(countryName)) {
+                        var curEntityIndiValue;
+                        if (year % 1 === 0 && indicators[timeUnit][category][indicator]["years"][countryName]["trends"].hasOwnProperty(year)) {
+                                curEntityIndiValue = indicators[timeUnit][category][indicator]["years"][countryName]["trends"][year].v;
+                                values.push(curEntityIndiValue);
+                        }
+                        else if (indicators[timeUnit][category][indicator]["years"][countryName]["trends"].hasOwnProperty(Math.floor(year))) {
+                                curEntityIndiValue = get(indicator, countryName, year, dataHelperModel, category);
+                                values.push(curEntityIndiValue);
                         }
                     }
                 }
             }
+        }
 
             return values;
         };
@@ -440,51 +443,34 @@ define(['d3', 'data-cube', 'util'], function (d3, dataCube, util) {
             return skeleton;
         };
 
-        var isAnyBubblesOutOfScope = function () {
-            var xIndicator = dataHelperModel.get("xIndicator");
-            var xScope = getScopeOfIndicatorForCurrentYear(xIndicator, dataHelperModel);
-
-            var yIndicator = dataHelperModel.get("yIndicator");
-            var yScope = getScopeOfIndicatorForCurrentYear(yIndicator, dataHelperModel);
-
-            var minXValue = dataHelperModel.get("minXValue");
-            var maxXValue = dataHelperModel.get("maxXValue");
-
-            var minYValue = dataHelperModel.get("minYValue");
-            var maxYValue = dataHelperModel.get("maxYValue");
-
-            return  (xScope.min < minXValue || xScope.max > maxXValue
-                || yScope.min < minYValue || yScope.max > maxYValue);
-        };
-
-        return {
-            loadData: loadData,
-            getEntityMeta: getEntityMeta,
-            getNestedData: getNestedData,
-            getMaxOfXIndicator: getMaxOfXIndicator,
-            getMinOfXIndicator: getMinOfXIndicator,
-            getMaxOfYIndicator: getMaxOfYIndicator,
-            getMinOfYIndicator: getMinOfYIndicator,
-            getMinOfSizeIndicator: getMinOfSizeIndicator,
-            getMaxOfSizeIndicator: getMaxOfSizeIndicator,
-            getScopeOfIndicatorForCurrentYear: getScopeOfIndicatorForCurrentYear,
-            getMinYear: getMinYear,
-            getMaxYear: getMaxYear,
-            getChartInfo: getChartInfo,
-            getChartFooter: getChartFooter,
-            getAxisNames: getAxisNames,
-            getAxisInfo: getAxisInfo,
-            getEntityLayerObject: getEntityLayerObject,
-            getDataObject: getDataObject,
-            getColor: getColor,
-            get: get,
-            getName: getName,
-            getDataForYear: getDataForYear,
-            initialize: initialize,
-            getSkeleton: getSkeleton
-        };
+    return {
+        loadData: loadData,
+        getEntityMeta: getEntityMeta,
+        getNestedData: getNestedData,
+        getMaxOfXIndicator: getMaxOfXIndicator,
+        getMinOfXIndicator: getMinOfXIndicator,
+        getMaxOfYIndicator: getMaxOfYIndicator,
+        getMinOfYIndicator: getMinOfYIndicator,
+        getMinOfSizeIndicator: getMinOfSizeIndicator,
+        getMaxOfSizeIndicator: getMaxOfSizeIndicator,
+        getScopeOfIndicatorForCurrentYear: getScopeOfIndicatorForCurrentYear,
+        getMinYear: getMinYear,
+        getMaxYear: getMaxYear,
+        getChartInfo: getChartInfo,
+        getChartFooter: getChartFooter,
+        getAxisNames: getAxisNames,
+        getAxisInfo: getAxisInfo,
+        getEntityLayerObject: getEntityLayerObject,
+        getDataObject: getDataObject,
+        getColor: getColor,
+        get: get,
+        getName: getName,
+        getDataForYear: getDataForYear,
+        initialize: initialize,
+        getSkeleton: getSkeleton
     };
 
-    return bubbleChartDataHelper;
 
+};
+    return bubbleChartDataHelper;
 });

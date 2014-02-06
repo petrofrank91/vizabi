@@ -582,18 +582,18 @@ module.exports = function (grunt) {
     grunt.registerTask('build', [
         'clean:dist',
         'copy:index',
-		'replace:mainjs',
-		'replace:templateincludes',
-		'replace:wrapperjsdist',
+        'replace:mainjs',
+        'replace:templateincludes',
+        'replace:wrapperjsdist',
         'useminPrepare',
         'requirejs',
         //'concurrent:dist', // runs various tasks concurrently, see configuration above. currently disabled since the stage server chokes here. instead running the tasks synchronously:
-            'compass:dist',
-            'copy:styles',
-            'imagemin',
-            'svgmin',
-            'htmlmin',
-            //'uglify', // comment out to simplify debugging
+        'compass:dist',
+        'copy:styles',
+        'imagemin',
+        'svgmin',
+        'htmlmin',
+        //'uglify', // comment out to simplify debugging
         'autoprefixer',
         //'modernizr', // disabled due to https://github.com/Modernizr/grunt-modernizr/issues/45
         'copy:dist',
