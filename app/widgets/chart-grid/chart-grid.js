@@ -124,30 +124,30 @@ define(['jquery'], function ($) {
                     return vizState.getDataHelper().getAxisInfo()[0];
                 });
 
-        var xDomain = [];
-        if (vizState.get("minXValue") !== undefined && vizState.get("maxXValue") !== undefined) {
-            var updatedMinX = vizState.get("updatedMinXValue");
-            var minX = vizState.get("minXValue");
+            var xDomain = [];
+            if (vizState.get("minXValue") !== undefined && vizState.get("maxXValue") !== undefined) {
+                var updatedMinX = vizState.get("updatedMinXValue");
+                var minX = vizState.get("minXValue");
 
-            if (updatedMinX && updatedMinX < minX) {
-                xDomain[0] = updatedMinX;
-            }
-            else {
-                xDomain[0] = minX;
-            }
+                if (updatedMinX && updatedMinX < minX) {
+                    xDomain[0] = updatedMinX;
+                }
+                else {
+                    xDomain[0] = minX;
+                }
 
-            var maxX = vizState.get("maxXValue");
-            var updatedMaxX = vizState.get("updatedMaxXValue");
-            
-            if (updatedMaxX && updatedMaxX > maxX) {
-                xDomain[1] = updatedMaxX;
+                var maxX = vizState.get("maxXValue");
+                var updatedMaxX = vizState.get("updatedMaxXValue");
+
+                if (updatedMaxX && updatedMaxX > maxX) {
+                    xDomain[1] = updatedMaxX;
+                }
+                else {
+                    xDomain[1] = maxX;
+                }
+            } else {
+                xDomain = [vizState.getDataHelper().getMinOfXIndicator(), vizState.getDataHelper().getMaxOfXIndicator()];
             }
-            else {
-                xDomain[1] = maxX;
-            }
-        } else {
-            xDomain = [vizState.getDataHelper().getMinOfXIndicator(), vizState.getDataHelper().getMaxOfXIndicator()];
-        }
 
             if (vizState.get("xAxisScale") === "log") {
                 xScale = d3.scale.log().domain(xDomain).range([0, availableWidth]);
@@ -196,19 +196,25 @@ define(['jquery'], function ($) {
 
         var yDomain = [];
         if (vizState.get("minYValue") !== undefined && vizState.get("maxYValue") !== undefined) {
-            if (vizState.get("updatedMinYValue")) {
-                yDomain[0] = vizState.get("updatedMinYValue");
+            var updatedMinY = vizState.get("updatedMinYValue");
+            var minY = vizState.get("minYValue");
+
+            if (updatedMinY && updatedMinY < minY) {
+                yDomain[0] = updatedMinY;
             }
             else {
-                yDomain[0] = vizState.get("minYValue");
+                yDomain[0] = minY;
             }
-            
-            if (vizState.get("updatedMaxYValue")) {
-                yDomain[1] = vizState.get("updatedMaxYValue");
+
+            var maxY = vizState.get("maxYValue");
+            var updatedMaxY = vizState.get("updatedMaxYValue");
+
+            if (updatedMaxY && updatedMaxY > maxY) {
+                yDomain[1] = updatedMaxY;
             }
-            else {
-                yDomain[1] = vizState.get("maxYValue");
-            }
+        else {
+            yDomain[1] = maxY;
+        }
         } else {
             yDomain = [vizState.getDataHelper().getMinOfYIndicator(), vizState.getDataHelper().getMaxOfYIndicator()];
         }
