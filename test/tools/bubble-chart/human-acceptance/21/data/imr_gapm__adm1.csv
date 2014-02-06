@@ -1,0 +1,1111 @@
+id,name,time,value
+BRA,Brasil,2007, 18.0 
+BRA,Brasil,2005, 19.8 
+BRA,Brasil,2000, 29.7 
+BRA001011,Rondonia,2000, 27.4 
+BRA001012,Acre,2000, 39.4 
+BRA001012,Acre,2005, 27.5 
+BRA001012,Acre,2007, 26.1 
+BRA001013,Amazonas,2000, 29.9 
+BRA001013,Amazonas,2005, 22.8 
+BRA001013,Amazonas,2007, 20.1 
+BRA001014,Roraima,2000, 24.5 
+BRA001014,Roraima,2005, 16.9 
+BRA001014,Roraima,2007, 15.5 
+BRA001015,Para,2000, 30.5 
+BRA001015,Para,2005, 22.8 
+BRA001015,Para,2007, 21.5 
+BRA001016,Amapa,2000, 24.1 
+BRA001016,Amapa,2005, 21.4 
+BRA001016,Amapa,2007, 19.4 
+BRA001017,Tocantins,2000, 29.9 
+BRA001017,Tocantins,2005, 21.6 
+BRA001017,Tocantins,2007, 20.0 
+BRA002021,Maranhao,2000, 47.0 
+BRA002021,Maranhao,2005, 30.5 
+BRA002021,Maranhao,2007, 28.1 
+BRA002022,Piaui,2000, 41.0 
+BRA002022,Piaui,2005, 26.8 
+BRA002022,Piaui,2007, 24.4 
+BRA002023,Ceara,2000, 43.4 
+BRA002023,Ceara,2005, 25.6 
+BRA002023,Ceara,2007, 22.7 
+BRA002024,Rio Grande do Norte,2000, 49.7 
+BRA002024,Rio Grande do Norte,2005, 31.3 
+BRA002024,Rio Grande do Norte,2007, 27.9 
+BRA002025,Paraiba,2000, 49.8 
+BRA002025,Paraiba,2005, 31.7 
+BRA002025,Paraiba,2007, 28.3 
+BRA002026,Pernambuco,2000, 53.3 
+BRA002026,Pernambuco,2005, 29.9 
+BRA002026,Pernambuco,2007, 17.3 
+BRA002027,Alagoas,2000, 64.7 
+BRA002027,Alagoas,2005, 41.4 
+BRA002027,Alagoas,2007, 38.5 
+BRA002028,Sergipe,2000, 42.0 
+BRA002028,Sergipe,2005, 30.0 
+BRA002028,Sergipe,2007, 28.0 
+BRA002029,Bahia,2000, 41.8 
+BRA002029,Bahia,2005, 27.2 
+BRA002029,Bahia,2007, 24.5 
+BRA003031,Minas Gerais,2000, 24.2 
+BRA003031,Minas Gerais,2005, 17.3 
+BRA003031,Minas Gerais,2007, 16.2 
+BRA003032,Espirito Santo,2000, 18.0 
+BRA003032,Espirito Santo,2005, 14.5 
+BRA003032,Espirito Santo,2007, 13.5 
+BRA003033,Rio de Janeiro,2000, 22.4 
+BRA003033,Rio de Janeiro,2005, 14.9 
+BRA003033,Rio de Janeiro,2007, 13.6 
+BRA003035,Sao Paulo,2000, 20.1 
+BRA003035,Sao Paulo,2005, 12.6 
+BRA003035,Sao Paulo,2007, 13.6 
+BRA004041,Parana,2000, 17.8 
+BRA004041,Parana,2005, 13.5 
+BRA004041,Parana,2007, 12.2 
+BRA004042,Santa Catarina,2000, 16.2 
+BRA004042,Santa Catarina,2005, 11.8 
+BRA004042,Santa Catarina,2007, 11.7 
+BRA004043,Rio Grande do Sul,2000, 14.8 
+BRA004043,Rio Grande do Sul,2005, 12.8 
+BRA004043,Rio Grande do Sul,2007, 12.1 
+BRA005050,Mato Grosso do Sul,2000, 24.3 
+BRA005050,Mato Grosso do Sul,2005, 18.0 
+BRA005050,Mato Grosso do Sul,2007, 17.9 
+BRA005051,Mato Grosso,2000, 24.9 
+BRA005051,Mato Grosso,2005, 18.3 
+BRA005051,Mato Grosso,2007, 16.9 
+BRA005052,Goias,2000, 22.8 
+BRA005052,Goias,2005, 17.0 
+BRA005052,Goias,2007, 15.9 
+BRA005053,Distrito Federal,2000, 17.8 
+BRA005053,Distrito Federal,2005, 12.7 
+BRA005053,Distrito Federal,2007, 10.4 
+BRA001011,Rondonia,2005, 19.7 
+BRA001011,Rondonia,2007, 18.6 
+IND,India,1988, 93.1 
+IND,India,1987, 93.1 
+IND,India,1998, 70.6 
+IND,India,1997, 69.6 
+IND,India,1994, 72.5 
+IND,India,2008, 51.9 
+IND,India,1982, 102.9 
+IND,India,2002, 61.7 
+IND,India,2001, 64.7 
+IND,India,2000, 66.6 
+IND,India,1999, 68.6 
+IND,India,1996, 70.6 
+IND,India,1995, 72.5 
+IND,India,1992, 77.4 
+IND,India,1991, 78.4 
+IND,India,1990, 78.4 
+IND,India,1989, 89.2 
+IND,India,1986, 95.1 
+IND,India,1985, 95.1 
+IND,India,1984, 101.9 
+IND,India,1983, 102.9 
+IND,India,1981, 107.8 
+IND,India,1980, 111.7 
+IND,India,1979, 117.6 
+IND,India,1978, 124.5 
+IND,India,1977, 127.4 
+IND,India,1976, 126.4 
+IND,India,1975, 137.2 
+IND,India,1974, 123.5 
+IND,India,1973, 131.3 
+IND,India,1972, 136.2 
+IND,India,1971, 126.4 
+IND,India,2003, 58.8 
+IND,India,2004, 56.8 
+IND,India,2005, 56.8 
+IND,India,2006, 55.9 
+IND,India,2007, 53.9 
+IND,India,2009, 49.0 
+IND001,Jammu & Kashmir,1992, 44.5 
+IND001,Jammu & Kashmir,1993, 44.5 
+IND001,Jammu & Kashmir,1998, 63.7 
+IND001,Jammu & Kashmir,1999, 63.7 
+IND001,Jammu & Kashmir,2000, 49.0 
+IND001,Jammu & Kashmir,2001, 47.0 
+IND001,Jammu & Kashmir,2002, 44.1 
+IND001,Jammu & Kashmir,2003, 43.1 
+IND001,Jammu & Kashmir,2004, 48.0 
+IND001,Jammu & Kashmir,2005, 49.0 
+IND001,Jammu & Kashmir,2005, 43.8 
+IND001,Jammu & Kashmir,2006, 51.0 
+IND001,Jammu & Kashmir,2006, 43.8 
+IND001,Jammu & Kashmir,2007, 50.0 
+IND001,Jammu & Kashmir,2008, 48.0 
+IND001,Jammu & Kashmir,2009, 44.1 
+IND002,Himachal Pradesh,1990, 67.0 
+IND002,Himachal Pradesh,1991, 73.1 
+IND002,Himachal Pradesh,1992, 67.4 
+IND002,Himachal Pradesh,1992, 54.7 
+IND002,Himachal Pradesh,1993, 64.3 
+IND002,Himachal Pradesh,1993, 54.7 
+IND002,Himachal Pradesh,1994, 57.8 
+IND002,Himachal Pradesh,1995, 61.3 
+IND002,Himachal Pradesh,1996, 60.8 
+IND002,Himachal Pradesh,1997, 61.3 
+IND002,Himachal Pradesh,1998, 61.7 
+IND002,Himachal Pradesh,1998, 33.7 
+IND002,Himachal Pradesh,1999, 52.9 
+IND002,Himachal Pradesh,1999, 33.7 
+IND002,Himachal Pradesh,2000, 58.8 
+IND002,Himachal Pradesh,2001, 52.9 
+IND002,Himachal Pradesh,2002, 51.0 
+IND002,Himachal Pradesh,2003, 48.0 
+IND002,Himachal Pradesh,2004, 50.0 
+IND002,Himachal Pradesh,2005, 48.0 
+IND002,Himachal Pradesh,2005, 35.4 
+IND002,Himachal Pradesh,2006, 49.0 
+IND002,Himachal Pradesh,2006, 35.4 
+IND002,Himachal Pradesh,2007, 46.1 
+IND002,Himachal Pradesh,2008, 43.1 
+IND002,Himachal Pradesh,2009, 44.1 
+IND003,Punjab,1971, 100.0 
+IND003,Punjab,1972, 116.6 
+IND003,Punjab,1973, 112.7 
+IND003,Punjab,1974, 95.1 
+IND003,Punjab,1975, 96.0 
+IND003,Punjab,1976, 105.8 
+IND003,Punjab,1977, 102.9 
+IND003,Punjab,1978, 114.7 
+IND003,Punjab,1979, 90.2 
+IND003,Punjab,1980, 87.2 
+IND003,Punjab,1981, 79.4 
+IND003,Punjab,1982, 73.5 
+IND003,Punjab,1983, 78.4 
+IND003,Punjab,1984, 64.7 
+IND003,Punjab,1985, 69.6 
+IND003,Punjab,1986, 66.6 
+IND003,Punjab,1989, 62.7 
+IND003,Punjab,1990, 59.8 
+IND003,Punjab,1991, 51.9 
+IND003,Punjab,1992, 54.9 
+IND003,Punjab,1992, 52.6 
+IND003,Punjab,1993, 53.9 
+IND003,Punjab,1993, 52.6 
+IND003,Punjab,1994, 51.9 
+IND003,Punjab,1995, 52.9 
+IND003,Punjab,1996, 50.0 
+IND003,Punjab,1997, 50.0 
+IND003,Punjab,1998, 52.9 
+IND003,Punjab,1998, 56.0 
+IND003,Punjab,1999, 51.9 
+IND003,Punjab,1999, 56.0 
+IND003,Punjab,2000, 51.0 
+IND003,Punjab,2001, 50.0 
+IND003,Punjab,2002, 50.0 
+IND003,Punjab,2003, 48.0 
+IND003,Punjab,2004, 44.1 
+IND003,Punjab,2005, 43.1 
+IND003,Punjab,2005, 40.9 
+IND003,Punjab,2006, 43.1 
+IND003,Punjab,2006, 40.9 
+IND003,Punjab,2007, 42.1 
+IND003,Punjab,2008, 40.2 
+IND003,Punjab,2009, 37.2 
+IND004,Chandigarh,1990, 7.5 
+IND004,Chandigarh,1991, 34.6 
+IND004,Chandigarh,1992, 11.9 
+IND004,Chandigarh,1993, 60.6 
+IND004,Chandigarh,1994, 52.6 
+IND004,Chandigarh,1995, 52.0 
+IND004,Chandigarh,1996, 26.5 
+IND004,Chandigarh,1997, 40.3 
+IND004,Chandigarh,2000, 27.4 
+IND004,Chandigarh,2001, 23.5 
+IND004,Chandigarh,2002, 20.6 
+IND004,Chandigarh,2004, 20.6 
+IND004,Chandigarh,2005, 18.6 
+IND004,Chandigarh,2006, 22.5 
+IND004,Chandigarh,2007, 26.5 
+IND004,Chandigarh,2008, 27.4 
+IND004,Chandigarh,2009, 24.5 
+IND005,Uttarakhand,2000, 49.0 
+IND005,Uttarakhand,2001, 47.0 
+IND005,Uttarakhand,2002, 40.2 
+IND005,Uttarakhand,2003, 40.2 
+IND005,Uttarakhand,2004, 41.2 
+IND005,Uttarakhand,2005, 41.2 
+IND005,Uttarakhand,2005, 41.1 
+IND005,Uttarakhand,2006, 42.1 
+IND005,Uttarakhand,2006, 41.1 
+IND005,Uttarakhand,2007, 47.0 
+IND005,Uttarakhand,2008, 43.1 
+IND005,Uttarakhand,2009, 40.2 
+IND006,Haryana,1971, 70.6 
+IND006,Haryana,1972, 92.1 
+IND006,Haryana,1973, 101.9 
+IND006,Haryana,1974, 100.0 
+IND006,Haryana,1975, 111.7 
+IND006,Haryana,1976, 109.8 
+IND006,Haryana,1977, 110.7 
+IND006,Haryana,1978, 106.8 
+IND006,Haryana,1979, 98.0 
+IND006,Haryana,1980, 100.9 
+IND006,Haryana,1981, 99.0 
+IND006,Haryana,1982, 91.1 
+IND006,Haryana,1983, 89.2 
+IND006,Haryana,1984, 99.0 
+IND006,Haryana,1985, 83.3 
+IND006,Haryana,1986, 83.3 
+IND006,Haryana,1989, 80.4 
+IND006,Haryana,1990, 67.6 
+IND006,Haryana,1991, 66.6 
+IND006,Haryana,1992, 73.5 
+IND006,Haryana,1992, 71.8 
+IND006,Haryana,1993, 64.7 
+IND006,Haryana,1993, 71.8 
+IND006,Haryana,1994, 68.6 
+IND006,Haryana,1995, 67.6 
+IND006,Haryana,1996, 66.6 
+IND006,Haryana,1997, 66.6 
+IND006,Haryana,1998, 68.6 
+IND006,Haryana,1998, 55.7 
+IND006,Haryana,1999, 66.6 
+IND006,Haryana,1999, 55.7 
+IND006,Haryana,2000, 65.7 
+IND006,Haryana,2001, 63.7 
+IND006,Haryana,2002, 60.8 
+IND006,Haryana,2003, 57.8 
+IND006,Haryana,2004, 59.8 
+IND006,Haryana,2005, 58.8 
+IND006,Haryana,2005, 40.9 
+IND006,Haryana,2006, 55.9 
+IND006,Haryana,2006, 40.9 
+IND006,Haryana,2007, 53.9 
+IND006,Haryana,2008, 52.9 
+IND006,Haryana,2009, 50.0 
+IND007,Delhi,1990, 41.8 
+IND007,Delhi,1991, 41.8 
+IND007,Delhi,1992, 42.6 
+IND007,Delhi,1992, 64.1 
+IND007,Delhi,1993, 24.5 
+IND007,Delhi,1993, 64.1 
+IND007,Delhi,1994, 53.0 
+IND007,Delhi,1995, 34.8 
+IND007,Delhi,1996, 39.9 
+IND007,Delhi,1997, 28.5 
+IND007,Delhi,1998, 45.9 
+IND007,Delhi,1999, 45.9 
+IND007,Delhi,2000, 31.4 
+IND007,Delhi,2001, 28.4 
+IND007,Delhi,2002, 29.4 
+IND007,Delhi,2004, 31.4 
+IND007,Delhi,2005, 34.3 
+IND007,Delhi,2005, 39.0 
+IND007,Delhi,2006, 36.3 
+IND007,Delhi,2006, 39.0 
+IND007,Delhi,2007, 35.3 
+IND007,Delhi,2008, 34.3 
+IND007,Delhi,2009, 32.3 
+IND008,Rajasthan,1972, 120.5 
+IND008,Rajasthan,1973, 134.3 
+IND008,Rajasthan,1974, 130.3 
+IND008,Rajasthan,1975, 151.9 
+IND008,Rajasthan,1976, 139.2 
+IND008,Rajasthan,1977, 139.2 
+IND008,Rajasthan,1978, 39.2 
+IND008,Rajasthan,1979, 106.8 
+IND008,Rajasthan,1980, 102.9 
+IND008,Rajasthan,1981, 105.8 
+IND008,Rajasthan,1982, 95.1 
+IND008,Rajasthan,1983, 106.8 
+IND008,Rajasthan,1984, 119.6 
+IND008,Rajasthan,1985, 105.8 
+IND008,Rajasthan,1986, 104.9 
+IND008,Rajasthan,1989, 94.1 
+IND008,Rajasthan,1990, 82.3 
+IND008,Rajasthan,1991, 77.4 
+IND008,Rajasthan,1992, 88.2 
+IND008,Rajasthan,1992, 71.1 
+IND008,Rajasthan,1993, 80.4 
+IND008,Rajasthan,1993, 71.1 
+IND008,Rajasthan,1994, 82.3 
+IND008,Rajasthan,1995, 84.3 
+IND008,Rajasthan,1996, 83.3 
+IND008,Rajasthan,1997, 83.3 
+IND008,Rajasthan,1998, 81.3 
+IND008,Rajasthan,1998, 78.8 
+IND008,Rajasthan,1999, 79.4 
+IND008,Rajasthan,1999, 78.8 
+IND008,Rajasthan,2000, 77.4 
+IND008,Rajasthan,2001, 77.4 
+IND008,Rajasthan,2002, 76.4 
+IND008,Rajasthan,2003, 73.5 
+IND008,Rajasthan,2004, 65.7 
+IND008,Rajasthan,2005, 66.6 
+IND008,Rajasthan,2005, 64.0 
+IND008,Rajasthan,2006, 65.7 
+IND008,Rajasthan,2006, 64.0 
+IND008,Rajasthan,2007, 63.7 
+IND008,Rajasthan,2008, 61.7 
+IND008,Rajasthan,2009, 57.8 
+IND009,Uttar Pradesh,1971, 163.7 
+IND009,Uttar Pradesh,1972, 198.0 
+IND009,Uttar Pradesh,1973, 172.5 
+IND009,Uttar Pradesh,1974, 168.6 
+IND009,Uttar Pradesh,1975, 194.0 
+IND009,Uttar Pradesh,1976, 174.4 
+IND009,Uttar Pradesh,1977, 164.6 
+IND009,Uttar Pradesh,1978, 173.5 
+IND009,Uttar Pradesh,1979, 158.8 
+IND009,Uttar Pradesh,1980, 155.8 
+IND009,Uttar Pradesh,1981, 147.0 
+IND009,Uttar Pradesh,1982, 144.1 
+IND009,Uttar Pradesh,1983, 151.9 
+IND009,Uttar Pradesh,1984, 151.9 
+IND009,Uttar Pradesh,1985, 139.2 
+IND009,Uttar Pradesh,1986, 129.4 
+IND009,Uttar Pradesh,1989, 115.6 
+IND009,Uttar Pradesh,1991, 95.1 
+IND009,Uttar Pradesh,1992, 96.0 
+IND009,Uttar Pradesh,1992, 97.9 
+IND009,Uttar Pradesh,1993, 91.1 
+IND009,Uttar Pradesh,1993, 97.9 
+IND009,Uttar Pradesh,1994, 86.2 
+IND009,Uttar Pradesh,1995, 84.3 
+IND009,Uttar Pradesh,1996, 83.3 
+IND009,Uttar Pradesh,1997, 83.3 
+IND009,Uttar Pradesh,1998, 83.3 
+IND009,Uttar Pradesh,1998, 85.0 
+IND009,Uttar Pradesh,1999, 82.3 
+IND009,Uttar Pradesh,1999, 85.0 
+IND009,Uttar Pradesh,2000, 81.3 
+IND009,Uttar Pradesh,2001, 80.4 
+IND009,Uttar Pradesh,2002, 78.4 
+IND009,Uttar Pradesh,2003, 74.5 
+IND009,Uttar Pradesh,2004, 70.6 
+IND009,Uttar Pradesh,2005, 71.5 
+IND009,Uttar Pradesh,2005, 71.2 
+IND009,Uttar Pradesh,2006, 69.6 
+IND009,Uttar Pradesh,2006, 71.2 
+IND009,Uttar Pradesh,2007, 67.6 
+IND009,Uttar Pradesh,2008, 65.7 
+IND009,Uttar Pradesh,2009, 61.7 
+IND010,Bihar,1981, 115.6 
+IND010,Bihar,1982, 109.8 
+IND010,Bihar,1983, 97.0 
+IND010,Bihar,1984, 93.1 
+IND010,Bihar,1985, 103.9 
+IND010,Bihar,1986, 99.0 
+IND010,Bihar,1989, 89.2 
+IND010,Bihar,1991, 67.6 
+IND010,Bihar,1992, 71.5 
+IND010,Bihar,1992, 87.4 
+IND010,Bihar,1993, 68.6 
+IND010,Bihar,1993, 87.4 
+IND010,Bihar,1994, 65.7 
+IND010,Bihar,1995, 71.5 
+IND010,Bihar,1996, 69.6 
+IND010,Bihar,1997, 69.6 
+IND010,Bihar,1998, 65.7 
+IND010,Bihar,1998, 71.4 
+IND010,Bihar,1999, 61.7 
+IND010,Bihar,1999, 71.4 
+IND010,Bihar,2000, 60.8 
+IND010,Bihar,2001, 60.8 
+IND010,Bihar,2002, 59.8 
+IND010,Bihar,2003, 58.8 
+IND010,Bihar,2004, 59.8 
+IND010,Bihar,2005, 59.8 
+IND010,Bihar,2005, 60.5 
+IND010,Bihar,2006, 58.8 
+IND010,Bihar,2006, 60.5 
+IND010,Bihar,2007, 56.8 
+IND010,Bihar,2008, 54.9 
+IND010,Bihar,2009, 51.0 
+IND011,Sikkim,1991, 50.0 
+IND011,Sikkim,1992, 28.4 
+IND011,Sikkim,1993, 37.2 
+IND011,Sikkim,1994, 26.3 
+IND011,Sikkim,1995, 60.9 
+IND011,Sikkim,1996, 51.8 
+IND011,Sikkim,1997, 36.1 
+IND011,Sikkim,1998, 43.0 
+IND011,Sikkim,1999, 43.0 
+IND011,Sikkim,2000, 48.0 
+IND011,Sikkim,2001, 41.2 
+IND011,Sikkim,2002, 33.3 
+IND011,Sikkim,2003, 32.3 
+IND011,Sikkim,2004, 31.4 
+IND011,Sikkim,2005, 29.4 
+IND011,Sikkim,2005, 33.0 
+IND011,Sikkim,2006, 32.3 
+IND011,Sikkim,2006, 33.0 
+IND011,Sikkim,2007, 33.3 
+IND011,Sikkim,2008, 32.3 
+IND011,Sikkim,2009, 33.3 
+IND012,Arunachal Pradesh,1991, 63.2 
+IND012,Arunachal Pradesh,1992, 42.8 
+IND012,Arunachal Pradesh,1992, 39.2 
+IND012,Arunachal Pradesh,1993, 58.0 
+IND012,Arunachal Pradesh,1993, 39.2 
+IND012,Arunachal Pradesh,1994, 39.3 
+IND012,Arunachal Pradesh,1995, 50.9 
+IND012,Arunachal Pradesh,1996, 37.8 
+IND012,Arunachal Pradesh,1997, 50.9 
+IND012,Arunachal Pradesh,1998, 61.8 
+IND012,Arunachal Pradesh,1999, 61.8 
+IND012,Arunachal Pradesh,2000, 43.1 
+IND012,Arunachal Pradesh,2001, 38.2 
+IND012,Arunachal Pradesh,2002, 36.3 
+IND012,Arunachal Pradesh,2003, 33.3 
+IND012,Arunachal Pradesh,2004, 37.2 
+IND012,Arunachal Pradesh,2005, 36.3 
+IND012,Arunachal Pradesh,2005, 59.5 
+IND012,Arunachal Pradesh,2006, 39.2 
+IND012,Arunachal Pradesh,2006, 59.5 
+IND012,Arunachal Pradesh,2007, 36.3 
+IND012,Arunachal Pradesh,2008, 31.4 
+IND012,Arunachal Pradesh,2009, 31.4 
+IND013,Nagaland,1991, 6.5 
+IND013,Nagaland,1992, 3.3 
+IND013,Nagaland,1992, 16.9 
+IND013,Nagaland,1993, 9.0 
+IND013,Nagaland,1993, 16.9 
+IND013,Nagaland,1994, -   
+IND013,Nagaland,1995, -   
+IND013,Nagaland,1996, 32.1 
+IND013,Nagaland,1998, 41.3 
+IND013,Nagaland,1999, 41.3 
+IND013,Nagaland,2005, 37.5 
+IND013,Nagaland,2006, 19.6 
+IND013,Nagaland,2006, 37.5 
+IND013,Nagaland,2007, 20.6 
+IND013,Nagaland,2008, 25.5 
+IND013,Nagaland,2009, 25.5 
+IND014,Manipur,1991, 21.3 
+IND014,Manipur,1992, 22.5 
+IND014,Manipur,1992, 41.6 
+IND014,Manipur,1993, 25.8 
+IND014,Manipur,1993, 41.6 
+IND014,Manipur,1994, 23.3 
+IND014,Manipur,1995, 35.0 
+IND014,Manipur,1996, 23.1 
+IND014,Manipur,1997, 29.9 
+IND014,Manipur,1998, 36.3 
+IND014,Manipur,1999, 36.3 
+IND014,Manipur,2000, 22.5 
+IND014,Manipur,2001, 19.6 
+IND014,Manipur,2002, 13.7 
+IND014,Manipur,2003, 15.7 
+IND014,Manipur,2004, 13.7 
+IND014,Manipur,2005, 12.7 
+IND014,Manipur,2005, 29.1 
+IND014,Manipur,2006, 10.8 
+IND014,Manipur,2006, 29.1 
+IND014,Manipur,2007, 11.8 
+IND014,Manipur,2008, 13.7 
+IND014,Manipur,2009, 15.7 
+IND015,Mizoram,1992, 14.3 
+IND015,Mizoram,1993, 14.3 
+IND015,Mizoram,1998, 36.3 
+IND015,Mizoram,1999, 36.3 
+IND015,Mizoram,2000, 20.6 
+IND015,Mizoram,2001, 18.6 
+IND015,Mizoram,2002, 13.7 
+IND015,Mizoram,2003, 15.7 
+IND015,Mizoram,2004, 18.6 
+IND015,Mizoram,2005, 19.6 
+IND015,Mizoram,2005, 33.4 
+IND015,Mizoram,2006, 24.5 
+IND015,Mizoram,2006, 33.4 
+IND015,Mizoram,2007, 22.5 
+IND015,Mizoram,2008, 36.3 
+IND015,Mizoram,2009, 35.3 
+IND016,Tripura,1991, 55.1 
+IND016,Tripura,1992, 48.9 
+IND016,Tripura,1992, 74.3 
+IND016,Tripura,1993, 42.2 
+IND016,Tripura,1993, 74.3 
+IND016,Tripura,1994, 38.3 
+IND016,Tripura,1995, 58.7 
+IND016,Tripura,1996, 47.5 
+IND016,Tripura,1997, 44.6 
+IND016,Tripura,1998, 43.3 
+IND016,Tripura,1999, 43.3 
+IND016,Tripura,2000, 40.2 
+IND016,Tripura,2001, 38.2 
+IND016,Tripura,2002, 33.3 
+IND016,Tripura,2003, 31.4 
+IND016,Tripura,2004, 31.4 
+IND016,Tripura,2005, 30.4 
+IND016,Tripura,2005, 50.5 
+IND016,Tripura,2006, 35.3 
+IND016,Tripura,2006, 50.5 
+IND016,Tripura,2007, 38.2 
+IND016,Tripura,2008, 33.3 
+IND016,Tripura,2009, 30.4 
+IND017,Meghalaya,1991, 55.9 
+IND017,Meghalaya,1992, 63.4 
+IND017,Meghalaya,1992, 62.9 
+IND017,Meghalaya,1993, 37.4 
+IND017,Meghalaya,1993, 62.9 
+IND017,Meghalaya,1994, 46.4 
+IND017,Meghalaya,1995, 49.5 
+IND017,Meghalaya,1996, 46.7 
+IND017,Meghalaya,1997, 64.1 
+IND017,Meghalaya,1998, 87.2 
+IND017,Meghalaya,1999, 87.2 
+IND017,Meghalaya,2000, 56.8 
+IND017,Meghalaya,2001, 54.9 
+IND017,Meghalaya,2002, 59.8 
+IND017,Meghalaya,2003, 55.9 
+IND017,Meghalaya,2004, 52.9 
+IND017,Meghalaya,2005, 48.0 
+IND017,Meghalaya,2005, 43.7 
+IND017,Meghalaya,2006, 51.9 
+IND017,Meghalaya,2006, 43.7 
+IND017,Meghalaya,2007, 54.9 
+IND017,Meghalaya,2008, 56.8 
+IND017,Meghalaya,2009, 57.8 
+IND018,Assam,1971, 136.2 
+IND018,Assam,1972, 133.3 
+IND018,Assam,1973, 133.3 
+IND018,Assam,1974, 133.3 
+IND018,Assam,1975, 141.1 
+IND018,Assam,1976, 121.5 
+IND018,Assam,1977, 112.7 
+IND018,Assam,1978, 115.6 
+IND018,Assam,1979, 101.9 
+IND018,Assam,1980, 100.9 
+IND018,Assam,1981, 103.9 
+IND018,Assam,1982, 100.0 
+IND018,Assam,1983, 92.1 
+IND018,Assam,1984, 97.0 
+IND018,Assam,1985, 108.8 
+IND018,Assam,1986, 106.8 
+IND018,Assam,1989, 89.2 
+IND018,Assam,1991, 79.4 
+IND018,Assam,1992, 80.4 
+IND018,Assam,1992, 86.9 
+IND018,Assam,1993, 79.4 
+IND018,Assam,1993, 86.9 
+IND018,Assam,1994, 76.4 
+IND018,Assam,1995, 75.5 
+IND018,Assam,1996, 72.5 
+IND018,Assam,1997, 74.5 
+IND018,Assam,1998, 74.5 
+IND018,Assam,1998, 68.1 
+IND018,Assam,1999, 74.5 
+IND018,Assam,1999, 68.1 
+IND018,Assam,2000, 73.5 
+IND018,Assam,2001, 71.5 
+IND018,Assam,2002, 68.6 
+IND018,Assam,2003, 65.7 
+IND018,Assam,2004, 64.7 
+IND018,Assam,2005, 66.6 
+IND018,Assam,2005, 64.8 
+IND018,Assam,2006, 65.7 
+IND018,Assam,2006, 64.8 
+IND018,Assam,2007, 64.7 
+IND018,Assam,2008, 62.7 
+IND018,Assam,2009, 59.8 
+IND019,West Bengal,1981, 89.2 
+IND019,West Bengal,1982, 84.3 
+IND019,West Bengal,1983, 82.3 
+IND019,West Bengal,1984, 80.4 
+IND019,West Bengal,1985, 72.5 
+IND019,West Bengal,1986, 69.6 
+IND019,West Bengal,1987, 69.6 
+IND019,West Bengal,1989, 75.5 
+IND019,West Bengal,1991, 69.6 
+IND019,West Bengal,1992, 63.7 
+IND019,West Bengal,1992, 73.8 
+IND019,West Bengal,1993, 56.8 
+IND019,West Bengal,1993, 73.8 
+IND019,West Bengal,1994, 60.8 
+IND019,West Bengal,1995, 56.8 
+IND019,West Bengal,1996, 53.9 
+IND019,West Bengal,1997, 53.9 
+IND019,West Bengal,1998, 51.9 
+IND019,West Bengal,1998, 47.7 
+IND019,West Bengal,1999, 51.0 
+IND019,West Bengal,1999, 47.7 
+IND019,West Bengal,2000, 50.0 
+IND019,West Bengal,2001, 50.0 
+IND019,West Bengal,2002, 48.0 
+IND019,West Bengal,2003, 45.1 
+IND019,West Bengal,2004, 39.2 
+IND019,West Bengal,2005, 37.2 
+IND019,West Bengal,2005, 47.0 
+IND019,West Bengal,2006, 37.2 
+IND019,West Bengal,2006, 47.0 
+IND019,West Bengal,2007, 36.3 
+IND019,West Bengal,2008, 34.3 
+IND019,West Bengal,2009, 32.3 
+IND020,Jharkhand,2000, 68.6 
+IND020,Jharkhand,2001, 60.8 
+IND020,Jharkhand,2002, 50.0 
+IND020,Jharkhand,2003, 50.0 
+IND020,Jharkhand,2004, 48.0 
+IND020,Jharkhand,2005, 49.0 
+IND020,Jharkhand,2005, 67.3 
+IND020,Jharkhand,2006, 48.0 
+IND020,Jharkhand,2006, 67.3 
+IND020,Jharkhand,2007, 47.0 
+IND020,Jharkhand,2008, 45.1 
+IND020,Jharkhand,2009, 43.1 
+IND021,Orissa,1971, 124.5 
+IND021,Orissa,1972, 128.4 
+IND021,Orissa,1973, 142.1 
+IND021,Orissa,1974, 147.0 
+IND021,Orissa,1975, 146.0 
+IND021,Orissa,1976, 124.5 
+IND021,Orissa,1977, 144.1 
+IND021,Orissa,1978, 130.3 
+IND021,Orissa,1979, 146.0 
+IND021,Orissa,1980, 140.1 
+IND021,Orissa,1981, 132.3 
+IND021,Orissa,1982, 129.4 
+IND021,Orissa,1983, 123.5 
+IND021,Orissa,1984, 128.4 
+IND021,Orissa,1985, 129.4 
+IND021,Orissa,1986, 120.5 
+IND021,Orissa,1987, 123.5 
+IND021,Orissa,1989, 118.6 
+IND021,Orissa,1991, 121.5 
+IND021,Orissa,1992, 112.7 
+IND021,Orissa,1992, 109.9 
+IND021,Orissa,1993, 107.8 
+IND021,Orissa,1993, 109.9 
+IND021,Orissa,1994, 100.9 
+IND021,Orissa,1995, 100.9 
+IND021,Orissa,1996, 94.1 
+IND021,Orissa,1997, 94.1 
+IND021,Orissa,1998, 96.0 
+IND021,Orissa,1998, 79.4 
+IND021,Orissa,1999, 95.1 
+IND021,Orissa,1999, 79.4 
+IND021,Orissa,2000, 93.1 
+IND021,Orissa,2001, 88.2 
+IND021,Orissa,2002, 85.3 
+IND021,Orissa,2003, 81.3 
+IND021,Orissa,2004, 75.5 
+IND021,Orissa,2005, 73.5 
+IND021,Orissa,2005, 63.4 
+IND021,Orissa,2006, 71.5 
+IND021,Orissa,2006, 63.4 
+IND021,Orissa,2007, 69.6 
+IND021,Orissa,2008, 67.6 
+IND021,Orissa,2009, 63.7 
+IND022,Chhattisgarh,2000, 77.4 
+IND022,Chhattisgarh,2001, 74.5 
+IND022,Chhattisgarh,2002, 71.5 
+IND022,Chhattisgarh,2003, 68.6 
+IND022,Chhattisgarh,2004, 58.8 
+IND022,Chhattisgarh,2005, 61.7 
+IND022,Chhattisgarh,2005, 69.4 
+IND022,Chhattisgarh,2006, 59.8 
+IND022,Chhattisgarh,2006, 69.4 
+IND022,Chhattisgarh,2007, 57.8 
+IND022,Chhattisgarh,2008, 55.9 
+IND022,Chhattisgarh,2009, 52.9 
+IND023,Madhya Pradesh,1971, 132.3 
+IND023,Madhya Pradesh,1972, 152.9 
+IND023,Madhya Pradesh,1973, 142.1 
+IND023,Madhya Pradesh,1974, 134.3 
+IND023,Madhya Pradesh,1975, 148.0 
+IND023,Madhya Pradesh,1976, 135.2 
+IND023,Madhya Pradesh,1977, 145.0 
+IND023,Madhya Pradesh,1978, 140.1 
+IND023,Madhya Pradesh,1979, 140.1 
+IND023,Madhya Pradesh,1980, 139.2 
+IND023,Madhya Pradesh,1981, 139.2 
+IND023,Madhya Pradesh,1982, 131.3 
+IND023,Madhya Pradesh,1983, 122.5 
+IND023,Madhya Pradesh,1984, 118.6 
+IND023,Madhya Pradesh,1985, 119.6 
+IND023,Madhya Pradesh,1986, 115.6 
+IND023,Madhya Pradesh,1987, 117.6 
+IND023,Madhya Pradesh,1991, 114.7 
+IND023,Madhya Pradesh,1992, 101.9 
+IND023,Madhya Pradesh,1992, 83.5 
+IND023,Madhya Pradesh,1993, 103.9 
+IND023,Madhya Pradesh,1993, 83.5 
+IND023,Madhya Pradesh,1994, 96.0 
+IND023,Madhya Pradesh,1995, 97.0 
+IND023,Madhya Pradesh,1996, 95.1 
+IND023,Madhya Pradesh,1997, 92.1 
+IND023,Madhya Pradesh,1998, 96.0 
+IND023,Madhya Pradesh,1998, 84.4 
+IND023,Madhya Pradesh,1999, 88.2 
+IND023,Madhya Pradesh,1999, 84.4 
+IND023,Madhya Pradesh,2000, 85.3 
+IND023,Madhya Pradesh,2001, 84.3 
+IND023,Madhya Pradesh,2002, 83.3 
+IND023,Madhya Pradesh,2003, 80.4 
+IND023,Madhya Pradesh,2004, 77.4 
+IND023,Madhya Pradesh,2005, 74.5 
+IND023,Madhya Pradesh,2005, 68.1 
+IND023,Madhya Pradesh,2006, 72.5 
+IND023,Madhya Pradesh,2006, 68.1 
+IND023,Madhya Pradesh,2007, 70.6 
+IND023,Madhya Pradesh,2008, 68.6 
+IND023,Madhya Pradesh,2009, 65.7 
+IND024,Gujarat,1971, 141.1 
+IND024,Gujarat,1972, 125.4 
+IND024,Gujarat,1973, 157.8 
+IND024,Gujarat,1974, 106.8 
+IND024,Gujarat,1975, 150.9 
+IND024,Gujarat,1976, 143.1 
+IND024,Gujarat,1977, 135.2 
+IND024,Gujarat,1978, 119.6 
+IND024,Gujarat,1979, 120.5 
+IND024,Gujarat,1980, 110.7 
+IND024,Gujarat,1981, 113.7 
+IND024,Gujarat,1982, 108.8 
+IND024,Gujarat,1983, 103.9 
+IND024,Gujarat,1984, 103.9 
+IND024,Gujarat,1985, 96.0 
+IND024,Gujarat,1986, 104.9 
+IND024,Gujarat,1987, 95.1 
+IND024,Gujarat,1990, 70.6 
+IND024,Gujarat,1991, 67.6 
+IND024,Gujarat,1992, 65.7 
+IND024,Gujarat,1992, 67.3 
+IND024,Gujarat,1993, 56.8 
+IND024,Gujarat,1993, 67.3 
+IND024,Gujarat,1994, 62.7 
+IND024,Gujarat,1995, 60.8 
+IND024,Gujarat,1996, 59.8 
+IND024,Gujarat,1997, 60.8 
+IND024,Gujarat,1998, 62.7 
+IND024,Gujarat,1998, 61.3 
+IND024,Gujarat,1999, 61.7 
+IND024,Gujarat,1999, 61.3 
+IND024,Gujarat,2000, 60.8 
+IND024,Gujarat,2001, 58.8 
+IND024,Gujarat,2002, 58.8 
+IND024,Gujarat,2003, 55.9 
+IND024,Gujarat,2004, 51.9 
+IND024,Gujarat,2005, 52.9 
+IND024,Gujarat,2005, 48.7 
+IND024,Gujarat,2006, 51.9 
+IND024,Gujarat,2006, 48.7 
+IND024,Gujarat,2007, 51.0 
+IND024,Gujarat,2008, 49.0 
+IND024,Gujarat,2009, 47.0 
+IND025,Daman & Diu,1990, 57.4 
+IND025,Daman & Diu,1991, 50.6 
+IND025,Daman & Diu,1992, 34.6 
+IND025,Daman & Diu,1993, 23.8 
+IND025,Daman & Diu,1994, 30.0 
+IND025,Daman & Diu,1995, 37.6 
+IND025,Daman & Diu,1996, 59.4 
+IND025,Daman & Diu,1997, 14.5 
+IND025,Daman & Diu,2000, 47.0 
+IND025,Daman & Diu,2001, 39.2 
+IND025,Daman & Diu,2002, 41.2 
+IND025,Daman & Diu,2004, 36.3 
+IND025,Daman & Diu,2005, 27.4 
+IND025,Daman & Diu,2006, 27.4 
+IND025,Daman & Diu,2007, 26.5 
+IND025,Daman & Diu,2008, 30.4 
+IND026,Dadra & Nagar Haveli,1990, 57.0 
+IND026,Dadra & Nagar Haveli,1991, 66.6 
+IND026,Dadra & Nagar Haveli,1992, 62.6 
+IND026,Dadra & Nagar Haveli,1993, 41.8 
+IND026,Dadra & Nagar Haveli,1994, 77.9 
+IND026,Dadra & Nagar Haveli,1995, 74.9 
+IND026,Dadra & Nagar Haveli,1996, 56.1 
+IND026,Dadra & Nagar Haveli,1997, 53.2 
+IND026,Dadra & Nagar Haveli,2000, 56.8 
+IND026,Dadra & Nagar Haveli,2001, 56.8 
+IND026,Dadra & Nagar Haveli,2002, 54.9 
+IND026,Dadra & Nagar Haveli,2004, 47.0 
+IND026,Dadra & Nagar Haveli,2005, 41.2 
+IND026,Dadra & Nagar Haveli,2006, 34.3 
+IND026,Dadra & Nagar Haveli,2007, 33.3 
+IND026,Dadra & Nagar Haveli,2008, 33.3 
+IND027,Maharashtra,1971, 102.9 
+IND027,Maharashtra,1972, 99.0 
+IND027,Maharashtra,1973, 113.7 
+IND027,Maharashtra,1974, 87.2 
+IND027,Maharashtra,1975, 90.2 
+IND027,Maharashtra,1976, 81.3 
+IND027,Maharashtra,1977, 105.8 
+IND027,Maharashtra,1978, 79.4 
+IND027,Maharashtra,1979, 84.3 
+IND027,Maharashtra,1980, 73.5 
+IND027,Maharashtra,1981, 77.4 
+IND027,Maharashtra,1982, 68.6 
+IND027,Maharashtra,1983, 77.4 
+IND027,Maharashtra,1984, 74.5 
+IND027,Maharashtra,1985, 66.6 
+IND027,Maharashtra,1986, 62.7 
+IND027,Maharashtra,1987, 64.7 
+IND027,Maharashtra,1990, 56.8 
+IND027,Maharashtra,1991, 58.8 
+IND027,Maharashtra,1992, 57.8 
+IND027,Maharashtra,1992, 49.5 
+IND027,Maharashtra,1993, 49.0 
+IND027,Maharashtra,1993, 49.5 
+IND027,Maharashtra,1994, 53.9 
+IND027,Maharashtra,1995, 53.9 
+IND027,Maharashtra,1996, 47.0 
+IND027,Maharashtra,1997, 46.1 
+IND027,Maharashtra,1998, 48.0 
+IND027,Maharashtra,1998, 42.8 
+IND027,Maharashtra,1999, 47.0 
+IND027,Maharashtra,1999, 42.8 
+IND027,Maharashtra,2000, 47.0 
+IND027,Maharashtra,2001, 44.1 
+IND027,Maharashtra,2002, 44.1 
+IND027,Maharashtra,2003, 41.2 
+IND027,Maharashtra,2004, 35.3 
+IND027,Maharashtra,2005, 35.3 
+IND027,Maharashtra,2005, 36.8 
+IND027,Maharashtra,2006, 34.3 
+IND027,Maharashtra,2006, 36.8 
+IND027,Maharashtra,2007, 33.3 
+IND027,Maharashtra,2008, 32.3 
+IND027,Maharashtra,2009, 30.4 
+IND028,Andhra Pradesh,1971, 103.9 
+IND028,Andhra Pradesh,1972, 113.7 
+IND028,Andhra Pradesh,1973, 102.9 
+IND028,Andhra Pradesh,1974, 108.8 
+IND028,Andhra Pradesh,1975, 120.5 
+IND028,Andhra Pradesh,1976, 119.6 
+IND028,Andhra Pradesh,1977, 122.5 
+IND028,Andhra Pradesh,1978, 114.7 
+IND028,Andhra Pradesh,1979, 103.9 
+IND028,Andhra Pradesh,1980, 90.2 
+IND028,Andhra Pradesh,1981, 84.3 
+IND028,Andhra Pradesh,1982, 77.4 
+IND028,Andhra Pradesh,1983, 75.5 
+IND028,Andhra Pradesh,1984, 76.4 
+IND028,Andhra Pradesh,1985, 81.3 
+IND028,Andhra Pradesh,1986, 80.4 
+IND028,Andhra Pradesh,1987, 77.4 
+IND028,Andhra Pradesh,1990, 68.6 
+IND028,Andhra Pradesh,1991, 71.5 
+IND028,Andhra Pradesh,1992, 69.6 
+IND028,Andhra Pradesh,1992, 69.0 
+IND028,Andhra Pradesh,1993, 62.7 
+IND028,Andhra Pradesh,1993, 69.0 
+IND028,Andhra Pradesh,1994, 63.7 
+IND028,Andhra Pradesh,1995, 65.7 
+IND028,Andhra Pradesh,1996, 63.7 
+IND028,Andhra Pradesh,1997, 61.7 
+IND028,Andhra Pradesh,1998, 64.7 
+IND028,Andhra Pradesh,1998, 64.5 
+IND028,Andhra Pradesh,1999, 64.7 
+IND028,Andhra Pradesh,1999, 64.5 
+IND028,Andhra Pradesh,2000, 63.7 
+IND028,Andhra Pradesh,2001, 64.7 
+IND028,Andhra Pradesh,2002, 60.8 
+IND028,Andhra Pradesh,2003, 57.8 
+IND028,Andhra Pradesh,2004, 57.8 
+IND028,Andhra Pradesh,2005, 55.9 
+IND028,Andhra Pradesh,2005, 52.4 
+IND028,Andhra Pradesh,2006, 54.9 
+IND028,Andhra Pradesh,2006, 52.4 
+IND028,Andhra Pradesh,2007, 52.9 
+IND028,Andhra Pradesh,2008, 51.0 
+IND028,Andhra Pradesh,2009, 48.0 
+IND029,Karnataka,1971, 93.1 
+IND029,Karnataka,1972, 93.1 
+IND029,Karnataka,1973, 88.2 
+IND029,Karnataka,1974, 84.3 
+IND029,Karnataka,1975, 78.4 
+IND029,Karnataka,1976, 87.2 
+IND029,Karnataka,1977, 81.3 
+IND029,Karnataka,1978, 80.4 
+IND029,Karnataka,1979, 81.3 
+IND029,Karnataka,1980, 69.6 
+IND029,Karnataka,1981, 67.6 
+IND029,Karnataka,1982, 63.7 
+IND029,Karnataka,1983, 69.6 
+IND029,Karnataka,1984, 72.5 
+IND029,Karnataka,1985, 67.6 
+IND029,Karnataka,1986, 71.5 
+IND029,Karnataka,1987, 73.5 
+IND029,Karnataka,1990, 68.6 
+IND029,Karnataka,1991, 75.5 
+IND029,Karnataka,1992, 71.5 
+IND029,Karnataka,1992, 64.1 
+IND029,Karnataka,1993, 65.7 
+IND029,Karnataka,1993, 64.1 
+IND029,Karnataka,1994, 65.7 
+IND029,Karnataka,1995, 60.8 
+IND029,Karnataka,1996, 51.9 
+IND029,Karnataka,1997, 51.9 
+IND029,Karnataka,1998, 56.8 
+IND029,Karnataka,1998, 50.5 
+IND029,Karnataka,1999, 56.8 
+IND029,Karnataka,1999, 50.5 
+IND029,Karnataka,2000, 55.9 
+IND029,Karnataka,2001, 56.8 
+IND029,Karnataka,2002, 53.9 
+IND029,Karnataka,2003, 51.0 
+IND029,Karnataka,2004, 48.0 
+IND029,Karnataka,2005, 49.0 
+IND029,Karnataka,2005, 42.3 
+IND029,Karnataka,2006, 47.0 
+IND029,Karnataka,2006, 42.3 
+IND029,Karnataka,2007, 46.1 
+IND029,Karnataka,2008, 44.1 
+IND029,Karnataka,2009, 40.2 
+IND030,Goa,1990, 20.3 
+IND030,Goa,1991, 20.4 
+IND030,Goa,1992, 18.9 
+IND030,Goa,1992, 31.3 
+IND030,Goa,1993, 26.4 
+IND030,Goa,1993, 31.3 
+IND030,Goa,1994, 3.4 
+IND030,Goa,1995, 16.2 
+IND030,Goa,1996, 24.3 
+IND030,Goa,1997, 16.8 
+IND030,Goa,1998, 36.0 
+IND030,Goa,1999, 36.0 
+IND030,Goa,2000, 22.5 
+IND030,Goa,2001, 18.6 
+IND030,Goa,2002, 16.7 
+IND030,Goa,2003, 15.7 
+IND030,Goa,2004, 16.7 
+IND030,Goa,2005, 15.7 
+IND030,Goa,2005, 15.0 
+IND030,Goa,2006, 14.7 
+IND030,Goa,2006, 15.0 
+IND030,Goa,2007, 12.7 
+IND030,Goa,2008, 9.8 
+IND030,Goa,2009, 10.8 
+IND031,Lakshadweep,1990, 19.2 
+IND031,Lakshadweep,1991, 42.9 
+IND031,Lakshadweep,1992, 14.1 
+IND031,Lakshadweep,1993, 6.8 
+IND031,Lakshadweep,1994, 33.6 
+IND031,Lakshadweep,1995, 56.9 
+IND031,Lakshadweep,1996, 16.0 
+IND031,Lakshadweep,1997, 33.8 
+IND031,Lakshadweep,2000, 26.5 
+IND031,Lakshadweep,2001, 32.3 
+IND031,Lakshadweep,2002, 24.5 
+IND031,Lakshadweep,2004, 29.4 
+IND031,Lakshadweep,2005, 21.6 
+IND031,Lakshadweep,2006, 24.5 
+IND031,Lakshadweep,2007, 23.5 
+IND031,Lakshadweep,2008, 30.4 
+IND032,Kerala,1971, 56.8 
+IND032,Kerala,1972, 61.7 
+IND032,Kerala,1973, 52.9 
+IND032,Kerala,1974, 52.9 
+IND032,Kerala,1975, 52.9 
+IND032,Kerala,1976, 54.9 
+IND032,Kerala,1977, 46.1 
+IND032,Kerala,1978, 41.2 
+IND032,Kerala,1979, 42.1 
+IND032,Kerala,1980, 39.2 
+IND032,Kerala,1981, 36.3 
+IND032,Kerala,1982, 29.4 
+IND032,Kerala,1983, 32.3 
+IND032,Kerala,1984, 28.4 
+IND032,Kerala,1985, 30.4 
+IND032,Kerala,1986, 26.5 
+IND032,Kerala,1987, 27.4 
+IND032,Kerala,1990, 15.7 
+IND032,Kerala,1991, 15.7 
+IND032,Kerala,1992, 16.7 
+IND032,Kerala,1992, 23.3 
+IND032,Kerala,1993, 12.7 
+IND032,Kerala,1993, 23.3 
+IND032,Kerala,1994, 15.7 
+IND032,Kerala,1995, 14.7 
+IND032,Kerala,1996, 13.7 
+IND032,Kerala,1997, 11.8 
+IND032,Kerala,1998, 15.7 
+IND032,Kerala,1998, 16.0 
+IND032,Kerala,1999, 13.7 
+IND032,Kerala,1999, 16.0 
+IND032,Kerala,2000, 13.7 
+IND032,Kerala,2001, 10.8 
+IND032,Kerala,2002, 9.8 
+IND032,Kerala,2003, 10.8 
+IND032,Kerala,2004, 11.8 
+IND032,Kerala,2005, 13.7 
+IND032,Kerala,2005, 15.0 
+IND032,Kerala,2006, 14.7 
+IND032,Kerala,2006, 15.0 
+IND032,Kerala,2007, 12.7 
+IND032,Kerala,2008, 11.8 
+IND032,Kerala,2009, 11.8 
+IND033,Tamil Nadu,1971, 110.7 
+IND033,Tamil Nadu,1972, 118.6 
+IND033,Tamil Nadu,1973, 105.8 
+IND033,Tamil Nadu,1974, 103.9 
+IND033,Tamil Nadu,1975, 109.8 
+IND033,Tamil Nadu,1976, 107.8 
+IND033,Tamil Nadu,1977, 100.9 
+IND033,Tamil Nadu,1978, 102.9 
+IND033,Tamil Nadu,1979, 98.0 
+IND033,Tamil Nadu,1980, 91.1 
+IND033,Tamil Nadu,1981, 89.2 
+IND033,Tamil Nadu,1982, 81.3 
+IND033,Tamil Nadu,1983, 85.3 
+IND033,Tamil Nadu,1984, 76.4 
+IND033,Tamil Nadu,1985, 79.4 
+IND033,Tamil Nadu,1986, 78.4 
+IND033,Tamil Nadu,1987, 74.5 
+IND033,Tamil Nadu,1990, 57.8 
+IND033,Tamil Nadu,1991, 55.9 
+IND033,Tamil Nadu,1992, 56.8 
+IND033,Tamil Nadu,1992, 66.3 
+IND033,Tamil Nadu,1993, 55.9 
+IND033,Tamil Nadu,1993, 66.3 
+IND033,Tamil Nadu,1994, 57.8 
+IND033,Tamil Nadu,1995, 52.9 
+IND033,Tamil Nadu,1996, 51.9 
+IND033,Tamil Nadu,1997, 51.9 
+IND033,Tamil Nadu,1998, 51.9 
+IND033,Tamil Nadu,1998, 47.2 
+IND033,Tamil Nadu,1999, 51.0 
+IND033,Tamil Nadu,1999, 47.2 
+IND033,Tamil Nadu,2000, 50.0 
+IND033,Tamil Nadu,2001, 48.0 
+IND033,Tamil Nadu,2002, 43.1 
+IND033,Tamil Nadu,2003, 42.1 
+IND033,Tamil Nadu,2004, 40.2 
+IND033,Tamil Nadu,2005, 36.3 
+IND033,Tamil Nadu,2005, 29.8 
+IND033,Tamil Nadu,2006, 36.3 
+IND033,Tamil Nadu,2006, 29.8 
+IND033,Tamil Nadu,2007, 34.3 
+IND033,Tamil Nadu,2008, 30.4 
+IND033,Tamil Nadu,2009, 27.4 
+IND034,Pondicherry,1990, 26.8 
+IND034,Pondicherry,1991, 20.8 
+IND034,Pondicherry,1992, 46.7 
+IND034,Pondicherry,1993, 20.1 
+IND034,Pondicherry,1994, 36.0 
+IND034,Pondicherry,1995, 21.5 
+IND034,Pondicherry,1996, 14.3 
+IND034,Pondicherry,1997, 28.9 
+IND034,Pondicherry,2000, 22.5 
+IND034,Pondicherry,2001, 21.6 
+IND034,Pondicherry,2002, 21.6 
+IND034,Pondicherry,2004, 23.5 
+IND034,Pondicherry,2005, 27.4 
+IND034,Pondicherry,2006, 27.4 
+IND034,Pondicherry,2007, 24.5 
+IND034,Pondicherry,2008, 24.5 
+IND035,Andaman & Nicobar Islands,1990, 41.9 
+IND035,Andaman & Nicobar Islands,1991, 29.4 
+IND035,Andaman & Nicobar Islands,1992, 23.1 
+IND035,Andaman & Nicobar Islands,1993, 32.7 
+IND035,Andaman & Nicobar Islands,1994, 15.3 
+IND035,Andaman & Nicobar Islands,1995, 34.9 
+IND035,Andaman & Nicobar Islands,1996, 28.9 
+IND035,Andaman & Nicobar Islands,1997, 33.7 
+IND035,Andaman & Nicobar Islands,2000, 22.5 
+IND035,Andaman & Nicobar Islands,2001, 17.6 
+IND035,Andaman & Nicobar Islands,2002, 14.7 
+IND035,Andaman & Nicobar Islands,2004, 18.6 
+IND035,Andaman & Nicobar Islands,2005, 26.5 
+IND035,Andaman & Nicobar Islands,2006, 30.4 
+IND035,Andaman & Nicobar Islands,2007, 33.3 
+IND035,Andaman & Nicobar Islands,2008, 30.4 
+IND035,Andaman & Nicobar Islands,2009, 26.5 
