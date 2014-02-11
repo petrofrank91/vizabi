@@ -76,7 +76,7 @@ module.exports = function (grunt) {
                 },
                 files: [
                     '<%= yeoman.hat %>/*.html',
-                    '<%= yeoman.app.base %>/*.html',
+                    '<%= yeoman.app.base %>/index-template.html',
 					'{<%= yeoman.tmp.project %>,<%= yeoman.app.project %>}/styles/{,*/}{,*/}{,*/}*.css',
 					'{<%= yeoman.tmp.project %>,<%= yeoman.app.project %>}/scripts/{,*/}{,*/}{,*/}*.js',
 					'{<%= yeoman.tmp.common %>,<%= yeoman.app.common %>}/styles/{,*/}{,*/}{,*/}*.css',
@@ -103,9 +103,6 @@ module.exports = function (grunt) {
             livereload: {
                 options: {
                     open: true,
-                    /*open: {
-                        target: 'http://<%= connect.options.hostname %>:100'//<%= connect.test.options.port %>'
-                    },*/
                     base: [
                         '<%= yeoman.tmp.base %>',
                         '<%= yeoman.app.base %>',
@@ -130,13 +127,6 @@ module.exports = function (grunt) {
                 }
             }
         },
-        /*
-        open: {
-            server: {
-                path: 'http://localhost:<%= connect.options.port %>'
-            }
-        },
-        */
         clean: {
             dist: {
                 files: [
@@ -186,12 +176,12 @@ module.exports = function (grunt) {
         },
         compass: {
             options: {
-                sassDir: '<%= yeoman.app.base %>/styles',
-                cssDir: '<%= yeoman.tmp.base %>/styles',
-                generatedImagesDir: '<%= yeoman.tmp.base %>/images/generated',
-                imagesDir: '<%= yeoman.app.base %>/images',
-                javascriptsDir: '<%= yeoman.app.base %>/scripts',
-                fontsDir: '<%= yeoman.app.base %>/styles/fonts',
+                sassDir: '<%= yeoman.app.project %>/styles',
+                cssDir: '<%= yeoman.app.project %>/styles',
+                generatedImagesDir: '<%= yeoman.app.project %>/images/generated',
+                imagesDir: '<%= yeoman.app.project %>/images',
+                javascriptsDir: '<%= yeoman.app.project %>/scripts',
+                fontsDir: '<%= yeoman.app.project %>/styles/fonts',
                 importPath: '<%= yeoman.app.base %>/bower_components',
                 httpImagesPath: '/images',
                 httpGeneratedImagesPath: '/images/generated',
@@ -259,7 +249,7 @@ module.exports = function (grunt) {
 						'{{project}}': project,
 						'{{hatnum}}': hatnum,
 						'<!-- @@hat-include:"css.html" -->': '<%= grunt.file.read("' + paths.hat + '/css.html") %>',
-						'<!-- @@hat-include:"body.html" -->': '<%= grunt.file.read("' + paths.hat + '/body.html") %>',
+						'<!-- @@hat-include:"body.html" -->': '<%= grunt.file.read("' + paths.hat + '/body.html") %>'
 					},
 					prefix: ''
 				},
@@ -439,7 +429,7 @@ module.exports = function (grunt) {
         copy: {
             index: {
                 src: '<%= yeoman.app.base %>/index-template.html',
-                dest: '<%= yeoman.app.base %>/index.html',
+                dest: '<%= yeoman.app.base %>/index.html'
             },
             dist: {
                 files: [
