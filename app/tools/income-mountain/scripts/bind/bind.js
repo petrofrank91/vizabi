@@ -1,6 +1,6 @@
 define([
         'd3',
-        'income-mountain/components/_components'
+        'income-mountain/components/components'
     ],
     function (d3, components) {
         'use strict';

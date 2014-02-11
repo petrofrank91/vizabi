@@ -1,4 +1,6 @@
-define(['d3'],
+define([
+        'd3'
+    ],
     function(d3) {
         'use strict';
 

@@ -2,13 +2,12 @@ define([
         'd3',
         'income-mountain/_i18n',
         'widgets/text/text',
-        'income-mountain/__picker',
         'widgets/time-slider/slider-types/1/ts1',
-        'income-mountain/viz/_labels',
-        'income-mountain/viz/_axis',
-        'income-mountain/viz/_incomeMountain'
+        'income-mountain/viz/labels',
+        'income-mountain/viz/axis',
+        'income-mountain/viz/incomeMountain'
     ],
-    function(d3, i18n, text, picker, timeslider, labels, axis, mountains) {
+    function(d3, i18n, text, timeslider, labels, axis, mountains) {
         var svg;
 
         var components = {

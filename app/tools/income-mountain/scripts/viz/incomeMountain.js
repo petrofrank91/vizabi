@@ -1,6 +1,6 @@
 define([
         'd3',
-        'income-mountain/scale/_scale'
+        'income-mountain/scale/scale'
     ],
     function(d3, scale) {
         'use strict';

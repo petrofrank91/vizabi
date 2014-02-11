@@ -1,15 +1,14 @@
 define([
         'd3',
-        'layout-manager/_layout-manager',
-        'income-mountain/data/_data',
-        'income-mountain/components/_components',
-        'income-mountain/layouts/_layouts',
-        'income-mountain/_events',
+        'layout-manager',
+        'income-mountain/data/data',
+        'income-mountain/components/components',
+        'income-mountain/layouts/layout',
         'income-mountain/_i18n',
-        'income-mountain/bind/_bind',
+        'income-mountain/bind/bind',
         'entities'
     ],
-    function(d3, lm, data, components, layouts, events, i18n, bind, entities) {
+    function(d3, lm, data, components, layouts, i18n, bind, entities) {
         'use strict';
 
         var div;
@@ -116,12 +115,8 @@ define([
             components.init(svg, state, properties);
         }
 
-        function initEvents() {
-            events.init();
-        }
-
         function initLayouts() {
-            layouts.init(lm, components.get());
+            layouts.init(components);
         }
 
         function initData() {

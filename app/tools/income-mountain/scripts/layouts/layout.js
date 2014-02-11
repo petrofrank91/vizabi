@@ -1,9 +1,14 @@
 define([
+        'layout-manager'
     ],
-    function() {
+    function(layoutManager) {
         var lname = 'default';
+        var components;
 
-        function init(layoutManager, components, layoutName) {
+        function init(c, name) {
+            components = c;
+            lname = name || lname;
+
             startLayout(lname);
             defaultComponents();
             layoutManager.update();
@@ -16,43 +21,43 @@ define([
         function defaultComponents() {
             addComponent(lname, {
                 id: 'header',
-                g: components.header.getGroup(),
+                g: components.get().header.getGroup(),
                 top: 1,
                 left: 1
             });
 
             addComponent(lname, {
                 id: 'timeslider',
-                g: components.timeslider.getGroup(),
+                g: components.get().timeslider.getGroup(),
                 top: ['header.top'],
                 right: ['stage.width', -10]
             });
 
             addComponent(lname, {
                 id: 'axis',
-                g: components.axis.getGroup(),
+                g: components.get().axis.getGroup(),
                 left: ['header.left'],
                 right: ['timeslider.right', 10],
                 bottom: ['stage.height', -10],
-                render: components.axis.render
+                render: components.get().axis.render
             });
 
             addComponent(lname, {
                 id: 'labels',
-                g: components.labels.getGroup(),
+                g: components.get().labels.getGroup(),
                 top: ['header.bottom', 10],
                 left: ['header.left'],
-                render: components.labels.render
+                render: components.get().labels.render
             });
 
             addComponent(lname, {
-                g: components.mountains.getGroup(),
+                g: components.get().mountains.getGroup(),
                 id: 'mountains',
                 top: ['timeslider.bottom', 5],
                 left: ['axis.left'],
                 right: ['axis.right'],
                 bottom: ['axis.top'],
-                render: components.mountains.render
+                render: components.get().mountains.render
             });
         }
 
