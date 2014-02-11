@@ -803,8 +803,8 @@ define(['util'], function (util) {
         };
 
         var setUpChartInfoDivs = function () {
-            document.getElementById("chartInfo").innerHTML = vizState.getDataHelper().getChartInfo();
-            document.getElementById("chartFooter").innerHTML = "<b>Source</b>:" + vizState.getDataHelper().getChartFooter();
+            //document.getElementById("chartInfo").innerHTML = vizState.getDataHelper().getChartInfo();
+            //document.getElementById("chartFooter").innerHTML = "<b>Source</b>:" + vizState.getDataHelper().getChartFooter();
         };
 
 
