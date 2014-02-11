@@ -38,6 +38,9 @@ require.config({
         'loader-factory': '../../vizabi-components/data-cube/loader-factory',
         'i18n-helper': '../../vizabi-components/data-cube/i18n-helper',
 
+        // components
+        'layout-manager': '../../vizabi-components/layout-manager',
+
         // widgets
         'settings-button': '../../widgets/settings-button/settings-button',
         'time-slider-jQueryUI': '../../widgets/time-slider-jQueryUI/time-slider-jQueryUI',
