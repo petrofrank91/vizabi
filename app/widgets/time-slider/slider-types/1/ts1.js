@@ -119,8 +119,6 @@ define([
             var moveButton = d3.select(viz.move.get().node());
             moveButton.data([{x: x, y: 47}]);
             moveButton.attr('transform', 'translate(' + x + ',47)');
-            console.log('expecting x', x);
-            console.log(moveButton);
         }
 
         function update() {
@@ -152,7 +150,7 @@ define([
 
         function ondrag(d) {
             if (d3.event.type === 'dragstart') {
-                isDragging = true;console.log(d);
+                isDragging = true;
                 isPlaying = false;
             } else if (d3.event.type === 'drag') {
                 var startingPoint = viz.timeline.properties.rangeStart -
