@@ -1,0 +1,76 @@
+//TODO: font size to em
+@import "variables";
+//@import "compass";
+
+
+//#bubble-chart-wrapper {
+body {
+    font-family: 'Open Sans', Helvetica, sans-serif;
+
+    .ui-slider-handle {
+        height: 18px !important;
+    }
+
+    .ui-slider {
+        height: 12px !important;
+    }
+
+    #settingsButton {
+        float: right
+    }
+
+    #label-year {
+        font-weight: bold;
+        font-size: 70px;
+        font: 500 196px "Helvetica Neue";
+        fill: #ddd;
+    }
+
+    .chart {
+        .axisLabel {
+           font-size: 27px;
+           font-style: italic;
+           fill: $colorGrayLighter;
+           .print {
+             fill: $colorGray;
+           }
+        }
+        .axis {
+            line {
+                fill: black;
+                shape-rendering: $crispEdges;
+                //@import opacity(0);
+
+            }
+            path {
+                shape-rendering: $crispEdges;
+                stroke-width: 6;
+                fill: $colorGray;
+            }
+            text {
+                font-size: 17px;
+            }
+            .tick.major text {
+                font-size: 30px;
+                fill: $colorGrayLighter;
+                stroke-width: 0px;
+            }
+
+            &.print {
+                text {
+                    font-style: italic;
+                    font-weight: 500;
+                }
+                .domain {
+                    stroke: black;
+                    stroke-width: 4.5
+                }
+                .tick.major line {
+                    stroke-dasharray: 2, 2;
+                }
+            }
+        }
+    }
+}
+
+

@@ -1,71 +1,40 @@
 body {
-    font-family: 'Open Sans', Helvetica, sans-serif;
-}
-
-.ui-slider-handle {
-    height: 18px !important;
-}
-
-.ui-slider {
-    height: 12px !important;
-}
-
-#settingsButton {
-    float: right
-}
-
-#label-year {
+  font-family: 'Open Sans', Helvetica, sans-serif; }
+  body .ui-slider-handle {
+    height: 18px !important; }
+  body .ui-slider {
+    height: 12px !important; }
+  body #settingsButton {
+    float: right; }
+  body #label-year {
     font-weight: bold;
     font-size: 70px;
     font: 500 196px "Helvetica Neue";
-    fill: #ddd;
-}
-
-.chart .axisLabel {
+    fill: #ddd; }
+  body .chart .axisLabel {
     font-size: 27px;
     font-style: italic;
-    fill: #708090;
-}
-
-.chart .axisLabel .print {
-    fill: gray;
-}
-
-.chart .axis line {
+    fill: slategrey; }
+    body .chart .axisLabel .print {
+      fill: gray; }
+  body .chart .axis line {
     fill: black;
-    shape-rendering: "crispEdges";
-    opacity: 0;
-}
-
-.chart .axis .tick.major text {
-    font-size: 30px;
-    fill: #708090;
-    stroke-width: 0px;
-}
-
-.chart .axis path {
-    /*fill: black;*/
+    shape-rendering: "crispEdges"; }
+  body .chart .axis path {
     shape-rendering: "crispEdges";
     stroke-width: 6;
-    fill: gray;
-}
-
-.chart .axis text {
-    font-size: 17px;
-    /*fill: black;*/
-}
-
-.chart .axis.print text {
+    fill: gray; }
+  body .chart .axis text {
+    font-size: 17px; }
+  body .chart .axis .tick.major text {
+    font-size: 30px;
+    fill: slategrey;
+    stroke-width: 0px; }
+  body .chart .axis.print text {
     font-style: italic;
-    font-weight: 500;
-}
-
-.print .tick.major line {
-    stroke-dasharray: 2, 2;
-}
-
-.axis.print .domain {
+    font-weight: 500; }
+  body .chart .axis.print .domain {
     stroke: black;
-    stroke-width: 4.5
-}
-
+    stroke-width: 4.5; }
+  body .chart .axis.print .tick.major line {
+    stroke-dasharray: 2, 2; }
