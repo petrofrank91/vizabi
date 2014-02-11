@@ -18,12 +18,13 @@ define([
         function init(svg) {
             g = svg.append('g').attr('class', 'vizabi-timeslider-1');
 
-            loadButtons();
             loadTimeline();
-            loadText();
-            
-            placeButtons();
             placeTimeline();
+
+            loadButtons();
+            placeButtons();
+
+            loadText();            
             placeText();
             
             hide();
