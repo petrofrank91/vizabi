@@ -1,0 +1,28 @@
+id,name,region,un_state
+BRA001011,Rondonia,north_brazil,bra
+BRA001012,Acre,north_brazil,bra
+BRA001013,Amazonas,north_brazil,bra
+BRA001014,Roraima,north_brazil,bra
+BRA001015,Para,north_brazil,bra
+BRA001016,Amapa,north_brazil,bra
+BRA001017,Tocantins,north_brazil,bra
+BRA002021,Maranhao,northeast_brazil,bra
+BRA002022,Piaui,northeast_brazil,bra
+BRA002023,Ceara,northeast_brazil,bra
+BRA002024,Rio Grande do Norte,northeast_brazil,bra
+BRA002025,Paraiba,northeast_brazil,bra
+BRA002026,Pernambuco,northeast_brazil,bra
+BRA002027,Alagoas,northeast_brazil,bra
+BRA002028,Sergipe,northeast_brazil,bra
+BRA002029,Bahia,northeast_brazil,bra
+BRA003031,Minas Gerais,southeast_brazil,bra
+BRA003032,Espirito Santo,southeast_brazil,bra
+BRA003033,Rio de Janeiro,southeast_brazil,bra
+BRA003035,Sao Paulo,southeast_brazil,bra
+BRA004041,Parana,south_brazil,bra
+BRA004042,Santa Catarina,south_brazil,bra
+BRA004043,Rio Grande do Sul,south_brazil,bra
+BRA005050,Mato Grosso do Sul,central_west_brazil,bra
+BRA005051,Mato Grosso,central_west_brazil,bra
+BRA005052,Goias,central_west_brazil,bra
+BRA005053,Distrito Federal,central_west_brazil,bra
