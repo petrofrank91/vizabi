@@ -41,7 +41,7 @@ require.config({
         'i18n-helper': '../../vizabi-components/data-cube/i18n-helper',
 
         // components
-        'layout-manager': '../../vizabi-components/layout-manager',
+        'layout-manager': '../../vizabi-components/layout-manager/layout-manager',
 
         // widgets
         'settings-button': '../../widgets/settings-button/settings-button',
