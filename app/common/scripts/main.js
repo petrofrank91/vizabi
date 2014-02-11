@@ -15,30 +15,32 @@ require.config({
          'jquery.ui.mouse': '../../bower_components/jquery-ui/ui/jquery.ui.mouse',
          'jquery.ui.slider': '../../bower_components/jquery-ui/ui/jquery.ui.slider',
          */
-        'util': "helpers/util",
+        'util': 'helpers/util',
 
         // bubble chart
-        'bubble-chart-model': "../../tools/bubble-chart/scripts/bubble-chart-model",
-        'bubble-chart-model-validator': "../../tools/bubble-chart/scripts/bubble-chart-model-validator",
-        'bubble-chart-glue': "../../tools/bubble-chart/scripts/bubble-chart-glue",
-        'bubble-chart-datahelper': "../../tools/bubble-chart/scripts/bubble-chart-datahelper",
-        'viz-bubble': "../../tools/bubble-chart/scripts/viz/viz-bubble",
-        'viz-bubble-print': "../../tools/bubble-chart/scripts/viz/viz-bubble-print",
+        'bubble-chart-model': '../../tools/bubble-chart/scripts/bubble-chart-model',
+        'bubble-chart-model-validator': '../../tools/bubble-chart/scripts/bubble-chart-model-validator',
+        'bubble-chart-glue': '../../tools/bubble-chart/scripts/bubble-chart-glue',
+        'bubble-chart-datahelper': '../../tools/bubble-chart/scripts/bubble-chart-datahelper',
+        'viz-bubble': '../../tools/bubble-chart/scripts/viz/viz-bubble',
+        'viz-bubble-print': '../../tools/bubble-chart/scripts/viz/viz-bubble-print',
 
         // data-cube related
-        'queue-async': "../../bower_components/queue-async/queue",
-        'data-cube': "../../vizabi-components/data-cube/data-cube",
-        'reader-multiple-json': "../../vizabi-components/data-cube/loader/reader-multiple-json",
-        'reader-single-csv': "../../vizabi-components/data-cube/loader/reader-single-csv",
-        'reader-multiple-csv': "../../vizabi-components/data-cube/loader/reader-multiple-csv",
-        'reader-multi-csv': "../../vizabi-components/data-cube/loader/reader-multi-csv",
-        'loader-factory': "../../vizabi-components/data-cube/loader-factory",
-        'i18n-helper': "../../vizabi-components/data-cube/i18n-helper",
+        'queue-async': '../../bower_components/queue-async/queue',
+        'data-cube': '../../vizabi-components/data-cube/data-cube',
+        'reader-multiple-json': '../../vizabi-components/data-cube/loader/reader-multiple-json',
+        'reader-single-csv': '../../vizabi-components/data-cube/loader/reader-single-csv',
+        'reader-multiple-csv': '../../vizabi-components/data-cube/loader/reader-multiple-csv',
+        'reader-multi-csv': '../../vizabi-components/data-cube/loader/reader-multi-csv',
+        'loader-factory': '../../vizabi-components/data-cube/loader-factory',
+        'i18n-helper': '../../vizabi-components/data-cube/i18n-helper',
 
         // widgets
-        'settings-button': "../../widgets/settings-button/settings-button",
-        'time-slider-jQueryUI': "../../widgets/time-slider-jQueryUI/time-slider-jQueryUI",
-        'chart-grid': "../../widgets/chart-grid/chart-grid",
+        'settings-button': '../../widgets/settings-button/settings-button',
+        'time-slider-jQueryUI': '../../widgets/time-slider-jQueryUI/time-slider-jQueryUI',
+        'chart-grid': '../../widgets/chart-grid/chart-grid',
+        // timesliders
+        'time-slider-1': '../../widgets/time-slider/slider-types/1/ts1',
 
         /* aliases to project-specific files */
         'project': '../../{{project}}/scripts' // variable replaced by grunt task and ends up in main-processed.js
@@ -46,10 +48,10 @@ require.config({
     },
     shim: {
         // simple shims
-        'd3': {exports: "d3"},
+        'd3': {exports: 'd3'},
         'jquery': {'exports': 'jQuery'},
-        'jquery.ui': {deps: ["jquery"], exports: "jQuery"},
-        'queue-async': {exports: "queue"},
+        'jquery.ui': {deps: ['jquery'], exports: 'jQuery'},
+        'queue-async': {exports: 'queue'},
 
         // jQuery UI Slider dependency chain START
         'jquery.ui.core': ['jquery'],
@@ -69,10 +71,10 @@ require([
     'vizabi-package'
 ], function (vizabi) {
 
-    //if (typeof(console) !== "undefined" && console.log) console.log('@vizabi amd loaded', window.vizabi, vizabi);
+    //if (typeof(console) !== 'undefined' && console.log) console.log('@vizabi amd loaded', window.vizabi, vizabi);
 
     // attach vizabi to global scope if window.vizabi is already available - this is only true in the case of google maps style inclusion so we consider it safe
-    if (typeof (window.vizabi) !== "undefined") {
+    if (typeof (window.vizabi) !== 'undefined') {
         window.vizabi = vizabi;
         window.vizabi.ready = function(callback) {
             callback();
@@ -87,7 +89,7 @@ require([
             return this.fireEvent('on' + event, evt)
         } else {
             // dispatch for firefox + others
-            var evt = document.createEvent("HTMLEvents");
+            var evt = document.createEvent('HTMLEvents');
             evt.initEvent(event, true, true); // event type,bubbling,cancelable
             return !this.dispatchEvent(evt);
         }
