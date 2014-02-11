@@ -9,6 +9,8 @@ require.config({
         'd3': '../../bower_components/d3/d3',
         'jquery': '../../bower_components/jquery/jquery',
         'jquery.ui': '../../bower_components/jquery-ui/ui/jquery-ui',
+        'jstat': '../../bower_components/rm-jstat/jstat',
+        'entities': 'libs/entities',
         /*
          'jquery.ui.core': '../../bower_components/jquery-ui/ui/jquery.ui.core',
          'jquery.ui.widget': '../../bower_components/jquery-ui/ui/jquery.ui.widget',
