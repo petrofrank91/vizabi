@@ -25,6 +25,9 @@ require.config({
         'viz-bubble': '../../tools/bubble-chart/scripts/viz/viz-bubble',
         'viz-bubble-print': '../../tools/bubble-chart/scripts/viz/viz-bubble-print',
 
+        // income mountain
+        'income-mountain': '../../tools/income-mountain',
+
         // data-cube related
         'queue-async': '../../bower_components/queue-async/queue',
         'data-cube': '../../vizabi-components/data-cube/data-cube',
