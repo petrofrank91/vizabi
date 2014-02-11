@@ -46,7 +46,8 @@ define(['bubble-chart-model-validator'], function (bubbleChartModelValidator) {
         positions: {},
         editMode: false,
         category: [],
-        autoZoom: false
+        autoZoom: false,
+        manualZoom: false
     };
 
 

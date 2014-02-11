@@ -1,4 +1,4 @@
-define(['chart-grid', 'util'], function (chartGrid, util) {
+define(['util'], function (util) {
 
     var vizBubble = function (callback) {
         var svg;
@@ -29,13 +29,13 @@ define(['chart-grid', 'util'], function (chartGrid, util) {
         var labelAngel = "-0.5";
         var labelPositionInteractive = "_50";
 
-        var vizChart;
+        //var vizChart;
         var vizBubblePrint;
 
-        var update = function (state) {
+        var update = function (state, chartScale, availableFrame) {
             vizState = state;
 
-            updateLayout();
+            updateLayout(chartScale, availableFrame);
             updateEntityLayers();
             renderCurrentBubbles();
             drawTrails();
@@ -47,23 +47,12 @@ define(['chart-grid', 'util'], function (chartGrid, util) {
             chartRenderDiv = renderDiv + "-scatterChart";
             vizState = state;
             isInteractive = state.get("isInteractive");
-
-            vizChart = new chartGrid();
-            vizChart.initializeLayers(renderDiv);
-
-            if (!isInteractive) {
-                vizBubblePrint = new gapminder.viz.vizBubblePrint(chartRenderDiv, vizState, vizStateChangeCallback);
-                vizBubblePrint.registerClickEventListerners();
-                vizBubblePrint.registerAlignButtonsEventListeners();
-            }
         };
 
-        var updateLayout = function () {
-            var scaleFunctions = vizChart.updateLayout(vizState);
-            xScale = scaleFunctions[0];
-            yScale = scaleFunctions[1];
+        var updateLayout = function (chartScale, availableFrame) {
+            xScale = chartScale[0];
+            yScale = chartScale[1];
 
-            var availableFrame = vizChart.getAvailableHeightAndWidth();
             availableHeight = availableFrame[0];
             availableWidth = availableFrame[1];
 
