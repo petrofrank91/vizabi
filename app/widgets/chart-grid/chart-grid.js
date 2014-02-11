@@ -19,11 +19,11 @@ define(['jquery'], function ($) {
         var yScale;
         var xAxis;
         var yAxis;
+        var zoomScale;
 
         var margin = {
             top: 20,
             right: 20,
-            //bottom: 80,
             bottom: -15,
             left: 100
         };
@@ -32,7 +32,6 @@ define(['jquery'], function ($) {
 
         var vizState;
         var yearLabel;
-        //var zoom;
         var g;
 
         var initializeChartLayers = function (renderDiv) {
@@ -83,8 +82,9 @@ define(['jquery'], function ($) {
                 .attr("class", "labelLayer");
         };
 
-        var updateLayout = function (vizStateObj) {
+        var updateLayout = function (vizStateObj, zoomScaleVal) {
             vizState = vizStateObj;
+            zoomScale = zoomScaleVal;
             var isInteractive = vizState.get("isInteractive");
 
             if (isInteractive) {
@@ -103,7 +103,6 @@ define(['jquery'], function ($) {
 
             createXAxis();
             createYAxis();
-            //setZoom();
 
             return [xScale, yScale];
         };
@@ -145,8 +144,14 @@ define(['jquery'], function ($) {
                 else {
                     xDomain[1] = maxX;
                 }
+
             } else {
                 xDomain = [vizState.getDataHelper().getMinOfXIndicator(), vizState.getDataHelper().getMaxOfXIndicator()];
+            }
+
+            if (zoomScale) {
+                xDomain[0] /= zoomScale;
+                xDomain[1] /= zoomScale;
             }
 
             if (vizState.get("xAxisScale") === "log") {
@@ -218,7 +223,10 @@ define(['jquery'], function ($) {
         } else {
             yDomain = [vizState.getDataHelper().getMinOfYIndicator(), vizState.getDataHelper().getMaxOfYIndicator()];
         }
-
+            if (zoomScale) {
+                yDomain[0] /= zoomScale;
+                yDomain[1] /= zoomScale;
+            }
 
             if (vizState.get("yAxisScale") === "log") {
                 yScale = d3.scale.log().domain(yDomain).range([availableHeight, 0]);
@@ -269,21 +277,21 @@ define(['jquery'], function ($) {
             return margin;
         };
 
-        var setZoom = function () {
-            var zoom = d3.behavior.zoom()
-                .x(xScale)
-                .y(yScale)
-                .scaleExtent([1, 10])
-                .on("zoom", zoomed);
-
-            g.call(zoom);
+        var getXScale = function () {
+          return xScale;
         };
 
-        var zoomed = function () {
-            svg.select(".x.axis").call(xAxis);
-            svg.select(".y.axis").call(yAxis);
+        var getYScale = function () {
+            return yScale;
         };
 
+        var getXAxis = function () {
+          return xAxis;
+        };
+
+        var getYAxis = function () {
+            return yAxis;
+        };
 
         return {
             initializeLayers: initializeChartLayers,
@@ -291,7 +299,12 @@ define(['jquery'], function ($) {
             getAvailableHeightAndWidth: getAvailableHeightAndWidth,
             getXAxisContainer: getXAxisContainer,
             getXLabel: getXLabel,
-            getMargin: getMargin
+            getMargin: getMargin,
+            getXScale: getXScale,
+            getYScale: getYScale,
+            getXAxis: getXAxis,
+            getYAxis: getYAxis
+
         };
     };
 

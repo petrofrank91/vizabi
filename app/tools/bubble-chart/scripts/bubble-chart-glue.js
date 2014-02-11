@@ -1,26 +1,33 @@
-define(['jquery', 'bubble-chart-model', 'viz-bubble', 'time-slider-jQueryUI', 'settings-button'], function ($, bubbleChartModel, vizBubble, timeSlider, settingsButton) {
+define(['jquery', 'bubble-chart-model', 'viz-bubble', 'time-slider-jQueryUI', 'settings-button', 'chart-grid'], function ($, bubbleChartModel, vizBubble, timeSlider, settingsButton, chartGrid) {
 
     // supposed to be available at window.vizabi.bubbleChart
     var bubbleChart = function (renderDiv, state) {
 
         var isInteractive;
-        var scatterChart;
+        var _vizBubble;
         var model;
         var appSVG;
         var _timeSlider;
+        var _vizChart;
+        var chartScales;
+        var availableFrame;
         var modelBindCallback;
         var placeholderDivIds = {
             slider: undefined,
             trails: undefined,
             playImage: undefined
         };
+        var enableManualZoom;
+
 
         var setInitialState = function (state) {
             model = new bubbleChartModel();
+
             model.setInit(state, function () {
                 isInteractive = model.get("isInteractive");
                 setUpSubviews();
                 setUpModelAndUpdate();
+                if (model.get("manualZoom")) {setZoom();}
                 if (modelBindCallback) {
                     modelBindCallback(model.getAttributes());
                 }
@@ -46,7 +53,9 @@ define(['jquery', 'bubble-chart-model', 'viz-bubble', 'time-slider-jQueryUI', 's
                 _timeSlider.update(model);
             }
 
-            scatterChart.update(model);
+            chartScales = _vizChart.updateLayout(model);
+            availableFrame = _vizChart.getAvailableHeightAndWidth();
+            _vizBubble.update(model,chartScales, availableFrame);
         };
 
 
@@ -59,8 +68,20 @@ define(['jquery', 'bubble-chart-model', 'viz-bubble', 'time-slider-jQueryUI', 's
 
 
         var initializeScatterChart = function (svg, renderDiv) {
-            scatterChart = new vizBubble(scatterChartModelUpdate);
-            scatterChart.initialize(svg, renderDiv, model);
+            var _vizBubblePrint;
+
+            _vizBubble = new vizBubble(scatterChartModelUpdate);
+
+            _vizChart = new chartGrid();
+            _vizChart.initializeLayers(renderDiv);
+
+            if (!isInteractive) {
+                _vizBubblePrint = new gapminder.viz.vizBubblePrint(chartRenderDiv, vizState, vizStateChangeCallback);
+                _vizBubblePrint.registerClickEventListerners();
+                _vizBubblePrint.registerAlignButtonsEventListeners();
+            }
+
+            _vizBubble.initialize(svg, renderDiv, model);
         };
 
         var initializeTimeSlider = function (isInteractive) {
@@ -75,7 +96,7 @@ define(['jquery', 'bubble-chart-model', 'viz-bubble', 'time-slider-jQueryUI', 's
 
         var scatterChartModelUpdate = function (state) {
             model.set(state, function () {
-                scatterChart.update(model);
+                _vizBubble.update(model,chartScales, availableFrame);
                 if (modelBindCallback) {
                     modelBindCallback(model.getAttributes());
                 }
@@ -85,9 +106,9 @@ define(['jquery', 'bubble-chart-model', 'viz-bubble', 'time-slider-jQueryUI', 's
 
         var timeSliderModelUpdate = function (state) {
             model.set(state, function () {
-
                 _timeSlider.update(model);
-                scatterChart.update(model);
+                _vizChart.updateLayout(model);
+                _vizBubble.update(model,chartScales, availableFrame);
                 if (modelBindCallback) {
                     modelBindCallback(model.getAttributes());
                 }
@@ -119,7 +140,6 @@ define(['jquery', 'bubble-chart-model', 'viz-bubble', 'time-slider-jQueryUI', 's
 
         /* GUI Layer Creator */
         var initializeLayers = function (changeCallback) {
-
             var containerDiv = document.createElement("div");
             containerDiv.id = "container-" + renderDiv;
             containerDiv.style.margin = "30px;";
@@ -251,6 +271,28 @@ define(['jquery', 'bubble-chart-model', 'viz-bubble', 'time-slider-jQueryUI', 's
 
         var setDivId = function (divName, divId) {
             placeholderDivIds[divName] = divId;
+        };
+
+        var setZoom = function () {
+            var g = d3.select("#" + renderDiv).select("g");
+            var xScale = _vizChart.getXScale();
+            var yScale = _vizChart.getYScale();
+
+            var zoom = d3.behavior.zoom()
+                .on("zoom", function() {
+                    zoomed(xScale,yScale, zoom.scale())
+                });
+
+            g.call(zoom);
+        };
+
+        var zoomed = function (xScale, yScale, zoomScale) {
+            _vizChart.updateLayout(model, zoomScale);
+            var availableFrame = _vizChart.getAvailableHeightAndWidth();
+            var xScale = _vizChart.getXScale();
+            var yScale = _vizChart.getYScale();
+
+            _vizBubble.update(model,[xScale, yScale], availableFrame);
         };
 
         setInitialState(state);
