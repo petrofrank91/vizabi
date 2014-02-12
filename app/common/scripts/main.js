@@ -11,6 +11,7 @@ require.config({
         'jquery.ui': '../../bower_components/jquery-ui/ui/jquery-ui',
         'jstat': '../../bower_components/rm-jstat/jstat',
         'entities': 'libs/entities',
+        'projection': 'http://d3js.org/d3.geo.projection.v0',
         /*
          'jquery.ui.core': '../../bower_components/jquery-ui/ui/jquery.ui.core',
          'jquery.ui.widget': '../../bower_components/jquery-ui/ui/jquery.ui.widget',
@@ -65,9 +66,11 @@ require.config({
         'jquery.ui.core': ['jquery'],
         'jquery.ui.widget': ['jquery.ui.core'],
         'jquery.ui.mouse': ['jquery.ui.widget'],
-        'jquery.ui.slider': ['jquery.ui.mouse']
+        'jquery.ui.slider': ['jquery.ui.mouse'],
         // jQuery UI Slider dependency chain END
 
+        // projection
+        'projection': { deps: ['d3'] }
     },
     waitSeconds: 30
 });
