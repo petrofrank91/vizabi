@@ -467,11 +467,11 @@ define(['util'], function (util) {
             var coordinates = fitWithinLabelConstraints(bbox, preferredX, preferredY);
 
             this.highlightLabel
-                .attr("transform", "translate(" + coordinates.x + "," + coordinates.y + ")");
+                //.attr("transform", "translate(" + coordinates.x + "," + coordinates.y + ")");
 
             this.xValueLabel = d3.select("#" + chartRenderDiv).select(".labelLayer")
                 .append("g")
-                .attr("transform", "translate(" + nodeX + "," + (availableHeight + 15) + ")")
+                //.attr("transform", "translate(" + nodeX + "," + (availableHeight + 15) + ")")
                 .attr("class", "xValueLabel")
                 .attr("pointer-events", "none");
 
@@ -511,7 +511,7 @@ define(['util'], function (util) {
 
             this.yValueLabel = d3.select("#" + chartRenderDiv).select(".labelLayer")
                 .append("g")
-                .attr("transform", "translate(" + -6 + "," + nodeY + ")")
+                //.attr("transform", "translate(" + -6 + "," + nodeY + ")")
                 .attr("class", "yValueLabel")
                 .attr("pointer-events", "none");
 
@@ -612,7 +612,7 @@ define(['util'], function (util) {
                 .attr("x2", labelCoordinates.x)
                 .attr("y2", labelCoordinates.y);
 
-            d3.select(this).attr("transform", "translate(" + labelCoordinates.x + "," + labelCoordinates.y + ")");
+            //d3.select(this).attr("transform", "translate(" + labelCoordinates.x + "," + labelCoordinates.y + ")");
         };
 
         var dragEnd = function (d, i) {
@@ -770,7 +770,7 @@ define(['util'], function (util) {
                 d.linkEndX = labelCoordinates.x;
                 d.linkEndY = labelCoordinates.y;
 
-                d3.select(this).attr("transform", "translate(" + labelCoordinates.x + "," + labelCoordinates.y + ")");
+                //d3.select(this).attr("transform", "translate(" + labelCoordinates.x + "," + labelCoordinates.y + ")");
             });
 
             labels.exit().remove();

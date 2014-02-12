@@ -50,7 +50,7 @@ define(['jquery'], function($) {
                 .classed("scatter", true);
 
             g = svg.append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             yearLabel = g.append("text")
                 .attr("id", "label-year");
@@ -125,7 +125,7 @@ define(['jquery'], function($) {
 
             xLabel
                 .attr("text-anchor", "middle")
-                .attr("transform", "translate(" + availableWidth + "," + (availableHeight + margin.bottom * 0.6) + ")")
+                //.attr("transform", "translate(" + availableWidth + "," + (availableHeight + margin.bottom * 0.6) + ")")
                 .attr("font-size", "30px")
                 .text(xLabelText)
                 .append("svg:title")
@@ -183,7 +183,7 @@ define(['jquery'], function($) {
             }
 
             xAxisContainer
-                .attr("transform", "translate(0," + (availableHeight) + ")")
+                //.attr("transform", "translate(0," + (availableHeight) + ")")
                 .attr("stroke", "lightgrey")
                 .classed("print", !vizState.get("isInteractive"))
                 .call(xAxis);
