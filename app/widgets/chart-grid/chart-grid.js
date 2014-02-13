@@ -8,11 +8,8 @@ define(['jquery'], function ($) {
         var xAxisContainer;
         var yAxisContainer;
         var grid;
-        var scatterContainer;
         var xLabel;
         var yLabel;
-        var linkLayer;
-        var labelLayer;
         var xDomain;
         var yDomain;
         var xScale;
@@ -33,6 +30,8 @@ define(['jquery'], function ($) {
         var vizState;
         var yearLabel;
         var g;
+        var searchLayer;
+
 
         var initializeChartLayers = function (renderDiv) {
             chartRenderDiv = renderDiv + "-scatterChart";
@@ -54,7 +53,13 @@ define(['jquery'], function ($) {
             yearLabel = g.append("text")
                 .attr("id", "label-year");
 
-            xLabel = g
+            searchLayer = g.append("g")
+                .attr("class", "search");
+
+            drawSearchBox();
+
+            var xLabelG = g.append("g");
+            xLabel = xLabelG
                 .append("svg:text")
                 .attr("class", "axisLabel");
 
@@ -258,6 +263,22 @@ define(['jquery'], function ($) {
                 .attr("y", g.node().getBBox().height / 2)
                 .text(Math.floor(vizState.get("year")));
             return yScale;
+        };
+
+        var drawSearchBox = function () {
+            var searchG = document.getElementsByClassName("search")[0];
+
+            var searchDiv = document.createElement("div");
+            searchDiv.className = "ui-widget";
+            searchG.appendChild(searchDiv);
+
+            var input = document.createElement("input");
+            input.id = "tags";
+            searchG.appendChild(input);
+
+            $("#tags").autocomplete({
+                source: ["a", "b", "c", "d"]
+            });
         };
 
 
