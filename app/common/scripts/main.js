@@ -11,7 +11,7 @@ require.config({
         'jquery.ui': '../../bower_components/jquery-ui/ui/jquery-ui',
         'jstat': '../../bower_components/rm-jstat/jstat',
         'entities': 'libs/entities',
-        'd3-geo-projection': '../../bower_components/d3-geo-projection/d3.geo.projection.js',
+        'd3-geo-projection': '../../bower_components/d3-geo-projection/d3.geo.projection',
         /*
          'jquery.ui.core': '../../bower_components/jquery-ui/ui/jquery.ui.core',
          'jquery.ui.widget': '../../bower_components/jquery-ui/ui/jquery.ui.widget',
