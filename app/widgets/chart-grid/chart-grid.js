@@ -1,6 +1,6 @@
-define(['jquery'], function ($) {
+define(['jquery'], function($) {
 
-    var chartGrid = function () {
+    var chartGrid = function() {
 
         var svg;
         var chartRenderDiv;
@@ -33,12 +33,14 @@ define(['jquery'], function ($) {
         var searchLayer;
 
 
-        var initializeChartLayers = function (renderDiv) {
+        var initializeChartLayers = function(renderDiv) {
             chartRenderDiv = renderDiv + "-scatterChart";
 
             svg = d3.select("#" + renderDiv)
                 .append("svg")
-                .style({display: "block"});
+                .style({
+                    display: "block"
+                });
 
 
             svg.attr("id", chartRenderDiv)
@@ -53,10 +55,6 @@ define(['jquery'], function ($) {
             yearLabel = g.append("text")
                 .attr("id", "label-year");
 
-            searchLayer = g.append("g")
-                .attr("class", "search");
-
-            drawSearchBox();
 
             var xLabelG = g.append("g");
             xLabel = xLabelG
@@ -85,9 +83,16 @@ define(['jquery'], function ($) {
 
             labelLayer = g.append("g")
                 .attr("class", "labelLayer");
+
+
+            searchLayer = g.append("g")
+                .append("rect")
+                .attr("width", "100")
+                .attr("height", "20")
+                .attr("opacity", "0.2");
         };
 
-        var updateLayout = function (vizStateObj, zoomScaleVal) {
+        var updateLayout = function(vizStateObj, zoomScaleVal) {
             vizState = vizStateObj;
             zoomScale = zoomScaleVal;
             var isInteractive = vizState.get("isInteractive");
@@ -112,7 +117,7 @@ define(['jquery'], function ($) {
             return [xScale, yScale];
         };
 
-        var createXAxis = function () {
+        var createXAxis = function() {
             var xLabelText = vizState.getDataHelper().getAxisNames()[0];
             if (!xLabelText) {
                 xLabelText = vizState.get("xIndicator");
@@ -124,7 +129,7 @@ define(['jquery'], function ($) {
                 .attr("font-size", "30px")
                 .text(xLabelText)
                 .append("svg:title")
-                .text(function () {
+                .text(function() {
                     return vizState.getDataHelper().getAxisInfo()[0];
                 });
 
@@ -135,8 +140,7 @@ define(['jquery'], function ($) {
 
                 if (updatedMinX && updatedMinX < minX) {
                     xDomain[0] = updatedMinX;
-                }
-                else {
+                } else {
                     xDomain[0] = minX;
                 }
 
@@ -145,8 +149,7 @@ define(['jquery'], function ($) {
 
                 if (updatedMaxX && updatedMaxX > maxX) {
                     xDomain[1] = updatedMaxX;
-                }
-                else {
+                } else {
                     xDomain[1] = maxX;
                 }
 
@@ -167,7 +170,7 @@ define(['jquery'], function ($) {
 
             xAxis = d3.svg.axis()
                 .scale(xScale)
-                .tickFormat(function (d) {
+                .tickFormat(function(d) {
                     return "$" + d;
                 })
                 .ticks(10)
@@ -188,7 +191,7 @@ define(['jquery'], function ($) {
             return xScale;
         };
 
-        var createYAxis = function () {
+        var createYAxis = function() {
             var yLabelText = vizState.getDataHelper().getAxisNames()[1];
 
             if (!yLabelText) {
@@ -200,34 +203,32 @@ define(['jquery'], function ($) {
                 .attr("font-size", "30px")
                 .text(yLabelText)
                 .append("svg:title")
-                .text(function () {
+                .text(function() {
                     return vizState.getDataHelper().getAxisInfo()[1];
                 });
 
-        var yDomain = [];
-        if (vizState.get("minYValue") !== undefined && vizState.get("maxYValue") !== undefined) {
-            var updatedMinY = vizState.get("updatedMinYValue");
-            var minY = vizState.get("minYValue");
+            var yDomain = [];
+            if (vizState.get("minYValue") !== undefined && vizState.get("maxYValue") !== undefined) {
+                var updatedMinY = vizState.get("updatedMinYValue");
+                var minY = vizState.get("minYValue");
 
-            if (updatedMinY && updatedMinY < minY) {
-                yDomain[0] = updatedMinY;
-            }
-            else {
-                yDomain[0] = minY;
-            }
+                if (updatedMinY && updatedMinY < minY) {
+                    yDomain[0] = updatedMinY;
+                } else {
+                    yDomain[0] = minY;
+                }
 
-            var maxY = vizState.get("maxYValue");
-            var updatedMaxY = vizState.get("updatedMaxYValue");
+                var maxY = vizState.get("maxYValue");
+                var updatedMaxY = vizState.get("updatedMaxYValue");
 
-            if (updatedMaxY && updatedMaxY > maxY) {
-                yDomain[1] = updatedMaxY;
+                if (updatedMaxY && updatedMaxY > maxY) {
+                    yDomain[1] = updatedMaxY;
+                } else {
+                    yDomain[1] = maxY;
+                }
+            } else {
+                yDomain = [vizState.getDataHelper().getMinOfYIndicator(), vizState.getDataHelper().getMaxOfYIndicator()];
             }
-        else {
-            yDomain[1] = maxY;
-        }
-        } else {
-            yDomain = [vizState.getDataHelper().getMinOfYIndicator(), vizState.getDataHelper().getMaxOfYIndicator()];
-        }
             if (zoomScale) {
                 yDomain[0] /= zoomScale;
                 yDomain[1] /= zoomScale;
@@ -265,52 +266,35 @@ define(['jquery'], function ($) {
             return yScale;
         };
 
-        var drawSearchBox = function () {
-            var searchG = document.getElementsByClassName("search")[0];
-
-            var searchDiv = document.createElement("div");
-            searchDiv.className = "ui-widget";
-            searchG.appendChild(searchDiv);
-
-            var input = document.createElement("input");
-            input.id = "tags";
-            searchG.appendChild(input);
-
-            $("#tags").autocomplete({
-                source: ["a", "b", "c", "d"]
-            });
-        };
-
-
-        var getAvailableHeightAndWidth = function () {
+        var getAvailableHeightAndWidth = function() {
             return [availableHeight, availableWidth];
         };
 
-        var getXAxisContainer = function () {
+        var getXAxisContainer = function() {
             return xAxisContainer;
         };
 
-        var getXLabel = function () {
+        var getXLabel = function() {
             return xLabel;
         };
 
-        var getMargin = function () {
+        var getMargin = function() {
             return margin;
         };
 
-        var getXScale = function () {
-          return xScale;
+        var getXScale = function() {
+            return xScale;
         };
 
-        var getYScale = function () {
+        var getYScale = function() {
             return yScale;
         };
 
-        var getXAxis = function () {
-          return xAxis;
+        var getXAxis = function() {
+            return xAxis;
         };
 
-        var getYAxis = function () {
+        var getYAxis = function() {
             return yAxis;
         };
 
@@ -332,4 +316,3 @@ define(['jquery'], function ($) {
     return chartGrid;
 
 });
-
