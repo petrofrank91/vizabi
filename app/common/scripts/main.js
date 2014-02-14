@@ -11,6 +11,7 @@ require.config({
         'jquery.ui': '../../bower_components/jquery-ui/ui/jquery-ui',
         'jstat': '../../bower_components/rm-jstat/jstat',
         'entities': 'libs/entities',
+        'jed': '../../bower_components/jed/jed',
         /*
          'jquery.ui.core': '../../bower_components/jquery-ui/ui/jquery.ui.core',
          'jquery.ui.widget': '../../bower_components/jquery-ui/ui/jquery.ui.widget',
