@@ -16,7 +16,7 @@ define([
         var textYear;
 
         function init(svg) {
-            g = svg.append('g').attr('class', 'vizabi-timeslider-1');
+            g = svg.append('g').attr('class', 'timeslider-1');
 
             loadTimeline();
             placeTimeline();
@@ -45,7 +45,7 @@ define([
 
         function loadTimeline() {
             timelineAxis = g.append('g')
-                .attr('class', 'vizabi-timeslider-timeline')
+                .attr('class', 'timeslider1-timeline')
                 .call(timeline.axis());
         }
 

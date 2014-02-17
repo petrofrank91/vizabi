@@ -10,7 +10,7 @@ define([
 
         function init(group) {
             button = group.append('g')
-                .attr('class', 'vizabi-timeslider-button-play');
+                .attr('class', 'button play');
         }
 
         function draw() {

@@ -16,7 +16,7 @@ define([
         var mwidth = 880;
 
         function init(svg) {
-            g = svg.append('g').attr('class', 'vizabi-im-mountains');
+            g = svg.append('g').attr('class', 'mountains');
         }
 
         // Draws ONE mountain. Data and information about the mountain to be

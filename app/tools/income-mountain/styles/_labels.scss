@@ -1,0 +1,29 @@
+.labels {
+    @include font-size(26px);
+    @include user-select-none;
+    font-family: $fontFamily;
+
+    .text {
+        cursor: pointer;
+
+        &.shadow {
+            @include opacity(0.3);
+        }
+
+        &.bold {
+            @include opacity(1);
+        }
+    }
+
+    .delete {
+        cursor: pointer;
+        @include opacity(0.5);
+        @include font-size(16px);
+        text-anchor: middle;
+        fill: $colorLightWhite;
+
+        &.shadow {
+            @include opacity(0.1);
+        }
+    }
+}

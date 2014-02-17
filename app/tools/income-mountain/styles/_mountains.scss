@@ -1,0 +1,13 @@
+.mountains {
+    stroke-width: 2;
+    stroke: $colorIMmediumBlue;
+    @include opacity(0.8);
+
+    &.shadow {
+        @include opacity(0.1);
+    }
+
+    &.bold {
+        @include opacity(1);
+    }
+}

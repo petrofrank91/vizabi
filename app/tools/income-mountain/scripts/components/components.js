@@ -25,7 +25,7 @@ define([
             components.header.init(
                 svg,
                 i18n('incMountain', 'People by income'),
-                'vizabi-im-header',
+                'header',
                 32
             );
 

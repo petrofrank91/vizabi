@@ -10,14 +10,13 @@ define([
 
         function init(group) {
             button = group.append('g')
-                .attr('class', 'vizabi-timeslider-button-move')
+                .attr('class', 'button move')
                 .data([{x: 0, y: 0}]);
         }
 
         function draw() {
             // Miterlimit?
             button.append('path')
-                .attr('stroke-miterlimit', 10)
                 .attr('d', movePath);
 
             button.append('rect')
