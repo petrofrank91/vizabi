@@ -12,7 +12,7 @@ define([
 
         function init(group) {
             button = group.append('g')
-                .attr('class', 'vizabi-timeslider-button-pause');
+                .attr('class', 'button pause');
         }
 
         function draw() {
