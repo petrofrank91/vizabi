@@ -36,6 +36,7 @@ require.config({
         'bubble-chart-datahelper': '../../tools/bubble-chart/scripts/bubble-chart-datahelper',
         'viz-bubble': '../../tools/bubble-chart/scripts/viz/viz-bubble',
         'viz-bubble-print': '../../tools/bubble-chart/scripts/viz/viz-bubble-print',
+        'bubble-chart-components':'../../tools/bubble-chart/scripts/components/components',
 
         // income mountain
         'income-mountain': '../../tools/income-mountain/scripts',
