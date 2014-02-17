@@ -1,6 +1,6 @@
-define(['util'], function (util) {
+define(['util'], function(util) {
 
-    var vizBubble = function (callback) {
+    var vizBubble = function(callback) {
         var svg;
         var scatterContainer;
         var labelLayer;
@@ -32,7 +32,7 @@ define(['util'], function (util) {
         //var vizChart;
         var vizBubblePrint;
 
-        var update = function (state, chartScale, availableFrame) {
+        var update = function(state, chartScale, availableFrame) {
             vizState = state;
 
             updateLayout(chartScale, availableFrame);
@@ -43,13 +43,16 @@ define(['util'], function (util) {
             drawLabels();
         };
 
-        var initializeLayers = function (root, renderDiv, state) {
+        var initializeLayers = function(renderDiv, state, components) {
             chartRenderDiv = renderDiv + "-scatterChart";
             vizState = state;
             isInteractive = state.get("isInteractive");
+            scatterContainer = components.scatterContainer;
+            linkLayer = components.linkLayer;
+            labelLayer = components.labelLayer;
         };
 
-        var updateLayout = function (chartScale, availableFrame) {
+        var updateLayout = function(chartScale, availableFrame) {
             xScale = chartScale[0];
             yScale = chartScale[1];
 
@@ -60,27 +63,25 @@ define(['util'], function (util) {
             setUpChartInfoDivs();
         };
 
-        var setBubbleAndFontSizeScale = function () {
+        var setBubbleAndFontSizeScale = function() {
             if (!vizState.get("minBubbleSize") && !vizState.get("maxBubbleSize")) {
                 bubbleSizeScale = d3.scale.sqrt().domain([vizState.getDataHelper().getMinOfSizeIndicator(), vizState.getDataHelper().getMaxOfSizeIndicator()]).range([1, 30]).exponent(0.5);
-            }
-            else {
+            } else {
                 bubbleSizeScale = d3.scale.sqrt().domain([vizState.getDataHelper().getMinOfSizeIndicator(), vizState.getDataHelper().getMaxOfSizeIndicator()]).range([vizState.get("minBubbleSize"), vizState.get("maxBubbleSize")]).exponent(0.5);
             }
 
             if (!vizState.get("minFontSize") && !vizState.get("maxFontSize")) {
                 fontSizeScale = d3.scale.sqrt().domain([0, 10e8]).range([7, 25]).exponent(0.5);
-            }
-            else {
+            } else {
                 fontSizeScale = d3.scale.sqrt().domain([0, 10e8]).range([vizState.get("minFontSize"), vizState.get("maxFontSize")]).exponent(0.5);
             }
         };
 
-        var updateEntityLayers = function () {
+        var updateEntityLayers = function() {
             countryLayers = vizState.getDataHelper().getEntityLayerObject();
 
             var entityLayers = d3.select("#" + chartRenderDiv + " .scatterContainer").selectAll(".entityLayer")
-                .data(countryLayers, function (d) {
+                .data(countryLayers, function(d) {
                     return d.id;
                 });
 
@@ -88,15 +89,15 @@ define(['util'], function (util) {
                 .enter()
                 .append("g")
                 .attr("class", "entityLayer")
-                .attr("name", function (d) {
+                .attr("name", function(d) {
                     return d.id;
                 })
-                .attr("id", function (d) {
+                .attr("id", function(d) {
                     return d.id;
                 });
 
             entityLayers
-                .sort(function (a, b) {
+                .sort(function(a, b) {
                     return b.max - a.max;
                 });
 
@@ -105,7 +106,7 @@ define(['util'], function (util) {
         };
 
 
-        var renderCurrentBubbles = function () {
+        var renderCurrentBubbles = function() {
             var year = vizState.get("year");
             var s = vizState.get("s");
             var opacity = vizState.get("opacity");
@@ -114,24 +115,24 @@ define(['util'], function (util) {
             var currentEntities = vizState.getDataHelper().getDataObject(year);
 
             var bubbles = d3.select("#" + chartRenderDiv).selectAll(".entityLayer")
-                .data(countryLayers, function (d) {
+                .data(countryLayers, function(d) {
                     return d.id;
                 })
-                .selectAll(".currentEntity").data(function (d) {
+                .selectAll(".currentEntity").data(function(d) {
                     var id = d.id;
                     return currentEntities[id];
                 });
 
             bubbles.enter().append("circle")
                 .attr("class", "currentEntity")
-                .attr("name", function (d) {
+                .attr("name", function(d) {
                     return d.id;
                 })
                 .attr("stroke-width", "0.8pt")
-                .attr("stroke", function (d) {
+                .attr("stroke", function(d) {
                     return vizState.getDataHelper().getColor(d.id, "stroke", d.category);
                 })
-                .attr("fill", function (d) {
+                .attr("fill", function(d) {
                     return vizState.getDataHelper().getColor(d.id, "fill", d.category);
                 })
                 .attr("pointer-events", "all")
@@ -143,26 +144,25 @@ define(['util'], function (util) {
                     .on("click", bubbleClickHandler)
                     .on("mouseover", bubbleOverHandler)
                     .on("mouseout", bubbleOutHandler);
-            }
-            else {
+            } else {
                 bubbles.on("click", vizBubblePrint.bubbleClickHandlerPrint);
             }
 
             bubbles
-                .attr("cx", function (d, i) {
+                .attr("cx", function(d, i) {
                     return xScale(d.x);
                 })
-                .attr("cy", function (d, i) {
+                .attr("cy", function(d, i) {
                     return yScale(d.y);
                 })
-                .attr("r", function (d, i) {
+                .attr("r", function(d, i) {
                     return bubbleSizeScale(d.size);
                 });
 
             bubbles.exit().remove();
         };
 
-        var drawTrails = function () {
+        var drawTrails = function() {
             var entityLayersData = [];
 
             var entities = vizState.getDataHelper().getEntityMeta();
@@ -170,7 +170,10 @@ define(['util'], function (util) {
             for (var entity in entities) {
                 if (entities.hasOwnProperty(entity)) {
                     var entityObj = entities[entity][0];
-                    var layerData = {id: entityObj.id, children: []};
+                    var layerData = {
+                        id: entityObj.id,
+                        children: []
+                    };
                     entityLayersData.push(layerData);
 
                     var selectedBubbles = vizState.get("s");
@@ -180,8 +183,15 @@ define(['util'], function (util) {
                     if (id in selectedBubbles && trails === "standard") {
                         var selected = selectedBubbles[id];
 
-                        var trailLayerBubble = {id: "trailLayerBubble", data: []};
-                        var trailLayerLine = {color: "#000", id: "trailLayerLine", data: []};
+                        var trailLayerBubble = {
+                            id: "trailLayerBubble",
+                            data: []
+                        };
+                        var trailLayerLine = {
+                            color: "#000",
+                            id: "trailLayerLine",
+                            data: []
+                        };
                         var children = layerData.children;
                         children.push(trailLayerLine, trailLayerBubble);
 
@@ -202,14 +212,13 @@ define(['util'], function (util) {
                         var rangeOfTrailEntities;
                         if (vizState.get("fraction") === 0) {
                             rangeOfTrailEntities = d3.range(trailStart, trailEnd, 1);
-                        }
-                        else {
+                        } else {
                             rangeOfTrailEntities = d3.range(trailStart, trailEnd + 1, 1);
                         }
 
                         var trailBubbleData = [];
 
-                        var trailEntities = rangeOfTrailEntities.map(function (year) {
+                        var trailEntities = rangeOfTrailEntities.map(function(year) {
                             var o = {};
 
                             o.x = vizState.getDataHelper().getDataForYear(vizState.get("xIndicator"), id, year, entityObj.parent);
@@ -249,28 +258,28 @@ define(['util'], function (util) {
 
 
             var trailContainers = d3.select("#" + chartRenderDiv).selectAll(".entityLayer")
-                .data(entityLayersData, function (d) {
+                .data(entityLayersData, function(d) {
                     return d.id;
                 })
-                .selectAll(".trailContainer").data(function (d) {
+                .selectAll(".trailContainer").data(function(d) {
                     return d.children;
-                }, function (d) {
+                }, function(d) {
                     return d.id;
                 });
 
             trailContainers.enter()
                 .insert("svg:g", "circle")
-                .attr("name", function (d) {
+                .attr("name", function(d) {
                     return d.id;
                 })
                 .attr("class", "trailContainer")
-                .each(function (d) {
+                .each(function(d) {
                     if (d.id === "trailLayerLine") {
                         d3.select(this).append("svg:path")
                             .attr("class", "trailPath")
                             .attr("fill", "none")
                             .attr("stroke-width", "1.5pt")
-                            .attr("stroke", function (d) {
+                            .attr("stroke", function(d) {
                                 return d.color;
                             });
                     }
@@ -280,30 +289,30 @@ define(['util'], function (util) {
                 .remove();
 
             var line = d3.svg.line()
-                .x(function (d) {
+                .x(function(d) {
                     return xScale(d.x);
                 })
-                .y(function (d) {
+                .y(function(d) {
                     return yScale(d.y);
                 });
 
             var trailPath = trailContainers
-                .filter(function (d) {
+                .filter(function(d) {
                     return d.id === "trailLayerLine";
                 })
                 .select(".trailPath");
 
             trailPath.
-                attr("d", function (d) {
-                    return line(d.data);
-                })
+            attr("d", function(d) {
+                return line(d.data);
+            })
                 .attr("stroke-opacity", 0.6);
 
-            var trailBubbles = trailContainers.filter(function (d) {
+            var trailBubbles = trailContainers.filter(function(d) {
                 return d.id == "trailLayerBubble"
             })
                 .selectAll(".trailEntity")
-                .data(function (d) {
+                .data(function(d) {
                     return d.data;
                 });
 
@@ -320,19 +329,19 @@ define(['util'], function (util) {
                 .on("mouseout", bubbleOutHandler);
 
             trailBubbles
-                .attr("stroke", function (d) {
+                .attr("stroke", function(d) {
                     return vizState.getDataHelper().getColor(d.id, "stroke");
                 })
-                .attr("fill", function (d) {
+                .attr("fill", function(d) {
                     return vizState.getDataHelper().getColor(d.id, "fill");
                 })
-                .attr("cx", function (d, i) {
+                .attr("cx", function(d, i) {
                     return xScale(d.x);
                 })
-                .attr("cy", function (d, i) {
+                .attr("cy", function(d, i) {
                     return yScale(d.y);
                 })
-                .attr("r", function (d, i) {
+                .attr("r", function(d, i) {
                     return bubbleSizeScale(d.size);
                 });
 
@@ -341,7 +350,7 @@ define(['util'], function (util) {
         };
 
 
-        var updateSelected = function () {
+        var updateSelected = function() {
             var entityMeta = vizState.getDataHelper().getEntityMeta();
             var selected = vizState.get("s");
             var opacity = vizState.get("opacity");
@@ -359,20 +368,17 @@ define(['util'], function (util) {
                 }
             }
 
-            circles.each(function (d, i) {
+            circles.each(function(d, i) {
                 if (util.isEmptyObject(selected)) {
                     d3.select(this).attr("fill-opacity", 0.9);
                     d3.select(this).attr("stroke-opacity", 0.9);
-                }
-
-                else {
+                } else {
                     var id = d.id;
 
                     if (id in selected) {
                         d3.select(this).attr("fill-opacity", 0.9);
                         d3.select(this).attr("stroke-opacity", 0.9);
-                    }
-                    else {
+                    } else {
                         d3.select(this).attr("fill-opacity", opacity);
                         d3.select(this).attr("stroke-opacity", opacity);
                     }
@@ -381,7 +387,7 @@ define(['util'], function (util) {
             });
         };
 
-        var bubbleOverHandler = function (d, i) {
+        var bubbleOverHandler = function(d, i) {
             var id = d.id;
             var selected = vizState.get("s");
             var currentEntity;
@@ -435,12 +441,12 @@ define(['util'], function (util) {
                 .attr("font-size", "20px")
                 .attr("class", "entityLabel")
                 .attr("text-anchor", "middle")
-                //.attr("dominant-baseline","central")
-                .text(function () {
-                    var text;
-                    currentEntity ? text = vizState.getDataHelper().getName(d.id, d.category) : text = vizState.getDataHelper().getName(d.id) + ", " + d.year;
-                    return text;
-                });
+            //.attr("dominant-baseline","central")
+            .text(function() {
+                var text;
+                currentEntity ? text = vizState.getDataHelper().getName(d.id, d.category) : text = vizState.getDataHelper().getName(d.id) + ", " + d.year;
+                return text;
+            });
 
             var textNodeBbox = textNode.node().getBBox();
             var textNodeBBoxWidth = textNodeBbox.width;
@@ -467,12 +473,12 @@ define(['util'], function (util) {
             var coordinates = fitWithinLabelConstraints(bbox, preferredX, preferredY);
 
             this.highlightLabel
-                //.attr("transform", "translate(" + coordinates.x + "," + coordinates.y + ")");
+            //.attr("transform", "translate(" + coordinates.x + "," + coordinates.y + ")");
 
             this.xValueLabel = d3.select("#" + chartRenderDiv).select(".labelLayer")
                 .append("g")
-                //.attr("transform", "translate(" + nodeX + "," + (availableHeight + 15) + ")")
-                .attr("class", "xValueLabel")
+            //.attr("transform", "translate(" + nodeX + "," + (availableHeight + 15) + ")")
+            .attr("class", "xValueLabel")
                 .attr("pointer-events", "none");
 
             var rectNodeX = this.xValueLabel
@@ -485,7 +491,7 @@ define(['util'], function (util) {
                 .attr("stroke", "#999");
 
             var numFormat2 = d3.format(",g");
-            var numberFormat = function (d) {
+            var numberFormat = function(d) {
                 return numFormat2(d.toPrecision(2));
             };
 
@@ -495,8 +501,8 @@ define(['util'], function (util) {
                 .attr("text-anchor", "middle")
                 .attr("font-weight", "bold")
 
-                .attr("dominant-baseline", "central")
-                .text(function () {
+            .attr("dominant-baseline", "central")
+                .text(function() {
                     return numberFormat(d.x);
                 });
 
@@ -511,8 +517,8 @@ define(['util'], function (util) {
 
             this.yValueLabel = d3.select("#" + chartRenderDiv).select(".labelLayer")
                 .append("g")
-                //.attr("transform", "translate(" + -6 + "," + nodeY + ")")
-                .attr("class", "yValueLabel")
+            //.attr("transform", "translate(" + -6 + "," + nodeY + ")")
+            .attr("class", "yValueLabel")
                 .attr("pointer-events", "none");
 
             var rectNodeY = this.yValueLabel
@@ -530,7 +536,7 @@ define(['util'], function (util) {
                 .attr("text-anchor", "end")
                 .attr("font-weight", "bold")
                 .attr("dominant-baseline", "central")
-                .text(function () {
+                .text(function() {
                     return numberFormat(d.y);
                 });
 
@@ -545,7 +551,7 @@ define(['util'], function (util) {
         };
 
 
-        var bubbleOutHandler = function (name, i) {
+        var bubbleOutHandler = function(name, i) {
 
             d3.select("#" + chartRenderDiv).selectAll(".highlightNode").remove();
             d3.select("#" + chartRenderDiv).selectAll(".highlightLabel").remove();
@@ -555,9 +561,12 @@ define(['util'], function (util) {
 
         };
 
-        var fitWithinLabelConstraints = function (bbox, x, y) {
+        var fitWithinLabelConstraints = function(bbox, x, y) {
 
-            var coordinates = {x: x, y: y};
+            var coordinates = {
+                x: x,
+                y: y
+            };
             var padding = 5;
 
             var minX = bbox.width / 2 + padding;
@@ -581,7 +590,7 @@ define(['util'], function (util) {
             return coordinates;
         };
 
-        var dragMove = function (d, i) {
+        var dragMove = function(d, i) {
             var preferredX = d3.event.x;
             var preferredY = d3.event.y;
 
@@ -604,7 +613,7 @@ define(['util'], function (util) {
             d.labelPos = angle + "_" + (distance - radius);
 
             var labelLink = d3.selectAll(".labelLink")
-                .filter(function (a) {
+                .filter(function(a) {
                     return a.id === d.id;
                 })
                 .attr("x1", perimeterX)
@@ -615,14 +624,16 @@ define(['util'], function (util) {
             //d3.select(this).attr("transform", "translate(" + labelCoordinates.x + "," + labelCoordinates.y + ")");
         };
 
-        var dragEnd = function (d, i) {
+        var dragEnd = function(d, i) {
             var selected = vizState.get("s");
             selected[d.id].labelPos = d.labelPos;
 
-            vizStateChangeCallback({s: selected}, vizData);
+            vizStateChangeCallback({
+                s: selected
+            }, vizData);
         };
 
-        var addLabelsToSelectedBubbles = function (selectedEntities, year) {
+        var addLabelsToSelectedBubbles = function(selectedEntities, year) {
             var labelsData = [];
 
             for (var entityId in selectedEntities) {
@@ -639,8 +650,7 @@ define(['util'], function (util) {
 
                     if ("labelPos" in entity) {
                         o.labelPos = selectedEntities[entityId].labelPos;
-                    }
-                    else {
+                    } else {
                         o.labelPos = labelAngel + labelPositionInteractive;
                     }
 
@@ -653,32 +663,35 @@ define(['util'], function (util) {
             return labelsData;
         };
 
-        var bubbleClickHandler = function (d, i) {
+        var bubbleClickHandler = function(d, i) {
             var currentYear = vizState.get("year");
             var selected = vizState.get("s");
             var id = d.id;
 
             if (id in selected) {
                 delete selected[id];
-            }
-            else {
-                selected[id] = {start: currentYear, category: d.category};
+            } else {
+                selected[id] = {
+                    start: currentYear,
+                    category: d.category
+                };
             }
 
-            vizStateChangeCallback({s: selected});
+            vizStateChangeCallback({
+                s: selected
+            });
             bubbleOutHandler();
         };
 
-        var drawLabels = function () {
+        var drawLabels = function() {
             if (isInteractive) {
                 drawLabelsInInteractiveMode();
-            }
-            else {
+            } else {
                 vizBubblePrint.drawLabels(fontSizeScale, fontSizeScale, xScale, yScale);
             }
         };
 
-        var drawLabelsInInteractiveMode = function () {
+        var drawLabelsInInteractiveMode = function() {
             var year = vizState.get("year");
             var trails = vizState.get("trails");
 
@@ -688,7 +701,7 @@ define(['util'], function (util) {
             var labels = d3.select("#" + chartRenderDiv)
                 .select(".labelLayer")
                 .selectAll(".labelNode")
-                .data(labelsData, function (d) {
+                .data(labelsData, function(d) {
                     return d.id;
                 });
 
@@ -717,11 +730,11 @@ define(['util'], function (util) {
                 .attr("y", "0")
                 .attr("font-size", "23px")
                 .attr("pointer-events", "none")
-                .text(function (d) {
+                .text(function(d) {
                     return d.name;
                 });
 
-            labels.each(function (d) {
+            labels.each(function(d) {
 
                 var bbox = d3.select(this).select(".labelText").node().getBBox();
                 var width = bbox.width;
@@ -776,7 +789,7 @@ define(['util'], function (util) {
             labels.exit().remove();
 
             var labelLinks = d3.select("#" + chartRenderDiv).select(".linkLayer").selectAll(".labelLink")
-                .data(labelsData, function (d) {
+                .data(labelsData, function(d) {
                     return d.id;
                 });
 
@@ -786,23 +799,23 @@ define(['util'], function (util) {
                 .attr("stroke-width", "1px");
 
             labelLinks
-                .attr("x1", function (d) {
+                .attr("x1", function(d) {
                     return d.linkStartX;
                 })
-                .attr("y1", function (d) {
+                .attr("y1", function(d) {
                     return d.linkStartY;
                 })
-                .attr("x2", function (d) {
+                .attr("x2", function(d) {
                     return d.linkEndX;
                 })
-                .attr("y2", function (d) {
+                .attr("y2", function(d) {
                     return d.linkEndY;
                 });
 
             labelLinks.exit().remove();
         };
 
-        var setUpChartInfoDivs = function () {
+        var setUpChartInfoDivs = function() {
             //document.getElementById("chartInfo").innerHTML = vizState.getDataHelper().getChartInfo();
             //document.getElementById("chartFooter").innerHTML = "<b>Source</b>:" + vizState.getDataHelper().getChartFooter();
         };

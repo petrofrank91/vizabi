@@ -35,58 +35,22 @@ define(['jquery'], function($) {
 
         var initializeChartLayers = function(renderDiv) {
             chartRenderDiv = renderDiv + "-scatterChart";
+            xAxisContainer = components.xAxis;
+            yAxisContainer = components.yAxis;
 
-            svg = d3.select("#" + renderDiv)
-                .append("svg")
-                .style({
-                    display: "block"
-                });
-
-
-            svg.attr("id", chartRenderDiv)
-                .attr("xmlns", "http://www.w3.org/2000/svg")
-                .attr("version", "1.1")
-                .classed("chart", true)
-                .classed("scatter", true);
-
-            g = svg.append("g")
-                //.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-            yearLabel = g.append("text")
+            yearLabel = components.yearLabel.append("text")
                 .attr("id", "label-year");
 
-
-            var xLabelG = g.append("g");
-            xLabel = xLabelG
-                .append("svg:text")
+            xLabel = components.xLabel
+                .append("text")
                 .attr("class", "axisLabel");
 
-            yLabel = g
-                .append("svg:text")
+            yLabel = components.yLabel
+                .append("text")
                 .attr("class", "axisLabel")
                 .attr("class", "axisLabel");
 
-            xAxisContainer = g.append("g")
-                .attr("class", "axis x");
-
-            yAxisContainer = g.append("g")
-                .attr("class", "axis y");
-
-            grid = g.append("g")
-                .attr("class", "grid");
-
-            scatterContainer = g.append("g")
-                .attr("class", "scatterContainer");
-
-            linkLayer = g.append("g")
-                .attr("class", "linkLayer");
-
-            labelLayer = g.append("g")
-                .attr("class", "labelLayer");
-
-
-            searchLayer = g.append("g")
-                .append("rect")
+            components.search.append("rect")
                 .attr("width", "100")
                 .attr("height", "20")
                 .attr("opacity", "0.2");
@@ -101,15 +65,10 @@ define(['jquery'], function($) {
                 availableWidth = ($(window).width()) - margin.left - margin.right;
                 availableHeight = ($(window).height()) - margin.top - margin.bottom;
 
-                svg.attr("viewBox", "70 0" + " " + availableWidth + " " + availableHeight * 1.14);
             } else {
                 availableWidth = 1061.102362205;
                 availableHeight = 772.755905512;
-
-                svg.attr("viewBox", "70 0" + " " + availableWidth + " " + availableHeight * 1.12);
             }
-
-            console.log("Update Layout", svg.style('width'), parseInt(svg.style('width')), "width");
 
             createXAxis();
             createYAxis();
@@ -125,7 +84,6 @@ define(['jquery'], function($) {
 
             xLabel
                 .attr("text-anchor", "middle")
-                //.attr("transform", "translate(" + availableWidth + "," + (availableHeight + margin.bottom * 0.6) + ")")
                 .attr("font-size", "30px")
                 .text(xLabelText)
                 .append("svg:title")
@@ -183,7 +141,6 @@ define(['jquery'], function($) {
             }
 
             xAxisContainer
-                //.attr("transform", "translate(0," + (availableHeight) + ")")
                 .attr("stroke", "lightgrey")
                 .classed("print", !vizState.get("isInteractive"))
                 .call(xAxis);
@@ -258,7 +215,6 @@ define(['jquery'], function($) {
                 .call(yAxis);
 
 
-            var g = d3.select("#" + chartRenderDiv).select("g").select(".axis.x");
             yearLabel
                 .attr("x", g.node().getBBox().width / 2)
                 .attr("y", g.node().getBBox().height / 2)
@@ -299,7 +255,7 @@ define(['jquery'], function($) {
         };
 
         return {
-            initializeLayers: initializeChartLayers,
+            initializeLayers: initializeLayers,
             updateLayout: updateLayout,
             getAvailableHeightAndWidth: getAvailableHeightAndWidth,
             getXAxisContainer: getXAxisContainer,
