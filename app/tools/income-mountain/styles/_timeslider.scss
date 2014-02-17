@@ -1,0 +1,47 @@
+.timeslider-1 {
+    @include user-select-none;
+    font-family: $fontFamily;
+    fill: $colorIMgreen;
+
+    .text {
+        @include font-size(40px);
+    }
+
+    .tick {
+        @include font-size(20px);
+    }
+
+    line, path {
+        fill: $colorTSdarkBlue;
+        stroke: $colorTSdarkBlue;
+    }
+
+    .button {
+        circle {
+            fill: $colorTSdarkBlue;
+            stroke: $colorTSdarkBlue;
+            stroke-width: 2px;
+            &:active {
+                fill: $colorDarkWhite;
+            }
+        }
+
+        path {
+            fill: $colorDarkWhite;
+            &:active {
+                fill: $colorTSdarkBlue;
+            }
+        }
+
+        &.move {
+            rect {
+                @extend path;
+                //stroke-miterlimit: 10;
+            }
+
+            path {
+                @extend circle;
+            }
+        }
+    }
+}

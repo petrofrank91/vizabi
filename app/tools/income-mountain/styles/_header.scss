@@ -1,0 +1,6 @@
+.header {
+    @include font-size(28px);
+    @include user-select-none;
+    fill: $colorIMgreen;
+    font-family: $fontFamily;
+}
