@@ -61,7 +61,8 @@ define([
                 return;
             }
 
-            div = d3.select(divId);
+            div = d3.select(divId).append('div')
+                .attr('class', 'vizabi-income-mountain');
             svg = div.append('svg').attr('id', 'rofitilou');
         }
 

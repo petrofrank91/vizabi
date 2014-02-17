@@ -12,7 +12,7 @@ define([
         var fontsize = 20;
 
         function init(svg, s) {
-            g = svg.append('g').attr('class', 'vizabi-im-labels');
+            g = svg.append('g').attr('class', 'labels');
             state = s;
         }
 

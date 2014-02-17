@@ -14,7 +14,7 @@ define([
         var dollarText = '$/day'
 
         function init(svg) {
-            g = svg.append('g').attr('class', 'vizabi-im-axis');
+            g = svg.append('g').attr('class', 'axis');
         }
 
         function axis() {
