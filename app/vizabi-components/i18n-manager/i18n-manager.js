@@ -1,6 +1,6 @@
 define([
         'jed',
-        'loader'
+        'i18n-manager/loader'
     ],
     function(Jed, loader) {
         'use strict';
