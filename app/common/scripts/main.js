@@ -12,6 +12,7 @@ require.config({
         'jstat': '../../bower_components/rm-jstat/jstat',
         'entities': 'libs/entities',
         'jed': '../../bower_components/jed/jed',
+        'zepto': '../../bower_components/zepto/zepto.min'
         /*
          'jquery.ui.core': '../../bower_components/jquery-ui/ui/jquery.ui.core',
          'jquery.ui.widget': '../../bower_components/jquery-ui/ui/jquery.ui.widget',
@@ -19,6 +20,10 @@ require.config({
          'jquery.ui.slider': '../../bower_components/jquery-ui/ui/jquery.ui.slider',
          */
         'util': 'helpers/util',
+
+
+        // sprintf
+        'sprint': '../../bower_components/sprint/src/sprint.min'
 
         // bubble chart
         'bubble-chart-model': '../../tools/bubble-chart/scripts/bubble-chart-model',
@@ -65,6 +70,8 @@ require.config({
         'jquery': {'exports': 'jQuery'},
         'jquery.ui': {deps: ['jquery'], exports: 'jQuery'},
         'queue-async': {exports: 'queue'},
+        'zepto': {exports: 'Zepto'},
+        'sprintf': {exports: 'sprintf'},
 
         // jQuery UI Slider dependency chain START
         'jquery.ui.core': ['jquery'],
