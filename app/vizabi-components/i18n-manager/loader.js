@@ -11,7 +11,7 @@ define([
                 type: 'GET',
                 url: sprintf(p[0].url, o),
                 dataType: 'json',
-                success: function() {
+                success: function(json) {
                     // Raise event (i18n loaded)
                     $(document.body).trigger('i18n:success');
                     // Execute callback
