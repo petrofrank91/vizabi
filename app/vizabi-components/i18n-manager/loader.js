@@ -1,33 +1,31 @@
 define([
-        'd3',   // using d3 because we use d3 everywhere else!
+        'zepto',
+        'sprintf',
         'i18n-manager/paths'
     ],
-    function(d3, paths) {
+    function($, sprintf, paths) {
         'use strict';
 
-        function loadFile(lang, id, callback, p) {
-            if (p.length) {
-                var path = p[0].url + lang + '/' + id + '.json';
-                d3.json(path, function(error, json) {
-                    if (error) {
-                        if (p.length > 1) {
-                            loadFile(lang, id, callback, p.slice(1, p.length));
-                        }
-                        
-                        return;
-                    }
-
+        function loadFile(o, p, callback) {
+            $.ajax({
+                type: 'GET',
+                url: sprintf(p[0].url, o),
+                dataType: 'json',
+                success: function() {
                     if (typeof callback === 'function') {
                         callback(json);
                     }
-                });
-            }
-
-            return;
+                },
+                error: function() {
+                    if (p.length > 1) {
+                        loadFile(o, p.slice(1, p.length), callback);
+                    }
+                }
+            });
         }
 
-        function load(lang, id, callback) {
-            loadFile(lang, id, callback, paths);
+        function load(l, f, callback) {
+            loadFile({ lang: l, filename: f }, paths, callback);
         }
 
         return {
