@@ -31,6 +31,9 @@ require.config({
         // income mountain
         'income-mountain': '../../tools/income-mountain',
 
+        // bubble map
+        'bubble-map': '../../tools/bubble-map',
+
         // data-cube related
         'queue-async': '../../bower_components/queue-async/queue',
         'data-cube': '../../vizabi-components/data-cube/data-cube',

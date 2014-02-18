@@ -103,7 +103,23 @@ define([], function() {
             return "black";    // Gapminder orange? Grey?
         },
 
-        get_lats: function (id) {
+        get_lat: function (id) {
+            if (this.geo[id]) {
+                return this.geo[id].latitude;
+            }
+
+            return undefined;
+        },
+
+        get_long: function(id) {
+            if (this.geo[id]) {
+                return this.geo[id].longitude;
+            }
+
+            return undefined;
+        },
+
+        getLatLong: function (id) {
             if (this.geo[id]) {
                 return {
                     latitude: this.geo[id].latitude,
@@ -127,6 +143,10 @@ define([], function() {
         },
 
         get_all_info: function (id) {
+            return this.geo[id];
+        },
+
+        get: function(id) {
             return this.geo[id];
         }
     };
