@@ -14,5 +14,8 @@
     "requirejs": "~2.1.10",
     "jed": "~0.5.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "sprintf": "*",
+    "zepto": "~1.1.2"
+  }
 }
