@@ -1,6 +1,6 @@
 define([
         'd3',   // using d3 because we use d3 everywhere else!
-        'paths'
+        'i18nMan/paths'
     ],
     function(d3, paths) {
         'use strict';
