@@ -1,13 +1,12 @@
 define([
         'd3',
-        'income-mountain/_i18n',
         'widgets/text/text',
         'widgets/time-slider/slider-types/1/ts1',
         'income-mountain/viz/labels',
         'income-mountain/viz/axis',
         'income-mountain/viz/incomeMountain'
     ],
-    function(d3, i18n, text, timeslider, labels, axis, mountains) {
+    function(d3, text, timeslider, labels, axis, mountains) {
         var svg;
 
         var components = {
@@ -19,7 +18,7 @@ define([
             mountains: mountains
         };
 
-        function init(svg, state, properties) {
+        function init(svg, i18n, state, properties) {
             // header start
             components.header = new text();
             components.header.init(

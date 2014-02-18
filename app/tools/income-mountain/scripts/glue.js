@@ -4,7 +4,7 @@ define([
         'income-mountain/data/data',
         'income-mountain/components/components',
         'income-mountain/layouts/layout',
-        'income-mountain/_i18n',
+        'i18n-manager',
         'income-mountain/bind/bind',
         'entities'
     ],
@@ -113,7 +113,7 @@ define([
         }
 
         function initComponents() {
-            components.init(svg, state, properties);
+            components.init(svg, i18n, state, properties);
         }
 
         function initLayouts() {
