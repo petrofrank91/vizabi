@@ -19,7 +19,8 @@ define([
             if (args.length === 2) { // singular
                 return translator.translate(args[1])
                     .onDomain(domain)
-                    .withContext(args[0]);
+                    .withContext(args[0])
+                    .fetch();
             } else if (args.length >= 4) { // plural form
                 return translator.translate(args[1])
                     .onDomain(domain)
