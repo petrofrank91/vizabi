@@ -12,7 +12,7 @@ require.config({
         'jstat': '../../bower_components/rm-jstat/jstat',
         'entities': 'libs/entities',
         'jed': '../../bower_components/jed/jed',
-        'zepto': '../../bower_components/zepto/zepto.min'
+        'zepto': '../../bower_components/zepto/zepto.min',
         /*
          'jquery.ui.core': '../../bower_components/jquery-ui/ui/jquery.ui.core',
          'jquery.ui.widget': '../../bower_components/jquery-ui/ui/jquery.ui.widget',
@@ -23,7 +23,7 @@ require.config({
 
 
         // sprintf
-        'sprint': '../../bower_components/sprint/src/sprint.min'
+        'sprintf': '../../bower_components/sprintf/src/sprintf.min',
 
         // bubble chart
         'bubble-chart-model': '../../tools/bubble-chart/scripts/bubble-chart-model',
