@@ -1,9 +1,9 @@
 define([
-        'zepto',
+        'i18n-manager/paths',
         'sprintf',
-        'i18n-manager/paths'
+        'zepto'
     ],
-    function($, sprintf, paths) {
+    function(paths, sprintf) {
         'use strict';
 
         function loadFile(o, p, callback) {
