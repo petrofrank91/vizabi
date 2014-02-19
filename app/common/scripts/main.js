@@ -37,6 +37,9 @@ require.config({
         'viz-bubble': '../../tools/bubble-chart/scripts/viz/viz-bubble',
         'viz-bubble-print': '../../tools/bubble-chart/scripts/viz/viz-bubble-print',
         'bubble-chart-components':'../../tools/bubble-chart/scripts/components/components',
+        'bubble-chart-year-label': '../../tools/bubble-chart/scripts/viz/yearLabel',
+        'bubble-chart-search-box': '../../tools/bubble-chart/scripts/viz/searchBox',
+
 
         // income mountain
         'income-mountain': '../../tools/income-mountain/scripts',
@@ -62,7 +65,15 @@ require.config({
         // widgets
         'settings-button': '../../widgets/settings-button/settings-button',
         'time-slider-jQueryUI': '../../widgets/time-slider-jQueryUI/time-slider-jQueryUI',
+        
+        //Widget, chart grid
         'chart-grid': '../../widgets/chart-grid/chart-grid',
+        'chart-grid-xLabel': '../../widgets/chart-grid/label',
+        'chart-grid-yLabel': '../../widgets/chart-grid/yLabel',
+        'chart-grid-xAxis': '../../widgets/chart-grid/axis',
+        'chart-grid-yAxis': '../../widgets/chart-grid/yAxis',
+        'chart-grid-scale': '../../widgets/chart-grid/scale',
+
         // timesliders
         'time-slider-1': '../../widgets/time-slider/slider-types/1/ts1',
 

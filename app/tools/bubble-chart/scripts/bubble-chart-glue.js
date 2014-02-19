@@ -184,6 +184,10 @@ define([
                 lm.divScale();
             };
 
+        var initComponents = function() {
+            components.init(svg, model);
+        };
+
 
             /* GUI Layer Creator */
             var initializeLayers = function(changeCallback) {
