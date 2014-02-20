@@ -1,4 +1,4 @@
-define(['util'], function(util) {
+define(['util', 'chart-grid-scale'], function (util, scale) {
 
     var vizBubble = function(callback) {
         var svg;
@@ -11,8 +11,6 @@ define(['util'], function(util) {
         var countryLayers;
         var linkLayer;
 
-        var xScale;
-        var yScale;
         var bubbleSizeScale;
         var fontSizeScale;
 
@@ -35,12 +33,12 @@ define(['util'], function(util) {
         var update = function(state, chartScale, availableFrame) {
             vizState = state;
 
-            updateLayout(chartScale, availableFrame);
-            updateEntityLayers();
-            renderCurrentBubbles();
-            drawTrails();
-            updateSelected();
-            drawLabels();
+            //updateLayout(chartScale, availableFrame);
+            //updateEntityLayers();
+            //renderCurrentBubbles();
+            //drawTrails();
+            //updateSelected();
+            //drawLabels();
         };
 
         var initializeLayers = function(renderDiv, state, components) {
@@ -65,8 +63,9 @@ define(['util'], function(util) {
 
         var setBubbleAndFontSizeScale = function() {
             if (!vizState.get("minBubbleSize") && !vizState.get("maxBubbleSize")) {
-                bubbleSizeScale = d3.scale.sqrt().domain([vizState.getDataHelper().getMinOfSizeIndicator(), vizState.getDataHelper().getMaxOfSizeIndicator()]).range([1, 30]).exponent(0.5);
-            } else {
+                bubbleSizeScale = scale.init([vizState.getDataHelper().getMinOfSizeIndicator(), vizState.getDataHelper().getMaxOfSizeIndicator()]).range([1, 30]).exponent(0.5);
+            }
+            else {
                 bubbleSizeScale = d3.scale.sqrt().domain([vizState.getDataHelper().getMinOfSizeIndicator(), vizState.getDataHelper().getMaxOfSizeIndicator()]).range([vizState.get("minBubbleSize"), vizState.get("maxBubbleSize")]).exponent(0.5);
             }
 
@@ -149,10 +148,13 @@ define(['util'], function(util) {
             }
 
             bubbles
-                .attr("cx", function(d, i) {
+                .attr("cx", function (d, i) {
+                    var xScale = scale.get("x")
                     return xScale(d.x);
+                    // return xScale(d.x);
                 })
-                .attr("cy", function(d, i) {
+                .attr("cy", function (d, i) {
+                    var yScale = scale.get("y")
                     return yScale(d.y);
                 })
                 .attr("r", function(d, i) {
