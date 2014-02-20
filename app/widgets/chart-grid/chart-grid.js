@@ -1,4 +1,4 @@
-define(['jquery'], function($) {
+define(['jquery', 'chart-grid-scale'], function($, scale) {
 
     var chartGrid = function() {
 
@@ -33,27 +33,27 @@ define(['jquery'], function($) {
         var searchLayer;
 
 
-        var initializeChartLayers = function(renderDiv) {
-            chartRenderDiv = renderDiv + "-scatterChart";
-            xAxisContainer = components.xAxis;
-            yAxisContainer = components.yAxis;
+        var initializeLayers = function(renderDiv, components) {
+            chartRenderDiv = renderDiv;
+            // xAxisContainer = components.xAxis;
+            // yAxisContainer = components.yAxis;
 
-            yearLabel = components.yearLabel.append("text")
-                .attr("id", "label-year");
+            // yearLabel = components.yearLabel.append("text")
+            //     .attr("id", "label-year");
 
-            xLabel = components.xLabel
-                .append("text")
-                .attr("class", "axisLabel");
+            // xLabel = components.xLabel
+            //     .append("text")
+            //     .attr("class", "axisLabel");
 
-            yLabel = components.yLabel
-                .append("text")
-                .attr("class", "axisLabel")
-                .attr("class", "axisLabel");
+            // yLabel = components.yLabel
+            //     .append("text")
+            //     .attr("class", "axisLabel")
+            //     .attr("class", "axisLabel");
 
-            components.search.append("rect")
-                .attr("width", "100")
-                .attr("height", "20")
-                .attr("opacity", "0.2");
+            // components.search.append("rect")
+            //      .attr("width", "100")
+            //      .attr("height", "20")
+            //      .attr("opacity", "0.2");
         };
 
         var updateLayout = function(vizStateObj, zoomScaleVal) {
@@ -61,17 +61,16 @@ define(['jquery'], function($) {
             zoomScale = zoomScaleVal;
             var isInteractive = vizState.get("isInteractive");
 
-            if (isInteractive) {
-                availableWidth = ($(window).width()) - margin.left - margin.right;
-                availableHeight = ($(window).height()) - margin.top - margin.bottom;
+            // if (isInteractive) {
+            //     availableWidth = ($(window).width()) - margin.left - margin.right;
+            //     availableHeight = ($(window).height()) - margin.top - margin.bottom;
+            // } else {
+            //     availableWidth = 1061.102362205;
+            //     availableHeight = 772.755905512;
+            // }
 
-            } else {
-                availableWidth = 1061.102362205;
-                availableHeight = 772.755905512;
-            }
-
-            createXAxis();
-            createYAxis();
+            //createXAxis();
+            //createYAxis();
 
             return [xScale, yScale];
         };
@@ -214,11 +213,10 @@ define(['jquery'], function($) {
                 .classed("print", !vizState.get("isInteractive"))
                 .call(yAxis);
 
-
-            yearLabel
-                .attr("x", g.node().getBBox().width / 2)
-                .attr("y", g.node().getBBox().height / 2)
-                .text(Math.floor(vizState.get("year")));
+            // yearLabel
+            //     .attr("x", xAxisContainer.node().getBBox().width / 2)
+            //     .attr("y", yAxisContainer.node().getBBox().height / 2)
+            //     .text(Math.floor(vizState.get("year")));
             return yScale;
         };
 
