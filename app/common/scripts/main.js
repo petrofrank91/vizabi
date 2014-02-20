@@ -37,8 +37,11 @@ require.config({
         'viz-bubble': '../../tools/bubble-chart/scripts/viz/viz-bubble',
         'viz-bubble-print': '../../tools/bubble-chart/scripts/viz/viz-bubble-print',
         'bubble-chart-components':'../../tools/bubble-chart/scripts/components/components',
-        'bubble-chart-year-label': '../../tools/bubble-chart/scripts/viz/yearLabel',
-        'bubble-chart-search-box': '../../tools/bubble-chart/scripts/viz/searchBox',
+        'bubble-chart-year-label': '../../tools/bubble-chart/scripts/viz/year-label',
+        'bubble-chart-search-box': '../../tools/bubble-chart/scripts/viz/search-box',
+        'bubble-chart-bubbles': '../../tools/bubble-chart/scripts/viz/bubbles',
+        'bubble-chart-events': '../../tools/bubble-chart/scripts/bubble-events',
+        'bubble-chart-bubble-label': '../../tools/bubble-chart/scripts/viz/bubble-labels',
 
 
         // income mountain
@@ -68,10 +71,10 @@ require.config({
         
         //Widget, chart grid
         'chart-grid': '../../widgets/chart-grid/chart-grid',
-        'chart-grid-xLabel': '../../widgets/chart-grid/label',
-        'chart-grid-yLabel': '../../widgets/chart-grid/yLabel',
-        'chart-grid-xAxis': '../../widgets/chart-grid/axis',
-        'chart-grid-yAxis': '../../widgets/chart-grid/yAxis',
+        'chart-grid-x-label': '../../widgets/chart-grid/x-label',
+        'chart-grid-y-label': '../../widgets/chart-grid/y-label',
+        'chart-grid-x-axis': '../../widgets/chart-grid/x-axis',
+        'chart-grid-y-axis': '../../widgets/chart-grid/y-axis',
         'chart-grid-scale': '../../widgets/chart-grid/scale',
 
         // timesliders
