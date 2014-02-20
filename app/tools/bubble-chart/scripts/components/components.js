@@ -1,11 +1,13 @@
 define([
-	'chart-grid-xLabel',
-	 'chart-grid-xAxis',
-	 'chart-grid-yLabel',
-	 'chart-grid-yAxis',
+	'chart-grid-x-label',
+	 'chart-grid-x-axis',
+	 'chart-grid-y-label',
+	 'chart-grid-y-axis',
 	 'bubble-chart-year-label',
-	 'bubble-chart-search-box'
-	 ], function(xLabel, xAxis, yLabel, yAxis, yearLabel, searchBox) {
+	 'bubble-chart-search-box',
+	 'bubble-chart-bubbles',
+	 'bubble-chart-bubble-label'
+	 ], function(xLabel, xAxis, yLabel, yAxis, yearLabel, searchBox, bubbles, bubbleLabels) {
 
 		var components = {
 			chart: undefined,
@@ -15,8 +17,8 @@ define([
 			xAxis: undefined,
 			yAxis: undefined,
 			searchBox: undefined,
-			scatterContainer: undefined,
-			linkLayer: undefined,
+			bubblesContainer: undefined,
+			//linkLayer: undefined,
 			labelLayer: undefined
 		};
 
@@ -45,17 +47,19 @@ define([
 			components.yAxis.render();
 
 			components.searchBox = new searchBox();
-			components.searchBox.init(svg);
+			components.searchBox.init(components.chart);
 			components.searchBox.render();
 
-			components.scatterContainer = components.chart.append("g")
-				.attr("class", "scatterContainer");
+			components.bubblesContainer = new bubbles();
+			components.bubblesContainer.init(components.chart, state);
+			components.bubblesContainer.render();
 
-			components.linkLayer = components.chart.append("g")
-				.attr("class", "linkLayer");
+			components.labelLayer = new bubbleLabels();
+			components.labelLayer.init(svg, state);
+			components.labelLayer.render();
 
-			components.labelLayer = components.chart.append("g")
-				.attr("class", "labelLayer");
+			// components.labelLayer = components.chart.append("g")
+			// 	.attr("class", "labelLayer");
 
 		};
 
