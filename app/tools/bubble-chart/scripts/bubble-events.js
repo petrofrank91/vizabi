@@ -1,6 +1,6 @@
 define(['d3'], function(d3) {
 
-    var bubbleEvents = function(vizState, g) {
+    var bubbleEvents = function(vizState, g, vizStateChangeCallback) {
 
         var availableWidth = ($(window).width());
         var availableHeight = ($(window).height());

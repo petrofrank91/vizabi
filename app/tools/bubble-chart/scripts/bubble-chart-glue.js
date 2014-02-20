@@ -185,7 +185,7 @@ define([
             };
 
         var initComponents = function() {
-            components.init(svg, model);
+            components.init(svg, model, scatterChartModelUpdate);
         };
 
 

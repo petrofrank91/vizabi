@@ -23,7 +23,7 @@ define([
 		};
 
 
-		var init = function (svg, state) {
+		var init = function (svg, state, stateChanged) {
 			components.chart = svg.append("g");
 
 			components.yearLabel = new yearLabel();
@@ -51,16 +51,12 @@ define([
 			components.searchBox.render();
 
 			components.bubblesContainer = new bubbles();
-			components.bubblesContainer.init(components.chart, state);
+			components.bubblesContainer.init(components.chart, state, stateChanged);
 			components.bubblesContainer.render();
 
 			components.labelLayer = new bubbleLabels();
 			components.labelLayer.init(svg, state);
 			components.labelLayer.render();
-
-			// components.labelLayer = components.chart.append("g")
-			// 	.attr("class", "labelLayer");
-
 		};
 
 		var get = function () {
