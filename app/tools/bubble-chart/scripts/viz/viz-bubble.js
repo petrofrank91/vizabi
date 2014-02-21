@@ -1,4 +1,4 @@
-define(['util', 'chart-grid-scale'], function (util, scale) {
+define(['util', 'chart-grid-scale'], function(util, scale) {
 
     var vizBubble = function(callback) {
         var svg;
@@ -39,22 +39,21 @@ define(['util', 'chart-grid-scale'], function (util, scale) {
             labelLayer = components.labelLayer;
         };
 
-        var update = function (state, chartScale, availableFrame) {
+        var update = function(state, chartScale, availableFrame) {
             vizState = state;
         };
 
-        var updateLayout = function () {};
+        var updateLayout = function() {};
 
         var setUpChartInfoDivs = function() {
             //document.getElementById("chartInfo").innerHTML = vizState.getDataHelper().getChartInfo();
             //document.getElementById("chartFooter").innerHTML = "<b>Source</b>:" + vizState.getDataHelper().getChartFooter();
         };
 
-
         return {
             initialize: initializeLayers,
             updateLayout: updateLayout,
-            update: update
+            update: update,
         };
     };
 
