@@ -40,7 +40,7 @@ define(['d3'], function(d3) {
 
 		var sqrt = function() {
 			return d3.scale.sqrt().domain(domain).range(range).exponent(0.5);
-		}
+		};
 
 		var get = function(axis) {
 			var result;
