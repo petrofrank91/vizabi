@@ -51,7 +51,7 @@ require.config({
 
         // components
         'layout-manager': '../../vizabi-components/layout-manager/layout-manager',
-        'i18n-manager': '../../vizabi-components/i18n-manager/i18n-manager'
+        'i18n-manager': '../../vizabi-components/i18n-manager/i18n-manager',
 
         // widgets
         'settings-button': '../../widgets/settings-button/settings-button',
