@@ -7,7 +7,7 @@ define(['d3'], function(d3) {
 
 
 		var init = function(svg, state) {
-			g = svg.append("text")
+			g = svg.append("g")
 				.attr("class", "axisLabel");
 			vizState = state;
 		};
@@ -21,13 +21,15 @@ define(['d3'], function(d3) {
 
 		var createLabel = function() {
 			g
+				.append("text")
+				.attr("y", "30")
 				.attr("text-anchor", "middle")
 				.attr("font-size", "30px")
-				.text(text)
-				.append("title")
-				.text(function() {
-					return vizState.getDataHelper().getAxisInfo()[0];
-				});
+				.text(text);
+				//.append("title")
+				//.text(function() {
+				//	return vizState.getDataHelper().getAxisInfo()[0];
+				//});
 		};
 
 		var render = function() {
