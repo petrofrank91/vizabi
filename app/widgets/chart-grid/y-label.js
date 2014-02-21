@@ -38,11 +38,16 @@ define([], function() {
 
 		};
 
+		var getGroup = function() {
+			return g;
+		};
+
 		return {
 			render: render,
-			init: init
+			init: init,
+			getGroup: getGroup
 		};
 	};
 
-    return yLabel;
+	return yLabel;
 });

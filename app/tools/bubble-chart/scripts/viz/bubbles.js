@@ -18,8 +18,7 @@ define(['d3', 'chart-grid-scale', 'bubble-chart-events', 'util'], function(d3, s
 			vizState = state;
 			isInteractive = vizState.get("isInteractive");
 			vizStateChangedCallback = vizStateChanged;
-			_bubbleEvents = new bubbleEvents(state, svg, vizStateChangedCallback);
-			
+			_bubbleEvents = new bubbleEvents(state, svg, vizStateChangedCallback);			
 		};
 
 
@@ -355,9 +354,14 @@ define(['d3', 'chart-grid-scale', 'bubble-chart-events', 'util'], function(d3, s
 			return g.node().getBBox();
 		};
 
+        var getGroup = function () {
+            return g;
+        };
+
 		return {
 			init: init,
-			render: render
+			render: render,
+            getGroup: getGroup
 		};
 	};
 

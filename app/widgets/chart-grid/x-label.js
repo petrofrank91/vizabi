@@ -37,9 +37,14 @@ define(['d3'], function(d3) {
 			return g.node().getBBox();
 		};
 
+		var getGroup = function() {
+			return g;
+		};
+
 		return {
 			render: render,
-			init: init
+			init: init,
+			getGroup: getGroup
 		};
 
 	};

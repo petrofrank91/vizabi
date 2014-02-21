@@ -176,9 +176,14 @@ define(['bubble-chart-events'], function(bubbleEvents) {
 			return g.node().getBBox();
 		};
 
+		var getGroup = function () {
+			return g;
+		};
+
 		return {
 			init: init,
-			render: render
+			render: render,
+			getGroup: getGroup
 		};
 	};
 

@@ -17,10 +17,17 @@ define([], function() {
 				.text(Math.floor(vizState.get("year")));
 		};
 
+
+        var getGroup = function () {
+            return g;
+        };
+
+
 		return {
 			init: init,
-			render: render
-		}
+			render: render,
+			getGroup: getGroup
+		};
 
 	};
 

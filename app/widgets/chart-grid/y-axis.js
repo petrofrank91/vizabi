@@ -49,7 +49,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 				//yScale = d3.scale.log().domain(yDomain).range([availableHeight, 0]);
 			} else {
 				// yScale = d3.scale.linear().domain(yDomain).range([availableHeight, 0]);
-				scale.init("y", vizState.get("xAxisScale"),yDomain,[0, availableWidth]);
+				scale.init("y", vizState.get("xAxisScale"), yDomain, [0, availableWidth]);
 			}
 		};
 
@@ -78,12 +78,17 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			return g.node().getBBox();
 		};
 
-        return {
-            render:render,
-            init: init
-        };
+		var getGroup = function() {
+			return g;
+		};
+
+		return {
+			render: render,
+			init: init,
+			getGroup: getGroup
+		};
 	};
 
-    return yAxis;
+	return yAxis;
 
 });
