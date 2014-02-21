@@ -43,7 +43,8 @@ require.config({
         'bubble-chart-events': '../../tools/bubble-chart/scripts/bubble-events',
         'bubble-chart-bubble-label': '../../tools/bubble-chart/scripts/viz/bubble-labels',
         'bubble-chart-container': '../../tools/bubble-chart/scripts/viz/chart-container',
-
+        'bubble-chart-layout': '../../tools/bubble-chart/scripts/layout/layout',
+        
         // income mountain
         'income-mountain': '../../tools/income-mountain/scripts',
 
