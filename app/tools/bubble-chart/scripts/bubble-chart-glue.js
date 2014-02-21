@@ -41,38 +41,48 @@ define([
                 height: '100%'
             };
 
-            var drawSvgLayer = function() {
-                svg = d3.select("#" + renderDiv)
-                    .append("svg")
-                    .attr("id", chartRenderDiv)
-                    .attr("xmlns", "http://www.w3.org/2000/svg")
-                    .attr("version", "1.1")
-                    .classed("chart", true)
-                    .classed("scatter", true)
-                    .style({
-                        display: "block"
-                    });
-            };
+        var placeholderDivIds = {
+            slider: undefined,
+            trails: undefined,
+            playImage: undefined
+        };
+
+        var drawSvgLayer = function() {
+            svg = d3.select("#" + renderDiv)
+                .append("svg")
+                .attr("id", chartRenderDiv)
+                .attr("xmlns", "http://www.w3.org/2000/svg")
+                .attr("version", "1.1")
+                .classed("chart", true)
+                .classed("scatter", true)
+                .style({
+                    display: "block"
+                });
+        };
 
             var setInitialState = function(state) {
                 model = new bubbleChartModel();
                 drawSvgLayer();
                 initComponents();
 
-                model.setInit(state, function() {
-                    isInteractive = model.get("isInteractive");
-                    setUpSubviews();
-                    setUpModelAndUpdate();
-                    if (model.get("manualZoom")) {
-                        setZoom();
-                    }
-                    if (modelBindCallback) {
-                        modelBindCallback(model.getAttributes());
-                    }
-                });
+            model = new bubbleChartModel();
+            model.setInit(state, function() {
+                isInteractive = model.get("isInteractive");
+                initComponents();
+                setUpSubviews();
+                setUpModelAndUpdate();
+                
+                initLayoutManager();
+                initLayouts();
 
-                seti18n();
-            };
+                if (model.get("manualZoom")) {
+                    setZoom();
+                }
+                if (modelBindCallback) {
+                    modelBindCallback(model.getAttributes());
+                }
+            });
+        };
 
             var setState = function(state) {
                 model.set(state, function() {
@@ -188,6 +198,15 @@ define([
             components.init(svg, model, scatterChartModelUpdate);
         };
 
+        var initLayoutManager = function() {
+            lm.init(svg, defaultMeasures, currentMeasures);
+            lm.divScale();
+        };
+
+        var  initLayouts = function() {
+            var _bubbleChartLayout = new bubbleChartLayout();
+            _bubbleChartLayout.init(components);
+        };
 
             /* GUI Layer Creator */
             var initializeLayers = function(changeCallback) {
