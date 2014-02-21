@@ -24,38 +24,43 @@ define([
 
 
 		var init = function (svg, state, stateChanged) {
-			components.chart = svg.append("g");
+			//components.chart = svg.append("g");
+			components.chart = new chartContainer();
+			components.chart.init(svg);
+			components.chart.render();
+			
+			var chartCountainerG = components.chart.getGroup();
 
 			components.yearLabel = new yearLabel();
-			components.yearLabel.init(components.chart, state);
+			components.yearLabel.init(chartCountainerG, state);
 			components.yearLabel.render();
 
 			components.xLabel = new xLabel();
-			components.xLabel.init(components.chart, state);
+			components.xLabel.init(chartCountainerG, state);
 			components.xLabel.render();
 
 			components.yLabel = new yLabel();
-			components.yLabel.init(components.chart, state);
+			components.yLabel.init(chartCountainerG, state);
 			components.yLabel.render();
 
 			components.xAxis = new xAxis();
-			components.xAxis.init(components.chart, state);
+			components.xAxis.init(chartCountainerG, state);
 			components.xAxis.render();
 
 			components.yAxis = new yAxis();
-			components.yAxis.init(components.chart, state);
+			components.yAxis.init(chartCountainerG, state);
 			components.yAxis.render();
 
 			components.searchBox = new searchBox();
-			components.searchBox.init(components.chart);
+			components.searchBox.init(chartCountainerG);
 			components.searchBox.render();
 
 			components.bubblesContainer = new bubbles();
-			components.bubblesContainer.init(components.chart, state, stateChanged);
+			components.bubblesContainer.init(chartCountainerG, state, stateChanged);
 			components.bubblesContainer.render();
 
 			components.labelLayer = new bubbleLabels();
-			components.labelLayer.init(svg, state);
+			components.labelLayer.init(chartCountainerG, state);
 			components.labelLayer.render();
 		};
 
