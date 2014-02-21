@@ -6,8 +6,9 @@ define([
 	 'bubble-chart-year-label',
 	 'bubble-chart-search-box',
 	 'bubble-chart-bubbles',
-	 'bubble-chart-bubble-label'
-	 ], function(xLabel, xAxis, yLabel, yAxis, yearLabel, searchBox, bubbles, bubbleLabels) {
+	 'bubble-chart-bubble-label',
+	 'bubble-chart-container'
+	 ], function(xLabel, xAxis, yLabel, yAxis, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer) {
 
 		var components = {
 			chart: undefined,
