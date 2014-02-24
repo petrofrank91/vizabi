@@ -5,8 +5,10 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var g;
 		var availableWidth;
 		var availableHeight;
+		var svg;
 
-		var init = function(svg, state)  {
+		var init = function(parentSvg, state)  {
+			svg = parentSvg;
 			g = svg
 				.append("g")
 				.attr("class", "axis x");
@@ -78,12 +80,42 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var render = function() {
 			setAxisScale();
 			createXAxis();
+			divideAxisIntoLabelsAndTextG();
 
 			return g.node().getBBox();
 		};
 
 		var getGroup = function() {
 			return g;
+		};
+
+		var clone = function(selector) {
+			var node = d3.select(selector).node();
+			return d3.select(node.parentNode.insertBefore(node.cloneNode(true),
+				node.nextSibling));
+		};
+
+		var divideAxisIntoLabelsAndTextG = function() {
+			var xAxisTextG = clone(g[0][0]);
+			xAxisTextG.attr("class", ".axis .x .text");
+			xAxisTextG.selectAll(".tick").selectAll("line").remove();
+
+			g.append(function() {
+				return xAxisTextG.node();
+			});
+
+			var xAxisLabelG = clone(g[0][0]);
+			xAxisLabelG.attr("class", ".axis .x .line");
+			xAxisLabelG.selectAll(".tick").selectAll("text").remove();
+
+			g.append(function() {
+				return xAxisLabelG.node();
+			});
+
+			g.selectAll(".tick").filter(function() {
+				return d3.select(d3.select(this).node().parentNode).attr("class") === g.attr("class");
+			})
+			.remove();
 		};
 
 		return {

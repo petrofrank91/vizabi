@@ -46,9 +46,8 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			// }
 
 			if (vizState.get("yAxisScale") === "log") {
-				//yScale = d3.scale.log().domain(yDomain).range([availableHeight, 0]);
+				scale.init("y", vizState.get("yAxisScale"), yDomain, [availableHeight, 0])
 			} else {
-				// yScale = d3.scale.linear().domain(yDomain).range([availableHeight, 0]);
 				scale.init("y", vizState.get("xAxisScale"), yDomain, [0, availableWidth]);
 			}
 		};
@@ -74,12 +73,42 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var render = function() {
 			setAxisScale();
 			createYAxis();
+			divideAxisIntoLabelsAndTextG();
 
 			return g.node().getBBox();
 		};
 
 		var getGroup = function() {
 			return g;
+		};
+
+		var divideAxisIntoLabelsAndTextG = function() {
+			var yAxisTextG = clone(g[0][0]);
+			yAxisTextG.attr("class", ".axis .y .text");
+			yAxisTextG.selectAll(".tick").selectAll("line").remove();
+
+			g.append(function() {
+				return yAxisTextG.node();
+			});
+
+			var yAxisLabelG = clone(g[0][0]);
+			yAxisLabelG.attr("class", ".axis .y .line");
+			yAxisLabelG.selectAll(".tick").selectAll("text").remove();
+
+			g.append(function() {
+				return yAxisLabelG.node();
+			});
+
+			g.selectAll(".tick").filter(function() {
+				return d3.select(d3.select(this).node().parentNode).attr("class") === g.attr("class");
+			})
+			.remove();
+		};
+
+		var clone = function(selector) {
+			var node = d3.select(selector).node();
+			return d3.select(node.parentNode.insertBefore(node.cloneNode(true),
+				node.nextSibling));
 		};
 
 		return {
