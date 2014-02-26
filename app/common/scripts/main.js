@@ -79,6 +79,10 @@ require.config({
         'chart-grid-x-axis': '../../widgets/chart-grid/x-axis',
         'chart-grid-y-axis': '../../widgets/chart-grid/y-axis',
         'chart-grid-scale': '../../widgets/chart-grid/scale',
+        'chart-grid-x-axis-text': '../../widgets/chart-grid/x-axis-text',
+        'chart-grid-x-axis-grid': '../../widgets/chart-grid/x-axis-grid',
+        'chart-grid-y-axis-text': '../../widgets/chart-grid/y-axis-text',
+        'chart-grid-y-axis-grid': '../../widgets/chart-grid/y-axis-grid',
 
         // timesliders
         'time-slider-1': '../../widgets/time-slider/slider-types/1/ts1',
