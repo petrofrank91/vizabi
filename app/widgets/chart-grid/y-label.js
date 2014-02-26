@@ -23,7 +23,6 @@ define([], function() {
 			g
 				.append("text")
 				.attr("y", "30")
-				.attr("text-anchor", "middle")
 				.attr("font-size", "30px")
 				.text("Sample Text");
 				//.text(text);

@@ -23,7 +23,6 @@ define(['d3'], function(d3) {
 			g
 				.append("text")
 				.attr("y", "30")
-				.attr("text-anchor", "middle")
 				.attr("font-size", "30px")
 				.text(text);
 				//.append("title")
