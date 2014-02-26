@@ -80,26 +80,29 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 
 		var clone = function(selector) {
 			var node = d3.select(selector).node();
+
 			return d3.select(node.parentNode.insertBefore(node.cloneNode(true),
 				node.nextSibling));
 		};
 
 		var setAxisTextG = function() {
-			xAxisLabelG = d3.select(g[0][0]);
+			xAxisTextG = d3.select(g[0][0]);
 
-			xAxisLabelG.attr("class", ".axis .y .text");
-			xAxisLabelG.selectAll(".tick").selectAll("line").remove();
+			xAxisTextG.attr("class", ".axis .y .text");
 
-			return xAxisLabelG;
+
+			xAxisTextG.selectAll(".tick").selectAll("line").remove();
+
+			return xAxisTextG;
 		};
 
 		var setAxisGridG = function() {
-			var xAxisTextG = clone(g[0][0]);
+			var xAxisGridG = clone(g[0][0]);
 			
-			xAxisTextG.attr("class", ".axis .y .line");
-			xAxisTextG.selectAll(".tick").selectAll("text").remove();
+			xAxisGridG.attr("class", ".axis .y .line");
+			xAxisGridG.selectAll(".tick").selectAll("text").remove();
 
-			return xAxisTextG;
+			return xAxisGridG;
 		};
 
 		var removeRestOfChartTicks = function () {
