@@ -34,9 +34,9 @@ define([
 			
 			var chartCountainerG = components.chart.getGroup();
 
-			components.yearLabel = new yearLabel();
-			components.yearLabel.init(chartCountainerG, state);
-			components.yearLabel.render();
+			// components.yearLabel = new yearLabel();
+			// components.yearLabel.init(chartCountainerG, state);
+			// components.yearLabel.render();
 
 			components.xLabel = new xLabel();
 			components.xLabel.init(chartCountainerG, state);
