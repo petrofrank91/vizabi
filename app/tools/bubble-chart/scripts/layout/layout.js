@@ -34,15 +34,16 @@ define(["layout-manager"], function(layoutManager) {
 			});
 
 			addComponent(lname, {
-				id: 'yAxisText',
-				g: components.get().yAxisText.getGroup(),
+				id: 'yAxisGrid',
+				g: components.get().yAxisGrid.getGroup(),
 				top: ['chart.top'],
 				left: ['chart.left']
 			});
+			
 
 			addComponent(lname, {
-				id: 'yAxisGrid',
-				g: components.get().yAxisGrid.getGroup(),
+				id: 'yAxisText',
+				g: components.get().yAxisText.getGroup(),
 				top: ['chart.top'],
 				left: ['chart.left']
 			});
@@ -51,7 +52,7 @@ define(["layout-manager"], function(layoutManager) {
 				id: 'searchBox',
 				g: components.get().searchBox.getGroup(),
 				top: ['chart.top', 10],
-				left: ['yAxisText.left', 10]
+				left: ['yAxisGrid.left', 10]
 			});
 
 			// LATER
@@ -63,13 +64,6 @@ define(["layout-manager"], function(layoutManager) {
 			// });
 
 			addComponent(lname, {
-				id: 'xAxisText',
-				g: components.get().xAxisText.getGroup(),
-				top: ['yAxisText.bottom'],
-				left: ['yAxisText.right']
-			});
-
-			addComponent(lname, {
 				id: 'xAxisGrid',
 				g: components.get().xAxisGrid.getGroup(),
 				top: ['yAxisGrid.bottom'],
@@ -77,19 +71,26 @@ define(["layout-manager"], function(layoutManager) {
 			});
 
 			addComponent(lname, {
+				id: 'xAxisText',
+				g: components.get().xAxisText.getGroup(),
+				top: ['yAxisText.bottom'],
+				left: ['yAxisText.right']
+			});
+
+			addComponent(lname, {
 				id: 'xLabel',
 				g: components.get().xLabel.getGroup(),
-				bottom: ['xAxisGrid.top'],
-				right: ['xAxisGrid.right', -50]
+				bottom: ['xAxisText.top'],
+				right: ['xAxisText.right', -50]
 			});
 
 			addComponent(lname, {
 				id: 'bubblesContainer',
 				g: components.get().bubblesContainer.getGroup(),
 				top: ['chart.top'],
-				left: ['yAxisGrid.left'],
-				bottom: ['xAxisText.top'],
-				right: ['xAxisGrid.right'],
+				left: ['yAxisText.left'],
+				bottom: ['xAxisGrid.top'],
+				right: ['xAxisText.right'],
 				render: components.get().bubblesContainer.render
 			});
 		};

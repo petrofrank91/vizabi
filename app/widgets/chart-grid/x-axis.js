@@ -90,7 +90,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 				node.nextSibling));
 		};
 
-		var setAxisLineG = function() {
+		var setAxisTextG = function() {
 			xAxisLabelG = d3.select(g[0][0]);
 
 			xAxisLabelG.attr("class", ".axis .x .text");
@@ -98,8 +98,8 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 
 			return xAxisLabelG;
 		};
-		
-		var setAxisTextG = function() {
+
+		var setAxisGridG = function() {
 			var xAxisTextG = clone(g[0][0]);
 			
 			xAxisTextG.attr("class", ".axis .x .line");
@@ -120,7 +120,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			render: render,
 			getGroup: getGroup,
 			setAxisTextG: setAxisTextG,
-			setAxisLineG: setAxisLineG,
+			setAxisGridG: setAxisGridG,
 			removeRestOfChartTicks: removeRestOfChartTicks
 		};
 	};

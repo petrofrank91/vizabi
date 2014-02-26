@@ -3,14 +3,7 @@ define(['chart-grid-x-axis'], function(xAxis) {
 
 		var g;
 
-		var init = function(svg, state) {
-			g = svg.append("g");
-			xAxis.init(g, state);
-		};
-
-
 		var render = function() {
-			xAxis.render();
 			g = xAxis.setAxisTextG();
 
 			return g.node().getBBox();
@@ -21,7 +14,6 @@ define(['chart-grid-x-axis'], function(xAxis) {
 		};
 
 		return {
-			init: init,
 			render: render,
 			getGroup: getGroup
 		};

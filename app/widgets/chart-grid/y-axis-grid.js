@@ -1,18 +1,19 @@
 define(['chart-grid-y-axis'], function(yAxis) {
-	var xAxisText = function() {
+	var yAxisGrid = function() {
 
 		var g;
 
-		var render = function() {
-			g = yAxis.setAxisLineG();
-
-			return g.node().getBBox();
+		var init = function(svg, state) {
+			g = svg.append("g");
+			yAxis.init(g, state);
 		};
 
-		var getAxisTick = function() {
-			g.append(function () {
-				return yAxis.getAxisLineG().node();
-			});
+
+		var render = function() {
+			yAxis.render();
+			g = yAxis.setAxisGridG();
+
+			return g.node().getBBox();
 		};
 
 		var getGroup = function() {
@@ -20,10 +21,11 @@ define(['chart-grid-y-axis'], function(yAxis) {
 		};
 
 		return {
+			init: init,
 			render: render,
 			getGroup: getGroup
 		};
 	};
 
-	return xAxisText;
+	return yAxisGrid;
 });
