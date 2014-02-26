@@ -1,31 +1,33 @@
 define([
 	'chart-grid-x-label',
-	 'chart-grid-x-axis',
 	 'chart-grid-y-label',
-	 'chart-grid-y-axis',
 	 'bubble-chart-year-label',
 	 'bubble-chart-search-box',
 	 'bubble-chart-bubbles',
 	 'bubble-chart-bubble-label',
-	 'bubble-chart-container'
-	 ], function(xLabel, xAxis, yLabel, yAxis, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer) {
+	 'bubble-chart-container',
+	 'chart-grid-x-axis-text',
+	 'chart-grid-x-axis-grid',
+	 'chart-grid-y-axis-text',
+	 'chart-grid-y-axis-grid',
+	 ], function(xLabel, yLabel, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer, xAxisText, xAxisGrid, yAxisText, yAxisGrid) {
 
 		var components = {
 			chart: undefined,
 			yearLabel: undefined,
 			xLabel: undefined,
 			yLabel: undefined,
-			xAxis: undefined,
-			yAxis: undefined,
+			xAxisText: undefined,
+			xAxisGrid:undefined,
+			yAxisText: undefined,
+			yAxisGrid:undefined,
 			searchBox: undefined,
 			bubblesContainer: undefined,
-			//linkLayer: undefined,
 			labelLayer: undefined
 		};
 
 
 		var init = function (svg, state, stateChanged) {
-			//components.chart = svg.append("g");
 			components.chart = new chartContainer();
 			components.chart.init(svg);
 			components.chart.render();
@@ -44,13 +46,19 @@ define([
 			components.yLabel.init(chartCountainerG, state);
 			components.yLabel.render();
 
-			components.xAxis = new xAxis();
-			components.xAxis.init(chartCountainerG, state);
-			components.xAxis.render();
+			components.xAxisText = new xAxisText();
+			components.xAxisText.init(chartCountainerG, state);
+			components.xAxisText.render();
 
-			components.yAxis = new yAxis();
-			components.yAxis.init(chartCountainerG, state);
-			components.yAxis.render();
+			components.xAxisGrid = new xAxisGrid();
+			components.xAxisGrid.render();
+
+			components.yAxisText = new yAxisText();
+			components.yAxisText.init(chartCountainerG, state);
+			components.yAxisText.render();
+
+			components.yAxisGrid = new yAxisGrid();
+			components.yAxisGrid.render();
 
 			components.searchBox = new searchBox();
 			components.searchBox.init(chartCountainerG);
