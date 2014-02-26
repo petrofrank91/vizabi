@@ -87,7 +87,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var setAxisLineG = function() {
 			xAxisLabelG = d3.select(g[0][0]);
 
-			xAxisLabelG.attr("class", ".axis .x .text");
+			xAxisLabelG.attr("class", ".axis .y .text");
 			xAxisLabelG.selectAll(".tick").selectAll("line").remove();
 
 			return xAxisLabelG;
@@ -96,7 +96,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var setAxisTextG = function() {
 			var xAxisTextG = clone(g[0][0]);
 			
-			xAxisTextG.attr("class", ".axis .x .line");
+			xAxisTextG.attr("class", ".axis .y .line");
 			xAxisTextG.selectAll(".tick").selectAll("text").remove();
 
 			return xAxisTextG;
