@@ -7,11 +7,8 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var availableHeight;
 		var svg;
 
-		var init = function(parentSvg, state)  {
-			svg = parentSvg;
-			g = svg
-				.append("g")
-				.attr("class", "axis x");
+		var init = function(svg, state)  {
+			g = svg;
 
 			vizState = state;
 			availableWidth = ($(window).width());
@@ -80,9 +77,6 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var render = function() {
 			setAxisScale();
 			createXAxis();
-			divideAxisIntoLabelsAndTextG();
-
-			return g.node().getBBox();
 		};
 
 		var getGroup = function() {
@@ -91,27 +85,30 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 
 		var clone = function(selector) {
 			var node = d3.select(selector).node();
+			
 			return d3.select(node.parentNode.insertBefore(node.cloneNode(true),
 				node.nextSibling));
 		};
 
-		var divideAxisIntoLabelsAndTextG = function() {
+		var setAxisLineG = function() {
+			xAxisLabelG = d3.select(g[0][0]);
+
+			xAxisLabelG.attr("class", ".axis .x .text");
+			xAxisLabelG.selectAll(".tick").selectAll("line").remove();
+
+			return xAxisLabelG;
+		};
+		
+		var setAxisTextG = function() {
 			var xAxisTextG = clone(g[0][0]);
-			xAxisTextG.attr("class", ".axis .x .text");
-			xAxisTextG.selectAll(".tick").selectAll("line").remove();
+			
+			xAxisTextG.attr("class", ".axis .x .line");
+			xAxisTextG.selectAll(".tick").selectAll("text").remove();
 
-			g.append(function() {
-				return xAxisTextG.node();
-			});
+			return xAxisTextG;
+		};
 
-			var xAxisLabelG = clone(g[0][0]);
-			xAxisLabelG.attr("class", ".axis .x .line");
-			xAxisLabelG.selectAll(".tick").selectAll("text").remove();
-
-			g.append(function() {
-				return xAxisLabelG.node();
-			});
-
+		var removeRestOfChartTicks = function() {
 			g.selectAll(".tick").filter(function() {
 				return d3.select(d3.select(this).node().parentNode).attr("class") === g.attr("class");
 			})
@@ -121,10 +118,12 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		return {
 			init: init,
 			render: render,
-			getGroup: getGroup
+			getGroup: getGroup,
+			setAxisTextG: setAxisTextG,
+			setAxisLineG: setAxisLineG,
+			removeRestOfChartTicks: removeRestOfChartTicks
 		};
 	};
 
-	return axis;
-
+	return axis();
 });

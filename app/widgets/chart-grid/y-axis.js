@@ -7,11 +7,9 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var availableHeight;
 
 		var init = function(svg, state)  {
-			g = svg
-				.append("g")
-				.attr("class", "axis y");
-
+			g = svg;
 			vizState = state;
+
 			availableWidth = ($(window).width());
 			availableHeight = ($(window).height());
 		};
@@ -73,37 +71,12 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var render = function() {
 			setAxisScale();
 			createYAxis();
-			divideAxisIntoLabelsAndTextG();
-
-			return g.node().getBBox();
 		};
 
 		var getGroup = function() {
 			return g;
 		};
 
-		var divideAxisIntoLabelsAndTextG = function() {
-			var yAxisTextG = clone(g[0][0]);
-			yAxisTextG.attr("class", ".axis .y .text");
-			yAxisTextG.selectAll(".tick").selectAll("line").remove();
-
-			g.append(function() {
-				return yAxisTextG.node();
-			});
-
-			var yAxisLabelG = clone(g[0][0]);
-			yAxisLabelG.attr("class", ".axis .y .line");
-			yAxisLabelG.selectAll(".tick").selectAll("text").remove();
-
-			g.append(function() {
-				return yAxisLabelG.node();
-			});
-
-			g.selectAll(".tick").filter(function() {
-				return d3.select(d3.select(this).node().parentNode).attr("class") === g.attr("class");
-			})
-			.remove();
-		};
 
 		var clone = function(selector) {
 			var node = d3.select(selector).node();
@@ -111,13 +84,41 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 				node.nextSibling));
 		};
 
+		var setAxisLineG = function() {
+			xAxisLabelG = d3.select(g[0][0]);
+
+			xAxisLabelG.attr("class", ".axis .x .text");
+			xAxisLabelG.selectAll(".tick").selectAll("line").remove();
+
+			return xAxisLabelG;
+		};
+
+		var setAxisTextG = function() {
+			var xAxisTextG = clone(g[0][0]);
+			
+			xAxisTextG.attr("class", ".axis .x .line");
+			xAxisTextG.selectAll(".tick").selectAll("text").remove();
+
+			return xAxisTextG;
+		};
+
+		var removeRestOfChartTicks = function () {
+			g.selectAll(".tick").filter(function() {
+				return d3.select(d3.select(this).node().parentNode).attr("class") === g.attr("class");
+			})
+			.remove();
+		};
+
 		return {
 			render: render,
 			init: init,
-			getGroup: getGroup
+			getGroup: getGroup,
+			setAxisTextG: setAxisTextG,
+			setAxisLineG: setAxisLineG,
+			removeRestOfChartTicks: removeRestOfChartTicks
 		};
 	};
 
-	return yAxis;
+	return yAxis();
 
 });
