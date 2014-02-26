@@ -148,14 +148,14 @@ define([
                 _vizBubble.initialize(renderDiv, model, components.get());
             };
 
-            var initializeTimeSlider = function(isInteractive) {
-                if (isInteractive) {
-                    createTimeSlider();
-                    _timeSlider = new timeSlider(timeSliderModelUpdate);
-                    _timeSlider.initialize(model, getDivId("slider"));
-                    _timeSlider.setupListeners();
-                }
-            };
+        var initializeTimeSlider = function(isInteractive) {
+            if (isInteractive) {
+                //createTimeSlider();
+                _timeSlider = new timeSlider(timeSliderModelUpdate);
+                _timeSlider.initialize(model, getDivId("slider"));
+                _timeSlider.setupListeners();
+            }
+        };
 
 
             var scatterChartModelUpdate = function(state) {
