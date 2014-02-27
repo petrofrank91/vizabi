@@ -34,18 +34,17 @@ define(["layout-manager"], function(layoutManager) {
 			});
 
 			addComponent(lname, {
-				id: 'yAxisGrid',
-				g: components.get().yAxisGrid.getGroup(),
-				top: ['chart.top'],
-				left: ['chart.left']
-			});
-			
-
-			addComponent(lname, {
 				id: 'yAxisText',
 				g: components.get().yAxisText.getGroup(),
 				top: ['chart.top'],
 				left: ['chart.left']
+			});
+
+			addComponent(lname, {
+				id: 'yAxisGrid',
+				g: components.get().yAxisGrid.getGroup(),
+				top: ['yAxisText.top'],
+				left: ['yAxisText.right']
 			});
 
 			addComponent(lname, {
