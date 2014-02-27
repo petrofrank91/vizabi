@@ -122,13 +122,13 @@ define(['d3'], function(d3) {
             var coordinates = fitWithinLabelConstraints(bbox, preferredX, preferredY);
 
             this.highlightLabel
-            //.attr("transform", "translate(" + coordinates.x + "," + coordinates.y + ")");
+            .attr("transform", "translate(" + coordinates.x + "," + coordinates.y + ")");
 
             this.xValueLabel = d3.select(".labelLayer")
-                .append("g")
-            //.attr("transform", "translate(" + nodeX + "," + (availableHeight + 15) + ")")
+            .append("g")
+            .attr("transform", "translate(" + nodeX + "," + (availableHeight + 15) + ")")
             .attr("class", "xValueLabel")
-                .attr("pointer-events", "none");
+            .attr("pointer-events", "none");
 
             var rectNodeX = this.xValueLabel
                 .append("rect")
@@ -166,7 +166,7 @@ define(['d3'], function(d3) {
 
             this.yValueLabel = d3.select(".labelLayer")
                 .append("g")
-            //.attr("transform", "translate(" + -6 + "," + nodeY + ")")
+            .attr("transform", "translate(" + -6 + "," + nodeY + ")")
             .attr("class", "yValueLabel")
                 .attr("pointer-events", "none");
 
@@ -230,7 +230,7 @@ define(['d3'], function(d3) {
                 .attr("x2", labelCoordinates.x)
                 .attr("y2", labelCoordinates.y);
 
-            //d3.select(this).attr("transform", "translate(" + labelCoordinates.x + "," + labelCoordinates.y + ")");
+            d3.select(this).attr("transform", "translate(" + labelCoordinates.x + "," + labelCoordinates.y + ")");
         };
 
         var dragEnd = function(d, i) {
