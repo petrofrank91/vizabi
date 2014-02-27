@@ -1,4 +1,9 @@
-define(['reader-multiple-json', 'reader-single-csv', 'reader-multiple-csv', 'reader-multi-csv'], function (readerMultipleJSON, readerSingleCSV, readerMultipleCSV, readerMultiCSV) {
+define([
+    'reader-multiple-json', 
+    'reader-single-csv', 
+    'reader-multiple-csv', 
+    'reader-multi-csv'
+    ], function (readerMultipleJSON, readerSingleCSV, readerMultipleCSV, readerMultiCSV) {
 
     var loaderFactory = function (dataFormat) {
         var reader;
