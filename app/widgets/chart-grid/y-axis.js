@@ -43,20 +43,16 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			// 	yDomain[1] /= zoomScale;
 			// }
 
-			if (vizState.get("yAxisScale") === "log") {
-				scale.init("y", vizState.get("yAxisScale"), yDomain, [availableHeight, 0])
-			} else {
-				scale.init("y", vizState.get("xAxisScale"), yDomain, [0, availableHeight]);
-			}
+			scale.init("y", vizState.get("yAxisScale"), yDomain, [availableHeight, 0]);
 		};
 
 		var createYAxis = function() {
 			ySvgAxis = d3.svg.axis()
 				.scale(scale.get("y"))
 				.orient("left")
-				.ticks(10)
-				.tickSize(-availableWidth, 0, 0)
-				.tickPadding(5);
+				//.ticks(10, d3.format(",d"))
+				.tickSize(-availableWidth, 0)
+				//.tickPadding(5)
 
 			if (vizState.get("yAxisTickValues")) {
 				ySvgAxis.tickValues(vizState.get("yAxisTickValues"));
@@ -90,7 +86,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var setAxisTextG = function() {
 			yAxisTextG = d3.select(g[0][0]);
 
-			yAxisTextG.attr("class", ".axis .y .text");
+			yAxisTextG.attr("class", "axis y text");
 			var yAxisTextMaxWidth = d3.max(yAxisTextG.selectAll("g").selectAll("text"), function () {
 				return this.node().getBBox().width;
 			});
@@ -98,14 +94,14 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			yAxisTextG.selectAll("g").selectAll("text").each(function() {
 				var textNode = d3.select(this);
 				var currentVal = parseFloat(textNode.attr("x"));
-				textNode.attr("x", currentVal + 5 + yAxisTextMaxWidth);
+				textNode.attr("x", currentVal + 8 + yAxisTextMaxWidth);
 			});
 
 			yAxisTextG.selectAll(".tick").selectAll("line").remove();
 
 			var axisPath = yAxisTextG.select('.domain');
 
-			axisPath.attr('transform', 'translate(' + (yAxisTextMaxWidth + 5) + ',0)');
+			axisPath.attr('transform', 'translate(' + (yAxisTextMaxWidth + 8) + ',0)');
 
 			return yAxisTextG;
 		};
@@ -113,7 +109,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var setAxisGridG = function() {
 			var yAxisGridG = clone(g[0][0]);
 			
-			yAxisGridG.attr("class", ".axis .y .line");
+			yAxisGridG.attr("class", "axis y .ine");
 			yAxisGridG.selectAll(".tick").selectAll("text").remove();
 			yAxisGridG.selectAll('.domain').remove();
 

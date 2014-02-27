@@ -54,7 +54,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 				.tickFormat(function(d) {
 					return "$" + d;
 				})
-				.ticks(10)
+				.ticks(10, d3.format(",d"))
 				.tickSize(-availableHeight, 0, 0)
 				.tickPadding(5)
 				.orient("bottom");
@@ -90,7 +90,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var setAxisTextG = function() {
 			xAxisLabelG = d3.select(g[0][0]);
 
-			xAxisLabelG.attr("class", ".axis .x .text");
+			xAxisLabelG.attr("class", "axis x text");
 			xAxisLabelG.selectAll(".tick").selectAll("line").remove();
 
 			return xAxisLabelG;
@@ -99,7 +99,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var setAxisGridG = function() {
 			var xAxisTextG = clone(g[0][0]);
 			
-			xAxisTextG.attr("class", ".axis .x .line");
+			xAxisTextG.attr("class", "axis x line");
 			xAxisTextG.selectAll(".tick").selectAll("text").remove();
 
 			return xAxisTextG;
