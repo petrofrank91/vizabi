@@ -3,15 +3,15 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 	var yAxis = function() {
 		var vizState;
 		var g;
-		var availableWidth;
-		var availableHeight;
+		var availableWidth = 800;
+		var availableHeight = 350;
 
 		var init = function(svg, state)  {
 			g = svg;
 			vizState = state;
 
-			availableWidth = ($(window).width());
-			availableHeight = ($(window).height());
+			// availableWidth = ($(window).width());
+			// availableHeight = ($(window).height());
 		};
 
 		var setAxisScale = function() {
@@ -46,7 +46,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			if (vizState.get("yAxisScale") === "log") {
 				scale.init("y", vizState.get("yAxisScale"), yDomain, [availableHeight, 0])
 			} else {
-				scale.init("y", vizState.get("xAxisScale"), yDomain, [0, availableWidth]);
+				scale.init("y", vizState.get("xAxisScale"), yDomain, [0, availableHeight]);
 			}
 		};
 
@@ -68,7 +68,9 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 				.call(ySvgAxis);
 		};
 
-		var render = function() {
+		var render = function(w, h) {
+			if (w) availableWidth = w;
+			if (h) availableHeight = h;
 			setAxisScale();
 			createYAxis();
 		};
