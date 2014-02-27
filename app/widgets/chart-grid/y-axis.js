@@ -86,31 +86,31 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		};
 
 		var setAxisTextG = function() {
-			xAxisTextG = d3.select(g[0][0]);
+			yAxisTextG = d3.select(g[0][0]);
 
-			xAxisTextG.attr("class", ".axis .y .text");
-			var xAxisTextMaxWidth = d3.max(xAxisTextG.selectAll("g").selectAll("text"), function () {
+			yAxisTextG.attr("class", ".axis .y .text");
+			var yAxisTextMaxWidth = d3.max(yAxisTextG.selectAll("g").selectAll("text"), function () {
 				return this.node().getBBox().width;
 			});
 			
-			xAxisTextG.selectAll("g").selectAll("text").each(function() {
+			yAxisTextG.selectAll("g").selectAll("text").each(function() {
 				var textNode = d3.select(this);
 				var currentVal = parseFloat(textNode.attr("x"));
-				textNode.attr("x", currentVal + 5 + xAxisTextMaxWidth);
+				textNode.attr("x", currentVal + 5 + yAxisTextMaxWidth);
 			});
 
-			xAxisTextG.selectAll(".tick").selectAll("line").remove();
+			yAxisTextG.selectAll(".tick").selectAll("line").remove();
 
-			return xAxisTextG;
+			return yAxisTextG;
 		};
 
 		var setAxisGridG = function() {
-			var xAxisGridG = clone(g[0][0]);
+			var yAxisGridG = clone(g[0][0]);
 			
-			xAxisGridG.attr("class", ".axis .y .line");
-			xAxisGridG.selectAll(".tick").selectAll("text").remove();
+			yAxisGridG.attr("class", ".axis .y .line");
+			yAxisGridG.selectAll(".tick").selectAll("text").remove();
 
-			return xAxisGridG;
+			return yAxisGridG;
 		};
 
 		var removeRestOfChartTicks = function () {
