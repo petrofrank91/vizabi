@@ -30,7 +30,6 @@ define(["layout-manager"], function(layoutManager) {
 				g: components.get().chart.getGroup(),
 				top: ['yLabel.bottom'],
 				left: ['yLabel.left'],
-
 			});
 
 			addComponent(lname, {
@@ -86,10 +85,10 @@ define(["layout-manager"], function(layoutManager) {
 			addComponent(lname, {
 				id: 'bubblesContainer',
 				g: components.get().bubblesContainer.getGroup(),
-				top: ['chart.top'],
-				left: ['chart.left'],
-				bottom: ['chart.bottom'],
-				right: ['chart.right'],
+				top: ['yAxisText.top'],
+				left: ['yAxisText.right'],
+				bottom: ['yAxisText.bottom'],
+				right: ['xAxisText.right'],
 				render: components.get().bubblesContainer.render
 			});
 		};

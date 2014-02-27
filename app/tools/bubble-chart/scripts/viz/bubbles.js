@@ -10,7 +10,6 @@ define(['d3', 'chart-grid-scale', 'bubble-chart-events', 'util'], function(d3, s
 		var fontSizeScale;
 		var vizStateChangedCallback;
 
-
 		var init = function(svg, state, vizStateChanged) {
 			g = svg
 				.append("g")
@@ -20,7 +19,6 @@ define(['d3', 'chart-grid-scale', 'bubble-chart-events', 'util'], function(d3, s
 			vizStateChangedCallback = vizStateChanged;
 			_bubbleEvents = new bubbleEvents(state, svg, vizStateChangedCallback);			
 		};
-
 
 		var setScales = function() {
 			if (!vizState.get("minBubbleSize") && !vizState.get("maxBubbleSize")) {
@@ -344,7 +342,7 @@ define(['d3', 'chart-grid-scale', 'bubble-chart-events', 'util'], function(d3, s
             });
         };
 
-		var render = function() {
+		var render = function(w, h) {
 			setScales();
 			createLayers();
 			createBubbles();
