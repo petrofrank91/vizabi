@@ -27,6 +27,14 @@ define([
             });
 
             addComponent(lname, {
+                id: 'pickerButton',
+                g: components.get().pickerButton.getGroup(),
+                bottom: ['header.bottom'],
+                left: ['header.right', { padding: 15 }],
+                render: components.get().pickerButton.render
+            });
+
+            addComponent(lname, {
                 id: 'timeslider',
                 g: components.get().timeslider.getGroup(),
                 top: ['header.top'],
