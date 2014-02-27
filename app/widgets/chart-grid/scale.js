@@ -16,8 +16,8 @@ define(['d3'], function(d3) {
 
 			if (type === "log" && axis === "x") {
 				xScale = log();
-			} else if (type === "log" && axis === "y") {
-				yScale = log();
+			} else if (type === "linear" && axis === "y") {
+				yScale = linear();
 			} else if (type === "linear" && axis === "x") {
 				xScale = linear();
 			} else if (type === "log" && axis === "y") {
@@ -35,7 +35,7 @@ define(['d3'], function(d3) {
 		};
 
 		var linear = function() {
-			return d3.scale.log().domain(domain).range(range);
+			return d3.scale.linear().domain(domain).range(range);
 		};
 
 		var sqrt = function() {
