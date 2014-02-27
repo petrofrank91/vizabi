@@ -3,16 +3,16 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 	var axis = function() {
 		var vizState;
 		var g;
-		var availableWidth;
-		var availableHeight;
+		var availableWidth = 800;
+		var availableHeight = 350;
 		var svg;
 
 		var init = function(svg, state)  {
 			g = svg;
 
 			vizState = state;
-			availableWidth = ($(window).width());
-			availableHeight = ($(window).height());
+			// availableWidth = ($(window).width());
+			// availableHeight = ($(window).height());
 		};
 
 		var setAxisScale = function() {
@@ -74,7 +74,9 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 				.call(svgAxis);
 		};
 
-		var render = function() {
+		var render = function(w, h) {
+			if (w) availableWidth = w;
+			if (h) availableHeight = h;
 			setAxisScale();
 			createXAxis();
 		};
