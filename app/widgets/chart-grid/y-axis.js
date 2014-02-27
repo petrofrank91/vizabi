@@ -101,6 +101,10 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 
 			yAxisTextG.selectAll(".tick").selectAll("line").remove();
 
+			var axisPath = yAxisTextG.select('.domain');
+
+			axisPath.attr('transform', 'translate(' + (yAxisTextMaxWidth + 5) + ',0)');
+
 			return yAxisTextG;
 		};
 
