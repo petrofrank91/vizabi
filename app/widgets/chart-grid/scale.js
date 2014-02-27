@@ -57,9 +57,19 @@ define(['d3'], function(d3) {
 			return result;
 		};
 
+		function setDomain(d) {
+			domain = d;
+		}
+
+		function setRange(r) {
+			range = r;
+		}
+
 		return {
 			init: init,
-			get: get
+			get: get,
+			setDomain: setDomain,
+			setRange: setRange
 		};
 	};
 
