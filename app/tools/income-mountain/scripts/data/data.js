@@ -1,6 +1,6 @@
 define([
-        'data/loader.js',
-        'data/operations.js'
+        'income-mountain/data/loader',
+        'income-mountain/data/operations'
     ],
     function(loader, operations) {
         'use strict';

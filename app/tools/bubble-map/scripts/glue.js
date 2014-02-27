@@ -1,7 +1,7 @@
 define([
         'd3',
         'entities',
-        'i18n-manager',
+        'i18n-manager/i18n-manager',
         'layout-manager',
         'bubble-map/data/data',
         'bubble-map/components/components',

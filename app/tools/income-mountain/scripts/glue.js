@@ -4,7 +4,7 @@ define([
         'income-mountain/data/data',
         'income-mountain/components/components',
         'income-mountain/layouts/layout',
-        'i18n-manager',
+        'i18n-manager/i18n-manager',
         'income-mountain/bind/bind',
         'entities'
     ],
@@ -104,6 +104,8 @@ define([
         function seti18n(fn) {
             if (typeof fn === 'function') {
                 i18n = fn;
+            } else {
+                i18n = new i18n();
             }
         }
 

@@ -1,0 +1,17 @@
+<body>
+<div><p>Shows a bubble map</p></div>
+<div id="bubble-map"></div>
+<br>
+</div>
+<script>
+    var renderDiv = '#bubble-map';
+    var state;
+    var app;
+
+    state = {
+        geo: ['SWE', 'PAN', 'UGA', 'CHN']
+    };
+
+    app = vizabi.bubbleMap(renderDiv, state);
+</script>
+</body>

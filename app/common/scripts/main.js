@@ -11,6 +11,7 @@ require.config({
         'jquery.ui': '../../bower_components/jquery-ui/ui/jquery-ui',
         'jstat': '../../bower_components/rm-jstat/jstat',
         'entities': 'libs/entities',
+        'widgets': '../../widgets',
         'jed': '../../bower_components/jed/jed',
         'zepto': '../../bower_components/zepto/zepto.min',
         /*
@@ -21,6 +22,7 @@ require.config({
          */
         'util': 'helpers/util',
 
+        'projection': '../../bower_components/d3-geo-projection/d3.geo.projection',
 
         // sprintf
         'sprintf': '../../bower_components/sprintf/src/sprintf.min',
@@ -34,10 +36,10 @@ require.config({
         'viz-bubble-print': '../../tools/bubble-chart/scripts/viz/viz-bubble-print',
 
         // income mountain
-        'income-mountain': '../../tools/income-mountain',
+        'income-mountain': '../../tools/income-mountain/scripts',
 
         // bubble map
-        'bubble-map': '../../tools/bubble-map',
+        'bubble-map': '../../tools/bubble-map/scripts',
 
         // data-cube related
         'queue-async': '../../bower_components/queue-async/queue',
@@ -51,7 +53,7 @@ require.config({
 
         // components
         'layout-manager': '../../vizabi-components/layout-manager/layout-manager',
-        'i18n-manager': '../../vizabi-components/i18n-manager/i18n-manager',
+        'i18n-manager': '../../vizabi-components/i18n-manager',
 
         // widgets
         'settings-button': '../../widgets/settings-button/settings-button',
@@ -72,6 +74,7 @@ require.config({
         'queue-async': {exports: 'queue'},
         'zepto': {exports: 'Zepto'},
         'sprintf': {exports: 'sprintf'},
+        'projection': { exports: 'd3' },
 
         // jQuery UI Slider dependency chain START
         'jquery.ui.core': ['jquery'],

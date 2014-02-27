@@ -23,7 +23,7 @@ define([
             components.header = new text();
             components.header.init(
                 svg,
-                i18n('incMountain', 'People by income'),
+                i18n.translate('incMountain', 'People by income'),
                 'header',
                 32
             );
