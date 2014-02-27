@@ -89,7 +89,15 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			xAxisTextG = d3.select(g[0][0]);
 
 			xAxisTextG.attr("class", ".axis .y .text");
-
+			var xAxisTextMaxWidth = d3.max(xAxisTextG.selectAll("g").selectAll("text"), function () {
+				return this.node().getBBox().width;
+			});
+			
+			xAxisTextG.selectAll("g").selectAll("text").each(function() {
+				var textNode = d3.select(this);
+				var currentVal = parseFloat(textNode.attr("x"));
+				textNode.attr("x", currentVal + 5 + xAxisTextMaxWidth);
+			});
 
 			xAxisTextG.selectAll(".tick").selectAll("line").remove();
 
