@@ -87,9 +87,9 @@ define(["layout-manager"], function(layoutManager) {
 				id: 'bubblesContainer',
 				g: components.get().bubblesContainer.getGroup(),
 				top: ['chart.top'],
-				left: ['yAxisText.left'],
-				bottom: ['xAxisGrid.top'],
-				right: ['xAxisText.right'],
+				left: ['chart.left'],
+				bottom: ['chart.bottom'],
+				right: ['chart.right'],
 				render: components.get().bubblesContainer.render
 			});
 		};
