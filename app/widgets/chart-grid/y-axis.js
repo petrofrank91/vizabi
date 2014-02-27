@@ -113,6 +113,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			
 			yAxisGridG.attr("class", ".axis .y .line");
 			yAxisGridG.selectAll(".tick").selectAll("text").remove();
+			yAxisGridG.selectAll('.domain').remove();
 
 			return yAxisGridG;
 		};
