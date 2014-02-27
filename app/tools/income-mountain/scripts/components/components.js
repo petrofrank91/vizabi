@@ -3,19 +3,20 @@ define([
         'jquery',
         'underscore',
         'widgets/text/text',
+        'income-mountain/viz/picker-button',
         'widgets/time-slider/slider-types/1/ts1',
         'income-mountain/viz/labels',
         'income-mountain/viz/axis',
         'income-mountain/viz/incomeMountain',
         'smart-picker',
     ],
-    function(d3, $, _, text, timeslider, labels, axis, mountains, smartPicker) {
+    function(d3, $, _, text, pickerButton, timeslider, labels, axis, mountains, smartPicker) {
         var svg;
 
         var components = {
             wrapper: undefined,
             header: undefined,
-            //picker: picker,
+            pickerButton: pickerButton,
             timeslider: undefined,
             labels: labels,
             axis: axis,
@@ -34,6 +35,11 @@ define([
             );
 
             // picker start
+            // components.pickerButton = new pickerButton();
+            components.pickerButton.init(
+                svg,
+                i18n.translate('incMountain', 'Select a location')
+            );
 
             // timeslider start
             components.timeslider = new timeslider();
