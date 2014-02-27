@@ -12,7 +12,7 @@ define([], function() {
 		};
 
 		var createLabelText = function() {
-			var text = vizState.getDataHelper().getAxisNames()[1];
+			text = vizState.getDataHelper().getAxisNames()[1];
 
 			if (!text) {
 				text = vizState.get("yIndicator");
@@ -24,8 +24,7 @@ define([], function() {
 				.append("text")
 				.attr("y", "30")
 				.attr("font-size", "30px")
-				.text("Sample Text");
-				//.text(text);
+				.text(text);
 				// .append("svg:title")
 				// .text(function() {
 				// 	return vizState.getDataHelper().getAxisInfo()[1];
