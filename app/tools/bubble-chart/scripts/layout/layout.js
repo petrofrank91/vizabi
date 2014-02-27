@@ -44,7 +44,7 @@ define(["layout-manager"], function(layoutManager) {
 				id: 'yAxisGrid',
 				g: components.get().yAxisGrid.getGroup(),
 				top: ['yAxisText.top'],
-				left: ['yAxisText.right']
+				left: ['yAxisText.right'],
 			});
 
 			addComponent(lname, {
@@ -66,7 +66,7 @@ define(["layout-manager"], function(layoutManager) {
 				id: 'xAxisGrid',
 				g: components.get().xAxisGrid.getGroup(),
 				top: ['yAxisGrid.bottom'],
-				left: ['yAxisGrid.right']
+				left: ['yAxisText.right']
 			});
 
 			addComponent(lname, {
@@ -80,7 +80,7 @@ define(["layout-manager"], function(layoutManager) {
 				id: 'xLabel',
 				g: components.get().xLabel.getGroup(),
 				bottom: ['xAxisText.top'],
-				right: ['xAxisText.right', -50]
+				right: ['xAxisText.right', -5]
 			});
 
 			addComponent(lname, {
