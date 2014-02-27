@@ -35,14 +35,14 @@ define([
                 }
             },
 
-            setDomain: function(lc) {
+            setLanguage: function(lc) {
                 this.domain = lc;
             },
 
-            load: function(lc, id, callback) {
+            loadLanguage: function(lc, id, callback) {
                 var context = this;
                 loader.load(lc, id, function(d) {
-                    context.data[lc] = d;
+                    context.data[lc] = d[lc];
                     if (typeof callback === 'function') {
                         callback();
                     }

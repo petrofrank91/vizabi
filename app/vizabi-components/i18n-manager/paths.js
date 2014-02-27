@@ -12,7 +12,7 @@ define([],
             {
                 id: 'local',
                 desc: 'Local storage',
-                url: '../../../data/i18n/%(lang)s/%(filename)s'
+                url: 'data/i18n/%(lang)s/%(filename)s'
             }
         ];
 
