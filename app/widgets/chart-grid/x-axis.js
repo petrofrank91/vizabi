@@ -45,12 +45,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			// 	xDomain[1] /= zoomScale;
 			// }
 
-			if (vizState.get("xAxisScale") === "log") {
-				scale.init("x", vizState.get("xAxisScale"), xDomain, [0, availableWidth]);
-			} else {
-				scale.init("x", vizState.get("xAxisScale"), xDomain, [0, availableWidth]);
-
-			}
+			scale.init("x", vizState.get("xAxisScale"), xDomain, [0, availableWidth]);
 		};
 
 		var createXAxis = function() {
