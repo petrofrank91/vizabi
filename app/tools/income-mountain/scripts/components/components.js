@@ -25,7 +25,7 @@ define([
                 svg,
                 i18n.translate('incMountain', 'People by income'),
                 'header',
-                32
+                50
             );
 
             // picker start

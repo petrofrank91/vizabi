@@ -31,7 +31,7 @@ define([
 
             getGroup: function() {
                 return this.g;
-            },
+            }
         };
 
         return text;
