@@ -16,6 +16,7 @@ This project uses npm, grunt and bower. For npm, you will need Node.js installed
     npm install -g bower grunt-cli
     npm install
     bower install
+    ./post-bower-install.sh
 
 ## Development Process
 
