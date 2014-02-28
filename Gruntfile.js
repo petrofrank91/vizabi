@@ -496,12 +496,16 @@ module.exports = function (grunt) {
         }
     };
 
-    // import app-specific config
-    var appConfig = require('./app/' + project + '/grunt-config');
+    // import component-specific config
+    var fs = require('fs');
+    var configPath = './app/' + project + '/grunt-config';
+    if (fs.existsSync(configPath + '.js')) {
+        var componentConfig = require(configPath)(paths);
 
-	// merge the gruntConfig with the app-specific config
-	var _ = require('lodash');
-	gruntConfig = _.merge(gruntConfig, appConfig);
+        // merge the gruntConfig with the app-specific config
+        var _ = require('lodash');
+        gruntConfig = _.merge(gruntConfig, componentConfig);
+    }
 
 	// uncomment to output merged config for debugging
     //console.log(gruntConfig, gruntConfig.concat.dist);
