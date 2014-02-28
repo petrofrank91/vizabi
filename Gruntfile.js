@@ -18,7 +18,7 @@ module.exports = function (grunt) {
     var tool_project = grunt.option('tool');
     var vizabi_components_project = grunt.option('vizabi-component');
     var widget_projects = grunt.option('widget');
-    var hatnum = grunt.option('hatnum');
+    var hatnum = grunt.option('hatnum') || 0;
 
     if (tool_project) {
         project = 'tools/' + tool_project;
@@ -28,6 +28,8 @@ module.exports = function (grunt) {
     }
     else if (widget_projects) {
         project = 'widgets/' + widget_projects;
+    } else {
+        project = 'vizabi.js';
     }
 
     // configurable paths
