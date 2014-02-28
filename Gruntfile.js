@@ -13,12 +13,13 @@ module.exports = function (grunt) {
     // load all grunt tasks
     require('load-grunt-tasks')(grunt);
 
-    // which project to work with
+    // which component to work with (component variable is called project for better consistency with go grunt config)
     var project;
     var tool_project = grunt.option('tool');
     var vizabi_components_project = grunt.option('vizabi-component');
     var widget_projects = grunt.option('widget');
-    var hatnum = grunt.option('hatnum');
+    var hatnum = grunt.option('hatnum') || 0;
+    var sourcePath, distPath;
 
     if (tool_project) {
         project = 'tools/' + tool_project;
@@ -28,12 +29,23 @@ module.exports = function (grunt) {
     }
     else if (widget_projects) {
         project = 'widgets/' + widget_projects;
+    } else {
+        // if no build target is specified, just build vizabi-amd and css for all components
+        project = 'vizabi.js';
+    }
+
+    // set hat path depending on component
+    if (project != 'vizabi.js') {
+        sourcePath = 'test/' + project + "/human-acceptance/" + hatnum;
+        distPath = project + "/human-acceptance/" + hatnum;
+    } else {
+        sourcePath = 'app/vizabi.js/build';
+        distPath = 'build';
     }
 
     // configurable paths
-    var hatPath = 'test/' + project + "/human-acceptance/" + hatnum;
 	var paths = {
-        hat: hatPath,
+        hat: sourcePath,
 		app: {
 			base: 'app',
             project: 'app/' + project,
@@ -45,9 +57,9 @@ module.exports = function (grunt) {
             common: '.tmp/common'
         },
         dist: {
-			base: 'dist/' + hatPath,
-            project: 'dist/' + hatPath + '/' + project,
-            common: 'dist/' + hatPath + '/common'
+			base: 'dist/' + distPath,
+            project: 'dist/' + distPath + '/' + project,
+            common: 'dist/' + distPath + '/common'
         }
     };
 
@@ -177,7 +189,7 @@ module.exports = function (grunt) {
         compass: {
             options: {
                 sassDir: '<%= yeoman.app.project %>/styles',
-                cssDir: '<%= yeoman.app.project %>/styles',
+                cssDir: '<%= yeoman.tmp.project %>/styles',
                 generatedImagesDir: '<%= yeoman.app.project %>/images/generated',
                 imagesDir: '<%= yeoman.app.project %>/images',
                 javascriptsDir: '<%= yeoman.app.project %>/scripts',
@@ -215,7 +227,7 @@ module.exports = function (grunt) {
                 ]
             }
         },
-         concat: {
+        concat: {
             html: {
                 src: [
                     //project-specific config through json
@@ -248,7 +260,7 @@ module.exports = function (grunt) {
 					variables: {
 						'{{project}}': project,
 						'{{hatnum}}': hatnum,
-						'<!-- @@hat-include:"css.html" -->': '<%= grunt.file.read("' + paths.hat + '/css.html") %>',
+                        '<!-- @@hat-include:"css.html" -->': '<link rel="stylesheet" href="../../../../build/styles/vizabi.css"/>',
 						'<!-- @@hat-include:"body.html" -->': '<%= grunt.file.read("' + paths.hat + '/body.html") %>'
 					},
 					prefix: ''
@@ -271,7 +283,7 @@ module.exports = function (grunt) {
 			wrapperjsdist: {
 				options: {
 					variables: {
-						'{{vizabi-script-tag-attributes}}': 'src="scripts/vizabi-amd.js"',
+						'{{vizabi-script-tag-attributes}}': 'src="../../../../build/scripts/vizabi-amd.js"',
 					},
 					prefix: ''
 				},
@@ -279,50 +291,6 @@ module.exports = function (grunt) {
                     {expand: true, flatten: true, src: ['<%= yeoman.app.base %>/vizabi.js/vizabi.js'], dest: '<%= yeoman.dist.base %>/scripts/'}
 				]
 			},
-        },
-        requirejs: {
-            dist: {
-                // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
-                options: {
-					// for not having to duplicate existing requirejs-configuration here
-					mainConfigFile: '<%= yeoman.app.common %>/scripts/main-processed.js',
-					// determines base path for "include" and "name"
-					baseUrl: '<%= yeoman.app.base %>/common/scripts',
-					// the main module to include into the outfile
-					include: 'main-processed',
-					// path to require.js or almond.js - without ".js"
-					name: '../../../<%= yeoman.app.base %>/bower_components/almond/almond',
-                    // wrapper content that allows vizabi.js to be included using both a script-tag or as an amd module
-                    wrap: {
-                        "startFile": "<%= yeoman.app.base %>/vizabi.js/wrap.start",
-                        "endFile": "<%= yeoman.app.base %>/vizabi.js/wrap.end"
-                    },
-					// the resulting file
-					out: '<%= yeoman.dist.base %>/scripts/vizabi-amd.js',
-					// none since this is done be a different grunt task
-                    optimize: 'none',
-					// generate source maps that help local debugging
-					generateSourceMaps: true,
-                    // required to support SourceMaps
-                    // http://requirejs.org/docs/errors.html#sourcemapcomments
-                    preserveLicenseComments: false,
-                    useStrict: true,
-					// makes inline require() statements work in the built file
-                    findNestedDependencies: true,
-					// performs some post build analysis (configuration taken from grunt-contrib-requirejs readme)
-					done: function(done, output) {
-						var duplicates = require('rjs-build-analysis').duplicates(output);
-
-						if (duplicates.length > 0) {
-							grunt.log.subhead('Duplicates found in requirejs build:');
-							grunt.log.warn(duplicates);
-							done(new Error('r.js built duplicate modules, please check the excludes option.'));
-                        }
-
-						done();
-                    }
-				}
-			}
         },
         'bower-install': {
             app: {
@@ -458,6 +426,18 @@ module.exports = function (grunt) {
                             'data/{,*/}*',
                         ]
                     },
+                ]
+            },
+            styles: {
+                files: [
+                    // Styles
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= yeoman.app.base %>/styles',
+                        dest: '<%= yeoman.tmp.base %>/styles/',
+                        src: '{,*/}*.css'
+                    },
                     // Project stylesheets
                     {
                         expand: true,
@@ -481,13 +461,6 @@ module.exports = function (grunt) {
                     },
                 ]
             },
-            styles: {
-                expand: true,
-                dot: true,
-                cwd: '<%= yeoman.app.base %>/styles',
-                dest: '<%= yeoman.tmp.base %>/styles/',
-                src: '{,*/}*.css'
-            }
         },
         modernizr: {
             devFile: '<%= yeoman.app.base %>/bower_components/modernizr/modernizr.js',
@@ -523,12 +496,16 @@ module.exports = function (grunt) {
         }
     };
 
-    // import app-specific config
-    var appConfig = grunt.file.readJSON('app/' + project + '/grunt-config.json');
+    // import component-specific config
+    var fs = require('fs');
+    var configPath = './app/' + project + '/grunt-config';
+    if (fs.existsSync(configPath + '.js')) {
+        var componentConfig = require(configPath)(paths);
 
-	// merge the gruntConfig with the app-specific config
-	var _ = require('lodash');
-	gruntConfig = _.merge(gruntConfig, appConfig);
+        // merge the gruntConfig with the app-specific config
+        var _ = require('lodash');
+        gruntConfig = _.merge(gruntConfig, componentConfig);
+    }
 
 	// uncomment to output merged config for debugging
     //console.log(gruntConfig, gruntConfig.concat.dist);
@@ -569,7 +546,24 @@ module.exports = function (grunt) {
         'mocha'
     ]);
 
-    grunt.registerTask('build', [
+    grunt.registerTask('build-hat', [
+        'clean:dist',
+        'copy:index',
+        'replace:mainjs',
+        'replace:templateincludes',
+        //'concurrent:dist', // runs various tasks concurrently, see configuration above. currently disabled since the stage server chokes here. instead running the tasks synchronously:
+        'imagemin',
+        'svgmin',
+        'htmlmin',
+        //'uglify', // comment out to simplify debugging
+        'autoprefixer',
+        //'modernizr', // disabled due to https://github.com/Modernizr/grunt-modernizr/issues/45
+        'copy:dist',
+        //'rev',
+        'clean:postbuild'
+    ]);
+
+    grunt.registerTask('build-vizabi.js', [
         'clean:dist',
         'copy:index',
         'replace:mainjs',
@@ -593,6 +587,18 @@ module.exports = function (grunt) {
         'usemin',
         'clean:postbuild'
     ]);
+
+    if (project == 'vizabi.js') {
+        grunt.registerTask('build', function () {
+            grunt.log.write('Building vizabi.js');
+            grunt.task.run(['build-vizabi.js']);
+        });
+    } else {
+        grunt.registerTask('build', function () {
+            grunt.log.write('Building HAT ' + hatnum + ' for component ' + project + '. (Assuming vizabi.js has been built already)');
+            grunt.task.run(['build-hat']);
+        });
+    }
 
     grunt.registerTask('default', [
         'jshint',

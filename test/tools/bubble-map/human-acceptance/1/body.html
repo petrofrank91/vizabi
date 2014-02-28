@@ -1,17 +1,22 @@
-<body>
 <div><p>Shows a bubble map</p></div>
 <div id="bubble-map"></div>
 <br>
-</div>
+<script src="../../../../build/scripts/vizabi.js" type="text/javascript"></script>
 <script>
-    var renderDiv = '#bubble-map';
-    var state;
-    var app;
 
-    state = {
-        geo: ['SWE', 'PAN', 'UGA', 'CHN']
-    };
+    function initialize() {
 
-    app = vizabi.bubbleMap(renderDiv, state);
+        var renderDiv = '#bubble-map';
+        var state;
+        var app;
+
+        state = {
+            geo: ['SWE', 'PAN', 'UGA', 'CHN']
+        };
+
+        app = vizabi.bubbleMap(renderDiv, state);
+
+    }
+    vizabi.ready(initialize);
+
 </script>
-</body>

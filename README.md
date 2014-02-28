@@ -1,8 +1,17 @@
 Gapminder Vizabi
 ==============
 
-## Get started
-In order to get the repo up and running, run the following commands:
+## Overview
+
+This repo consists of
+
+* the different components that together build up the Vizabi library
+* build scripts and wrapper code that creates the files that are supposed to be distributed to end-users
+* human acceptance tests (called "HATs" in short) that acts both as test cases to evaluate, and as examples of how to use the Vizabi library
+
+## Prerequisites
+
+This project uses npm, grunt and bower. For npm, you will need Node.js installed. Then, run the following commands:
 
     npm install -g bower grunt-cli
     npm install
@@ -10,35 +19,30 @@ In order to get the repo up and running, run the following commands:
 
 ## Development Process
 
-When you work with each type of `app` (`tool`, `vizabi-component` and `widget`), you can provide each of the
-mentioned types with their references to fire up Grunt server which has its built-in LiveReload task, watching changes
-and applying them instantly for styles and to reload the pages for changes in Javascript code.
+When developing for Vizabi, you run a Human Acceptane Test (HAT) page and inside that you work with enhanced/testing the code. Grunt `watch` task will look for changes you make and then will reload the page or apply styles instantly.
 
-###Development Process (with Grunt)
+For each component, its related HATs reside in `test/*component-type*/*name*/human-acceptance/*hatnum*` folder. You need to pass `hatnum` option to Grunt. Depending on which type of component you are developing with Vizabi, run:
 
-Depending on which type of app you are developing with Vizabi, you need to run grunt serve -appType = appId
+    grunt serve --component-type=name --hatnum=hat-folder-number
 
-    grunt serve --appType = appId
+Replace `component-type` with either `tool`, `vizabi-component` or `widget` depending on what you are developing.
+Replace `hat-folder-number` with the human acceptance test that you are using to try out the library. (Hint: hatnum `0` should give you the most basic version of the component).
 
-**NOTE**: For a reference of all supported appType and appIds, see the Vizabi apps reference Ids in below.
+When you run the command, a built in local web server will start serving the contents of the specific component
+browser will open and goes to the `human-acceptance` test index page.
 
+Example:
 
-When you run the command, browser will open and goes to the `human-acceptance` test index page.
+    grunt serve --tool=bubble-chart --hatnum=0
 
+This example should open the HAT defined in the folder test/tool/bubble-chart/human-acceptance/*hatnum*
 
-When developing for Vizabi, you mainly have a Human Acceptane Test (HAT) page and inside that you are working with your instance of
-visualization. For each app, its related HATS reside in `test/*appType*/*appID*/human-acceptance/*hatnum*` folder. You can pass `hatnum` option to Grunt so that you
-will code in your HAT index page and  At the same time, grunt `watch` task will look for changes you make and then will reload the page or apply styles instantly. So you can develop and check your human-acceptance test while you are developing to make sure all tests pass.
+### Vizabi components and their names
 
-    grunt serve --appType = appId -hatnum=hat-folder-number
-
-### Vizabi apps reference IDs
-
-Here is a table regarding the reference IDs and the associated tool types in Vizabi project:
-
+Here is a table regarding the names and the associated component types in Vizabi project:
 
     |-------------------------------------------|
-    | appID                | appType            |
+    | name                 | component-type     |
     |----------------------|--------------------|
     | income-mountain      | tool               |
     | bubble-chart         | tool               |
@@ -54,14 +58,13 @@ Here is a table regarding the reference IDs and the associated tool types in Viz
     | time-slider-jQueryUI | widget             |
     ---------------------------------------------
 
+## Build vizabi.js
 
-## Build gapminder.js
-
-todo
+    grunt build
 
 ## Testing
 
-todo
+    ./generate-all-hats.sh
 
 ## Code Conventions
 * When creating files, the convention is to use dashes instead of underscore or camel case notation.
