@@ -260,7 +260,7 @@ module.exports = function (grunt) {
 					variables: {
 						'{{project}}': project,
 						'{{hatnum}}': hatnum,
-						'<!-- @@hat-include:"css.html" -->': '<%= grunt.file.read("' + paths.hat + '/css.html") %>',
+                        '<!-- @@hat-include:"css.html" -->': '<link rel="stylesheet" href="../../../../build/styles/vizabi.css"/>',
 						'<!-- @@hat-include:"body.html" -->': '<%= grunt.file.read("' + paths.hat + '/body.html") %>'
 					},
 					prefix: ''
@@ -547,7 +547,6 @@ module.exports = function (grunt) {
         'copy:index',
         'replace:mainjs',
         'replace:templateincludes',
-        'useminPrepare',
         //'concurrent:dist', // runs various tasks concurrently, see configuration above. currently disabled since the stage server chokes here. instead running the tasks synchronously:
         'imagemin',
         'svgmin',
@@ -557,7 +556,6 @@ module.exports = function (grunt) {
         //'modernizr', // disabled due to https://github.com/Modernizr/grunt-modernizr/issues/45
         'copy:dist',
         //'rev',
-        'usemin',
         'clean:postbuild'
     ]);
 
