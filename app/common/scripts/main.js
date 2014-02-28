@@ -14,6 +14,8 @@ require.config({
         'widgets': '../../widgets',
         'jed': '../../bower_components/jed/jed',
         'zepto': '../../bower_components/zepto/zepto.min',
+        'd3-geo-projection': '../../bower_components/d3-geo-projection/d3.geo.projection',
+
         /*
          'jquery.ui.core': '../../bower_components/jquery-ui/ui/jquery.ui.core',
          'jquery.ui.widget': '../../bower_components/jquery-ui/ui/jquery.ui.widget',
@@ -69,6 +71,7 @@ require.config({
     shim: {
         // simple shims
         'd3': {exports: 'd3'},
+        'd3-geo-projection': {deps: ['d3'], exports: 'd3'},
         'jquery': {'exports': 'jQuery'},
         'jquery.ui': {deps: ['jquery'], exports: 'jQuery'},
         'queue-async': {exports: 'queue'},
@@ -80,9 +83,8 @@ require.config({
         'jquery.ui.core': ['jquery'],
         'jquery.ui.widget': ['jquery.ui.core'],
         'jquery.ui.mouse': ['jquery.ui.widget'],
-        'jquery.ui.slider': ['jquery.ui.mouse']
+        'jquery.ui.slider': ['jquery.ui.mouse'],
         // jQuery UI Slider dependency chain END
-
     },
     waitSeconds: 30
 });

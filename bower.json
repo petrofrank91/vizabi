@@ -8,6 +8,7 @@
     "jquery-ui": "~1.10.3",
     "queue-async": "~1.0.4",
     "d3": "~3.3.13",
+    "d3-geo-projection": "https://github.com/d3/d3-geo-projection.git#~0.2.8",
     "select2": "~3.4.5",
     "rm-jstat": "master",
     "almond": "~0.2.9",
