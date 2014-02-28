@@ -215,7 +215,7 @@ module.exports = function (grunt) {
                 ]
             }
         },
-         concat: {
+        concat: {
             html: {
                 src: [
                     //project-specific config through json
