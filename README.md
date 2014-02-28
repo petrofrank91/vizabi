@@ -60,11 +60,11 @@ Here is a table regarding the names and the associated component types in Vizabi
 
 ## Build vizabi.js
 
-todo
+    grunt build
 
 ## Testing
 
-todo
+    ./generate-all-hats.sh
 
 ## Code Conventions
 * When creating files, the convention is to use dashes instead of underscore or camel case notation.
