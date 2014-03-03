@@ -17,6 +17,10 @@ define([
             indicator: 'pop'
         };
 
+        var properties = {
+            language: 'dev'
+        };
+
         var defaultMeasures = {
             width: 900,
             height: 500
@@ -103,13 +107,14 @@ define([
         };
 
         bubbleMap.prototype = {
-            init: function(div, st, _i18n) {
+            init: function(div, st, prop, _i18n) {
                 div = d3.select(div).append('div')
                     .attr('class', 'vizabi-bubble-map');
 
                 this.svg = div.append('svg');
 
                 this.setState(st);
+                this.setProperties(prop);
                 this.seti18n(_i18n);
 
                 this.divider = 1000000000;
@@ -127,9 +132,15 @@ define([
             },
 
             setState: function(s) {
+                if (!s) return;
                 state.year = s.year || state.year;
                 state.geo = s.geo || stage.geo;
                 state.indicator = s.indicator || state.indicator;
+            },
+
+            setProperties: function(p) {
+                if (!p) return;
+                properties.language = p.language || properties.language;
             },
 
             seti18n: function(_i18n) {
@@ -137,6 +148,9 @@ define([
                     this.i18n = _i18n;
                 } else {
                     this.i18n = i18n.instance();
+                    if (properties.language !=== 'dev') {
+                        this.i18n.setLanguage(properties.language);
+                    }
                 }
             },
 
