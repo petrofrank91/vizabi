@@ -4,11 +4,11 @@ define([
         'income-mountain/data/data',
         'income-mountain/components/components',
         'income-mountain/layouts/layout',
-        'i18n-manager/i18n-manager',
         'income-mountain/bind/bind',
-        'entities'
+        'entities',
+        'i18n'
     ],
-    function(d3, lm, data, components, layouts, i18n, bind, entities) {
+    function(d3, lm, data, components, layouts, bind, entities) {
         'use strict';
 
         var div;
@@ -37,12 +37,14 @@ define([
             finalYear: 2010
         };
 
+        var _i18n;
+
         var drawable;  // Data used for drawing
 
-        function init(divId, state, i18n) {
+        function init(divId, state, t) {
             initProperties(divId);
             setState(state);
-            seti18n(i18n);
+            seti18n(t);
 
             initComponents();
             initLayoutManager();
@@ -103,9 +105,9 @@ define([
 
         function seti18n(fn) {
             if (typeof fn === 'function') {
-                i18n = fn;
+                _i18n = fn;
             } else {
-                i18n = new i18n();
+                _i18n = i18n.instance();
             }
         }
 
@@ -115,7 +117,7 @@ define([
         }
 
         function initComponents() {
-            components.init(svg, i18n, state, properties);
+            components.init(svg, _i18n, state, properties);
         }
 
         function initLayouts() {
