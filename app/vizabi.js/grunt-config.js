@@ -4,7 +4,8 @@ module.exports = function (paths) {
             templateincludes: {
                 options: {
                     variables: {
-                        '<!-- @@hat-include:"css.html" -->': '<%= grunt.file.read("' + paths.hat + '/css.html") %>',
+                        '<!-- @@vizabi.js-script-tag -->': '<script src="../../../../build/scripts/vizabi.js" type="text/javascript"></script>',
+                        '<!-- @@hat-include:"css.html" -->': '<link rel="stylesheet" href="../../../../build/styles/vizabi.css"/>',
                     }
                 }
             }

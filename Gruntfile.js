@@ -260,7 +260,8 @@ module.exports = function (grunt) {
 					variables: {
 						'{{project}}': project,
 						'{{hatnum}}': hatnum,
-                        '<!-- @@hat-include:"css.html" -->': '<link rel="stylesheet" href="../../../../build/styles/vizabi.css"/>',
+                        '<!-- @@vizabi.js-script-tag -->': '<script src="scripts/vizabi.js" type="text/javascript"></script>',
+                        '<!-- @@hat-include:"css.html" -->': '<%= grunt.file.read("' + paths.app.base + '/vizabi.js/build/css.html") %>',
 						'<!-- @@hat-include:"body.html" -->': '<%= grunt.file.read("' + paths.hat + '/body.html") %>'
 					},
 					prefix: ''
@@ -434,19 +435,11 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         dot: true,
-                        cwd: '<%= yeoman.app.base %>/styles',
-                        dest: '<%= yeoman.tmp.base %>/styles/',
-                        src: '{,*/}*.css'
-                    },
-                    // Project stylesheets
-                    {
-                        expand: true,
-                        dot: true,
-						cwd: '<%= yeoman.app.project %>',
-						dest: '<%= yeoman.dist.project %>',
+                        cwd: '<%= yeoman.app.base %>',
+                        dest: '<%= yeoman.tmp.base %>',
                         src: [
-                            //'styles/{,*/}{,*/}*.css',
-                            'styles/*.ico'
+                            'tools/{,*/}{,*/}styles/*.css',
+                            'tools/{,*/}{,*/}styles/*.ico',
                         ]
                     },
                     // jQuery UI theme - for relative urls to work (https://github.com/GoalSmashers/clean-css/issues/129#issuecomment-32153443)
@@ -456,7 +449,7 @@ module.exports = function (grunt) {
 						cwd: '<%= yeoman.app.base %>/bower_components/jquery-ui/themes/base',
 						dest: '<%= yeoman.dist.base %>/styles',
                         src: [
-                            'images/{,*/}*.{gif,jpg,jpeg,png,svg,webp}',
+                            'images/{,* /}*.{gif,jpg,jpeg,png,svg,webp}',
                         ]
                     },
                 ]
