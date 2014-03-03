@@ -34,16 +34,18 @@ define([
             maxHeight: 0,
             mheight: 440,
             startYear: 1820,
-            finalYear: 2010
+            finalYear: 2010,
+            language: 'dev'
         };
 
         var _i18n;
 
         var drawable;  // Data used for drawing
 
-        function init(divId, state, t) {
-            initProperties(divId);
+        function init(divId, state, properties, t) {
+            initSVG(divId);
             setState(state);
+            setProperties(properties);
             seti18n(t);
 
             initComponents();
@@ -57,7 +59,7 @@ define([
             components.get().mountains.setDrawLoader(draw);
         }
 
-        function initProperties(divId) {
+        function initSVG(divId) {
             if (!divId) {
                 console.error('Supply a div id or else I cant render!');
                 return;
@@ -73,9 +75,21 @@ define([
         }
 
         function setState(s) {
+            if (!s) return;
             state.year = +s.year || state.year;
             state.geo = setGeo(s.geo) || state.geo;
             state.stack = s.stack;
+        }
+
+        function getProperties() {
+            return properties;
+        }
+
+        function setProperties(p) {
+            if (!p) return;
+            properties.startYear = p.startYear || properties.startYear;
+            properties.finalYear = p.finalYear || properties.finalYear;
+            properties.language = p.language || properties.language;
         }
 
         function setGeo(geos) {
@@ -108,6 +122,9 @@ define([
                 _i18n = fn;
             } else {
                 _i18n = i18n.instance();
+                if (properties.language !== 'dev') {
+                    setLanguage(properties.language);
+                }
             }
         }
 
