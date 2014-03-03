@@ -13,12 +13,12 @@ define([
             map: map
         };
 
-        components.init = function(svg, i18n, state, properties) {
+        components.init = function(svg, _i18n, state, properties) {
             //header start
             components.header = new text();
             components.header.init(
                 svg,
-                i18n.translate('bubbleMap', 'Billions of people per region'),
+                _i18n.translate('bubbleMap', 'Billions of people per region'),
                 'header',
                 32
             );

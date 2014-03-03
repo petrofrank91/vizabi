@@ -1,14 +1,14 @@
 define([
         'd3',
         'entities',
-        'i18n-manager/i18n-manager',
         'layout-manager',
         'bubble-map/data/data',
         'bubble-map/components/components',
         'bubble-map/layouts/layout',
-        'bubble-map/bind/bind'
+        'bubble-map/bind/bind',
+        'i18n'
     ],
-    function(d3, entities, t, layoutManager, data, components, layout, bind) {
+    function(d3, entities, layoutManager, data, components, layout, bind) {
         'use strict';
 
         var state = {
@@ -29,8 +29,8 @@ define([
 
         var d;
 
-        function initComponents(svg, i18n) {
-            components.init(svg, i18n, state);
+        function initComponents(svg, _i18n) {
+            components.init(svg, _i18n, state);
         }
 
         function initLayoutManager(svg) {
@@ -103,14 +103,14 @@ define([
         };
 
         bubbleMap.prototype = {
-            init: function(div, st, i18n) {
+            init: function(div, st, _i18n) {
                 div = d3.select(div).append('div')
                     .attr('class', 'vizabi-bubble-map');
 
                 this.svg = div.append('svg');
 
                 this.setState(st);
-                this.seti18n(i18n);
+                this.seti18n(_i18n);
 
                 this.divider = 1000000000;
                 this.bubValue = 400000;
@@ -132,11 +132,11 @@ define([
                 state.indicator = s.indicator || state.indicator;
             },
 
-            seti18n: function(i18n) {
+            seti18n: function(_i18n) {
                 if (typeof i18n === 'function') {
-                    this.i18n = i18n;
+                    this.i18n = _i18n;
                 } else {
-                    this.i18n = new t();
+                    this.i18n = i18n.instance();
                 }
             },
 
