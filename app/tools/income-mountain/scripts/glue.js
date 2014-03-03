@@ -111,6 +111,17 @@ define([
             }
         }
 
+        function setLanguage(lang, callback) {
+            var id = 0; // Income Mountain pofile id
+            _i18n.setLanguage(lang, id, function() {
+                var header = components.get().header;
+                header.setText(_i18n.translate('incMountain', 'People by income'));
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            });
+        }
+
         function initLayoutManager() {
             lm.init(svg, defaultMeasures, currentMeasures);
             lm.divScale();
@@ -178,6 +189,7 @@ define([
             setState: setState,
             setMeasures: setMeasures,
             seti18n: seti18n,
+            setLanguage: setLanguage,
             setGeo: setGeo,
             draw: draw,
             data: data
