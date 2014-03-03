@@ -28,17 +28,17 @@ define([
 
         // Bubble Map
         util.extend(vizabi, {
-            bubbleMap: function(div, state) {
+            bubbleMap: function(div, state, properties, i18nfn) {
                 var viz = new bubbleMap();
-                viz.init(div, state);
+                viz.init(div, state, properties, i18nfn);
                 return viz;
             }
         });
 
         // Income Mountain
         util.extend(vizabi, {
-            incomeMountain: function(div, state) {
-                incomeMountain.init(div, state);
+            incomeMountain: function(div, state, properties, i18nfn) {
+                incomeMountain.init(div, state, properties, i18nfn);
                 return incomeMountain;
             }
         });
