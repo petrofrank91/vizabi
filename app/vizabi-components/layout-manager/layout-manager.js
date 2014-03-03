@@ -234,8 +234,6 @@ define([],
                 return undefined;
             }
 
-            // Check if we have the stage
-
             var component = layout[selectedLayoutName][componentName];
             var anchorPoints = processAnchorPoints(component);
 
@@ -248,12 +246,17 @@ define([],
         // specified, it is applied to the returned value.
         function parseLinkedAnchorPoint(anchorPoint) {
             var bind = anchorPoint[0].split('.');
-            var padding = anchorPoint[1];
+            var padding = anchorPoint[1] ? anchorPoint[1].padding : undefined;
+            var percentage = anchorPoint[1] ? anchorPoint[1].percentage : undefined;
 
             var componentName = bind[0];
             var anchorPointName = bind[1];
 
             var point = getAnchorPoint(componentName, anchorPointName);
+
+            if (percentage) {
+                point = parsePercentage(percentage, point);
+            }
 
             if (padding) {
                 point += padding;
