@@ -203,7 +203,8 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
-                    generatedImagesDir: '<%= yeoman.dist.base %>/images/generated'
+                    generatedImagesDir: '<%= yeoman.dist.base %>/images/generated',
+                    cssDir: '<%= yeoman.dist.base %>/styles'
                 }
             },
             server: {
