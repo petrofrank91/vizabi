@@ -55,6 +55,11 @@ define([
                 });
             };
 
+            var setLanguage = function(lang, callback) {
+                var id = 0;
+                _i18n.setLanguage(lang, id, callback);
+            };
+
             var setUpModelAndUpdate = function () {
                 var year = model.get("year");
                 var trails = model.get("trails");
