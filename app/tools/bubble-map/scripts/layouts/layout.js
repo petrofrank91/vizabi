@@ -30,7 +30,7 @@ define([
                 id: 'timeslider',
                 g: components.timeslider.getGroup(),
                 bottom: ['stage.height'],
-                left: ['header.left', 200],
+                xcenter: ['stage.width', { percentage: "50%" } ],
                 render: components.timeslider.render
             });
 

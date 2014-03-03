@@ -300,8 +300,10 @@ define([],
             return {
                 left: parseAnchorPoint(component.left, stage.width),
                 right: parseAnchorPoint(component.right, stage.width),
+                xcenter: parseAnchorPoint(component.xcenter, stage.width),
                 top: parseAnchorPoint(component.top, stage.height),
                 bottom: parseAnchorPoint(component.bottom, stage.height),
+                ycenter: parseAnchorPoint(component.ycenter, stage.height),
                 width: getWidth(component),
                 height: getHeight(component)
             };
@@ -310,25 +312,38 @@ define([],
         // Discovers all anchor points for a given component
         function discoverAllPoints(anchorPoints) {
             // Horizontal calculation
-            if (!anchorPoints.left && anchorPoints.right) {
+            if (anchorPoints.xcenter) {
+                anchorPoints.left = anchorPoints.xcenter - anchorPoints.width / 2;
+                anchorPoints.right = anchorPoints.xcenter + anchorPoints.width / 2;
+                console.log(anchorPoints.xcenter, anchorPoints.left, anchorPoints.right, anchorPoints.width)
+            } else if (!anchorPoints.left && anchorPoints.right) {
                 anchorPoints.left = anchorPoints.right - anchorPoints.width;
+                anchorPoints.xcenter = anchorPoints.left + anchorPoints.width / 2;
             } else if (!anchorPoints.left && !anchorPoints.right) {
                 // Blank the horizontal points
                 anchorPoints.left = 0;
                 anchorPoints.right = anchorPoints.width;
+                anchorPoints.xcenter = anchorPoints.width / 2;
             } else if (anchorPoints.left && !anchorPoints.right) {
                 anchorPoints.right = anchorPoints.left + anchorPoints.width;
+                anchorPoints.xcenter = anchorPoints.left + anchorPoints.width / 2;
             }
 
             // Vertical calculation
-            if (!anchorPoints.top && anchorPoints.bottom) {
+            if (anchorPoints.ycenter) {
+                anchorPoints.top = anchorPoints.ycenter - anchorPoints.height / 2;
+                anchorPoints.bottom = anchorPoints.ycenter + anchorPoints.height / 2;
+            } else if (!anchorPoints.top && anchorPoints.bottom) {
                 anchorPoints.top = anchorPoints.bottom - anchorPoints.height;
+                anchorPoints.ycenter = anchorPoints.top + anchorPoints.height / 2;
             } else if (!anchorPoints.top && !anchorPoints.bottom) {
                 // Blank the vertical points
                 anchorPoints.top = 0;
                 anchorPoints.bottom = anchorPoints.height;
+                anchorPoints.ycenter = anchorPoints.height / 2;
             } else if (anchorPoints.top && !anchorPoints.bottom) {
                 anchorPoints.bottom = anchorPoints.top + anchorPoints.height;
+                anchorPoints.ycenter = anchorPoints.top + anchorPoints.height / 2;
             }
 
             return anchorPoints;
