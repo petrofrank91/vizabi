@@ -30,22 +30,22 @@ define([
                 id: 'timeslider',
                 g: components.get().timeslider.getGroup(),
                 top: ['header.top'],
-                right: ['stage.width', -10]
+                right: ['stage.width', { padding: -10 } ]
             });
 
             addComponent(lname, {
                 id: 'axis',
                 g: components.get().axis.getGroup(),
                 left: ['header.left'],
-                right: ['timeslider.right', 10],
-                bottom: ['stage.height', -10],
+                right: ['timeslider.right', { padding: 10 } ],
+                bottom: ['stage.height', { padding: -10 } ],
                 render: components.get().axis.render
             });
 
             addComponent(lname, {
                 id: 'labels',
                 g: components.get().labels.getGroup(),
-                top: ['header.bottom', 10],
+                top: ['header.bottom', { padding: 10 } ],
                 left: ['header.left'],
                 render: components.get().labels.render
             });
@@ -53,7 +53,7 @@ define([
             addComponent(lname, {
                 g: components.get().mountains.getGroup(),
                 id: 'mountains',
-                top: ['timeslider.bottom', 5],
+                top: ['timeslider.bottom', { padding: 5 } ],
                 left: ['axis.left'],
                 right: ['axis.right'],
                 bottom: ['axis.top'],
