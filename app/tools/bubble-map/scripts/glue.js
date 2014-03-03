@@ -148,8 +148,8 @@ define([
                     this.i18n = _i18n;
                 } else {
                     this.i18n = i18n.instance();
-                    if (properties.language !=== 'dev') {
-                        this.i18n.setLanguage(properties.language);
+                    if (properties.language !== 'dev') {
+                        this.setLanguage(properties.language);
                     }
                 }
             },
@@ -160,7 +160,9 @@ define([
                 this.i18n.setLanguage(lang, id, function() {
                     var header = components.header;
                     header.setText(_this.i18n.translate('bubbleMap', 'Billions of people per region'));
-                    callback();
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
                 });
             },
 
