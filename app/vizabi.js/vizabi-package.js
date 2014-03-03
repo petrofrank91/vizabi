@@ -38,8 +38,8 @@ define([
         // Income Mountain
         util.extend(vizabi, {
             incomeMountain: function(div, state) {
-                var viz = incomeMountain.init(div, state);
-                return viz;
+                incomeMountain.init(div, state);
+                return incomeMountain;
             }
         });
 

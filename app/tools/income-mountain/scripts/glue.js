@@ -4,11 +4,11 @@ define([
         'income-mountain/data/data',
         'income-mountain/components/components',
         'income-mountain/layouts/layout',
-        'i18n-manager/i18n-manager',
         'income-mountain/bind/bind',
-        'entities'
+        'entities',
+        'i18n'
     ],
-    function(d3, lm, data, components, layouts, i18n, bind, entities) {
+    function(d3, lm, data, components, layouts, bind, entities) {
         'use strict';
 
         var div;
@@ -37,12 +37,14 @@ define([
             finalYear: 2010
         };
 
+        var _i18n;
+
         var drawable;  // Data used for drawing
 
-        function init(divId, state, i18n) {
+        function init(divId, state, t) {
             initProperties(divId);
             setState(state);
-            seti18n(i18n);
+            seti18n(t);
 
             initComponents();
             initLayoutManager();
@@ -103,10 +105,21 @@ define([
 
         function seti18n(fn) {
             if (typeof fn === 'function') {
-                i18n = fn;
+                _i18n = fn;
             } else {
-                i18n = new i18n();
+                _i18n = i18n.instance();
             }
+        }
+
+        function setLanguage(lang, callback) {
+            var id = 0; // Income Mountain pofile id
+            _i18n.setLanguage(lang, id, function() {
+                var header = components.get().header;
+                header.setText(_i18n.translate('incMountain', 'People by income'));
+                if (typeof callback === 'function') {
+                    callback();
+                }
+            });
         }
 
         function initLayoutManager() {
@@ -115,7 +128,7 @@ define([
         }
 
         function initComponents() {
-            components.init(svg, i18n, state, properties);
+            components.init(svg, _i18n, state, properties);
         }
 
         function initLayouts() {
@@ -176,6 +189,7 @@ define([
             setState: setState,
             setMeasures: setMeasures,
             seti18n: seti18n,
+            setLanguage: setLanguage,
             setGeo: setGeo,
             draw: draw,
             data: data

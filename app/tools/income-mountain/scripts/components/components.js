@@ -18,12 +18,12 @@ define([
             mountains: mountains
         };
 
-        function init(svg, i18n, state, properties) {
+        function init(svg, _i18n, state, properties) {
             // header start
             components.header = new text();
             components.header.init(
                 svg,
-                i18n.translate('incMountain', 'People by income'),
+                _i18n.translate('incMountain', 'People by income'),
                 'header',
                 50
             );

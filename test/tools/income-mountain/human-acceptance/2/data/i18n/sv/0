@@ -1,0 +1,21 @@
+{
+   "sv" : {
+      "" : {
+         "Plural-Forms" : " nplurals=2; plural=(n != 1);",
+         "MIME-Version" : " 1.0",
+         "POT-Creation-Date" : " 2014-02-27 03:47+0100",
+         "Language" : " sv",
+         "Last-Translator" : " Thiago Costa Porto <thiago@freebsd.local>",
+         "Content-Type" : " text/plain; charset=UTF-8",
+         "PO-Revision-Date" : " 2014-02-27 03:51+0100",
+         "Language-Team" : " Swedish",
+         "Report-Msgid-Bugs-To" : " ",
+         "Project-Id-Version" : " PACKAGE VERSION",
+         "Content-Transfer-Encoding" : " 8bit"
+      },
+      "incMountain\u0004People by income" : [
+         null,
+         "Inkomstfördelning"
+      ]
+   }
+}
