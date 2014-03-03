@@ -188,8 +188,8 @@ module.exports = function (grunt) {
         },
         compass: {
             options: {
-                sassDir: '<%= yeoman.app.project %>/styles',
-                cssDir: '<%= yeoman.tmp.project %>/styles',
+                sassDir: '<%= yeoman.app.base %>/vizabi.js/styles',
+                cssDir: '<%= yeoman.tmp.base %>/styles',
                 generatedImagesDir: '<%= yeoman.app.project %>/images/generated',
                 imagesDir: '<%= yeoman.app.project %>/images',
                 javascriptsDir: '<%= yeoman.app.project %>/scripts',
@@ -261,7 +261,7 @@ module.exports = function (grunt) {
 						'{{project}}': project,
 						'{{hatnum}}': hatnum,
                         '<!-- @@vizabi.js-script-tag -->': '<script src="scripts/vizabi.js" type="text/javascript"></script>',
-                        '<!-- @@hat-include:"css.html" -->': '<%= grunt.file.read("' + paths.app.base + '/vizabi.js/build/css.html") %>',
+                        '<!-- @@hat-include:"css.html" -->': '<link rel="stylesheet" href="styles/vizabi.css"/>',
 						'<!-- @@hat-include:"body.html" -->': '<%= grunt.file.read("' + paths.hat + '/body.html") %>'
 					},
 					prefix: ''
