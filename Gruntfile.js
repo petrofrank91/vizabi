@@ -439,7 +439,7 @@ module.exports = function (grunt) {
 						cwd: '<%= yeoman.hat %>',
 						dest: '<%= yeoman.dist.base %>',
                         src: [
-                            'data/{,*/}*',
+                            'data/**',
                         ]
                     },
                 ]
