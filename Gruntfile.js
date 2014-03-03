@@ -260,8 +260,23 @@ module.exports = function (grunt) {
 					variables: {
 						'{{project}}': project,
 						'{{hatnum}}': hatnum,
-                        '<!-- @@vizabi.js-script-tag -->': '<script src="scripts/vizabi.js" type="text/javascript"></script>',
-                        '<!-- @@hat-include:"css.html" -->': '<link rel="stylesheet" href="styles/vizabi.css"/>',
+                        '<!-- @@vizabi.js-script-tag -->': '<script type="text/javascript" src="scripts/vizabi.js"></script>',
+                        '<!-- @@vizabi.css-style-tag -->': '<link rel="stylesheet" href="styles/vizabi.css"/>',
+						'<!-- @@hat-include:"body.html" -->': '<%= grunt.file.read("' + paths.hat + '/body.html") %>'
+					},
+					prefix: ''
+				},
+				files: [
+					{expand: true, flatten: true, src: ['<%= yeoman.app.base %>/index.html'], dest: '<%= yeoman.app.base %>/'}
+				]
+			},
+			templateincludesdist: {
+				options: {
+					variables: {
+						'{{project}}': project,
+						'{{hatnum}}': hatnum,
+                        '<!-- @@vizabi.js-script-tag -->': '<script type="text/javascript" src="../../../../build/scripts/vizabi.js"></script>',
+                        '<!-- @@vizabi.css-style-tag -->': '<link rel="stylesheet" href="../../../../build/styles/vizabi.css"/>',
 						'<!-- @@hat-include:"body.html" -->': '<%= grunt.file.read("' + paths.hat + '/body.html") %>'
 					},
 					prefix: ''
@@ -543,7 +558,7 @@ module.exports = function (grunt) {
         'clean:dist',
         'copy:index',
         'replace:mainjs',
-        'replace:templateincludes',
+        'replace:templateincludesdist',
         //'concurrent:dist', // runs various tasks concurrently, see configuration above. currently disabled since the stage server chokes here. instead running the tasks synchronously:
         'imagemin',
         'svgmin',
@@ -560,7 +575,7 @@ module.exports = function (grunt) {
         'clean:dist',
         'copy:index',
         'replace:mainjs',
-        'replace:templateincludes',
+        'replace:templateincludesdist',
         'replace:wrapperjsdist',
         'useminPrepare',
         'requirejs',
