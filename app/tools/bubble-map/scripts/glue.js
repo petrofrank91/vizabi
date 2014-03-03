@@ -140,6 +140,16 @@ define([
                 }
             },
 
+            setLanguage: function(lang, callback) {
+                var _this = this;
+                var id = 0;
+                this.i18n.setLanguage(lang, id, function() {
+                    var header = components.header;
+                    header.setText(_this.i18n.translate('bubbleMap', 'Billions of people per region'));
+                    callback();
+                });
+            },
+
             setminValue: function(x) {
                 this.bubValue = x || this.bubValue;
             },
