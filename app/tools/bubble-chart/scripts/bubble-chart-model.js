@@ -39,6 +39,7 @@ define(['bubble-chart-model-validator'], function (bubbleChartModelValidator) {
         xAxisTickValues: undefined,
         yAxisTickValues: undefined,
         language: undefined,
+        i18nfn: undefined,
         minFontSize: undefined,
         maxFontSize: undefined,
         minBubbleSize: undefined,

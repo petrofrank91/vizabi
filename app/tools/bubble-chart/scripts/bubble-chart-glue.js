@@ -10,7 +10,6 @@ define([
     function ($, bubbleChartModel, vizBubble, timeSlider, settingsButton, chartGrid) {
         // supposed to be available at window.vizabi.bubbleChart
         var bubbleChart = function (renderDiv, state) {
-
             var isInteractive;
             var _vizBubble;
             var model;
@@ -41,9 +40,8 @@ define([
                     }
                 });
 
-                _i18n = i18n.instance();
+                seti18n();
             };
-
 
             var setState = function (state) {
                 model.set(state, function () {
@@ -55,9 +53,20 @@ define([
                 });
             };
 
+            var seti18n = function() {
+                var language = model.get("language");
+                var fn = model.get("i18nfn");
+
+                _i18n = fn ? fn : i18n.instance();
+
+                if (language) {
+                    setLanguage(language)
+                }
+            };
+
             var setLanguage = function(lang, callback) {
-                var id = 0;
-                _i18n.setLanguage(lang, id, callback);
+                var filename = 0;
+                _i18n.setLanguage(lang, filename, callback);
             };
 
             var setUpModelAndUpdate = function () {
