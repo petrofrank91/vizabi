@@ -6,9 +6,10 @@ define([
         'bubble-map/components/components',
         'bubble-map/layouts/layout',
         'bubble-map/bind/bind',
-        'i18n'
+        'events',
+        'i18n',
     ],
-    function(d3, entities, layoutManager, data, components, layout, bind) {
+    function(d3, entities, layoutManager, data, components, layout, bind, events) {
         'use strict';
 
         var state = {
@@ -60,6 +61,10 @@ define([
             bind.init(context);
         }
 
+        function initEvents(context) {
+            context.events = events.instance();
+        }
+
         function makeBubblesData(context) {
             var data = [];
 
@@ -96,6 +101,7 @@ define([
         var bubbleMap = function() {
             this.svg = undefined;
             this.i18n = undefined;
+            this.events = undefined;
 
             this.gradient = false;
             this.border = false;
@@ -112,6 +118,8 @@ define([
                     .attr('class', 'vizabi-bubble-map');
 
                 this.svg = div.append('svg');
+
+                initEvents(this);
 
                 this.setState(st);
                 this.setProperties(prop);
