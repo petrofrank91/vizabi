@@ -50,11 +50,6 @@ define([
         function initData() {
             d = new data();
             d.init(state);
-
-            d.map(function() {
-                components.map.setMapData(d.cache.map);
-                components.map.draw();
-            });
         }
 
         function initBind(context) {
@@ -89,13 +84,6 @@ define([
             }
 
             return data;
-        }
-
-
-        function loadIndicator(context) {            
-            d.load(context.indicator, function() {
-                context.render.apply(context);
-            });
         }
 
         var bubbleMap = function() {
@@ -137,6 +125,7 @@ define([
                 initBind(this);
 
                 this.setIndicator(state.indicator);
+                this.loadMap();
             },
 
             setState: function(s) {
@@ -151,9 +140,9 @@ define([
                 properties.language = p.language || properties.language;
             },
 
-            seti18n: function(_i18n) {
+            seti18n: function(fn) {
                 if (typeof i18n === 'function') {
-                    this.i18n = _i18n;
+                    this.i18n = fn;
                 } else {
                     this.i18n = i18n.instance();
                     if (properties.language !== 'dev') {
@@ -166,8 +155,7 @@ define([
                 var _this = this;
                 var id = 0;
                 this.i18n.setLanguage(lang, id, function() {
-                    var header = components.header;
-                    header.setText(_this.i18n.translate('bubbleMap', 'Billions of people per region'));
+                    _this.events.trigger('changed:language', lang);
                     if (typeof callback === 'function') {
                         callback();
                     }
@@ -191,8 +179,18 @@ define([
             },
 
             setIndicator: function(indicator) {
-                this.indicator = indicator;
-                loadIndicator(this);
+                var _this = this;
+                d.load(indicator, function() {
+                    _this.events.trigger('loaded:data', indicator);
+                });
+            },
+
+            loadMap: function() {
+                var _this = this;
+                components.map.ready = false;
+                d.map(function() {
+                    _this.events.trigger('loaded:map', d.cache.map);
+                });
             },
 
             render: function() {
