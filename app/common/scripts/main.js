@@ -56,6 +56,7 @@ require.config({
         // components
         'layout-manager': '../../vizabi-components/layout-manager/layout-manager',
         'i18n': '../../bower_components/i18n-js/i18n',
+        'events': '../../vizabi-components/event-manager/event-manager',
 
         // widgets
         'settings-button': '../../widgets/settings-button/settings-button',
