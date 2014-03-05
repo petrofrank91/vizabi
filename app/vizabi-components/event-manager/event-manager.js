@@ -20,6 +20,21 @@ define([
             }
         }
 
+        function removeEvent(context, name, func) {
+            if (typeof name === 'string') {
+                if (context.events[name]) {
+                    if (typeof func === 'function') {
+                        var evts = context.events[name];
+                        while (evts.indexOf(func) !== -1) {
+                            evts.splice(evts.indexOf(func), 1);
+                        }
+                    } else {
+                        context.events[name] = [];
+                    }
+                }
+            }
+        }
+
         function register(context, instance) {
             context.instances.push(instance);
         }
@@ -38,19 +53,12 @@ define([
         }
 
         function unbind(context, name, func) {
-            if (typeof func === 'function') {
-                if (typeof name === 'string') {
-                    if (context.events[name]) {
-                        var evts = context.events[name];
-
-                        while (evts.indexOf(func) !== -1) {
-                            evts.splice(evts.indexOf(func), 1);
-                        }
-                    }
-                }
-            } else {
-                if (typeof name === 'string' && context.events[name]) {
-                    context.events[name] = [];
+            if (typeof name === 'string') {
+                removeEvent(context, name, func);
+            } else if ((Array.isArray && Array.isArray(name)) ||
+                Object.prototype.toString.call(name) === '[object Array]') {
+                for (var i = 0; i < name.length; i++) {
+                    removeEvent(context, name[i], func);
                 }
             }
         }
