@@ -88,7 +88,7 @@ define([
             trigger(this, name, args);
 
             // Global event triggers event on all instances
-            for (var j = 0; j < this.instances; j++) {
+            for (var j = 0; j < this.instances.length; j++) {
                 var instance = this.instances[j];
                 instance.trigger(name, args);
             }
