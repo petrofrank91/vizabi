@@ -7,6 +7,8 @@ define([
         var g;
 
         var mapData = {};
+
+        var ready = false;
         
         var projection = d3.geo.equirectangular();
         var path = d3.geo.path().projection(projection);
@@ -49,6 +51,7 @@ define([
         }
 
         return {
+            ready: ready,
             init: init,
             position: pos,
             setMapData: setMapData,
