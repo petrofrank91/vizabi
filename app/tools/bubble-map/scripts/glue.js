@@ -196,6 +196,14 @@ define([
             render: function() {
                 components.bubbles.setData(makeBubblesData(this));
                 components.bubbles.draw();
+            },
+
+            on: function(evt, callback) {
+                this.events.bind(evt, callback);
+            },
+
+            trigger: function(evt, args) {
+                this.events.trigger(evt, args);
             }
         };
 
