@@ -1,22 +1,65 @@
 define([
-        'bubble-map/components/components'
+        'bubble-map/components/components',
     ],
     function(components) {
         'use strict';
 
-        var self;
+        var _self;
 
         function init(context) {
-            self = context;
-            bindAll();
+            _self = context;
+
+            listenState();
+            listenLanguage();
+            listenMap();
+            listenData();
+            
+            bindTimeslider();
+        }
+
+        function listenState() {
+            _self.events.bind('changed:state', function(state) {
+                _self.setState(state);
+                _self.render();
+            });
+        }
+
+        function listenLanguage() {
+            _self.events.bind('changed:language', function(lang) {
+                var header = components.header;
+                header.setText(_self.i18n.translate('bubbleMap',
+                    'Billions of people per region'));
+            });
+        }
+
+        function listenMap() {
+            _self.events.bind('loaded:map', function(data) {
+                components.map.setMapData(data);
+                components.map.draw();
+                components.map.ready = true;
+            });
+        }
+
+        function listenData() {
+            _self.events.bind('loaded:data', function(indicator) {
+                if (!components.map.ready) {
+                    var action = function() {
+                        _self.indicator = indicator;
+                        _self.render();
+                        _self.events.unbind('loaded:map', action);
+                    };
+
+                    _self.events.bind('loaded:map', action);
+                }
+            });
         }
 
         function bindTimeslider() {
             var timeslider = components.timeslider;
             var bubbles = components.bubbles;
 
-            var action = function() {
-                self.render();
+            var action = function(year) {
+                _self.events.trigger('changed:state', { year: year });
             };
 
             timeslider.onplay(action);
@@ -24,13 +67,8 @@ define([
             timeslider.onmove(action);
         }
 
-        function bindAll() {
-            bindTimeslider();
-        }
-
         return {
             init: init,
-            all: bindAll,
             timeslider: bindTimeslider
         };
     }

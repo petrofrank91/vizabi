@@ -1,0 +1,21 @@
+{
+   "pt_BR" : {
+      "" : {
+         "Plural-Forms" : " nplurals=2; plural=(n > 1);",
+         "MIME-Version" : " 1.0",
+         "POT-Creation-Date" : " 2014-03-03 21:01+0100",
+         "Language" : " pt_BR",
+         "Last-Translator" : " Thiago Costa Porto <thiago@freebsd.local>",
+         "Content-Type" : " text/plain; charset=UTF-8",
+         "PO-Revision-Date" : " 2014-03-03 21:02+0100",
+         "Language-Team" : " Brazilian Portuguese",
+         "Report-Msgid-Bugs-To" : " ",
+         "Project-Id-Version" : " PACKAGE VERSION",
+         "Content-Transfer-Encoding" : " 8bit"
+      },
+      "bubbleMap\u0004Billions of people per region" : [
+         null,
+         "Bilhões de pessoas por região"
+      ]
+   }
+}
