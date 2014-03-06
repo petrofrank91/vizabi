@@ -1,0 +1,56 @@
+<div id="stats" style='margin: 15px 0; background-color: #f8f8f8; border: 1px solid #ddd; font-family: Consolas, "Liberation Mono", Courier, monospace; font-size: 13px; line-height: 19px; overflow: auto; padding: 6px 10px; border-radius: 3px; word-wrap: normal'>
+Number of bubbleMap events:<br>
+&nbsp;&nbsp;changed:state = <span id="state" style="color: #dd1144">0</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #999988">// triggered when the bubble map state changed</span><br>
+&nbsp;&nbsp;changed:language = <span id="language" style="color: #dd1144">0</span>&nbsp;&nbsp; <span style="color: #999988">// triggered when the tool language has changed</span><br>
+&nbsp;&nbsp;loaded:map = <span id="map" style="color: #dd1144">0</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: #999988">// triggered when the tool map has been loaded</span><br>
+&nbsp;&nbsp;loaded:data = <span id="data" style="color: #dd1144">0</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color: #999988">// triggered when indicator data has been loaded</span><br>
+</div>
+<div style="height:80%;width:100%;position:absolute">
+    <div id="bubble-map">
+    </div>
+</div>
+<!-- @@vizabi.js-script-tag -->
+<script>
+    function initialize() {
+        var renderDiv = '#bubble-map';
+        var state;
+        var properties;
+        var app;
+
+        var numStateChanges = 0;
+        var numLanguageChanges = 0;
+        var numLoadedMap = 0;
+        var numLoadedData = 0;
+
+        state = {
+            geo: ['SWE', 'PAN', 'UGA', 'CHN']
+        };
+
+        properties = {
+            language: 'pt_BR'
+        };
+
+        i18n.clearPath();
+        i18n.addPath('data/i18n/%(lang)s/%(filename)s');
+
+        app = vizabi.bubbleMap(renderDiv, state, properties);
+
+        app.on('changed:state', function() {
+            document.getElementById('state').innerHTML = ++numStateChanges;
+        });
+
+        app.on('changed:language', function() {
+            document.getElementById('language').innerHTML = ++numLanguageChanges;
+        });
+
+        app.on('loaded:data', function() {
+            document.getElementById('data').innerHTML = ++numLoadedData;
+        });
+
+        app.on('loaded:map', function() {
+            document.getElementById('map').innerHTML = ++numLoadedMap;
+        });
+    }
+
+    vizabi.ready(initialize);
+</script>
