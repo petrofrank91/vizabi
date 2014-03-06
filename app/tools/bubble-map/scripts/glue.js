@@ -131,7 +131,7 @@ define([
             setState: function(s) {
                 if (!s) return;
                 state.year = s.year || state.year;
-                state.geo = s.geo || stage.geo;
+                state.geo = s.geo || state.geo;
                 state.indicator = s.indicator || state.indicator;
             },
 
