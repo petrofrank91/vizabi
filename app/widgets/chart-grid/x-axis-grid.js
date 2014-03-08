@@ -12,9 +12,12 @@ define(['chart-grid-x-axis', 'chart-grid-scale'], function(xAxis, scale) {
 		};
 
 		var render = function(w, h) {
-			if (axis) {
-				axis.remove();
-			}
+			if (w) availableWidth = w;
+			if (h) availableHeight = h;
+			
+			// if (axis) {
+			// 	axis.remove();
+			// }
 
 			setAxisScale();
 			createXAxis();
@@ -85,6 +88,22 @@ define(['chart-grid-x-axis', 'chart-grid-scale'], function(xAxis, scale) {
 				.attr("stroke", "lightgrey")
 				.classed("print", !vizState.get("isInteractive"))
 				.call(svgAxis);
+		};
+
+		var createYAxis = function() {
+			ySvgAxis = d3.svg.axis()
+				.scale(scale.get("y"))
+				.orient("left")
+				.tickSize(-availableWidth, 0);
+
+			if (vizState.get("yAxisTickValues")) {
+				ySvgAxis.tickValues(vizState.get("yAxisTickValues"));
+			}
+
+			axis = g
+				.attr("stroke", "lightgrey")
+				.classed("print", !vizState.get("isInteractive"))
+				.call(ySvgAxis);
 		};
 
 		return {

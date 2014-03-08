@@ -16,9 +16,9 @@ define(['chart-grid-x-axis', 'chart-grid-scale'], function(xAxis, scale) {
 			if (w) availableWidth = w;
 			if (h) availableHeight = h;
 
-			if (axis) {
-				axis.remove();
-			}
+			// if (axis) {
+			// 	axis.remove();
+			// }
 
 			setAxisScale();
 			createXAxis();
@@ -82,12 +82,10 @@ define(['chart-grid-x-axis', 'chart-grid-scale'], function(xAxis, scale) {
 		};
 
 		var setAxisTextG = function() {
-			xAxisLabelG = d3.select(g[0][0]);
+			axis.attr("class", "axis x text");
+			axis.selectAll(".tick").selectAll("line").remove();
 
-			xAxisLabelG.attr("class", "axis x text");
-			xAxisLabelG.selectAll(".tick").selectAll("line").remove();
-
-			g = xAxisLabelG;
+			g = axis;
 		};
 
 		var getGroup = function() {
