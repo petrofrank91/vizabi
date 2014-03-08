@@ -21,6 +21,7 @@ define(['chart-grid-x-axis', 'chart-grid-scale'], function(xAxis, scale) {
 
 			setAxisScale();
 			createXAxis();
+			setAxisGridG();
 
 			return g.node().getBBox();
 		};
@@ -90,21 +91,6 @@ define(['chart-grid-x-axis', 'chart-grid-scale'], function(xAxis, scale) {
 				.call(svgAxis);
 		};
 
-		var createYAxis = function() {
-			ySvgAxis = d3.svg.axis()
-				.scale(scale.get("y"))
-				.orient("left")
-				.tickSize(-availableWidth, 0);
-
-			if (vizState.get("yAxisTickValues")) {
-				ySvgAxis.tickValues(vizState.get("yAxisTickValues"));
-			}
-
-			axis = g
-				.attr("stroke", "lightgrey")
-				.classed("print", !vizState.get("isInteractive"))
-				.call(ySvgAxis);
-		};
 
 		return {
 			render: render,
