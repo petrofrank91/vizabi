@@ -45,20 +45,21 @@ define([
 			components.yLabel = new yLabel();
 			components.yLabel.init(chartCountainerG, state);
 			components.yLabel.render();
+			
+			components.xAxisText = new xAxisText();
+			components.xAxisText.init(chartCountainerG, state);
+			components.xAxisText.render();
 
 			components.xAxisGrid = new xAxisGrid();
 			components.xAxisGrid.init(chartCountainerG, state);
 			components.xAxisGrid.render();
 
-			components.xAxisText = new xAxisText();
-			components.xAxisText.render();
+			components.yAxisText = new yAxisText();
+			components.yAxisText.init(chartCountainerG, state);
+			components.yAxisText.render();
 
 			components.yAxisGrid = new yAxisGrid();
-			components.yAxisGrid.init(chartCountainerG, state);
 			components.yAxisGrid.render();
-
-			components.yAxisText = new yAxisText();
-			components.yAxisText.render();
 
 			components.searchBox = new searchBox();
 			components.searchBox.init(chartCountainerG);
