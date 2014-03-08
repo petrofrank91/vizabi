@@ -36,7 +36,8 @@ define(["layout-manager"], function(layoutManager) {
 				id: 'yAxisText',
 				g: components.get().yAxisText.getGroup(),
 				top: ['chart.top'],
-				left: ['chart.left']
+				left: ['chart.left'],
+				render: components.get().yAxisText.render
 			});
 
 			addComponent(lname, {
@@ -44,7 +45,9 @@ define(["layout-manager"], function(layoutManager) {
 				g: components.get().yAxisGrid.getGroup(),
 				top: ['yAxisText.top'],
 				left: ['yAxisText.right'],
+				render: components.get().yAxisGrid.render
 			});
+
 
 			addComponent(lname, {
 				id: 'searchBox',
@@ -65,14 +68,16 @@ define(["layout-manager"], function(layoutManager) {
 				id: 'xAxisText',
 				g: components.get().xAxisText.getGroup(),
 				top: ['yAxisText.bottom'],
-				left: ['yAxisText.right']
+				left: ['yAxisText.right'],
+				render: components.get().xAxisText.render
 			});
 
 			addComponent(lname, {
 				id: 'xAxisGrid',
 				g: components.get().xAxisGrid.getGroup(),
 				top: ['yAxisText.bottom'],
-				left: ['yAxisText.right']
+				left: ['yAxisText.right'],
+				render: components.get().xAxisGrid.render
 			});
 
 			addComponent(lname, {

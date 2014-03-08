@@ -59,6 +59,7 @@ define([
 			components.yAxisText.render();
 
 			components.yAxisGrid = new yAxisGrid();
+			components.yAxisGrid.init(chartCountainerG, state);
 			components.yAxisGrid.render();
 
 			components.searchBox = new searchBox();
