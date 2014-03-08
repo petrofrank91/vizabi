@@ -28,7 +28,7 @@ define(['chart-grid-y-axis', 'chart-grid-scale'], function(yAxis, scale) {
 
 
 		var setAxisGridG = function() {
-			axis.attr("class", "axis y line");
+			axis.attr("class", "axis y grid");
 			axis.selectAll(".tick").selectAll("text").remove();
 			axis.selectAll('.domain').remove();
 
