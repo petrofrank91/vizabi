@@ -1,17 +1,20 @@
 define(['d3', 'chart-grid-scale'], function(d3, scale) {
 
 	var yAxis = function() {
+		
+		var availableWidth = 880;
+		var availableHeight = 440;
+		var availableWidth;
+		var availableHeight;
+
+
 		var vizState;
 		var g;
-		var availableWidth = 800;
-		var availableHeight = 350;
+		var axis;
 
 		var init = function(svg, state)  {
 			g = svg;
 			vizState = state;
-
-			// availableWidth = ($(window).width());
-			// availableHeight = ($(window).height());
 		};
 
 		var setAxisScale = function() {
@@ -43,32 +46,35 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			// 	yDomain[1] /= zoomScale;
 			// }
 
-			scale.init("y", vizState.get("yAxisScale"), yDomain, [availableHeight, 0]);
+			 scale.init("y", vizState.get("yAxisScale"), yDomain, [availableHeight, 0]);
 		};
 
 		var createYAxis = function() {
 			ySvgAxis = d3.svg.axis()
 				.scale(scale.get("y"))
 				.orient("left")
-				//.ticks(10, d3.format(",d"))
-				.tickSize(-availableWidth, 0)
-				//.tickPadding(5)
+				.tickSize(-availableWidth, 0);
 
 			if (vizState.get("yAxisTickValues")) {
 				ySvgAxis.tickValues(vizState.get("yAxisTickValues"));
 			}
 
-			g
+			axis = g
 				.attr("stroke", "lightgrey")
 				.classed("print", !vizState.get("isInteractive"))
 				.call(ySvgAxis);
 		};
 
 		var render = function(w, h) {
-			if (w) availableWidth = w;
-			if (h) availableHeight = h;
-			setAxisScale();
-			createYAxis();
+			 if (w) availableWidth = w;
+			 if (h) availableHeight = h;
+			 
+			 // if (axis) {
+			 // 	axis.remove();
+			 // }
+
+			 setAxisScale();
+			 createYAxis();
 		};
 
 		var getGroup = function() {
@@ -108,8 +114,8 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 
 		var setAxisGridG = function() {
 			var yAxisGridG = clone(g[0][0]);
-			
-			yAxisGridG.attr("class", "axis y .ine");
+
+			yAxisGridG.attr("class", "axis y line");
 			yAxisGridG.selectAll(".tick").selectAll("text").remove();
 			yAxisGridG.selectAll('.domain').remove();
 
@@ -123,13 +129,18 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			.remove();
 		};
 
+		var getScale = function () {
+			return yScale;
+		};
+
 		return {
 			render: render,
 			init: init,
 			getGroup: getGroup,
 			setAxisTextG: setAxisTextG,
 			setAxisGridG: setAxisGridG,
-			removeRestOfChartTicks: removeRestOfChartTicks
+			removeRestOfChartTicks: removeRestOfChartTicks,
+			getScale : getScale
 		};
 	};
 

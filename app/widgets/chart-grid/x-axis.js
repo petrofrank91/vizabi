@@ -3,16 +3,16 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 	var axis = function() {
 		var vizState;
 		var g;
-		var availableWidth = 800;
-		var availableHeight = 350;
-		var svg;
+		var availableWidth = 880;
+		var availableHeight = 440;
+		var axis;
+		var xAxisLabelG;
+		var xAxisTextG;
+		var xScale;
 
-		var init = function(svg, state)  {
-			g = svg;
-
+		var init = function(_svg, state)  {
+			g = _svg;
 			vizState = state;
-			// availableWidth = ($(window).width());
-			// availableHeight = ($(window).height());
 		};
 
 		var setAxisScale = function() {
@@ -55,7 +55,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 					return "$" + d;
 				})
 				.ticks(10, d3.format(",d"))
-				.tickSize(-availableHeight, 0, 0)
+				.tickSize(-availableHeight, 0)
 				.tickPadding(5)
 				.orient("bottom");
 
@@ -63,7 +63,7 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 				svgAxis.tickValues(vizState.get("xAxisTickValues"));
 			}
 
-			g
+			axis = g
 				.attr("stroke", "lightgrey")
 				.classed("print", !vizState.get("isInteractive"))
 				.call(svgAxis);
@@ -72,6 +72,11 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 		var render = function(w, h) {
 			if (w) availableWidth = w;
 			if (h) availableHeight = h;
+
+			if (axis) {
+				axis.remove();
+			}
+
 			setAxisScale();
 			createXAxis();
 		};
@@ -80,36 +85,58 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			return g;
 		};
 
-		var clone = function(selector) {
-			var node = d3.select(selector).node();
-			
-			return d3.select(node.parentNode.insertBefore(node.cloneNode(true),
-				node.nextSibling));
+		var cloneAxis = function() {
+			var node = axis.node();
+
+			var i = node.parentNode.insertBefore(node.cloneNode(true),
+				node.nextSibling);
+
+			return d3.select(i);
 		};
 
 		var setAxisTextG = function() {
-			xAxisLabelG = d3.select(g[0][0]);
+			// xAxisLabelG = d3.select(g[0][0]);
 
-			xAxisLabelG.attr("class", "axis x text");
-			xAxisLabelG.selectAll(".tick").selectAll("line").remove();
+			// xAxisLabelG.attr("class", "axis x text");
+			// xAxisLabelG.selectAll(".tick").selectAll("line").remove();
 
-			return xAxisLabelG;
+			// return xAxisLabelG;
+
+			xAxisTextG = cloneAxis();
+
+			xAxisTextG.attr("class", "axis x text");
+			xAxisTextG.selectAll(".tick").selectAll("line").remove();
+			xAxisTextG.select('path').remove();
+
+			return xAxisTextG;
 		};
 
 		var setAxisGridG = function() {
-			var xAxisTextG = clone(g[0][0]);
-			
-			xAxisTextG.attr("class", "axis x line");
-			xAxisTextG.selectAll(".tick").selectAll("text").remove();
+			// xAxisTextG = cloneAxis();
 
-			return xAxisTextG;
+			// xAxisTextG.attr("class", "axis x line");
+			// xAxisTextG.selectAll(".tick").selectAll("text").remove();
+			// xAxisTextG.select('path').remove();
+
+			// return xAxisTextG;
+
+			xAxisLabelG = d3.select(g[0][0]);
+
+			xAxisLabelG.attr("class", "axis x line");
+			xAxisLabelG.selectAll(".tick").selectAll("text").remove();
+
+			return xAxisLabelG;
 		};
 
 		var removeRestOfChartTicks = function() {
 			g.selectAll(".tick").filter(function() {
 				return d3.select(d3.select(this).node().parentNode).attr("class") === g.attr("class");
 			})
-			.remove();
+				.remove();
+		};
+
+		var getScale = function () {
+			return xScale;
 		};
 
 		return {
@@ -118,7 +145,8 @@ define(['d3', 'chart-grid-scale'], function(d3, scale) {
 			getGroup: getGroup,
 			setAxisTextG: setAxisTextG,
 			setAxisGridG: setAxisGridG,
-			removeRestOfChartTicks: removeRestOfChartTicks
+			removeRestOfChartTicks: removeRestOfChartTicks,
+			getScale: getScale
 		};
 	};
 
