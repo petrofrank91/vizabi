@@ -1,149 +1,151 @@
-define(['d3', 'chart-grid-scale'], function(d3, scale) {
+define([
+		'chart-grid-scale'
+	],
+	function(scale) {
+		function yAxis() {
+			var g;
+			var axis;
+			var axisText;
+			var axisGrid;
+			var vizState;
+			var availableWidth = 880;
+			var availableHeight = 500;
 
-	var yAxis = function() {
-		
-		var availableWidth = 880;
-		var availableHeight = 440;
-		var availableWidth;
-		var availableHeight;
+			function init(svg, state) {
+				g = svg.append("g");
+				axis = svg.append('g').attr('id', 'axis');
+				axisText = svg.append('g').classed('axistext', true).attr('stroke', 'lightgrey');//css
+				axisGrid = svg.append('g').classed('axisgrid', true).attr('stroke', 'lightgrey');//css
+				vizState = state;
+			};
 
+			function render(w, h) {
+				if (w) availableWidth = w;
+				if (h) availableHeight = h;
 
-		var vizState;
-		var g;
-		var axis;
-
-		var init = function(svg, state)  {
-			g = svg;
-			vizState = state;
-		};
-
-		var setAxisScale = function() {
-			var yDomain = [];
-			if (vizState.get("minYValue") !== undefined && vizState.get("maxYValue") !== undefined) {
-				var updatedMinY = vizState.get("updatedMinYValue");
-				var minY = vizState.get("minYValue");
-
-				if (updatedMinY && updatedMinY < minY) {
-					yDomain[0] = updatedMinY;
-				} else {
-					yDomain[0] = minY;
+				if (axis) {
+					axis.selectAll('g').remove();
+					axis.select('path').remove();
+					axisText.selectAll('g').remove();
+					axisGrid.selectAll('g').remove();
 				}
 
-				var maxY = vizState.get("maxYValue");
-				var updatedMaxY = vizState.get("updatedMaxYValue");
+				setYScale();
+				bakeAxis();
+				breakdownAxes();
+				addAxisPadding();
 
-				if (updatedMaxY && updatedMaxY > maxY) {
-					yDomain[1] = updatedMaxY;
+				return axis.node().getBBox();
+			};
+
+			function findYDomain() {
+				var yDomain = [];
+				if (vizState.get("minYValue") !== undefined && vizState.get("maxYValue") !== undefined) {
+					var updatedMinY = vizState.get("updatedMinYValue");
+					var minY = vizState.get("minYValue");
+
+					if (updatedMinY && updatedMinY < minY) {
+						yDomain[0] = updatedMinY;
+					} else {
+						yDomain[0] = minY;
+					}
+
+					var maxY = vizState.get("maxYValue");
+					var updatedMaxY = vizState.get("updatedMaxYValue");
+
+					if (updatedMaxY && updatedMaxY > maxY) {
+						yDomain[1] = updatedMaxY;
+					} else {
+						yDomain[1] = maxY;
+					}
 				} else {
-					yDomain[1] = maxY;
+					yDomain = [vizState.getDataHelper().getMinOfYIndicator(), vizState.getDataHelper().getMaxOfYIndicator()];
 				}
-			} else {
-				yDomain = [vizState.getDataHelper().getMinOfYIndicator(), vizState.getDataHelper().getMaxOfYIndicator()];
+
+				return yDomain;
+			};
+
+			function setYScale() {
+				scale.init("y", vizState.get("yAxisScale"), findYDomain(), [availableHeight, 0]);
 			}
 
-			// if (zoomScale) {
-			// 	yDomain[0] /= zoomScale;
-			// 	yDomain[1] /= zoomScale;
-			// }
+			function bakeAxis() {
+				var domainInvert = findYDomain().reverse();
+				var localScale = d3.scale.linear().domain(domainInvert).range([0, availableHeight]);
 
-			 scale.init("y", vizState.get("yAxisScale"), yDomain, [availableHeight, 0]);
-		};
+				var axisMaker = d3.svg.axis()
+					.scale(localScale)
+					.orient("left")
+					.tickSize(-availableWidth, 0);
 
-		var createYAxis = function() {
-			ySvgAxis = d3.svg.axis()
-				.scale(scale.get("y"))
-				.orient("left")
-				.tickSize(-availableWidth, 0);
+				if (vizState.get("yAxisTickValues")) {
+					axisMaker.tickValues(vizState.get("yAxisTickValues"));
+				}
 
-			if (vizState.get("yAxisTickValues")) {
-				ySvgAxis.tickValues(vizState.get("yAxisTickValues"));
+				axis.attr("stroke", "lightgrey").attr('id', 'axisNodes').call(axisMaker);//css
 			}
 
-			axis = g
-				.attr("stroke", "lightgrey")
-				.classed("print", !vizState.get("isInteractive"))
-				.call(ySvgAxis);
+			function breakdownAxes() {
+				axis.selectAll('.tick').each(function(d) {
+					axisText.node().appendChild(this.cloneNode(true));
+					axisGrid.node().appendChild(this.cloneNode(true));
+				});
+
+				axisGrid.selectAll('text').remove();
+				axisText.selectAll('line').remove();
+				axis.selectAll('.tick').remove();
+			}
+
+			function addAxisPadding() {
+				var maxTextWidth = 0;
+
+				axisText.selectAll('text').each(function() {
+					var element = d3.select(this);
+					maxTextWidth = Math.max(element.node().getBBox().width, maxTextWidth);
+				});
+
+				axisText.selectAll('text').each(function() {
+					var element = d3.select(this);
+					element.attr('x', maxTextWidth);
+				});
+			}
+
+			function getGroup() {
+				return g;
+			};
+
+			function getAxisText() {
+				return axisText;
+			}
+
+			function bboxAxisText() {
+				return axisText.node().getBBox();
+			}
+
+			function getAxisGrid() {
+				return axisGrid;
+			}
+
+			function bboxAxisGrid() {
+				return axisGrid.node().getBBox();
+			}
+
+			function getAxis() {
+				return axis;
+			}
+
+			return {
+				render: render,
+				getGroup: getGroup,
+				getAxis: getAxis,
+				getAxisText: getAxisText,
+				measureAxisText: bboxAxisText,
+				getAxisGrid: getAxisGrid,
+				measureAxisGrid: bboxAxisGrid,
+				init: init
+			};
 		};
 
-		var render = function(w, h) {
-			 if (w) availableWidth = w;
-			 if (h) availableHeight = h;
-			 
-			 // if (axis) {
-			 // 	axis.remove();
-			 // }
-
-			 setAxisScale();
-			 createYAxis();
-		};
-
-		var getGroup = function() {
-			return g;
-		};
-
-
-		var clone = function(selector) {
-			var node = d3.select(selector).node();
-
-			return d3.select(node.parentNode.insertBefore(node.cloneNode(true),
-				node.nextSibling));
-		};
-
-		var setAxisTextG = function() {
-			yAxisTextG = d3.select(g[0][0]);
-
-			yAxisTextG.attr("class", "axis y text");
-			var yAxisTextMaxWidth = d3.max(yAxisTextG.selectAll("g").selectAll("text"), function () {
-				return this.node().getBBox().width;
-			});
-			
-			yAxisTextG.selectAll("g").selectAll("text").each(function() {
-				var textNode = d3.select(this);
-				var currentVal = parseFloat(textNode.attr("x"));
-				textNode.attr("x", currentVal + 8 + yAxisTextMaxWidth);
-			});
-
-			yAxisTextG.selectAll(".tick").selectAll("line").remove();
-
-			var axisPath = yAxisTextG.select('.domain');
-
-			axisPath.attr('transform', 'translate(' + (yAxisTextMaxWidth + 8) + ',0)');
-
-			return yAxisTextG;
-		};
-
-		var setAxisGridG = function() {
-			var yAxisGridG = clone(g[0][0]);
-
-			yAxisGridG.attr("class", "axis y line");
-			yAxisGridG.selectAll(".tick").selectAll("text").remove();
-			yAxisGridG.selectAll('.domain').remove();
-
-			return yAxisGridG;
-		};
-
-		var removeRestOfChartTicks = function () {
-			g.selectAll(".tick").filter(function() {
-				return d3.select(d3.select(this).node().parentNode).attr("class") === g.attr("class");
-			})
-			.remove();
-		};
-
-		var getScale = function () {
-			return yScale;
-		};
-
-		return {
-			render: render,
-			init: init,
-			getGroup: getGroup,
-			setAxisTextG: setAxisTextG,
-			setAxisGridG: setAxisGridG,
-			removeRestOfChartTicks: removeRestOfChartTicks,
-			getScale : getScale
-		};
-	};
-
-	return yAxis();
-
-});
+		return yAxis;
+	}
+);
