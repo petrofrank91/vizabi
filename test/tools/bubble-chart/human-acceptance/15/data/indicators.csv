@@ -1,4 +1,0 @@
-id,name,info,data,unit,note
-gdp_per_cap,GDP per capita,Sum of gross value added by all resident producers in the economy plus any product taxes and minus any subsidies not included in the value of the products,bra1,US Dollars,bra1:geconyale
-imr,Infant Mortality Rate,"Number of deaths of children before age 1, per 10000 live births",bra1,Deaths per 1000 births,bra1:siabinfo
-pop,Population,"Number of inhabitants, including migrant workers.",bra1,Number,bra1:siabinfo
