@@ -47,7 +47,7 @@ define(["layout-manager"], function(layoutManager) {
 				top: ['yLabel.bottom'],
 				left: ['chart.left'],
 				bottom: ['chart.bottom', -60],
-				right: ['chart.right'],
+				right: ['chart.right', -20],
 				render: components.get().yAxis.render
 			});
 
@@ -88,7 +88,7 @@ define(["layout-manager"], function(layoutManager) {
 				top: ['yAxis.top'],
 				left: ['chart.left'],
 				bottom: ['chart.bottom', -60],
-				right: ['chart.right'],
+				right: ['chart.right', -20],
 				render: components.get().xAxis.render
 			});
 
@@ -97,6 +97,7 @@ define(["layout-manager"], function(layoutManager) {
 				g: components.get().xAxis.getAxis(),
 				top: ['yAxis.bottom'],
 				left: ['yAxis.right'],
+				right: ['x-axisCaller.right'],
 				render: components.get().xAxis.measureAxis
 			});
 
@@ -105,7 +106,7 @@ define(["layout-manager"], function(layoutManager) {
 				g: components.get().xAxis.getAxisText(),
 				top: ['xAxis.top'],
 				left: ['xAxis.left'],
-				right: ['chart.right'],
+				right: ['xAxis.right'],
 				render: components.get().xAxis.measureAxisText
 			});
 
@@ -114,7 +115,7 @@ define(["layout-manager"], function(layoutManager) {
 				g: components.get().xAxis.getAxisGrid(),
 				top: ['xAxis.bottom'],
 				left: ['xAxis.left'],
-				right: ['chart.right'],
+				right: ['xAxis.right'],
 				render: components.get().xAxis.measureAxisGrid
 			});
 
