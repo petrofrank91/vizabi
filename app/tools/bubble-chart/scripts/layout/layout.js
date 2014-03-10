@@ -28,56 +28,94 @@ define(["layout-manager"], function(layoutManager) {
 			addComponent(lname, {
 				id: 'chart',
 				g: components.get().chart.getGroup(),
+				top: 1,
+				left: 1,
+				bottom: ['stage.height', -10],
+				right: ['stage.width', -10]
+			});
+			
+			// addComponent(lname, {
+			// 	id: 'yearLabel',
+			// 	g: components.get().yearLabel.getGroup(),
+			// 	xcenter: ['chart.xcenter'],
+			// 	ycenter: ['chart.ycenter']
+			// });
+
+			addComponent(lname, {
+				id: 'axisCaller',
+				g: components.get().yAxis.getGroup(),
 				top: ['yLabel.bottom'],
-				left: ['yLabel.left'],
+				left: ['chart.left'],
+				bottom: ['chart.bottom', -60],
+				right: ['chart.right'],
+				render: components.get().yAxis.render
 			});
 
 			addComponent(lname, {
 				id: 'yAxisText',
-				g: components.get().yAxisText.getGroup(),
-				top: ['chart.top'],
+				g: components.get().yAxis.getAxisText(),
+				top: ['yLabel.bottom'],
 				left: ['chart.left'],
-				render: components.get().yAxisText.render
+				render: components.get().yAxis.measureAxisText
+			});
+
+			addComponent(lname, {
+				id: 'yAxis',
+				g: components.get().yAxis.getAxis(),
+				top: ['yLabel.bottom'],
+				left: ['yAxisText.right', 5],
+				render: components.get().yAxis.measureAxis
 			});
 
 			addComponent(lname, {
 				id: 'yAxisGrid',
-				g: components.get().yAxisGrid.getGroup(),
-				top: ['yAxisText.top'],
-				left: ['yAxisText.right'],
-				render: components.get().yAxisGrid.render
+				g: components.get().yAxis.getAxisGrid(),
+				top: ['yLabel.bottom'],
+				left: ['yAxis.left'],
+				render: components.get().yAxis.measureAxisGrid
 			});
-
 
 			addComponent(lname, {
 				id: 'searchBox',
 				g: components.get().searchBox.getGroup(),
-				top: ['chart.top', 10],
-				left: ['yAxisGrid.left', 10]
+				top: ['yLabel.bottom', 10],
+				left: ['yAxis.right', 10]
 			});
 
-			// LATER
-			// addComponent(lname, {
-			// 	id: 'yearLabel',
-			// 	g: components.get().yearLabel.getGroup(),
-			// 	top: 1,
-			// 	left: 1
-			// });
+			addComponent(lname, {
+				id: 'x-axisCaller',
+				g: components.get().xAxis.getGroup(),
+				top: ['yAxis.top'],
+				left: ['chart.left'],
+				bottom: ['chart.bottom', -60],
+				right: ['chart.right'],
+				render: components.get().xAxis.render
+			});
+
+			addComponent(lname, {
+				id: 'xAxis',
+				g: components.get().xAxis.getAxis(),
+				top: ['yAxis.bottom'],
+				left: ['yAxis.right'],
+				render: components.get().xAxis.measureAxis
+			});
 
 			addComponent(lname, {
 				id: 'xAxisText',
-				g: components.get().xAxisText.getGroup(),
-				top: ['yAxisText.bottom'],
-				left: ['yAxisText.right'],
-				render: components.get().xAxisText.render
+				g: components.get().xAxis.getAxisText(),
+				top: ['xAxis.top'],
+				left: ['xAxis.left'],
+				right: ['chart.right'],
+				render: components.get().xAxis.measureAxisText
 			});
 
 			addComponent(lname, {
 				id: 'xAxisGrid',
-				g: components.get().xAxisGrid.getGroup(),
-				top: ['yAxisText.bottom'],
-				left: ['yAxisText.right'],
-				render: components.get().xAxisGrid.render
+				g: components.get().xAxis.getAxisGrid(),
+				top: ['xAxis.bottom'],
+				left: ['xAxis.left'],
+				right: ['chart.right'],
+				render: components.get().xAxis.measureAxisGrid
 			});
 
 			addComponent(lname, {
@@ -90,10 +128,10 @@ define(["layout-manager"], function(layoutManager) {
 			addComponent(lname, {
 				id: 'bubblesContainer',
 				g: components.get().bubblesContainer.getGroup(),
-				top: ['yAxisText.top'],
-				left: ['yAxisText.right'],
-				bottom: ['yAxisText.bottom'],
-				right: ['xAxisText.right'],
+				top: ['yAxis.top'],
+				left: ['yAxis.right'],
+				bottom: ['yAxis.bottom'],
+				right: ['xAxis.right'],
 				render: components.get().bubblesContainer.render
 			});
 		};
