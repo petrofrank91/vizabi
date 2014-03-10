@@ -86,9 +86,9 @@ define(["layout-manager"], function(layoutManager) {
 				id: 'x-axisCaller',
 				g: components.get().xAxis.getGroup(),
 				top: ['yAxis.top'],
-				left: ['chart.left'],
+				left: ['yAxis.right'],
 				bottom: ['chart.bottom', -60],
-				right: ['chart.right', -20],
+				right: ['yAxisGrid.right'],
 				render: components.get().xAxis.render
 			});
 
