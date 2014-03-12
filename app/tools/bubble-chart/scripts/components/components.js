@@ -7,8 +7,9 @@ define([
 	 'bubble-chart-bubble-label',
 	 'bubble-chart-container',
 	 'chart-grid-x-axis',
-	 'chart-grid-y-axis'
-	 ], function(xLabel, yLabel, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer, xAxis, yAxis) {
+	 'chart-grid-y-axis',
+	 'bubble-chart-links'
+	 ], function(xLabel, yLabel, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer, xAxis, yAxis, bubbleLinks) {
 		var components = {
 			chart: undefined,
 			yearLabel: undefined,
@@ -21,7 +22,8 @@ define([
 			searchBox: undefined,
 			bubblesContainer: undefined,
 			labelLayer: undefined,
-			chartG: undefined
+			chartG: undefined,
+			linkLayer: undefined
 		};
 
 		var init = function (svg, state, stateChanged) {
@@ -59,9 +61,14 @@ define([
 			components.bubblesContainer.init(chartCountainerG, state, stateChanged);
 			components.bubblesContainer.render();
 
+			components.linkLayer = new bubbleLinks();
+			components.linkLayer.init(chartCountainerG, state);
+
 			components.labelLayer = new bubbleLabels();
 			components.labelLayer.init(chartCountainerG, state);
-			components.labelLayer.render();
+
+
+
 		};
 
 		var get = function () {
