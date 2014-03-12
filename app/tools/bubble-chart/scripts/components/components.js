@@ -20,7 +20,8 @@ define([
 			yAxisGrid:undefined,
 			searchBox: undefined,
 			bubblesContainer: undefined,
-			labelLayer: undefined
+			labelLayer: undefined,
+			chartG: undefined
 		};
 
 		var init = function (svg, state, stateChanged) {
@@ -29,7 +30,7 @@ define([
 			components.chart.render();
 			
 			var chartCountainerG = components.chart.getGroup().append('g');
-
+			components.chartG = chartCountainerG;
 			// components.yearLabel = new yearLabel();
 			// components.yearLabel.init(chartCountainerG, state);
 			// components.yearLabel.render();
