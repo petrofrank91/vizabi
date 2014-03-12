@@ -12,7 +12,6 @@ define([
             var selected = vizState.get("s");
             var id = d.id;
 
-
             if (id in selected) {
                 delete selected[id];
             } else {
@@ -178,7 +177,7 @@ define([
 
             this.yValueLabel = d3.select(".labelLayer")
                 .append("g")
-                .attr("transform", "translate(" + 30 + "," + nodeY + ")")
+                .attr("transform", "translate(" + (paddingRight - 5) + "," + nodeY + ")")
                 .attr("class", "yValueLabel")
                 .attr("pointer-events", "none");
 
