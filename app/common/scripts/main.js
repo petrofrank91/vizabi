@@ -44,6 +44,7 @@ require.config({
         'bubble-chart-bubble-label': '../../tools/bubble-chart/scripts/viz/bubble-labels',
         'bubble-chart-container': '../../tools/bubble-chart/scripts/viz/chart-container',
         'bubble-chart-layout': '../../tools/bubble-chart/scripts/layout/layout',
+        'bubble-chart-links': '../../tools/bubble-chart/scripts/viz/bubble-links',
         
         // income mountain
         'income-mountain': '../../tools/income-mountain/scripts',
