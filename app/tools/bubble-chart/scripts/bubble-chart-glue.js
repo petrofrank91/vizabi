@@ -158,13 +158,13 @@ define([
         };
 
 
-            var scatterChartModelUpdate = function(state) {
-                model.set(state, function() {
-                    _vizBubble.update(model, chartScales, availableFrame);
-                    if (modelBindCallback) {
-                        modelBindCallback(model.getAttributes());
-                    }
-                });
+        var scatterChartModelUpdate = function(state) {
+            model.set(state, function() {
+                components.get().bubblesContainer.render();
+                if (modelBindCallback) {
+                    modelBindCallback(model.getAttributes());
+                }
+            });
 
             };
 
