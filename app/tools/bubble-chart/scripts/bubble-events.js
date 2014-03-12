@@ -1,6 +1,6 @@
 define([
     'd3',
-    ], function(d3) {
+], function(d3) {
 
     var bubbleEvents = function(vizState, g, vizStateChangeCallback) {
         var availableWidth;
@@ -39,14 +39,14 @@ define([
         };
 
         var bubbleOverHandler = function(d, i) {
-            var components = require("bubble-chart-components");
-
             var id = d.id;
             var selected = vizState.get("s");
             var currentEntity;
             var alreadySelected;
-            availableHeight = components.get().chartG.node().getBBox().height;
+            var components = require("bubble-chart-components");
 
+            availableHeight = components.get().chartG.node().getBBox().height;
+            
             (d.year === vizState.get("year")) ? currentEntity = true : currentEntity = false;
 
             (id in selected) ? alreadySelected = true : alreadySelected = false;
@@ -56,11 +56,17 @@ define([
             }
 
             this.overNode = d3.select(d3.event.target).node();
-
             var overNode = d3.select(this.overNode);
 
-            var nodeX = parseInt(overNode.attr("cx"));
-            var nodeY = parseInt(overNode.attr("cy"));
+            var gridXTransform = components.get().xAxis.getAxisGrid().attr("transform");
+            var gridYTransform = components.get().yAxis.getAxisGrid().attr("transform");
+            var paddingRight = parseInt(gridXTransform.substring(gridXTransform.indexOf("(") + 1,
+                gridXTransform.indexOf(",")));
+            var paddingTop = parseInt(gridYTransform.substring(gridXTransform.indexOf(",") + 1,
+                gridXTransform.indexOf(")")));
+
+            var nodeX = parseInt(overNode.attr("cx")) + paddingRight;
+            var nodeY = parseInt(overNode.attr("cy")) + paddingTop;
             var nodeR = parseInt(overNode.attr("r"));
             var nodeFill = overNode.attr("fill");
 
@@ -128,13 +134,13 @@ define([
             var coordinates = fitWithinLabelConstraints(bbox, preferredX, preferredY);
 
             this.highlightLabel
-            .attr("transform", "translate(" + coordinates.x + "," + coordinates.y + ")");
+                .attr("transform", "translate(" + coordinates.x + "," + coordinates.y + ")");
 
             this.xValueLabel = d3.select(".labelLayer")
-            .append("g")
-            .attr("transform", "translate(" + nodeX + "," + availableHeight + ")")
-            .attr("class", "xValueLabel")
-            .attr("pointer-events", "none");
+                .append("g")
+                .attr("transform", "translate(" + nodeX + "," + availableHeight + ")")
+                .attr("class", "xValueLabel")
+                .attr("pointer-events", "none");
 
             var rectNodeX = this.xValueLabel
                 .append("rect")
@@ -172,8 +178,8 @@ define([
 
             this.yValueLabel = d3.select(".labelLayer")
                 .append("g")
-            .attr("transform", "translate(" + 30 + "," + nodeY + ")")
-            .attr("class", "yValueLabel")
+                .attr("transform", "translate(" + 30 + "," + nodeY + ")")
+                .attr("class", "yValueLabel")
                 .attr("pointer-events", "none");
 
             var rectNodeY = this.yValueLabel
@@ -248,8 +254,11 @@ define([
             }, vizData);
         };
 
-        var fitWithinLabelConstraints = function (bbox, x, y) {
-            var coordinates = {x: x, y: y};
+        var fitWithinLabelConstraints = function(bbox, x, y) {
+            var coordinates = {
+                x: x,
+                y: y
+            };
             var padding = 5;
 
             var minX = bbox.width / 2 + padding;
