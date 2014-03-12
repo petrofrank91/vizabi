@@ -1,14 +1,17 @@
-define(['d3'], function(d3) {
+define([
+    'd3',
+    ], function(d3) {
 
     var bubbleEvents = function(vizState, g, vizStateChangeCallback) {
+        var availableWidth;
+        var availableHeight;
 
-        var availableWidth = ($(window).width());
-        var availableHeight = ($(window).height());
 
         var bubbleClickHandler = function(d, i) {
             var currentYear = vizState.get("year");
             var selected = vizState.get("s");
             var id = d.id;
+
 
             if (id in selected) {
                 delete selected[id];
@@ -36,10 +39,13 @@ define(['d3'], function(d3) {
         };
 
         var bubbleOverHandler = function(d, i) {
+            var components = require("bubble-chart-components");
+
             var id = d.id;
             var selected = vizState.get("s");
             var currentEntity;
             var alreadySelected;
+            availableHeight = components.get().chartG.node().getBBox().height;
 
             (d.year === vizState.get("year")) ? currentEntity = true : currentEntity = false;
 
@@ -126,7 +132,7 @@ define(['d3'], function(d3) {
 
             this.xValueLabel = d3.select(".labelLayer")
             .append("g")
-            .attr("transform", "translate(" + nodeX + "," + (availableHeight + 15) + ")")
+            .attr("transform", "translate(" + nodeX + "," + availableHeight + ")")
             .attr("class", "xValueLabel")
             .attr("pointer-events", "none");
 
@@ -166,7 +172,7 @@ define(['d3'], function(d3) {
 
             this.yValueLabel = d3.select(".labelLayer")
                 .append("g")
-            .attr("transform", "translate(" + -6 + "," + nodeY + ")")
+            .attr("transform", "translate(" + 30 + "," + nodeY + ")")
             .attr("class", "yValueLabel")
                 .attr("pointer-events", "none");
 
@@ -243,7 +249,6 @@ define(['d3'], function(d3) {
         };
 
         var fitWithinLabelConstraints = function (bbox, x, y) {
-
             var coordinates = {x: x, y: y};
             var padding = 5;
 
