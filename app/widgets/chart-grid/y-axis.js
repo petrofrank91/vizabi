@@ -11,15 +11,15 @@ define([
 			var availableWidth = 880;
 			var availableHeight = 500;
 
-			function init(svg, state) {
+			var init = function(svg, state) {
 				g = svg.append("g");
 				axis = svg.append('g').attr('id', 'axis');
-				axisText = svg.append('g').classed('axistext', true).attr('stroke', 'lightgrey');//css
-				axisGrid = svg.append('g').classed('axisgrid', true).attr('stroke', 'lightgrey');//css
+				axisText = svg.append('g').classed('y axistext', true).attr('stroke', 'lightgrey');//css
+				axisGrid = svg.append('g').classed('y axisgrid', true).attr('stroke', 'lightgrey');//css
 				vizState = state;
 			};
 
-			function render(w, h) {
+			var render = function(w, h) {
 				if (w) availableWidth = w;
 				if (h) availableHeight = h;
 
@@ -31,14 +31,14 @@ define([
 				}
 
 				setYScale();
-				bakeAxis();
+				makeAxis();
 				breakdownAxes();
 				addAxisPadding();
 
 				return axis.node().getBBox();
 			};
 
-			function findYDomain() {
+			var findYDomain = function() {
 				var yDomain = [];
 				if (vizState.get("minYValue") !== undefined && vizState.get("maxYValue") !== undefined) {
 					var updatedMinY = vizState.get("updatedMinYValue");
@@ -65,11 +65,11 @@ define([
 				return yDomain;
 			};
 
-			function setYScale() {
+			var setYScale = function() {
 				scale.init("y", vizState.get("yAxisScale"), findYDomain(), [availableHeight, 0]);
-			}
+			};
 
-			function bakeAxis() {
+			var makeAxis = function () {
 				var domainInvert = findYDomain().reverse();
 				var localScale = d3.scale.linear().domain(domainInvert).range([0, availableHeight]);
 
@@ -83,9 +83,9 @@ define([
 				}
 
 				axis.attr("stroke", "lightgrey").attr('id', 'axisNodes').call(axisMaker);//css
-			}
+			};
 
-			function breakdownAxes() {
+			var breakdownAxes = function () {
 				axis.selectAll('.tick').each(function(d) {
 					axisText.node().appendChild(this.cloneNode(true));
 					axisGrid.node().appendChild(this.cloneNode(true));
@@ -94,9 +94,9 @@ define([
 				axisGrid.selectAll('text').remove();
 				axisText.selectAll('line').remove();
 				axis.selectAll('.tick').remove();
-			}
+			};
 
-			function addAxisPadding() {
+			var addAxisPadding = function () {
 				var maxTextWidth = 0;
 
 				axisText.selectAll('text').each(function() {
@@ -110,29 +110,33 @@ define([
 				});
 			}
 
-			function getGroup() {
+			var getGroup = function() {
 				return g;
 			};
 
-			function getAxisText() {
+			var getAxisText = function() {
 				return axisText;
 			}
 
-			function bboxAxisText() {
+			var bboxAxisText = function() {
 				return axisText.node().getBBox();
 			}
 
-			function getAxisGrid() {
+			var getAxisGrid = function() {
 				return axisGrid;
-			}
+			};
 
-			function bboxAxisGrid() {
+			var bboxAxisGrid = function() {
 				return axisGrid.node().getBBox();
-			}
+			};
 
-			function getAxis() {
+			var getAxis = function() {
 				return axis;
-			}
+			};
+
+			var getHeight = function () {
+				return availableHeight;
+			};
 
 			return {
 				render: render,
@@ -142,7 +146,8 @@ define([
 				measureAxisText: bboxAxisText,
 				getAxisGrid: getAxisGrid,
 				measureAxisGrid: bboxAxisGrid,
-				init: init
+				init: init,
+				getHeight: getHeight
 			};
 		};
 

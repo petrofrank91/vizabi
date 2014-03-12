@@ -7,7 +7,7 @@ define([], function() {
 
 		var init = function(svg, state) {
 			g = svg.append("g")
-				.attr("class", "axisLabel");
+				.attr("class", "y axisLabel");
 			vizState = state;
 		};
 

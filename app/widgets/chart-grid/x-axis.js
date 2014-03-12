@@ -14,7 +14,7 @@ define([
 			var availableWidth = 880;
 			var availableHeight = 500;
 
-			function init(svg, state) {
+			var init = function(svg, state) {
 				g = svg.append("g");
 				axis = svg.append('g').attr('id', 'x axis');
 				// 'stroke' in the 2 lines below should be CSS
@@ -23,7 +23,7 @@ define([
 				vizState = state;
 			};
 
-			function render(w, h) {
+			var render = function(w, h) {
 				if (w) availableWidth = w;
 				if (h) availableHeight = h;
 
@@ -35,7 +35,7 @@ define([
 				}
 
 				setXScale();
-				bakeAxis();
+				makeAxis();
 			
 				breakdownAxes();
 
@@ -70,11 +70,11 @@ define([
 				return xDomain;
 			};
 
-			function setXScale(w) {
+			var setXScale = function(w) {
 				scale.init("x", vizState.get("xAxisScale"), findXDomain(), [0, availableWidth]);
-			}
+			};
 
-			function bakeAxis() {
+			var  makeAxis = function() {
 				var axisMaker = d3.svg.axis()
 					.scale(scale.get("x"))
 					.tickFormat(function(d) {
@@ -90,9 +90,9 @@ define([
 				
 				// stroke below should be css
 				axis.attr("stroke", "lightgrey").attr('id', 'axisNodes').call(axisMaker);
-			}
+			};
 
-			function breakdownAxes() {
+			var breakdownAxes = function() {
 				axis.selectAll('.tick').each(function(d) {
 					axisText.node().appendChild(this.cloneNode(true));
 					axisGrid.node().appendChild(this.cloneNode(true));
@@ -101,31 +101,35 @@ define([
 				axisGrid.selectAll('text').remove();
 				axisText.selectAll('line').remove();
 				axis.selectAll('.tick').remove();
-			}
+			};
 
-			function getGroup() {
+			var getGroup = function() {
 				return g;
 			};
 
-			function getAxisText() {
+			var getAxisText = function() {
 				return axisText;
-			}
+			};
 
-			function bboxAxisText() {
+			var bboxAxisText = function() {
 				return axisText.node().getBBox();
-			}
+			};
 
-			function getAxisGrid() {
+			var getAxisGrid = function() {
 				return axisGrid;
-			}
+			};
 
-			function bboxAxisGrid() {
+			var bboxAxisGrid = function() {
 				return axisGrid.node().getBBox();
-			}
+			};
 
-			function getAxis() {
+			var getAxis = function() {
 				return axis;
-			}
+			};
+
+			var getWidth = function () {
+				return availableWidth;
+			};
 
 			return {
 				render: render,
@@ -135,7 +139,8 @@ define([
 				measureAxisText: bboxAxisText,
 				getAxisGrid: getAxisGrid,
 				measureAxisGrid: bboxAxisGrid,
-				init: init
+				init: init,
+				getWidth : getWidth
 			};
 		};
 
