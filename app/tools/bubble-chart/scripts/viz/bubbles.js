@@ -3,8 +3,9 @@ define([
     'chart-grid-scale',
     'bubble-chart-events',
     'util',
-    'bubble-chart-bubble-label'
-], function(d3, scale, bubbleEvents, util, bubbleLabels) {
+    'bubble-chart-bubble-label',
+    'bubble-chart-commons'
+], function(d3, scale, bubbleEvents, util, bubbleLabels, commons) {
 
     var bubbles = function() {
 
@@ -21,6 +22,8 @@ define([
         var labelPositionInteractive = "_50";
         var availableWidth;
         var availableHeight;
+        var paddingRight;
+        var paddingTop;
 
         var init = function(svg, state, vizStateChanged) {
             g = svg
@@ -113,7 +116,7 @@ define([
             if (isInteractive) {
                 bubbles
                     .on("click", _bubbleEvents.bubbleClickHandler)
-                    .on("mouseover", _bubbleEvents.bubbleOverHandler)
+                    .on("mouseover",  _bubbleEvents.bubbleOverHandler)
                     .on("mouseout", _bubbleEvents.bubbleOutHandler);
             } else {
                 bubbles.on("click", vizBubblePrint.bubbleClickHandlerPrint);
@@ -299,7 +302,7 @@ define([
                 .attr("fill-opacity", 0.6)
                 .attr("stroke-opacity", 0.6)
                 .on("click", _bubbleEvents.bubbleClickHandler)
-                .on("mouseover", _bubbleEvents.bubbleOverHandler)
+                .on("mouseover", _bubbleEvents.bubbleOverHandler(d,i, paddingRight, paddingTop))
                 .on("mouseout", _bubbleEvents.bubbleOutHandler);
 
             trailBubbles
@@ -394,22 +397,6 @@ define([
         var drawLabels = function() {
             var year = vizState.get("year");
             var trails = vizState.get("trails");
-            var components = require("bubble-chart-components");
-
-            var gridXTransform = components.get().xAxis.getAxisGrid().attr("transform");
-            var gridYTransform = components.get().yAxis.getAxisGrid().attr("transform");
-            var paddingRight;
-
-            if (gridXTransform) {
-                paddingRight = parseInt(gridXTransform.substring(gridXTransform.indexOf("(") + 1,
-                    gridXTransform.indexOf(",")));
-            }
-            var paddingTop;
-            if (gridYTransform) {
-                paddingTop = parseInt(gridYTransform.substring(gridXTransform.indexOf(",") + 1,
-                    gridXTransform.indexOf(")")));
-            }
-
             var selected = vizState.get("s");
             var labelsData = addLabelsData(selected, year);
 
@@ -428,8 +415,7 @@ define([
                 .append("g")
                 .attr("class", "labelNode")
                 .attr("cursor", "pointer")
-            //.attr("transform", "translate(" + paddingRight + "," + paddingTop + ")")
-            .call(dragInteractive);
+                .call(dragInteractive);
 
             labelContainer.append("rect")
                 .attr("cursor", "pointer")
@@ -503,8 +489,7 @@ define([
                 d.linkEndX = labelCoordinates.x;
                 d.linkEndY = labelCoordinates.y;
 
-                d3.select(this).attr("transform", "translate(" + (labelCoordinates.x + paddingRight) 
-                    + "," + (labelCoordinates.y + paddingTop) + ")");
+                d3.select(this).attr("transform", "translate(" + (labelCoordinates.x + paddingRight) + "," + (labelCoordinates.y + paddingTop + ")"));
             });
 
             labels.exit().remove();
@@ -539,7 +524,6 @@ define([
         };
 
 
-        //TODO: refactor this into a helper
         var fitWithinLabelConstraints = function(bbox, x, y) {
             var coordinates = {
                 x: x,
@@ -577,7 +561,9 @@ define([
             createBubbles();
             //drawTrails();
             updateSelected();
+            setPaddings();
             drawLabels();
+
 
             return g.node().getBBox();
         };
@@ -586,11 +572,37 @@ define([
             return g;
         };
 
+        var setPaddings = function() {
+            var components = require("bubble-chart-components");
+            var gridXTransform = components.get().xAxis.getAxisGrid().attr("transform");
+            if (gridXTransform) {
+                paddingRight = parseInt(gridXTransform.substring(gridXTransform.indexOf("(") + 1,
+                    gridXTransform.indexOf(",")));
+            }
+
+            var gridYTransform = components.get().yAxis.getAxisGrid().attr("transform");
+            if (gridYTransform) {
+                paddingTop = parseInt(gridYTransform.substring(gridXTransform.indexOf(",") + 1,
+                    gridXTransform.indexOf(")")));
+            }
+
+        };
+
+        var getPaddingRight = function () {
+            return paddingRight;
+        };  
+
+        var getPaddingTop = function () {
+            return paddingTop;
+        };
+
         return {
             init: init,
             render: render,
-            getGroup: getGroup
-        };
+            getGroup: getGroup,
+            getPaddingTop: getPaddingTop,
+            getPaddingRight: getPaddingRight
+        };  
     };
 
     return bubbles;
