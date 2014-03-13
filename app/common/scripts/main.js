@@ -40,11 +40,12 @@ require.config({
         'bubble-chart-year-label': '../../tools/bubble-chart/scripts/viz/year-label',
         'bubble-chart-search-box': '../../tools/bubble-chart/scripts/viz/search-box',
         'bubble-chart-bubbles': '../../tools/bubble-chart/scripts/viz/bubbles',
-        'bubble-chart-events': '../../tools/bubble-chart/scripts/bubble-events',
+        'bubble-chart-events': '../../tools/bubble-chart/scripts/viz/bubble-events',
         'bubble-chart-bubble-label': '../../tools/bubble-chart/scripts/viz/bubble-labels',
         'bubble-chart-container': '../../tools/bubble-chart/scripts/viz/chart-container',
         'bubble-chart-layout': '../../tools/bubble-chart/scripts/layout/layout',
         'bubble-chart-links': '../../tools/bubble-chart/scripts/viz/bubble-links',
+        'bubble-chart-commons': '../../tools/bubble-chart/scripts/viz/common/bubble-chart-common',
         
         // income mountain
         'income-mountain': '../../tools/income-mountain/scripts',
