@@ -30,6 +30,10 @@ define(['util', 'chart-grid-scale'], function(util, scale) {
         //var vizChart;
         var vizBubblePrint;
 
+        var initializeLayers = function () {
+
+        };
+
         var update = function(state, chartScale, availableFrame) {
             vizState = state;
             isInteractive = state.get("isInteractive");
