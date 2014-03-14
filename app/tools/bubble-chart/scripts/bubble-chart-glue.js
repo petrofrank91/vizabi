@@ -6,9 +6,11 @@ define([
         'settings-button',
         'chart-grid',
         'bubble-chart-components',
+        'bubble-chart-layout',
+        'layout-manager',
         'i18n'
     ],
-    function($, bubbleChartModel, vizBubble, timeSlider, settingsButton, chartGrid, components) {
+    function($, bubbleChartModel, vizBubble, timeSlider, settingsButton, chartGrid, components, bubbleChartLayout, lm) {
         // supposed to be available at window.vizabi.bubbleChart
         var bubbleChart = function(renderDiv, state) {
             var isInteractive;
@@ -20,11 +22,6 @@ define([
             var chartScales;
             var availableFrame;
             var modelBindCallback;
-            var placeholderDivIds = {
-                slider: undefined,
-                trails: undefined,
-                playImage: undefined
-            };
             var enableManualZoom;
             var _i18n;
 
@@ -41,48 +38,49 @@ define([
                 height: '100%'
             };
 
-        var placeholderDivIds = {
-            slider: undefined,
-            trails: undefined,
-            playImage: undefined
-        };
+            var placeholderDivIds = {
+                slider: undefined,
+                trails: undefined,
+                playImage: undefined
+            };
 
-        var drawSvgLayer = function() {
-            svg = d3.select("#" + renderDiv)
-                .append("svg")
-                .attr("id", chartRenderDiv)
-                .attr("xmlns", "http://www.w3.org/2000/svg")
-                .attr("version", "1.1")
-                .classed("chart", true)
-                .classed("scatter", true)
-                .style({
-                    display: "block"
-                });
-        };
+            var drawSvgLayer = function() {
+                svg = d3.select("#" + renderDiv)
+                    .append("svg")
+                    .attr("id", chartRenderDiv)
+                    .attr("xmlns", "http://www.w3.org/2000/svg")
+                    .attr("version", "1.1")
+                    .classed("chart", true)
+                    .classed("scatter", true)
+                    .style({
+                        display: "block"
+                    });
+            };
 
             var setInitialState = function(state) {
-                model = new bubbleChartModel();
                 drawSvgLayer();
-                initComponents();
 
-            model = new bubbleChartModel();
-            model.setInit(state, function() {
-                isInteractive = model.get("isInteractive");
-                initComponents();
-                setUpSubviews();
-                setUpModelAndUpdate();
-                
-                initLayoutManager();
-                initLayouts();
+                model = new bubbleChartModel();
 
-                if (model.get("manualZoom")) {
-                    setZoom();
-                }
-                if (modelBindCallback) {
-                    modelBindCallback(model.getAttributes());
-                }
-            });
-        };
+                model.setInit(state, function() {
+                    isInteractive = model.get("isInteractive");
+                    setUpSubviews();
+                    setUpModelAndUpdate();
+
+                    initComponents();
+                    initLayoutManager();
+                    initLayouts();
+
+                    if (model.get("manualZoom")) {
+                        setZoom();
+                    }
+                    if (modelBindCallback) {
+                        modelBindCallback(model.getAttributes());
+                    }
+                });
+
+                seti18n();
+            };
 
             var setState = function(state) {
                 model.set(state, function() {
@@ -128,6 +126,7 @@ define([
                 initializeLayers(scatterChartModelUpdate);
                 initializeScatterChart(renderDiv);
                 initializeTimeSlider(isInteractive);
+
             };
 
 
@@ -148,23 +147,23 @@ define([
                 _vizBubble.initialize(renderDiv, model, components.get());
             };
 
-        var initializeTimeSlider = function(isInteractive) {
-            if (isInteractive) {
-                //createTimeSlider();
-                _timeSlider = new timeSlider(timeSliderModelUpdate);
-                _timeSlider.initialize(model, getDivId("slider"));
-                _timeSlider.setupListeners();
-            }
-        };
-
-
-        var scatterChartModelUpdate = function(state) {
-            model.set(state, function() {
-                components.get().bubblesContainer.render();
-                if (modelBindCallback) {
-                    modelBindCallback(model.getAttributes());
+            var initializeTimeSlider = function(isInteractive) {
+                if (isInteractive) {
+                    //createTimeSlider();
+                    _timeSlider = new timeSlider(timeSliderModelUpdate);
+                    _timeSlider.initialize(model, getDivId("slider"));
+                    _timeSlider.setupListeners();
                 }
-            });
+            };
+
+
+            var scatterChartModelUpdate = function(state) {
+                model.set(state, function() {
+                    components.get().bubblesContainer.render();
+                    if (modelBindCallback) {
+                        modelBindCallback(model.getAttributes());
+                    }
+                });
 
             };
 
@@ -179,6 +178,9 @@ define([
                 });
             };
 
+            var registerModelBindCallback = function(callback) {
+                modelBindCallback = callback;
+            };
 
             var initComponents = function() {
                 components.init(svg, model, scatterChartModelUpdate);
@@ -193,20 +195,6 @@ define([
                 lm.init(svg, defaultMeasures, currentMeasures);
                 lm.divScale();
             };
-
-        var initComponents = function() {
-            components.init(svg, model, scatterChartModelUpdate);
-        };
-
-        var initLayoutManager = function() {
-            lm.init(svg, defaultMeasures, currentMeasures);
-            lm.divScale();
-        };
-
-        var  initLayouts = function() {
-            var _bubbleChartLayout = new bubbleChartLayout();
-            _bubbleChartLayout.init(components);
-        };
 
             /* GUI Layer Creator */
             var initializeLayers = function(changeCallback) {
@@ -285,7 +273,8 @@ define([
                 setVizabiState: setInitialState,
                 setState: setState,
                 setInitialState: setInitialState,
-                setLanguage: setLanguage
+                setLanguage: setLanguage,
+                registerStateBindCallback: registerModelBindCallback
             };
         };
 
