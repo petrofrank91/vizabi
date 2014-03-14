@@ -10,7 +10,7 @@ define(['bubble-chart-model-validator'], function (bubbleChartModelValidator) {
         opacity: 0.5,
         speed: 0.1,
         zoom: {},
-        trails: "none",
+        trails: "standard",
         tSpeed: 300,
         action: "multi",
         enableHistory: true,

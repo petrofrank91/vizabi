@@ -87,7 +87,6 @@ define([
                 initializeLayers(scatterChartModelUpdate);
                 initializeScatterChart(appSVG, renderDiv);
                 initializeTimeSlider(isInteractive);
-                //setTrailsCheckBoxBinding();
             };
 
 
@@ -140,25 +139,18 @@ define([
             };
 
 
-            var setTrailsCheckBoxBinding = function () {
-                document.getElementsByClassName("ui-trails")[0].onclick = function () {
-                    if (this.checked) {
-                        model.set({trails: "standard"}, setUpModelAndUpdate);
-                        if (modelBindCallback) {
-                            modelBindCallback(model.getAttributes());
-                        }
-                    }
-                    else {
-                        model.set({trails: "none"}, setUpModelAndUpdate);
-                        if (modelBindCallback) {
-                            modelBindCallback(model.getAttributes());
-                        }
-                    }
-                };
+            var initComponents = function() {
+                components.init(svg, model, scatterChartModelUpdate);
             };
 
-            var registerModelBindCallback = function (callback) {
-                modelBindCallback = callback;
+            var initLayouts = function() {
+                var _bubbleChartLayout = new bubbleChartLayout();
+                _bubbleChartLayout.init(components);
+            };
+
+            var initLayoutManager = function () {
+                lm.init(svg, defaultMeasures, currentMeasures);
+                lm.divScale();
             };
 
 
@@ -166,84 +158,61 @@ define([
             var initializeLayers = function (changeCallback) {
                 var appRenderDiv = document.getElementById(renderDiv);
 
-
                 setDivId("labelForYear", "label-year-" + renderDiv);
 
     //            var _settingsButton = new settingsButton(changeCallback, model);
     //            _settingsButton.initialize(renderDiv);
 
-    //            var alignButtons = document.createElement("div");
-    //            alignButtons.id = "alignButtons";
-    //            alignButtons.style.display = "inline-block";
-    //            alignButtons.style.width = "100px";
-    //            alignButtons.style.height = "20px";
-    //            appRenderDiv.appendChild(alignButtons);
-    //
-    //
-    //            var leftAlign = document.createElement("input");
-    //            leftAlign.id = "leftAlign";
-    //            leftAlign.setAttribute("name", "setting");
-    //            leftAlign.setAttribute("value", "leftAlign");
-    //            leftAlign.setAttribute("type", "radio");
-    //            alignButtons.appendChild(leftAlign);
-    //
-    //            var leftLabel = document.createElement("label");
-    //            leftLabel.setAttribute("for", "leftAlign");
-    //            leftLabel.style.fontSize = "6px;";
-    //            leftLabel.innerHtml = "LEFT";
-    //            alignButtons.appendChild(leftLabel);
-    //
-    //
-    //            var midAlign = document.createElement("input");
-    //            midAlign.id = "leftAlign";
-    //            midAlign.setAttribute("name", "setting");
-    //            midAlign.setAttribute("value", "midAlign");
-    //            midAlign.setAttribute("type", "radio");
-    //            alignButtons.appendChild(midAlign);
-    //
-    //            var midLabel = document.createElement("label");
-    //            midLabel.setAttribute("for", "midAlign");
-    //            midLabel.style.fontSize = "6px;";
-    //            midLabel.innerHtml = "CENTER";
-    //            alignButtons.appendChild(midLabel);
-    //
-    //            var rightAlign = document.createElement("input");
-    //            rightAlign.id = "rightAlign";
-    //            rightAlign.setAttribute("name", "setting");
-    //            rightAlign.setAttribute("values", "rightAlign");
-    //            rightAlign.setAttribute("type", "radio");
-    //            alignButtons.appendChild(rightAlign);
-    //
-    //            var rightLabel = document.createElement("label");
-    //            rightLabel.setAttribute("for", "midAlign");
-    //            rightLabel.style.fontSize = "6px;";
-    //            rightLabel.innerHtml = "RIGHT";
-    //            alignButtons.appendChild(rightLabel);
-    //
-    //            $("#alignButtons").buttonset();
-    //            $("#alignButtons").hide();
-
-                if (model.get("isInteractive")) {
-                    createTrails(appRenderDiv);
-                    setTrailsCheckBoxBinding();
-                }
-            };
-
-            var createTrails = function (appRenderDiv) {
-                setDivId("trails", "trails-" + renderDiv);
-
-                var trailsDiv = document.createElement("div");
-                trailsDiv.id = getDivId("trails");
-                appRenderDiv.appendChild(trailsDiv);
-
-                var trailsLabel = document.createElement("label");
-                trailsLabel.innerHTML = "Trails";
-                trailsDiv.appendChild(trailsLabel);
-
-                var trailsCheckBox = document.createElement("input");
-                trailsCheckBox.type = "checkbox";
-                trailsCheckBox.className = "ui-trails";
-                trailsDiv.appendChild(trailsCheckBox);
+                //            var alignButtons = document.createElement("div");
+                //            alignButtons.id = "alignButtons";
+                //            alignButtons.style.display = "inline-block";
+                //            alignButtons.style.width = "100px";
+                //            alignButtons.style.height = "20px";
+                //            appRenderDiv.appendChild(alignButtons);
+                //
+                //
+                //            var leftAlign = document.createElement("input");
+                //            leftAlign.id = "leftAlign";
+                //            leftAlign.setAttribute("name", "setting");
+                //            leftAlign.setAttribute("value", "leftAlign");
+                //            leftAlign.setAttribute("type", "radio");
+                //            alignButtons.appendChild(leftAlign);
+                //
+                //            var leftLabel = document.createElement("label");
+                //            leftLabel.setAttribute("for", "leftAlign");
+                //            leftLabel.style.fontSize = "6px;";
+                //            leftLabel.innerHtml = "LEFT";
+                //            alignButtons.appendChild(leftLabel);
+                //
+                //
+                //            var midAlign = document.createElement("input");
+                //            midAlign.id = "leftAlign";
+                //            midAlign.setAttribute("name", "setting");
+                //            midAlign.setAttribute("value", "midAlign");
+                //            midAlign.setAttribute("type", "radio");
+                //            alignButtons.appendChild(midAlign);
+                //
+                //            var midLabel = document.createElement("label");
+                //            midLabel.setAttribute("for", "midAlign");
+                //            midLabel.style.fontSize = "6px;";
+                //            midLabel.innerHtml = "CENTER";
+                //            alignButtons.appendChild(midLabel);
+                //
+                //            var rightAlign = document.createElement("input");
+                //            rightAlign.id = "rightAlign";
+                //            rightAlign.setAttribute("name", "setting");
+                //            rightAlign.setAttribute("values", "rightAlign");
+                //            rightAlign.setAttribute("type", "radio");
+                //            alignButtons.appendChild(rightAlign);
+                //
+                //            var rightLabel = document.createElement("label");
+                //            rightLabel.setAttribute("for", "midAlign");
+                //            rightLabel.style.fontSize = "6px;";
+                //            rightLabel.innerHtml = "RIGHT";
+                //            alignButtons.appendChild(rightLabel);
+                //
+                //            $("#alignButtons").buttonset();
+                //            $("#alignButtons").hide();
             };
 
             var createTimeSlider = function () {
