@@ -115,6 +115,7 @@ module.exports = function (grunt) {
             livereload: {
                 options: {
                     open: true,
+                    hostname: '0.0.0.0',
                     base: [
                         '<%= yeoman.tmp.base %>',
                         '<%= yeoman.app.base %>',
