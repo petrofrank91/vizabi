@@ -24,7 +24,7 @@ define(['jquery'], function ($) {
 
             playButton = $(".play-button", "#" + timeSliderDiv);
 
-            var scaleWidth = sliderAttributes.sliderScale.width();
+            var scaleWidth = sliderAttributes.sliderScale.width() ? sliderAttributes.sliderScale.width() : 1; // `hackfix`
 
             var scale = d3.scale.linear()
                 .domain([timeSliderState.getDataHelper().getMinYear(), timeSliderState.getDataHelper().getMaxYear()])
