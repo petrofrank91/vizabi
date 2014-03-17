@@ -59,8 +59,8 @@ define([
 
                 _i18n = fn ? fn : i18n.instance();
 
-                if (language) {
-                    setLanguage(language)
+                if (language && language !== 'dev') {
+                    setLanguage(language);
                 }
             };
 
