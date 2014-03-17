@@ -231,4 +231,6 @@ define(['queue-async'], function (queue) {
         };
     };
 
+    return readerMultipleCSV;
+
 });
