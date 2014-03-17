@@ -33,9 +33,10 @@ define([
 			
 			var chartCountainerG = components.chart.getGroup().append('g');
 			components.chartG = chartCountainerG;
-			// components.yearLabel = new yearLabel();
-			// components.yearLabel.init(chartCountainerG, state);
-			// components.yearLabel.render();
+
+			components.yearLabel = new yearLabel();
+			components.yearLabel.init(chartCountainerG, state);
+			components.yearLabel.render();
 
 			components.yLabel = new yLabel();
 			components.yLabel.init(chartCountainerG, state);
@@ -66,9 +67,6 @@ define([
 
 			components.labelLayer = new bubbleLabels();
 			components.labelLayer.init(chartCountainerG, state);
-
-
-
 		};
 
 		var get = function () {

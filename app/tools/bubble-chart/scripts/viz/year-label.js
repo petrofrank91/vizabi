@@ -12,8 +12,6 @@ define([], function() {
 		var render = function() {
 			g
 				.append("text")
-				//.attr("x", xAxisContainer.node().getBBox().width / 2)
-				//.attr("y", yAxisContainer.node().getBBox().height / 2)
 				.text(Math.floor(vizState.get("year")));
 		};
 
