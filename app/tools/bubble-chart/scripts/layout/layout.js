@@ -30,24 +30,24 @@ define(["layout-manager"], function(layoutManager) {
 				g: components.get().chart.getGroup(),
 				top: 1,
 				left: 1,
-				bottom: ['stage.height', -10],
-				right: ['stage.width', -10]
+				bottom: ['stage.height', { padding: -10 }],
+				right: ['stage.width', { padding: -10 }]
 			});
 			
-			// addComponent(lname, {
-			// 	id: 'yearLabel',
-			// 	g: components.get().yearLabel.getGroup(),
-			// 	xcenter: ['chart.xcenter'],
-			// 	ycenter: ['chart.ycenter']
-			// });
+			addComponent(lname, {
+				id: 'yearLabel',
+				g: components.get().yearLabel.getGroup(),
+				xcenter: ['stage.width', { percentage: '50%' }],
+				ycenter: ['stage.height', { percentage: '50%' }]
+			});
 
 			addComponent(lname, {
 				id: 'axisCaller',
 				g: components.get().yAxis.getGroup(),
 				top: ['yLabel.bottom'],
 				left: ['chart.left'],
-				bottom: ['chart.bottom', -60],
-				right: ['chart.right', -20],
+				bottom: ['chart.bottom', { padding: -20 }],
+				right: ['chart.right', { padding: -20 }],
 				render: components.get().yAxis.render
 			});
 
@@ -63,7 +63,7 @@ define(["layout-manager"], function(layoutManager) {
 				id: 'yAxis',
 				g: components.get().yAxis.getAxis(),
 				top: ['yLabel.bottom'],
-				left: ['yAxisText.right', 5],
+				left: ['yAxisText.right', { padding: 5 }],
 				render: components.get().yAxis.measureAxis
 			});
 
@@ -78,8 +78,8 @@ define(["layout-manager"], function(layoutManager) {
 			addComponent(lname, {
 				id: 'searchBox',
 				g: components.get().searchBox.getGroup(),
-				top: ['yLabel.bottom', 10],
-				left: ['yAxis.right', 10]
+				top: ['yLabel.bottom', { padding: 10 }],
+				left: ['yAxis.right', { padding: 10 }]
 			});
 
 			addComponent(lname, {
@@ -87,7 +87,7 @@ define(["layout-manager"], function(layoutManager) {
 				g: components.get().xAxis.getGroup(),
 				top: ['yAxis.top'],
 				left: ['yAxis.right'],
-				bottom: ['chart.bottom', -60],
+				bottom: ['chart.bottom', { padding: -20 }],
 				right: ['yAxisGrid.right'],
 				render: components.get().xAxis.render
 			});
@@ -123,7 +123,7 @@ define(["layout-manager"], function(layoutManager) {
 				id: 'xLabel',
 				g: components.get().xLabel.getGroup(),
 				bottom: ['xAxisText.top'],
-				right: ['xAxisText.right', -5]
+				right: ['xAxisText.right', { padding: -5 }]
 			});
 
 			addComponent(lname, {
