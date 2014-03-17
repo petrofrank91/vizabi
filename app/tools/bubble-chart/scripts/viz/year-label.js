@@ -12,7 +12,11 @@ define([], function() {
 		var render = function() {
 			g
 				.append("text")
-				.text(Math.floor(vizState.get("year")));
+				.text(Math.floor(vizState.get("year")))
+				.attr('y', 300)
+				// The two lines below should be replaced by CSS
+				.attr('font-size', '300px')
+				.attr('opacity', 0.2);
 		};
 
 
