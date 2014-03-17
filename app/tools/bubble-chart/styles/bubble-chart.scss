@@ -40,7 +40,7 @@ body {
                 fill: black;
                 shape-rendering: $crispEdges;
                 //@import opacity(0);
-
+                opacity: 0;
             }
             path {
                 shape-rendering: $crispEdges;
