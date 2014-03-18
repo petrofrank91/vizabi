@@ -8,7 +8,7 @@
         var chartState;
         var app;
 
-        if (window.history.state === null) {
+        if (!window.history.state) {
             var URL = window.location.href.toString();
             // When a new tab is opened
             if (URL.indexOf("#?") !== -1) {
