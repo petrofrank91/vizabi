@@ -8,7 +8,7 @@ define(['d3'], function(d3) {
 
 		var init = function(svg, state) {
 			g = svg.append("g")
-				.attr("class", "x axisLabel");
+				.attr("class", "axisLabel");
 			vizState = state;
 		};
 

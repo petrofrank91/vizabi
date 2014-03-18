@@ -4,8 +4,9 @@ define([], function() {
 
 		var g;
 		var vizState;
+
 		var init = function(svg, state) {
-			g = svg.append("g").attr("class", "year-label")
+			g = svg.append("g").attr("class", "yearLabel")
 			vizState = state;
 			addGaussianBlur(svg);
 		};
