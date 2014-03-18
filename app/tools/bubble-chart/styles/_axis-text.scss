@@ -1,0 +1,6 @@
+.axisText {
+    @include font-size(30px);
+
+    font-family: $fontFamily;
+    fill: $colorIMmediumBlue;
+}

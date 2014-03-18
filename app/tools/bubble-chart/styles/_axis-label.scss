@@ -1,0 +1,7 @@
+.axisLabel {
+    @include font-size(45px);
+    @include user-select-none;
+    
+    font-family: $fontFamily;
+    fill: $colorTSdarkBlue;
+}
