@@ -4,10 +4,15 @@ define([
 	function(scale) {
 		function yAxis() {
 			var g;
+			
 			var axis;
 			var axisText;
 			var axisGrid;
 			var vizState;
+
+			var showFullGrid = false;
+			var tickPixels = 4;
+
 			var availableWidth = 880;
 			var availableHeight = 500;
 
@@ -37,6 +42,8 @@ define([
 				makeAxis();
 				breakdownAxes();
 				addAxisPadding();
+
+				if (showFullGrid) moveTick();
 
 				return axis.node().getBBox();
 			};
@@ -76,16 +83,20 @@ define([
 				var domainInvert = findYDomain().reverse();
 				var localScale = d3.scale.linear().domain(domainInvert).range([0, availableHeight]);
 
+				var tickPixelsSize = showFullGrid ? - (availableWidth + tickPixels) : tickPixels;
+
 				var axisMaker = d3.svg.axis()
 					.scale(localScale)
 					.orient("left")
-					.tickSize(-availableWidth, 0);
+					.tickSize(tickPixelsSize, 0);
 
 				if (vizState.get("yAxisTickValues")) {
 					axisMaker.tickValues(vizState.get("yAxisTickValues"));
 				}
 
-				axis.attr("stroke", "lightgrey").attr('id', 'axisNodes').call(axisMaker);//css
+				axis
+					.attr('id', 'axisNodes')
+					.call(axisMaker);
 			};
 
 			var breakdownAxes = function () {
@@ -111,6 +122,10 @@ define([
 					var element = d3.select(this);
 					element.attr('x', maxTextWidth);
 				});
+			};
+
+			var moveTick = function() {
+				axisGrid.selectAll('line').attr('transform', 'translate(' + -tickPixels + ',0)');
 			}
 
 			var getGroup = function() {

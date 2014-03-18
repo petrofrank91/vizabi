@@ -8,7 +8,10 @@ define([
 			var axis;
 			var axisText;
 			var axisGrid;
-			
+
+			var showFullGrid = false; // if false, shows only the tick
+			var tickPixels = 4;	// number of extra pixels that the tick is drawn with
+
 			var vizState;
 
 			var availableWidth = 880;
@@ -41,12 +44,15 @@ define([
 				makeAxis();
 			
 				breakdownAxes();
+				
+				if (showFullGrid) moveTick();
 
 				return axis.node().getBBox();
 			};
 
 			function findXDomain() {
 				var xDomain = [];
+
 				if (vizState.get("minXValue") !== undefined && vizState.get("maxXValue") !== undefined) {
 					var updatedMinX = vizState.get("updatedMinXValue");
 					var minX = vizState.get("minXValue");
@@ -77,22 +83,23 @@ define([
 				scale.init("x", vizState.get("xAxisScale"), findXDomain(), [0, availableWidth]);
 			};
 
-			var  makeAxis = function() {
+			var makeAxis = function() {
+				var tickPixelsSize = showFullGrid ? -(availableHeight + tickPixels) : tickPixels;
+
 				var axisMaker = d3.svg.axis()
 					.scale(scale.get("x"))
 					.tickFormat(function(d) {
 						return "$" + d;
 					})
 					.ticks(10, d3.format(",d"))
-					.tickSize(-availableHeight, 0)
+					.tickSize(tickPixelsSize, 0)
 					.orient("bottom");
 				
 				if (vizState.get("xAxisTickValues")) {
 					axisMaker.tickValues(vizState.get("xAxisTickValues"));
 				}
 				
-				// stroke below should be css
-				axis.attr("stroke", "lightgrey").attr('id', 'axisNodes').call(axisMaker);
+				axis.attr('id', 'axisNodes').call(axisMaker);
 			};
 
 			var breakdownAxes = function() {
@@ -104,6 +111,10 @@ define([
 				axisGrid.selectAll('text').remove();
 				axisText.selectAll('line').remove();
 				axis.selectAll('.tick').remove();
+			};
+
+			var moveTick = function() {
+				axisGrid.selectAll('line').attr('transform', 'translate(0,' + tickPixels + ')');
 			};
 
 			var getGroup = function() {
