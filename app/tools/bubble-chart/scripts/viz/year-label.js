@@ -7,7 +7,21 @@ define([], function() {
 		var init = function(svg, state) {
 			g = svg.append("g").attr("class", "year-label")
 			vizState = state;
+			addGaussianBlur(svg);
 		};
+
+		var addGaussianBlur = function(svg) {
+			var filter = svg
+				.append('defs')
+				.append('filter')
+				.attr('id', 'blur')
+				.attr('x', 0)
+				.attr('y', 0);
+
+			filter.append('feGaussianBlur')
+				.attr('in', 'SourceGraphic')
+				.attr('stdDeviation', 1);
+		}
 
 		var render = function() {
 			g
@@ -16,7 +30,8 @@ define([], function() {
 				.attr('y', 300)
 				// The two lines below should be replaced by CSS
 				.attr('font-size', '300px')
-				.attr('opacity', 0.2);
+				.attr('opacity', 0.2)
+				.attr('filter', 'url(#blur)');
 		};
 
 
