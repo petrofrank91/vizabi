@@ -46,7 +46,7 @@ define(["layout-manager"], function(layoutManager) {
 				g: components.get().yAxis.getGroup(),
 				top: ['yLabel.bottom'],
 				left: ['chart.left'],
-				bottom: ['chart.bottom', { padding: -20 }],
+				bottom: ['chart.bottom', { padding: -30 }],
 				right: ['chart.right', { padding: -20 }],
 				render: components.get().yAxis.render
 			});
@@ -63,7 +63,7 @@ define(["layout-manager"], function(layoutManager) {
 				id: 'yAxis',
 				g: components.get().yAxis.getAxis(),
 				top: ['yLabel.bottom'],
-				left: ['yAxisText.right', { padding: 5 }],
+				left: ['yAxisText.right', { padding: 8 }],
 				render: components.get().yAxis.measureAxis
 			});
 
@@ -72,6 +72,7 @@ define(["layout-manager"], function(layoutManager) {
 				g: components.get().yAxis.getAxisGrid(),
 				top: ['yLabel.bottom'],
 				left: ['yAxis.left'],
+				right: ['chart.right'],
 				render: components.get().yAxis.measureAxisGrid
 			});
 
@@ -88,7 +89,7 @@ define(["layout-manager"], function(layoutManager) {
 				top: ['yAxis.top'],
 				left: ['yAxis.right'],
 				bottom: ['chart.bottom', { padding: -20 }],
-				right: ['yAxisGrid.right'],
+				right: ['chart.right'],
 				render: components.get().xAxis.render
 			});
 
@@ -97,14 +98,14 @@ define(["layout-manager"], function(layoutManager) {
 				g: components.get().xAxis.getAxis(),
 				top: ['yAxis.bottom'],
 				left: ['yAxis.right'],
-				right: ['x-axisCaller.right'],
+				right: ['chart.right'],
 				render: components.get().xAxis.measureAxis
 			});
 
 			addComponent(lname, {
 				id: 'xAxisText',
 				g: components.get().xAxis.getAxisText(),
-				top: ['xAxis.top'],
+				top: ['xAxis.top', { padding: 5 }],
 				left: ['xAxis.left'],
 				right: ['xAxis.right'],
 				render: components.get().xAxis.measureAxisText
@@ -122,7 +123,7 @@ define(["layout-manager"], function(layoutManager) {
 			addComponent(lname, {
 				id: 'xLabel',
 				g: components.get().xLabel.getGroup(),
-				bottom: ['xAxisText.top'],
+				bottom: ['xAxisText.top', { padding: -5 }],
 				right: ['xAxisText.right', { padding: -5 }]
 			});
 
