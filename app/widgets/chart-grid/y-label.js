@@ -6,8 +6,7 @@ define([], function() {
 		var text;
 
 		var init = function(svg, state) {
-			g = svg.append("g")
-				.attr("class", "axisLabel");
+			g = svg.append("g").attr("class", "axisLabel");
 			vizState = state;
 		};
 
@@ -20,15 +19,9 @@ define([], function() {
 		};
 
 		var createLabel = function() {
-			g
-				.append("text")
-				.attr("y", "30")
-				.attr("font-size", "30px")
-				.text(text);
-				// .append("svg:title")
-				// .text(function() {
-				// 	return vizState.getDataHelper().getAxisInfo()[1];
-				// });
+			var font = g.append("text").text(text);
+			var fontSize = font.attr('font-size') || font.style('font-size');
+			font.attr('y', fontSize);
 		};
 
 		var render = function() {
@@ -36,7 +29,6 @@ define([], function() {
 			createLabel();
 
 			return g.node().getBBox();
-
 		};
 
 		var getGroup = function() {

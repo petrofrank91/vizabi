@@ -25,21 +25,18 @@ define([], function() {
 		}
 
 		var render = function() {
-			g
+			var font = g
 				.append("text")
 				.text(Math.floor(vizState.get("year")))
-				.attr('y', 300)
-				// The two lines below should be replaced by CSS
-				.attr('font-size', '300px')
-				.attr('opacity', 0.2)
 				.attr('filter', 'url(#blur)');
-		};
 
+			var fontSize = font.attr('font-size') || font.style('font-size');
+			font.attr('y', fontSize);
+		};
 
         var getGroup = function () {
             return g;
         };
-
 
 		return {
 			init: init,
@@ -48,8 +45,6 @@ define([], function() {
 		};
 
 	};
-
-
 
 	return yearLabel;
 
