@@ -15,11 +15,14 @@ define([
 			var availableHeight = 500;
 
 			var init = function(svg, state) {
-				g = svg.append("g");
-				axis = svg.append('g').attr('id', 'x axis');
-				// 'stroke' in the 2 lines below should be CSS
-				axisText = svg.append('g').classed('x axistext', true).attr('stroke', 'lightgrey');
-				axisGrid = svg.append('g').classed('x axisgrid', true).attr('stroke', 'lightgrey');
+				var wrapper = svg.append('g').attr('id', 'x axis');
+
+				g = wrapper.append("g").attr('id', 'blank-axis-builder');
+
+				axis = wrapper.append('g').attr('class', 'axis');
+				axisText = wrapper.append('g').attr('class', 'axisText');
+				axisGrid = wrapper.append('g').attr('class', 'axisGrid');
+
 				vizState = state;
 			};
 

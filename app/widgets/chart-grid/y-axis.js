@@ -12,10 +12,13 @@ define([
 			var availableHeight = 500;
 
 			var init = function(svg, state) {
-				g = svg.append("g");
-				axis = svg.append('g').attr('id', 'axis');
-				axisText = svg.append('g').classed('y axistext', true).attr('stroke', 'lightgrey');//css
-				axisGrid = svg.append('g').classed('y axisgrid', true).attr('stroke', 'lightgrey');//css
+				var wrapper = svg.append('g').attr('id', 'y axis');
+				
+				g = wrapper.append("g").attr('id', 'blank-axis-builder');
+				
+				axis = wrapper.append('g').attr('class', 'axis');
+				axisText = wrapper.append('g').attr('class', 'axisText');
+				axisGrid = wrapper.append('g').attr('class', 'axisGrid');
 				vizState = state;
 			};
 
