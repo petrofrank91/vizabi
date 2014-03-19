@@ -15,6 +15,7 @@ require.config({
         'jed': '../../bower_components/jed/jed',
         'zepto': '../../bower_components/zepto/zepto.min',
         'd3-geo-projection': '../../bower_components/d3-geo-projection/d3.geo.projection',
+        'touchSwipe': '../../bower_components/touchSwipe/jquery.touchSwipe.min',
 
         /*
          'jquery.ui.core': '../../bower_components/jquery-ui/ui/jquery.ui.core',
