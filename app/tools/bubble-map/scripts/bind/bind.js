@@ -148,7 +148,9 @@ define([
                // d3.select(event.target).click();
             },
             threshold:10,
-            fingers:'all'
+            fingers:'all',
+            excludedElements: $.fn.swipe.defaults.excludedElements +
+                ", .timeslider-1",
           });
         }
 
