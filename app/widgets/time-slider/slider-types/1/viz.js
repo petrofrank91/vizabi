@@ -93,6 +93,12 @@ define([
             return g;
         }
 
+        function reloadTimeline() {
+            timelineAxis.remove();
+            loadTimeline();
+            placeTimeline();
+        }
+
         return {
             init: init,
             writeYear: writeYear,
@@ -102,6 +108,7 @@ define([
             timeline: timeline,
             timelineAxis: timelineAxis,
             text: text,
+            reloadTimeline: reloadTimeline,
             getGroup: getGroup
         };
     }

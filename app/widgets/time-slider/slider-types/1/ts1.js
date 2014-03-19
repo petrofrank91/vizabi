@@ -49,6 +49,7 @@ define([
                 e = e || range.end;
                 range.start = s;
                 range.end = e;
+                viz.reloadTimeline();
             },
 
             onplay: function(callback) {
@@ -83,6 +84,12 @@ define([
 
             getGroup: function() {
                 return viz.getGroup();
+            },
+
+            update: function() {
+                validateYear();
+                slide();
+                update();
             },
 
             viz: viz
@@ -186,6 +193,11 @@ define([
                     moveCallback(state.year);
                 }
             }
+        }
+
+        function validateYear() {
+            if (state.year < range.start) state.year = range.start;
+            else if (state.year > range.end) state.year = range.end;
         }
 
         return timeslider;
