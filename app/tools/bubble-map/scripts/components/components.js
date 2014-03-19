@@ -13,7 +13,7 @@ define([
             map: map
         };
 
-        components.init = function(svg, _i18n, state, properties) {
+        components.init = function(wrapperDiv, svg, _i18n, state, properties) {
             //header start
             components.header = new text();
             components.header.init(
@@ -26,6 +26,7 @@ define([
             // timeslider start
             components.timeslider = new timeslider();
             components.timeslider.init(svg, state);
+            components.timeslider.setRange(1800, 2100);
 
             // map
             components.map.init(svg);
@@ -33,6 +34,9 @@ define([
             // bubbles
             components.bubbles = new bubbles();
             components.bubbles.init(svg, components.map);
+
+            // wrapper
+            components.wrapper = wrapperDiv;
         }
 
         return components;

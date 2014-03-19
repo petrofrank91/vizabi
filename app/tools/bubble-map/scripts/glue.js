@@ -34,8 +34,8 @@ define([
 
         var d;
 
-        function initComponents(svg, _i18n) {
-            components.init(svg, _i18n, state);
+        function initComponents(wrapperDiv, svg, _i18n) {
+            components.init(wrapperDiv, svg, _i18n, state);
         }
 
         function initLayoutManager(svg) {
@@ -53,7 +53,7 @@ define([
         }
 
         function initBind(context) {
-            bind.init(context);
+            bind.init(context, state);
         }
 
         function initEvents(context) {
@@ -116,7 +116,7 @@ define([
                 this.divider = 1000000000;
                 this.bubValue = 400000;
 
-                initComponents(this.svg, this.i18n);
+                initComponents(div, this.svg, this.i18n);
                 initData();
 
                 initLayoutManager(this.svg);
