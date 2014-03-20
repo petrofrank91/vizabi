@@ -9,7 +9,7 @@
     "queue-async": "~1.0.4",
     "d3": "~3.3.13",
     "d3-geo-projection": "https://github.com/d3/d3-geo-projection.git#~0.2.8",
-    "picker": "https://github.com/Gapminder/Picker.git#develop",
+    "picker": "https://github.com/Gapminder/smart-picker.git#develop",
     "i18n-js": "https://github.com/Gapminder/i18n-js.git#develop",
     "touchSwipe": "https://github.com/mattbryson/TouchSwipe-Jquery-Plugin.git#master",
     "select2": "~3.4.5",
