@@ -1,12 +1,15 @@
 define([
         'd3',
+        'jquery',
+        'underscore',
         'widgets/text/text',
         'widgets/time-slider/slider-types/1/ts1',
         'income-mountain/viz/labels',
         'income-mountain/viz/axis',
-        'income-mountain/viz/incomeMountain'
+        'income-mountain/viz/incomeMountain',
+        'smart-picker',
     ],
-    function(d3, text, timeslider, labels, axis, mountains) {
+    function(d3, $, _, text, timeslider, labels, axis, mountains, smartPicker) {
         var svg;
 
         var components = {
@@ -16,7 +19,8 @@ define([
             timeslider: undefined,
             labels: labels,
             axis: axis,
-            mountains: mountains
+            mountains: mountains,
+            geoPicker: undefined 
         };
 
         function init(wrapperDiv, svg, _i18n, state, properties) {
@@ -47,6 +51,25 @@ define([
             components.mountains.init(svg);
 
             components.wrapper = wrapperDiv;
+
+            // geo picker
+            components.geoPicker = new smartPicker("geoMult", "geo-mult", {
+                width: 500,
+                confirmButton: true,
+                draggable: true,
+                initialValue: state.geo,
+                onInteraction: function(data) {
+
+                    var selected = data.selected;
+                    var countries = [];
+                    for(var i=0, size=selected.length; i<size; i++){
+                        var country = selected[i];
+                        countries.push(country.value);
+                    }
+
+                    state.geo = countries;
+                }
+            });
         }
 
         function get() {

@@ -9,6 +9,7 @@ define([
         'i18n'
     ],
     function(d3, lm, data, components, layouts, bind, entities) {
+
         'use strict';
 
         var div;
@@ -57,6 +58,9 @@ define([
             bind.all();
 
             components.get().mountains.setDrawLoader(draw);
+
+            components.get().geoPicker.show();
+
         }
 
         function initSVG(divId) {

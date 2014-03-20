@@ -7,13 +7,14 @@ require.config({
 
         // common deps
         'd3': '../../bower_components/d3/d3',
-        'jquery': '../../bower_components/jquery/jquery',
+        'jquery': '../../bower_components/jquery/jquery.min',
         'jquery.ui': '../../bower_components/jquery-ui/ui/jquery-ui',
         'jstat': '../../bower_components/rm-jstat/jstat',
         'entities': 'libs/entities',
         'widgets': '../../widgets',
         'jed': '../../bower_components/jed/jed',
         'zepto': '../../bower_components/zepto/zepto.min',
+        'underscore': '../../bower_components/underscore/underscore',
         'd3-geo-projection': '../../bower_components/d3-geo-projection/d3.geo.projection',
         'touchSwipe': '../../bower_components/touchSwipe/jquery.touchSwipe.min',
 
@@ -26,6 +27,9 @@ require.config({
         'util': 'helpers/util',
 
         'projection': '../../bower_components/d3-geo-projection/d3.geo.projection',
+
+        //smartPicker
+        'smart-picker': '../../bower_components/picker/dist/smart-picker.min',
 
         // sprintf
         'sprintf': '../../bower_components/sprintf/src/sprintf.min',
