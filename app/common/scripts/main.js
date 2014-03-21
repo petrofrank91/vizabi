@@ -31,6 +31,7 @@ require.config({
         'sprintf': '../../bower_components/sprintf/src/sprintf.min',
 
         // bubble chart
+        'bubble-chart': '../../tools/bubble-chart/scripts',
         'bubble-chart-model': '../../tools/bubble-chart/scripts/bubble-chart-model',
         'bubble-chart-model-validator': '../../tools/bubble-chart/scripts/bubble-chart-model-validator',
         'bubble-chart-glue': '../../tools/bubble-chart/scripts/bubble-chart-glue',
