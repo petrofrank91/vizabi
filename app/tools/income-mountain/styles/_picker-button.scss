@@ -1,0 +1,20 @@
+.picker-button {
+    .text {
+        @include font-size(16px);
+        @include user-select-none();
+        
+        fill: #7394A6;
+        text-anchor: start;
+        font-family: $fontFamily;
+    }
+
+    .rectangle {
+        stroke: #7394A6;
+        stroke-width: 2px;
+        fill: #FDFDFD;
+    }
+
+    .triangle {
+        fill: #7394A6;
+    }
+}
