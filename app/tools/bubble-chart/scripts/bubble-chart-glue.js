@@ -76,11 +76,9 @@ define([
                     initComponents();
                     initLayoutManager();
                     initLayouts();
+                    initBind();
 
                     seti18n();
-
-                    bind.init(_vizBubble, _vizChart, model, chartScales, availableFrame, modelBindCallback);
-                    bind.all();
 
                     if (model.get("manualZoom")) {
                         setZoom();
@@ -190,6 +188,11 @@ define([
             var registerModelBindCallback = function(callback) {
                 modelBindCallback = callback;
             };
+
+            var initBind = function() {
+                bind.init(_vizBubble, _vizChart, model, chartScales, availableFrame, modelBindCallback);
+                bind.all();
+            }
 
             var initComponents = function() {
                 components.init(div, svg, model, scatterChartModelUpdate);
