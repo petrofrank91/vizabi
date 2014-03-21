@@ -21,6 +21,7 @@ define([
             _self.events.bind('changed:state', function(state) {
                 _self.setState(state);
                 _self.render();
+                components.timeslider.update();
             });
         }
 
