@@ -4,6 +4,7 @@ define([], function() {
 
 		var g;
 		var vizState;
+		var yearLabel;
 
 		var init = function(svg, state) {
 			g = svg.append("g").attr("class", "yearLabel")
@@ -25,14 +26,18 @@ define([], function() {
 		}
 
 		var render = function() {
-			var font = g
+			yearLabel = g
 				.append("text")
 				.text(Math.floor(vizState.get("year")))
 				.attr('filter', 'url(#blur)');
 
-			var fontSize = font.attr('font-size') || font.style('font-size');
-			font.attr('y', fontSize);
+			var fontSize = yearLabel.attr('font-size') || yearLabel.style('font-size');
+			yearLabel.attr('y', fontSize);
 		};
+
+		var update = function() {
+			yearLabel.text(Math.floor(vizState.get('year')));
+		}
 
         var getGroup = function () {
             return g;
@@ -41,6 +46,7 @@ define([], function() {
 		return {
 			init: init,
 			render: render,
+			update: update,
 			getGroup: getGroup
 		};
 
