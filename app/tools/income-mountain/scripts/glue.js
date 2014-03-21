@@ -145,7 +145,7 @@ define([
         }
 
         function initComponents() {
-            components.init(svg, _i18n, state, properties);
+            components.init(div, svg, _i18n, state, properties);
         }
 
         function initLayouts() {
