@@ -13,13 +13,16 @@ define([
         var mountains;
         var timeslider;
 
+        var drawFn;
+
         var highlighted = [];
 
-        function init(s) {
+        function init(s, draw) {
             state = s;
             labels = components.get().labels.getGroup();
             mountains = components.get().mountains.getGroup();
             timeslider = components.get().timeslider.getGroup();
+            drawFn = draw;
         }
 
         function deleteGeo(geo) {
@@ -173,7 +176,6 @@ define([
         }
 
         function bindTouchTimeslider() {
-            console.log(components)
             var wrapper = components.get().wrapper;
             var wrapperJq = $(wrapper.node());
             var width = wrapperJq.width();
@@ -222,6 +224,7 @@ define([
                             for (var x = state.year; x <= new_year; x++) {
                                 state.year = x;
                                 components.get().timeslider.update();
+                                drawFn();
                             }
                         }
                         if (direction === 'left') {
@@ -234,6 +237,7 @@ define([
                             for (var x = state.year; x >= new_year; x--) {
                                 state.year = x;
                                 components.get().timeslider.update();
+                                drawFn();
                             }
                         }
                     } else if (phase === 'end') {

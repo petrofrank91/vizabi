@@ -53,7 +53,7 @@ define([
             initLayouts();
             initData();
 
-            bind.init(getState());
+            bind.init(getState(), draw);
             bind.all();
 
             components.get().mountains.setDrawLoader(draw);
@@ -176,10 +176,11 @@ define([
             for (var i = 0; i < state.geo.length; i++) {
                 var geo = state.geo[i];
                 var year = Math.floor(state.year);
+                var drawableData = drawable[geo][year] || [];
 
                 d.push({
                     id: geo,
-                    data: drawable[geo][year],
+                    data: drawableData,
                     name: entities.get_name(geo),
                     color: entities.get_color(geo),
                     maxHeight: drawable[geo].geoMaxHeight
