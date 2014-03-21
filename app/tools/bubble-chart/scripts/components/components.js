@@ -11,6 +11,7 @@ define([
 	 'bubble-chart-links'
 	 ], function(xLabel, yLabel, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer, xAxis, yAxis, bubbleLinks) {
 		var components = {
+			wrapper: undefined,
 			chart: undefined,
 			yearLabel: undefined,
 			xLabel: undefined,
@@ -26,7 +27,9 @@ define([
 			linkLayer: undefined
 		};
 
-		var init = function (svg, state, stateChanged) {
+		var init = function (wrapperDiv, svg, state, stateChanged) {
+			components.wrapper = wrapperDiv;
+
 			components.chart = new chartContainer();
 			components.chart.init(svg);
 			components.chart.render();

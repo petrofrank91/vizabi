@@ -8,9 +8,10 @@ define([
         'bubble-chart-components',
         'bubble-chart-layout',
         'layout-manager',
+        'bubble-chart/bind/bind',
         'i18n'
     ],
-    function($, bubbleChartModel, vizBubble, timeSlider, settingsButton, chartGrid, components, bubbleChartLayout, lm) {
+    function($, bubbleChartModel, vizBubble, timeSlider, settingsButton, chartGrid, components, bubbleChartLayout, lm, bind) {
         // supposed to be available at window.vizabi.bubbleChart
         var bubbleChart = function(renderDiv, state) {
             var isInteractive;
@@ -25,6 +26,7 @@ define([
             var enableManualZoom;
             var _i18n;
 
+            var div;
             var svg;
             var chartRenderDiv = renderDiv + "-scatterChart";
 
@@ -45,9 +47,11 @@ define([
             };
 
             var drawSvgLayer = function() {
-                svg = d3.select("#" + renderDiv)
+                div = d3.select("#" + renderDiv)
                     .append('div')
-                    .attr('class', 'vizabi-bubble-chart')
+                    .attr('class', 'vizabi-bubble-chart');
+
+                svg = div
                     .append("svg")
                     .attr("id", chartRenderDiv)
                     .attr("xmlns", "http://www.w3.org/2000/svg")
@@ -73,6 +77,11 @@ define([
                     initLayoutManager();
                     initLayouts();
 
+                    seti18n();
+
+                    bind.init(_vizBubble, _vizChart, model, chartScales, availableFrame, modelBindCallback);
+                    bind.all();
+
                     if (model.get("manualZoom")) {
                         setZoom();
                     }
@@ -80,8 +89,6 @@ define([
                         modelBindCallback(model.getAttributes());
                     }
                 });
-
-                seti18n();
             };
 
             var setState = function(state) {
@@ -185,7 +192,7 @@ define([
             };
 
             var initComponents = function() {
-                components.init(svg, model, scatterChartModelUpdate);
+                components.init(div, svg, model, scatterChartModelUpdate);
             };
 
             var initLayouts = function() {
