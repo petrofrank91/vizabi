@@ -10,6 +10,7 @@ define([
         var svg;
 
         var components = {
+            wrapper: undefined,
             header: undefined,
             //picker: picker,
             timeslider: undefined,
@@ -18,7 +19,7 @@ define([
             mountains: mountains
         };
 
-        function init(svg, _i18n, state, properties) {
+        function init(wrapperDiv, svg, _i18n, state, properties) {
             // header start
             components.header = new text();
             components.header.init(
@@ -44,6 +45,8 @@ define([
 
             // mountains start
             components.mountains.init(svg);
+
+            components.wrapper = wrapperDiv;
         }
 
         function get() {
