@@ -10,7 +10,7 @@ define([
 	 'chart-grid-y-axis',
 	 'bubble-chart-links',
 	 'smart-picker'
-	 ], function(xLabel, yLabel, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer, xAxis, yAxis, bubbleLinks) {
+	 ], function(xLabel, yLabel, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer, xAxis, yAxis, bubbleLinks, smartPicker) {
 		var components = {
 			wrapper: undefined,
 			chart: undefined,
