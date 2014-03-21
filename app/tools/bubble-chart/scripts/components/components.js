@@ -8,7 +8,8 @@ define([
 	 'bubble-chart-container',
 	 'chart-grid-x-axis',
 	 'chart-grid-y-axis',
-	 'bubble-chart-links'
+	 'bubble-chart-links',
+	 'smart-picker'
 	 ], function(xLabel, yLabel, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer, xAxis, yAxis, bubbleLinks) {
 		var components = {
 			wrapper: undefined,
@@ -24,7 +25,8 @@ define([
 			bubblesContainer: undefined,
 			labelLayer: undefined,
 			chartG: undefined,
-			linkLayer: undefined
+			linkLayer: undefined,
+			picker: undefined
 		};
 
 		var init = function (wrapperDiv, svg, state, stateChanged) {
@@ -70,6 +72,23 @@ define([
 
 			components.labelLayer = new bubbleLabels();
 			components.labelLayer.init(chartCountainerG, state);
+
+			components.picker = new smartPicker("geoMult", "geo-mult", {
+                width: 500,
+                confirmButton: true,
+                draggable: true,
+                initialValue: state.geo,
+                onInteraction: function(data) {
+                    var selected = data.selected;
+                    var countries = [];
+                    for(var i=0, size=selected.length; i<size; i++){
+                        var country = selected[i];
+                        countries.push(country.value);
+                    }
+                    console.log(countries);
+                }
+            });
+
 		};
 
 		var get = function () {
