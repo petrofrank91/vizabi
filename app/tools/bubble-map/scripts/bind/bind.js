@@ -1,13 +1,17 @@
 define([
         'bubble-map/components/components',
+        'jquery',
+        'touchSwipe'
     ],
-    function(components) {
+    function(components, $) {
         'use strict';
 
         var _self;
+        var state;
 
-        function init(context) {
+        function init(context, s) {
             _self = context;
+            state = s;
 
             listenState();
             listenLanguage();
@@ -15,13 +19,14 @@ define([
             listenData();
             
             bindTimeslider();
+            bindTouchTimeslider();
         }
 
         function listenState() {
-            _self.events.bind('changed:state', function(state) {
-                _self.setState(state);
-                _self.render();
+            _self.events.bind('changed:state', function(s) {
+                _self.setState(s);
                 components.timeslider.update();
+                _self.render();
             });
         }
 
@@ -66,6 +71,85 @@ define([
             timeslider.onplay(action);
             timeslider.onpause(action);
             timeslider.onmove(action);
+        }
+
+        function bindTouchTimeslider() {
+            var wrapper = components.wrapper;
+            var wrapperJq = $(wrapper.node());
+            var width = wrapperJq.width();
+
+            var speed = 0;
+
+            var lastMovement = {
+                distance: 0,
+                duration: 0,
+                direction: 'none'
+            }
+
+            wrapperJq.swipe({
+                threshold: 1,
+
+                fingers: 'all',
+
+                excludedElements: $.fn.swipe.defaults.excludedElements +
+                    ", .timeslider-1",
+
+                //Generic swipe handler for all directions
+                swipeStatus: function(event, phase, direction, distance, duration, fingers) {
+                    if (lastMovement.distance > distance) {
+                        if (direction === 'right') {
+                            direction = 'left';
+                        } else if (direction === 'left') {
+                            direction = 'right';
+                        }
+                    } else if (lastMovement.distance === distance) {
+                        direction = lastMovement.direction;
+                    }
+
+                    speed = distance / (duration - lastMovement.duration);
+
+                    if (phase === 'move') {
+                        var change = distance * speed / 200;
+
+                        // TODO: Analize if it is worthy to swap up/down to the last direction used
+                        if (direction === 'right') {
+                            var new_year = state.year + change;
+
+                            if (new_year > 2100) {
+                                new_year = 2100;
+                            }
+
+                            for (var x = state.year; x <= new_year; x++) {
+                                _self.events.trigger('changed:state', { year: x });
+                            }
+                        }
+                        if (direction === 'left') {
+                            var new_year = state.year - change;
+                            
+                            if (new_year < 1800) {
+                                new_year = 1800;
+                            }
+                            
+                            for (var x = state.year; x >= new_year; x--) {
+                                _self.events.trigger('changed:state', { year: x });
+                            }
+                        }
+                    } else if (phase === 'end') {
+                        var speedReduction = setInterval(function() {
+                            var friction = 0.001;
+                            speed -= Math.sqrt(friction * 15);
+
+                            if (speed <= 0) {
+                                clearInterval(speedReduction);
+                            }
+                        }, 200);
+                    }
+
+                    lastMovement.distance = distance;
+                    lastMovement.duration = duration;
+                    lastMovement.direction = direction;
+                }
+            });
         }
 
         return {
