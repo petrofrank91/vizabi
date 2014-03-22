@@ -36,6 +36,10 @@ define([
             _bubbleLabels = new bubbleLabels();
         };
 
+        var getBubbleEvents = function() {
+            return _bubbleEvents;
+        }
+
         var setScales = function() {
             if (!vizState.get("minBubbleSize") && !vizState.get("maxBubbleSize")) {
                 scale.init("bubble", "sqrt", [vizState.getDataHelper().getMinOfSizeIndicator(), vizState.getDataHelper().getMaxOfSizeIndicator()], [1, 30]);
@@ -601,7 +605,8 @@ define([
             render: render,
             getGroup: getGroup,
             getPaddingTop: getPaddingTop,
-            getPaddingRight: getPaddingRight
+            getPaddingRight: getPaddingRight,
+            getBubbleEvents: getBubbleEvents
         };  
     };
 
