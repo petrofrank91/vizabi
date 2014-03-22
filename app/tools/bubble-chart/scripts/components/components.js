@@ -29,7 +29,7 @@ define([
 			picker: undefined
 		};
 
-		var init = function (wrapperDiv, svg, state, stateChanged) {
+		var init = function (wrapperDiv, svg, state, stateChanged, _i18n) {
 			components.wrapper = wrapperDiv;
 
 			components.chart = new chartContainer();
@@ -69,7 +69,9 @@ define([
 			components.picker.init(components.bubbleEvents);
 
 			components.searchBox = new searchBox();
-			components.searchBox.init(chartCountainerG, components.picker);
+			console.log(_i18n);
+			components.searchBox.init(chartCountainerG, components.picker,
+				_i18n.translate('bubbleChart', 'Find country...'));
 			components.searchBox.render();
 
 			components.linkLayer = new bubbleLinks();
