@@ -53,7 +53,7 @@ define([
                 }
             }
 
-            return newData;
+            return cache;
         }
 
         // Groups 'data' by year and creates the properties 'x', 'y' and 'y0' for
