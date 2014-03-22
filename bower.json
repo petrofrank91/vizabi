@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "sprintf": "*",
-    "zepto": "~1.1.2"
+    "zepto": "~1.1.2",
+    "underscore": "~1.6.0"
   }
 }
