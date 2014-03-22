@@ -9,6 +9,7 @@ define([
 
         var state;
 
+        var pickerButton;
         var labels;
         var mountains;
         var timeslider;
@@ -19,10 +20,18 @@ define([
 
         function init(s, draw) {
             state = s;
+            pickerButton = components.get().pickerButton.getGroup();
             labels = components.get().labels.getGroup();
             mountains = components.get().mountains.getGroup();
             timeslider = components.get().timeslider.getGroup();
             drawFn = draw;
+        }
+
+        function bindPickerButton() {
+            pickerButton.on('click', function() {
+                // open picker
+                components.get().geoPicker.show();
+            })
         }
 
         function deleteGeo(geo) {
@@ -259,6 +268,7 @@ define([
         }
 
         function all() {
+            bindPickerButton();
             bindLabels();
             bindMountains();
             bindTimeslider();

@@ -1,25 +1,30 @@
 define([
         'd3',
+        'jquery',
+        'underscore',
         'widgets/text/text',
+        'income-mountain/viz/picker-button',
         'widgets/time-slider/slider-types/1/ts1',
         'income-mountain/viz/labels',
         'income-mountain/viz/axis',
-        'income-mountain/viz/incomeMountain'
+        'income-mountain/viz/incomeMountain',
+        'smart-picker',
     ],
-    function(d3, text, timeslider, labels, axis, mountains) {
+    function(d3, $, _, text, pickerButton, timeslider, labels, axis, mountains, smartPicker) {
         var svg;
 
         var components = {
             wrapper: undefined,
             header: undefined,
-            //picker: picker,
+            pickerButton: pickerButton,
             timeslider: undefined,
             labels: labels,
             axis: axis,
-            mountains: mountains
+            mountains: mountains,
+            geoPicker: undefined 
         };
 
-        function init(wrapperDiv, svg, _i18n, state, properties) {
+        function init(wrapperDiv, svg, _i18n, state, properties, update) {
             // header start
             components.header = new text();
             components.header.init(
@@ -30,6 +35,11 @@ define([
             );
 
             // picker start
+            // components.pickerButton = new pickerButton();
+            components.pickerButton.init(
+                svg,
+                i18n.translate('incMountain', 'Select a location')
+            );
 
             // timeslider start
             components.timeslider = new timeslider();
@@ -47,6 +57,32 @@ define([
             components.mountains.init(svg);
 
             components.wrapper = wrapperDiv;
+
+            // geo picker
+            components.geoPicker = new smartPicker("geoMult", "geo-mult", {
+                width: 500,
+                confirmButton: true,
+                draggable: true,
+                initialValue: state.geo,
+                onSet: function(data) {
+                    var selected = data.selected;
+                    var countries = [];
+                    var numNewGeos = 0;
+
+                    for (var i = 0, size = selected.length; i < size; i++) {
+                        var country = selected[i];
+                        
+                        if (state.geo.indexOf(country.value) === -1) {
+                            numNewGeos++;
+                        }
+
+                        countries.push(country.value);
+                    }
+
+                    state.geo = countries;
+                    update(numNewGeos);
+                }
+            });
         }
 
         function get() {

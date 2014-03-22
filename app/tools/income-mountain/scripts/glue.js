@@ -9,6 +9,7 @@ define([
         'i18n'
     ],
     function(d3, lm, data, components, layouts, bind, entities) {
+
         'use strict';
 
         var div;
@@ -145,7 +146,7 @@ define([
         }
 
         function initComponents() {
-            components.init(div, svg, _i18n, state, properties);
+            components.init(div, svg, _i18n, state, properties, loadData);
         }
 
         function initLayouts() {
@@ -156,6 +157,19 @@ define([
             var len = state.geo.length;
 
             data.init(state, properties, function() {
+                if (!--len) {
+                    drawable = data.get();
+                    components.get().labels.render();
+                    components.get().mountains.render();
+                    bind.all();
+                }
+            });
+        }
+
+        function loadData(numberNewGeos) {
+            var len = numberNewGeos;
+            
+            data.load(function() {
                 if (!--len) {
                     drawable = data.get();
                     components.get().labels.render();
