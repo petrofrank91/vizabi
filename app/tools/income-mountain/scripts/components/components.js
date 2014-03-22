@@ -23,7 +23,7 @@ define([
             geoPicker: undefined 
         };
 
-        function init(wrapperDiv, svg, _i18n, state, properties) {
+        function init(wrapperDiv, svg, _i18n, state, properties, update) {
             // header start
             components.header = new text();
             components.header.init(
@@ -58,16 +58,23 @@ define([
                 confirmButton: true,
                 draggable: true,
                 initialValue: state.geo,
-                onInteraction: function(data) {
-
+                onSet: function(data) {
                     var selected = data.selected;
                     var countries = [];
-                    for(var i=0, size=selected.length; i<size; i++){
+                    var numNewGeos = 0;
+
+                    for (var i = 0, size = selected.length; i < size; i++) {
                         var country = selected[i];
+                        
+                        if (state.geo.indexOf(country.value) === -1) {
+                            numNewGeos++;
+                        }
+
                         countries.push(country.value);
                     }
 
                     state.geo = countries;
+                    update(numNewGeos);
                 }
             });
         }
