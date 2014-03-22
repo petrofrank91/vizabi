@@ -8,8 +8,9 @@ define([
 	 'bubble-chart-container',
 	 'chart-grid-x-axis',
 	 'chart-grid-y-axis',
-	 'bubble-chart-links'
-	 ], function(xLabel, yLabel, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer, xAxis, yAxis, bubbleLinks) {
+	 'bubble-chart-links',
+	 'bubble-chart/viz/geo-picker'
+	 ], function(xLabel, yLabel, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer, xAxis, yAxis, bubbleLinks, geoPicker) {
 		var components = {
 			wrapper: undefined,
 			chart: undefined,
@@ -24,10 +25,11 @@ define([
 			bubblesContainer: undefined,
 			labelLayer: undefined,
 			chartG: undefined,
-			linkLayer: undefined
+			linkLayer: undefined,
+			picker: undefined
 		};
 
-		var init = function (wrapperDiv, svg, state, stateChanged) {
+		var init = function (wrapperDiv, svg, state, stateChanged, _i18n) {
 			components.wrapper = wrapperDiv;
 
 			components.chart = new chartContainer();
@@ -49,10 +51,6 @@ define([
 			components.yAxis.init(chartCountainerG, state);
 			components.yAxis.render();
 
-			components.searchBox = new searchBox();
-			components.searchBox.init(chartCountainerG);
-			components.searchBox.render();
-
 			components.xAxis = new xAxis();
 			components.xAxis.init(chartCountainerG, state);
 			components.xAxis.render();
@@ -62,14 +60,26 @@ define([
 			components.xLabel.render();
 
 			components.bubblesContainer = new bubbles();
-			components.bubblesContainer.init(chartCountainerG, state, stateChanged);
+			components.bubblesContainer.init(chartCountainerG, state, stateChanged, components.bubbleEvents);
 			components.bubblesContainer.render();
+
+			components.bubbleEvents = components.bubblesContainer.getBubbleEvents();
+
+			components.picker = new geoPicker();
+			components.picker.init(components.bubbleEvents);
+
+			components.searchBox = new searchBox();
+			console.log(_i18n);
+			components.searchBox.init(chartCountainerG, components.picker,
+				_i18n.translate('bubbleChart', 'Find country...'));
+			components.searchBox.render();
 
 			components.linkLayer = new bubbleLinks();
 			components.linkLayer.init(chartCountainerG, state);
 
 			components.labelLayer = new bubbleLabels();
 			components.labelLayer.init(chartCountainerG, state);
+
 		};
 
 		var get = function () {

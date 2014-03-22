@@ -73,12 +73,12 @@ define([
                     setUpSubviews();
                     setUpModelAndUpdate();
 
+                    seti18n();
+
                     initComponents();
                     initLayoutManager();
                     initLayouts();
                     initBind();
-
-                    seti18n();
 
                     if (model.get("manualZoom")) {
                         setZoom();
@@ -195,7 +195,7 @@ define([
             }
 
             var initComponents = function() {
-                components.init(div, svg, model, scatterChartModelUpdate);
+                components.init(div, svg, model, scatterChartModelUpdate, _i18n);
             };
 
             var initLayouts = function() {

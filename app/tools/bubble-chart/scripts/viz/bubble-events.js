@@ -9,24 +9,70 @@ define([
         var paddingRight;
         var paddingTop;
 
+        var getSelectedBubbles = function() {
+            return vizState.get("s");
+        };
+
         var bubbleClickHandler = function(d, i) {
+
             var currentYear = vizState.get("year");
             var selected = vizState.get("s");
             var id = d.id;
 
             if (id in selected) {
-                delete selected[id];
+                selected = bubbleUnselect(selected, id);
             } else {
-                selected[id] = {
-                    start: currentYear,
-                    category: d.category
-                };
+                selected = bubbleSelect(selected, id, d.category);
             }
+            updateBubbleHighlight(selected);
+        };
 
+        var updateBubbleHighlight = function(selected) {
             vizStateChangeCallback({
                 s: selected
             });
             bubbleOutHandler();
+        }
+
+        var bubbleUnselectAll = function() {
+            var selected = {};
+            updateBubbleHighlight(selected);
+        };
+
+        var bubbleForceSelection = function(idList) {
+            var selected = {};
+            for(var i=0, size=idList.length; i<size; i++) {
+                selected = bubbleSelect(selected, idList[i]);
+            }
+            updateBubbleHighlight(selected);
+        };
+
+        var bubbleSelect= function(selected, id, category) {
+            var currentYear = vizState.get("year");
+
+            if(!category) {
+                // TO DO 
+                //we must find the category
+                //for now, we're using d3, but this should be different (model)
+                // eg: bubbles[id].getCategory
+                d3.selectAll('.currentEntity').each(function(d) {
+                    if (d.id === id) category = d.category;
+                });
+            }
+
+            selected[id] = {
+                start: currentYear,
+                category: category
+            };
+
+            return selected;
+        };
+
+        var bubbleUnselect = function(selected, id) {
+            if (id in selected) {
+                delete selected[id];
+            }
+            return selected;
         };
 
         var bubbleOutHandler = function(name, i) {
@@ -308,7 +354,9 @@ define([
         };  
 
         return {
+            getSelectedBubbles: getSelectedBubbles,
             bubbleClickHandler: bubbleClickHandler,
+            bubbleForceSelection: bubbleForceSelection,
             bubbleOverHandler: bubbleOverHandler,
             bubbleOutHandler: bubbleOutHandler,
             dragMove: dragMove,
