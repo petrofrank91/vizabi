@@ -9,8 +9,8 @@ define([
 	 'chart-grid-x-axis',
 	 'chart-grid-y-axis',
 	 'bubble-chart-links',
-	 'smart-picker'
-	 ], function(xLabel, yLabel, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer, xAxis, yAxis, bubbleLinks, smartPicker) {
+	 'bubble-chart/viz/geo-picker'
+	 ], function(xLabel, yLabel, yearLabel, searchBox, bubbles, bubbleLabels, chartContainer, xAxis, yAxis, bubbleLinks, geoPicker) {
 		var components = {
 			wrapper: undefined,
 			chart: undefined,
@@ -51,10 +51,6 @@ define([
 			components.yAxis.init(chartCountainerG, state);
 			components.yAxis.render();
 
-			components.searchBox = new searchBox();
-			components.searchBox.init(chartCountainerG);
-			components.searchBox.render();
-
 			components.xAxis = new xAxis();
 			components.xAxis.init(chartCountainerG, state);
 			components.xAxis.render();
@@ -64,30 +60,23 @@ define([
 			components.xLabel.render();
 
 			components.bubblesContainer = new bubbles();
-			components.bubblesContainer.init(chartCountainerG, state, stateChanged);
+			components.bubblesContainer.init(chartCountainerG, state, stateChanged, components.bubbleEvents);
 			components.bubblesContainer.render();
+
+			components.bubbleEvents = components.bubblesContainer.getBubbleEvents();
+
+			components.picker = new geoPicker();
+			components.picker.init(components.bubbleEvents);
+
+			components.searchBox = new searchBox();
+			components.searchBox.init(chartCountainerG, components.picker);
+			components.searchBox.render();
 
 			components.linkLayer = new bubbleLinks();
 			components.linkLayer.init(chartCountainerG, state);
 
 			components.labelLayer = new bubbleLabels();
 			components.labelLayer.init(chartCountainerG, state);
-
-			components.picker = new smartPicker("geoMult", "geo-mult", {
-                width: 500,
-                confirmButton: true,
-                draggable: true,
-                initialValue: state.geo,
-                onInteraction: function(data) {
-                    var selected = data.selected;
-                    var countries = [];
-                    for(var i=0, size=selected.length; i<size; i++){
-                        var country = selected[i];
-                        countries.push(country.value);
-                    }
-                    console.log(countries);
-                }
-            });
 
 		};
 
