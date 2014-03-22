@@ -30,7 +30,7 @@ define([
         function bindPickerButton() {
             pickerButton.on('click', function() {
                 // open picker
-                // picker.show();
+                components.get().geoPicker.show();
             })
         }
 
