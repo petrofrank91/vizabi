@@ -1,0 +1,17 @@
+.searchBox {
+    cursor: pointer;
+
+    .magnifier {
+        stroke: $colorTSdarkBlue;
+        stroke-width: 36;
+        stroke-linecap: 'round';
+    }
+
+    .text {
+        @include font-size(22px);
+        @include user-select-none();
+
+        font-family: $fontFamily;
+        fill: $colorTSdarkBlue;
+    }
+}
