@@ -79,8 +79,8 @@ define(["layout-manager"], function(layoutManager) {
 			addComponent(lname, {
 				id: 'searchBox',
 				g: components.get().searchBox.getGroup(),
-				top: ['yLabel.bottom', { padding: 10 }],
-				left: ['yAxis.right', { padding: 10 }]
+				top: ['yLabel.bottom', { padding: 15 }],
+				left: ['yAxis.right', { padding: 20 }]
 			});
 
 			addComponent(lname, {
