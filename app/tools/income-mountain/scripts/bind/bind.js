@@ -38,6 +38,7 @@ define([
         function deleteGeo(geo) {
             state.geo.splice(state.geo.indexOf(geo), 1);
             reload = true;
+            components.get().geoPicker.resetValue(state.geo);
             components.get().labels.render();
             drawFn();
             // raise event that a country was deleted instead of splice
