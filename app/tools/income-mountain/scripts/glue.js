@@ -42,6 +42,7 @@ define([
         var _i18n;
 
         var drawable;  // Data used for drawing
+        var reload = false;
 
         function init(divId, state, properties, t) {
             initSVG(divId);
@@ -186,6 +187,9 @@ define([
             var d = [];
 
             mountains.clear();
+
+            if (bind.checkReload()) drawable = data.get();
+            bind.clearReload();
 
             for (var i = 0; i < state.geo.length; i++) {
                 var geo = state.geo[i];

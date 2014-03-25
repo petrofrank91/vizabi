@@ -15,6 +15,7 @@ define([
         var timeslider;
 
         var drawFn;
+        var reload = false;
 
         var highlighted = [];
 
@@ -36,7 +37,18 @@ define([
 
         function deleteGeo(geo) {
             state.geo.splice(state.geo.indexOf(geo), 1);
+            reload = true;
+            components.get().labels.render();
+            drawFn();
             // raise event that a country was deleted instead of splice
+        }
+
+        function checkReload() {
+            return reload;
+        }
+
+        function clearReload() {
+            reload = false;
         }
 
         function mouseoverHighlight(overGeo) {
@@ -277,6 +289,8 @@ define([
         }
 
         return {
+            checkReload: checkReload,
+            clearReload: clearReload,
             init: init,
             all: all,
             labels: bindLabels,
