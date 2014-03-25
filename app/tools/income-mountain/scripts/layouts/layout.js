@@ -30,8 +30,7 @@ define([
                 id: 'pickerButton',
                 g: components.get().pickerButton.getGroup(),
                 bottom: ['header.bottom'],
-                left: ['header.right', { padding: 15 }],
-                render: components.get().pickerButton.render
+                left: ['header.right', { padding: 15 }]
             });
 
             addComponent(lname, {

@@ -13,14 +13,14 @@ define([
             g = svg.append('g').attr('class', 'picker-button');
             text = t;
 
-            render();
+            create();
         }
 
         function setText(t) {
             text = t.toUpperCase();
         }
 
-        function render(w, h) {
+        function create() {
             var rectangle = g.append('rect').attr('class', 'rectangle')
                 .attr('x', 1).attr('y', 8)
                 .attr('rx', 5).attr('ry', 5)
@@ -46,6 +46,13 @@ define([
             return g.node().getBBox();
         }
 
+        function redraw() {
+            g.select('.rectangle').remove();
+            g.select('.text').remove();
+            g.select('.triangle').remove();
+            create();
+        }
+
         function getGroup() {
             return g;
         }
@@ -54,7 +61,7 @@ define([
             init: init,
             setText: setText,
             getGroup: getGroup,
-            render: render
+            redraw: redraw
         };
     }
 );
