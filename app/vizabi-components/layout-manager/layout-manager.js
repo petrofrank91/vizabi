@@ -223,6 +223,7 @@ define([],
             // Sanity check on anchor point
             if (anchorPointName !== 'left' && anchorPointName !== 'right' &&
                 anchorPointName !== 'top' && anchorPointName !== 'bottom' &&
+                anchorPointName !== 'xcenter' && anchorPointName !== 'ycenter' &&
                 anchorPointName !== 'width' && anchorPointName !== 'height') {
                 console.error(errorMsg.unknownAnchorPointName, anchorPointName);
                 return undefined;
@@ -312,38 +313,40 @@ define([],
         // Discovers all anchor points for a given component
         function discoverAllPoints(anchorPoints) {
             // Horizontal calculation
-            if (anchorPoints.xcenter) {
-                anchorPoints.left = anchorPoints.xcenter - anchorPoints.width / 2;
-                anchorPoints.right = anchorPoints.xcenter + anchorPoints.width / 2;
-                console.log(anchorPoints.xcenter, anchorPoints.left, anchorPoints.right, anchorPoints.width)
-            } else if (!anchorPoints.left && anchorPoints.right) {
+            if (!anchorPoints.left && anchorPoints.right) {
                 anchorPoints.left = anchorPoints.right - anchorPoints.width;
-                anchorPoints.xcenter = anchorPoints.left + anchorPoints.width / 2;
             } else if (!anchorPoints.left && !anchorPoints.right) {
                 // Blank the horizontal points
                 anchorPoints.left = 0;
                 anchorPoints.right = anchorPoints.width;
-                anchorPoints.xcenter = anchorPoints.width / 2;
             } else if (anchorPoints.left && !anchorPoints.right) {
                 anchorPoints.right = anchorPoints.left + anchorPoints.width;
-                anchorPoints.xcenter = anchorPoints.left + anchorPoints.width / 2;
+            }
+
+            // Check for horizontal centering
+            if (anchorPoints.xcenter) {
+                anchorPoints.left = anchorPoints.xcenter - anchorPoints.width / 2;
+                anchorPoints.right = anchorPoints.xcenter + anchorPoints.width / 2;
+            } else {
+                anchorPoints.xcenter = anchorPoints.left + (anchorPoints.width / 2);
             }
 
             // Vertical calculation
-            if (anchorPoints.ycenter) {
-                anchorPoints.top = anchorPoints.ycenter - anchorPoints.height / 2;
-                anchorPoints.bottom = anchorPoints.ycenter + anchorPoints.height / 2;
-            } else if (!anchorPoints.top && anchorPoints.bottom) {
+            if (!anchorPoints.top && anchorPoints.bottom) {
                 anchorPoints.top = anchorPoints.bottom - anchorPoints.height;
-                anchorPoints.ycenter = anchorPoints.top + anchorPoints.height / 2;
             } else if (!anchorPoints.top && !anchorPoints.bottom) {
                 // Blank the vertical points
                 anchorPoints.top = 0;
                 anchorPoints.bottom = anchorPoints.height;
-                anchorPoints.ycenter = anchorPoints.height / 2;
             } else if (anchorPoints.top && !anchorPoints.bottom) {
                 anchorPoints.bottom = anchorPoints.top + anchorPoints.height;
-                anchorPoints.ycenter = anchorPoints.top + anchorPoints.height / 2;
+            }
+
+            if (anchorPoints.ycenter) {
+                anchorPoints.top = anchorPoints.ycenter - (anchorPoints.height / 2);
+                anchorPoints.bottom = anchorPoints.ycenter + anchorPoints.height / 2;
+            } else {
+                anchorPoints.ycenter = (anchorPoints.bottom - anchorPoints.top) / 2;
             }
 
             return anchorPoints;
