@@ -24,7 +24,7 @@ define([
             geoPicker: undefined 
         };
 
-        function init(wrapperDiv, svg, _i18n, state, properties, update) {
+        function init(wrapperDiv, svg, _i18n, state, properties, d, update) {
             // header start
             components.header = new text();
             components.header.init(
@@ -68,11 +68,12 @@ define([
                     var selected = data.selected;
                     var countries = [];
                     var numNewGeos = 0;
+                    var cache = d.getCached();
 
                     for (var i = 0, size = selected.length; i < size; i++) {
                         var country = selected[i];
                         
-                        if (state.geo.indexOf(country.value) === -1) {
+                        if (!cache[country.value]) {
                             numNewGeos++;
                         }
 

@@ -147,7 +147,7 @@ define([
         }
 
         function initComponents() {
-            components.init(div, svg, _i18n, state, properties, loadData);
+            components.init(div, svg, _i18n, state, properties, data, loadData);
         }
 
         function initLayouts() {
@@ -170,14 +170,21 @@ define([
         function loadData(numberNewGeos) {
             var len = numberNewGeos;
             
-            data.load(function() {
-                if (!--len) {
-                    drawable = data.get();
-                    components.get().labels.render();
-                    components.get().mountains.render();
-                    bind.all();
-                }
-            });
+            if (len) {
+                data.load(function() {
+                    if (!--len) {
+                        drawable = data.get();
+                        components.get().labels.render();
+                        components.get().mountains.render();
+                        bind.all();
+                    }
+                });
+            } else {
+                drawable = data.get();
+                components.get().labels.render();
+                components.get().mountains.render();
+                bind.all();
+            }
         }
 
         function draw(mheight) {
