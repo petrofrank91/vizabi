@@ -35,13 +35,6 @@ define(["layout-manager"], function(layoutManager) {
 			});
 			
 			addComponent(lname, {
-				id: 'yearLabel',
-				g: components.get().yearLabel.getGroup(),
-				xcenter: ['stage.width', { percentage: '50%' }],
-				ycenter: ['stage.height', { percentage: '50%' }]
-			});
-
-			addComponent(lname, {
 				id: 'axisCaller',
 				g: components.get().yAxis.getGroup(),
 				top: ['yLabel.bottom'],
@@ -135,6 +128,13 @@ define(["layout-manager"], function(layoutManager) {
 				bottom: ['yAxis.bottom'],
 				right: ['xAxis.right'],
 				render: components.get().bubblesContainer.render
+			});
+
+			addComponent(lname, {
+				id: 'yearLabel',
+				g: components.get().yearLabel.getGroup(),
+				xcenter: ['xAxis.xcenter'],
+				ycenter: ['yAxis.ycenter']
 			});
 		};
 
