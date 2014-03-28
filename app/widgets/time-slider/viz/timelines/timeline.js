@@ -1,4 +1,4 @@
-define([
+    define([
         'd3',
         'widgets/time-slider/scale/year'
     ],
@@ -53,8 +53,8 @@ define([
 
             return d3.svg.axis().scale(scale.get())
                 .tickValues(v)
-                .tickSize(15, 0, 2)
-                .tickPadding(11)
+                .tickSize(8, 0, 2)
+                .tickPadding(18)
                 .tickSubdivide(1)
                 .tickFormat(function(d) { return d; });
         }
