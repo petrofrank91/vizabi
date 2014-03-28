@@ -23,6 +23,21 @@ define([], function() {
                 }
             },
 
+            WORLD: {
+                name: "World",
+                color: {
+                    fill: "#FFB700",
+                    fill_dark: "#FFAB15",
+                    fill_light: "#FFC600",
+                    shade: "#FC6E1A",
+                    stroke: "#E3451C",
+                    drop_shadow: "#DDAA72",
+                    mist: "#FFC76E",
+                    mist_light: "#FFEED3",
+                    bling: "#FFEBB3"
+                }
+            },
+
             EUR: {
                 name: "Europe",
                 color: {
