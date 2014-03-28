@@ -10,6 +10,8 @@ define([
         'use strict';
 
         var g;
+        var timelineg;
+        var buttonsg;
 
         var timelineAxis;
         var axisValues;
@@ -18,6 +20,8 @@ define([
 
         function init(svg) {
             g = svg.append('g').attr('class', 'timeslider-1');
+            timelineg = g.append('g').attr('id', 'timeline');
+            buttonsg = g.append('g').attr('id', 'buttons');
 
             loadTimeline();
             placeTimeline();
@@ -34,19 +38,19 @@ define([
         }
 
         function loadButtons() {
-            play.init(g);
+            play.init(buttonsg);
             play.draw();
 
-            pause.init(g);
+            pause.init(buttonsg);
             pause.draw();
 
-            move.init(g);
+            move.init(buttonsg);
             move.draw();
         }
 
         function loadTimeline(v) {
             axisValues = v || axisValues;
-            timelineAxis = g.append('g')
+            timelineAxis = timelineg.append('g')
                 .attr('class', 'timeslider1-timeline')
                 .call(timeline.axis(axisValues));
         }
