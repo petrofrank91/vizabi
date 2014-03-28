@@ -12,6 +12,7 @@ define([
         var g;
 
         var timelineAxis;
+        var axisValues;
 
         var textYear;
 
@@ -43,10 +44,11 @@ define([
             move.draw();
         }
 
-        function loadTimeline() {
+        function loadTimeline(v) {
+            axisValues = v || axisValues;
             timelineAxis = g.append('g')
                 .attr('class', 'timeslider1-timeline')
-                .call(timeline.axis());
+                .call(timeline.axis(axisValues));
         }
 
         function loadText() {
@@ -99,6 +101,18 @@ define([
             placeTimeline();
         }
 
+        function setAxisValues(v) {
+            axisValues = v;
+            reloadTimeline();
+        }
+
+        function setYearRange(s, e) {
+            console.log(timelineAxis);
+            timeline.setStart(s);
+            timeline.setEnd(e);
+            reloadTimeline();
+        }
+
         return {
             init: init,
             writeYear: writeYear,
@@ -109,6 +123,8 @@ define([
             timelineAxis: timelineAxis,
             text: text,
             reloadTimeline: reloadTimeline,
+            setAxisValues: setAxisValues,
+            setYearRange: setYearRange,
             getGroup: getGroup
         };
     }
