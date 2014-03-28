@@ -11,7 +11,8 @@ define([
         var axisWidth = 880;
 
         var dollarTicks = [365, 3650, 36500]; // $1, $10, $100
-        var dollarText = '$/day'
+        var dollarText = i18n.translate('', ' / day');
+        var dollarSign = i18n.translate('', '$');
 
         function init(svg) {
             g = svg.append('g').attr('class', 'axis');
@@ -21,9 +22,9 @@ define([
             var axisConfig = d3.svg.axis().scale(scale.get())
                 .tickValues(dollarTicks)
                 .tickSize(5, 0, 2)
-                .tickPadding(2.5)
+                .tickPadding(3.5)
                 .tickFormat(function(d) {
-                    return (d/365) + '' + dollarText;
+                    return dollarSign + '' + (d/365) + '' + dollarText;
                 });
 
             a = g.append('g').call(axisConfig);
