@@ -18,6 +18,7 @@ define([
 
         function setText(t) {
             text = t.toUpperCase();
+            redraw();
         }
 
         function create() {
