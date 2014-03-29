@@ -37,7 +37,7 @@ define([
             mheight: 440,
             startYear: 1800,
             endYear: 2018,
-            language: 'sv',
+            language: 'dev',
             languageFilename: '3',
             languagePath: 'http://stage.cms.gapminder.org/api/i18nCatalog/poJson?id=%(filename)s&lang=%(lang)s'
         };
