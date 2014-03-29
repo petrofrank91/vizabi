@@ -30,7 +30,8 @@ define([
                 id: 'pickerButton',
                 g: components.get().pickerButton.getGroup(),
                 bottom: ['header.bottom'],
-                left: ['header.right', { padding: 15 }]
+                left: ['header.right', { padding: 15 }],
+                render: components.get().pickerButton.redraw()
             });
 
             addComponent(lname, {
@@ -52,7 +53,7 @@ define([
             addComponent(lname, {
                 id: 'labels',
                 g: components.get().labels.getGroup(),
-                top: ['header.bottom', { padding: 10 } ],
+                top: ['header.bottom', { padding: 15 } ],
                 left: ['header.left'],
                 render: components.get().labels.render
             });
