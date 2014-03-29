@@ -346,7 +346,7 @@ define([],
                 anchorPoints.top = anchorPoints.ycenter - (anchorPoints.height / 2);
                 anchorPoints.bottom = anchorPoints.ycenter + anchorPoints.height / 2;
             } else {
-                anchorPoints.ycenter = (anchorPoints.bottom - anchorPoints.top) / 2;
+                anchorPoints.ycenter = anchorPoints.top + (anchorPoints.height / 2);
             }
 
             return anchorPoints;
