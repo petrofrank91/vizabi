@@ -159,6 +159,7 @@ define([
                 
                 loadPickerData();
                 loadLabelDict();
+                lm.update();
 
                 if (typeof callback === 'function') {
                     callback();
