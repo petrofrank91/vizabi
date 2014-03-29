@@ -18,7 +18,8 @@ define([
         }
 
         function load(callback) {
-            return loader.load(state.geo, callback);
+            return loader.load(state.geo, properties.startYear,
+                properties.endYear, callback);
         }
 
         function getCached() {

@@ -73,6 +73,7 @@ require.config({
         'layout-manager': '../../vizabi-components/layout-manager/layout-manager',
         'i18n': '../../bower_components/i18n-js/i18n',
         'events': '../../vizabi-components/event-manager/event-manager',
+        'data-manager': '../../vizabi-components/data-manager/data-manager',
         'i18n-manager': '../../vizabi-components/i18n-manager/i18n-manager',
 
 
