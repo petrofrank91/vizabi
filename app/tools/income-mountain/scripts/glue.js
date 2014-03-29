@@ -36,7 +36,9 @@ define([
             mheight: 440,
             startYear: 1800,
             endYear: 2018,
-            language: 'dev'
+            language: 'sv',
+            languageFilename: '3',
+            languagePath: 'http://stage.cms.gapminder.org/api/i18nCatalog/poJson?id=%(filename)s&lang=%(lang)s'
         };
 
         var _i18n;
@@ -124,17 +126,33 @@ define([
                 _i18n = fn;
             } else {
                 _i18n = i18n.instance();
+                _i18n.setPath({url: properties.languagePath});
                 if (properties.language !== 'dev') {
                     setLanguage(properties.language);
                 }
             }
         }
 
+        function setLanguageFilename(filename) {
+            properties.languageFilename = filename;
+        }
+
+        function seti18nPath(path) {
+            _i18n.clearPath();
+            _i18n.setPath(path);
+            properties.languagePath = path;
+        }
+
         function setLanguage(lang, callback) {
-            var id = 0; // Income Mountain pofile id
-            _i18n.setLanguage(lang, id, function() {
-                var header = components.get().header;
-                header.setText(_i18n.translate('incMountain', 'People by income'));
+            _i18n.setLanguage(lang, properties.languageFilename, function() {
+                properties.language = lang;
+
+                components.get().header.setText(
+                    _i18n.translate('', 'People by income'));
+                components.get().axis.setText(_i18n.translate('', '/ day'));
+                components.get().pickerButton.setText(
+                    _i18n.translate('', 'Select location'));
+
                 if (typeof callback === 'function') {
                     callback();
                 }
@@ -195,8 +213,11 @@ define([
 
             mountains.clear();
 
-            if (bind.checkReload()) drawable = data.get();
+            // to be substituted with events
+            if (bind.checkReload()) drawable = data.get(); 
             bind.clearReload();
+            if (!drawable || drawable === {}) return;
+            // to be substituted with events
 
             for (var i = 0; i < state.geo.length; i++) {
                 var geo = state.geo[i];
