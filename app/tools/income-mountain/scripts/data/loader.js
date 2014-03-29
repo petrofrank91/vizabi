@@ -2,52 +2,58 @@
 define([
         'd3',
         'entities',
+        'data-manager',
         'jstat',
     ],
-    function(d3, entities) {
+    function(d3, entities, dataManager) {
         'use strict';
 
-        var path = 'http://vizabi-dev.gapminder.org.s3.amazonaws.com/data/income_mountain/';
-        var extension = '.csv';
-
         var cache;
+        var specialCases = ['AFR', 'AME', 'ASI', 'EUR', 'WORLD'];
 
         // Initialize the module with a 'cache' object.
         function init(c) {
             cache = c;
         }
 
-        function loadCSV(geo, callback) {
-            d3.csv(path + geo + extension, function(csvData) {
-                if (typeof callback === 'function') {
-                    callback(csvData);
-                }
-            });
-        }
-
-        function load(geoArray, callback) {
+        function load(geoArray, startYear, endYear, callback) {
             var newData = {};
-
+            
             for (var i = 0; i < geoArray.length; i++) {
                 var geo = geoArray[i];
+
                 if (!cache[geo]) {
-                    (function(geo) {
-                        loadCSV(geo, function(csvData) {
-                            // Store the loaded data
-                            if (entities.get_region(geo) === geo) {
-                                cache[geo] = nest(csvData);
-                            } else {
-                                cache[geo] = gdpGiniPopToObject(csvData);
-                            }
-                            
-                            newData[geo] = cache[geo];
-                            
-                            // Run any supplied callback function
-                            if (typeof callback === 'function') {
-                                callback(csvData);
-                            }
-                        });
-                    })(geo);
+                    var reqObj = {
+                        item: geo,
+                        start: startYear,
+                        end: endYear
+                    };
+
+                    if (specialCases.indexOf(geo) !== -1) {
+                        (function(o) {
+                            dataManager.getIMShapes(o, function(json) {
+                                cache[o.item] =
+                                    yearHeights(json[o.item.toLowerCase()]);
+                                newData[o.item] = cache[o.item];
+
+                                if (typeof callback === 'function') {
+                                    callback(json);
+                                }
+                            });
+                        })(reqObj);
+                    } else {
+                        (function(o) {
+                            dataManager.getIMRaw(o, function(json) {
+                                cache[o.item] =
+                                    makeShapes(json[o.item.toLowerCase()]);
+                                newData[o.item] = cache[o.item];
+                                
+                                if (typeof callback === 'function') {
+                                    callback(json);
+                                }
+                            });
+                        })(reqObj);
+                    }
                 } else {
                     newData[geo] = cache[geo];
                 }
@@ -56,44 +62,21 @@ define([
             return cache;
         }
 
-        // Groups 'data' by year and creates the properties 'x', 'y' and 'y0' for
-        // each drawable point. These properties are used for calculation of the
-        // curve. Returns a data stick with the nested data.
-        function nest(data) {
-            var geoMaxHeight = 0;
+        function yearHeights(data) {
+            for (var year in data) {
+                if (data.hasOwnProperty(year)) {
+                    data[year].maxHeight = 0;
+                    for (var i = 0; i < data[year].length; i++) {
+                        data[year].maxHeight = Math.max(data[year][i].height,
+                            data[year].maxHeight);
+                    }
+                }
+            }
 
-            var dataSet = d3.nest()
-                .key(function(d) {
-                    return d.year;
-                })
-                .rollup(function(d) {
-                    var yearData = [];
-                    var yearMaxHeight = 0;
-                    
-                    d.forEach(function(p) {
-                        yearMaxHeight = Math.max(yearMaxHeight, p.height);
-
-                        yearData.push({
-                            height: +p.height,
-                            x: +p.x,
-                            y: +p.height,
-                            y0: 0
-                        });
-                    });
-                    
-                    yearData.maxHeight = yearMaxHeight;
-                    geoMaxHeight = Math.max(geoMaxHeight, yearMaxHeight);
-
-                    return yearData;
-                })
-                .map(data);
-
-            dataSet.geoMaxHeight = geoMaxHeight;
-
-            return dataSet;
+            return data;
         }
 
-        function gdpGiniPopToObject(points) {
+        function makeShapes(points) {
             var geoMaxHeight = 0;
 
             var countryDataSet = d3.nest()
