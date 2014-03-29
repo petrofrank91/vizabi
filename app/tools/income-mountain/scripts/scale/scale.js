@@ -4,8 +4,8 @@ define([
     function(d3) {
         'use strict';
 
-        var startScale = 182.5; // $0.5/day
-        var endScale = 730000;  // $2000/day
+        var startScale = 18.25; // $0.05/day
+        var endScale = 730000;
         var width = 880;
 
         // Ideally, I wouldn't have a 'get'. But I will solve this later.
