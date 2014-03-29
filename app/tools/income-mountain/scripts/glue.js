@@ -1,6 +1,7 @@
 define([
         'd3',
         'layout-manager',
+        'data-manager',
         'income-mountain/data/data',
         'income-mountain/components/components',
         'income-mountain/layouts/layout',
@@ -8,7 +9,7 @@ define([
         'entities',
         'i18n'
     ],
-    function(d3, lm, data, components, layouts, bind, entities) {
+    function(d3, lm, dataManager, data, components, layouts, bind, entities) {
 
         'use strict';
 
