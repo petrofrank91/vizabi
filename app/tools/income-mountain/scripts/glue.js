@@ -58,6 +58,9 @@ define([
             initLayouts();
             initData();
 
+            loadPickerData();
+            loadLabelDict();
+
             bind.init(getState(), draw);
             bind.all();
 
@@ -153,6 +156,9 @@ define([
                 components.get().axis.setText(_i18n.translate('', '/ day'));
                 components.get().pickerButton.setText(
                     _i18n.translate('', 'Select location'));
+                
+                loadPickerData();
+                loadLabelDict();
 
                 if (typeof callback === 'function') {
                     callback();
@@ -204,6 +210,47 @@ define([
                 components.get().mountains.render();
                 bind.all();
             }
+        }
+
+        function loadPickerData() {
+            dataManager.getAvailability('income-mountain',
+                properties.language, function(list) {
+                components.get().geoPicker.resetData({
+                    text: _i18n.translate('', 'Select location'),
+                    options: list
+                });
+            });
+        }
+
+        function loadLabelDict() {
+            var labelDict = {};
+            var len = 3;
+
+            var action = function(json) {
+                for (var i = 0; i < json.length; i++) {
+                    labelDict[json[i].id.toUpperCase()] = json[i];
+                }
+
+                if (!--len) {
+                    components.get().labels.setLabelDict(labelDict);
+                    components.get().labels.render();
+                }
+            };
+            
+            dataManager.getCategoryThings('unstate', properties.language,
+                function(json) {
+                action(json);
+            });
+
+            dataManager.getCategoryThings('planet', properties.language,
+                function(json) {
+                action(json);
+            });
+            
+            dataManager.getCategoryThings('region', properties.language,
+                function(json) {
+                action(json);
+            });
         }
 
         function draw(mheight) {
