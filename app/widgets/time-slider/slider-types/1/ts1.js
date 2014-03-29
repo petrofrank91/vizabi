@@ -51,10 +51,12 @@ define([
                 range.end = e;
                 viz.setYearRange(s, e);
                 viz.reloadTimeline();
+                this.update();
             },
 
             setAxisValues: function(v) {
                 viz.setAxisValues(v);
+                this.update();
             },
 
             onplay: function(callback) {

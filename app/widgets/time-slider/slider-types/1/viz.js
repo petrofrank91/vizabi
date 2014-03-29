@@ -111,7 +111,6 @@ define([
         }
 
         function setYearRange(s, e) {
-            console.log(timelineAxis);
             timeline.setStart(s);
             timeline.setEnd(e);
             reloadTimeline();
