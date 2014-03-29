@@ -29,16 +29,15 @@ define([
             components.header = new text();
             components.header.init(
                 svg,
-                _i18n.translate('incMountain', 'People by income'),
+                _i18n.translate('', 'People by income'),
                 'header',
                 50
             );
 
             // picker start
-            // components.pickerButton = new pickerButton();
             components.pickerButton.init(
                 svg,
-                i18n.translate('incMountain', 'Select a location')
+                _i18n.translate('', 'Select location')
             );
 
             // timeslider start
@@ -53,7 +52,7 @@ define([
             components.labels.render();
 
             // axis start
-            components.axis.init(svg);
+            components.axis.init(svg, _i18n.translate('', '/ day'));
             components.axis.render();
 
             // mountains start
