@@ -34,8 +34,8 @@ define([
         var properties = {
             maxHeight: 0,
             mheight: 440,
-            startYear: 1820,
-            finalYear: 2010,
+            startYear: 1800,
+            endYear: 2018,
             language: 'dev'
         };
 

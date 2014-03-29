@@ -44,6 +44,9 @@ define([
             // timeslider start
             components.timeslider = new timeslider();
             components.timeslider.init(svg, state);
+            components.timeslider.setRange(properties.startYear,
+                properties.endYear);
+            components.timeslider.setAxisValues([1800, 1900, 2000]);
 
             // labels start
             components.labels.init(svg, state);

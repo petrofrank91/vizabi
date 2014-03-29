@@ -49,7 +49,12 @@ define([
                 e = e || range.end;
                 range.start = s;
                 range.end = e;
+                viz.setYearRange(s, e);
                 viz.reloadTimeline();
+            },
+
+            setAxisValues: function(v) {
+                viz.setAxisValues(v);
             },
 
             onplay: function(callback) {
