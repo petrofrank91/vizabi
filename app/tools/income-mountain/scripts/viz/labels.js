@@ -11,9 +11,16 @@ define([
 
         var fontsize = 20;
 
-        function init(svg, s) {
+        var labelDict = {};
+
+        function init(svg, s, dict) {
             g = svg.append('g').attr('class', 'labels');
             state = s;
+            labelDict = dict || {};
+        }
+
+        function setDict(dict) {
+            labelDict = dict;
         }
 
         function draw() {
@@ -24,7 +31,7 @@ define([
 
                 // make entity return the whole obj
                 var entity = {
-                    name: entities.get_name(geo),
+                    name: labelDict[geo] ? labelDict[geo].name : entities.get_name(geo),
                     color: entities.get_color(geo)
                 }
 
@@ -63,6 +70,7 @@ define([
 
         return {
             init: init,
+            setLabelDict: setDict,
             getGroup: getGroup,
             render: draw
         }
