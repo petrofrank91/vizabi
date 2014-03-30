@@ -12,7 +12,7 @@ define([
 
         var dataManager = {};
         dataManager.cache = cache;
-        var waffleUrl = 'http://localhost:9990/waffle/lang/';
+        var waffleUrl = 'http://oven.gapminder.org:9990/waffle/lang/';
 
         dataManager.getIMShapes = function(o, callback) {
             var url = waffleUrl + 'en/shapes/income-mountain/' +
