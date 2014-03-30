@@ -69,9 +69,8 @@ define([
 			components.picker.init(components.bubbleEvents);
 
 			components.searchBox = new searchBox();
-			console.log(_i18n);
 			components.searchBox.init(chartCountainerG, components.picker,
-				_i18n.translate('bubbleChart', 'Find country...'));
+				_i18n.translate('', 'Find country...'));
 			components.searchBox.render();
 
 			components.linkLayer = new bubbleLinks();
