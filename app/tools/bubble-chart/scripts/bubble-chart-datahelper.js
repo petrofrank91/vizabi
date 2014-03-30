@@ -328,20 +328,23 @@ define(['d3', 'data-cube', 'util', 'data-manager'], function (d3, dataCube, util
             var currentEntities = [];
             var category = dataHelperModel.get("entity") || dataHelperModel.get("category");
 
-
             for (var entityId in entityMeta) {
                 if (entityMeta.hasOwnProperty(entityId)) {
                     currentEntities[entityId] = [];
                     var entityCategory = entityMeta[entityId][0].parent;
                     if (category.indexOf(entityCategory) >= 0) {
-                        var o = {};
-                        o.id = entityId;
-                        o.x = get(dataHelperModel.get("xIndicator"), entityId, year, dataHelperModel, entityCategory);
-                        o.y = get(dataHelperModel.get("yIndicator"), entityId, year, dataHelperModel, entityCategory);
-                        o.size = get(dataHelperModel.get("sizeIndicator"), entityId, year, dataHelperModel, entityCategory);
-                        o.color = getColor(entityId, "fill", entityCategory);
-                        o.year = year;
-                        o.category = entityCategory;
+                        var o = {
+                            id: entityId,
+                            x: dataManager.retrieve('gdp', entityId, year) / dataManager.retrieve('pop', entityId, year),
+                            //get(dataHelperModel.get("xIndicator"), entityId, year, dataHelperModel, entityCategory),
+                            y: dataManager.retrieve('lex', entityId, year),
+                            //get(dataHelperModel.get("yIndicator"), entityId, year, dataHelperModel, entityCategory),
+                            size: dataManager.retrieve('pop', entityId, year),
+                            //get(dataHelperModel.get("sizeIndicator"), entityId, year, dataHelperModel, entityCategory),
+                            color: getColor(entityId, "fill", entityCategory),
+                            year: year,
+                            category: entityCategory
+                        };
 
                         if (o.x && o.y && o.size) {
                             currentEntities[entityId].push(o);
@@ -428,8 +431,8 @@ define(['d3', 'data-cube', 'util', 'data-manager'], function (d3, dataCube, util
         };
 
         var getName = function (id, category) {
-            //return entityMeta[category][id][0].name;
-            return entityMeta[id][0].name;
+            //return entityMeta[id][0].name;
+            return things[id.toLowerCase()];
         };
 
         var setDatasetAndChartInfo = function (chartInfo) {
@@ -442,17 +445,19 @@ define(['d3', 'data-cube', 'util', 'data-manager'], function (d3, dataCube, util
         var setAxesNameAndInfo = function () {
             var xIndicator = dataHelperModel.get("xIndicator");
             var yIndicator = dataHelperModel.get("yIndicator");
+            //var yIndicator = dataManager.cache.definitions.indicators['lex'];
+            //console.log(yIndicator);
 
             for (var entity in indicators[timeUnit]) {
                 if (indicators[timeUnit].hasOwnProperty(entity)) {
                     for (var indicatorName in indicators[timeUnit][entity]) {
                         if (indicators[timeUnit][entity].hasOwnProperty(indicatorName) && indicatorName == xIndicator) {
                             xAxisInfo = indicators[timeUnit][entity][indicatorName]["info"].info;
-                            xAxisName = indicators[timeUnit][entity][indicatorName]["info"].name;
+                            xAxisName = dataManager.cache.definitions.indicators['gdp_per_cap'].name;
                         }
                         else if (indicators[timeUnit][entity].hasOwnProperty(indicatorName) && indicatorName == yIndicator) {
                             yAxisInfo = indicators[timeUnit][entity][indicatorName]["info"].info;
-                            yAxisName = indicators[timeUnit][entity][indicatorName]["info"].name;
+                            yAxisName = dataManager.cache.definitions.indicators['lex'].name;
                         }
                     }
                 }
