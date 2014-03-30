@@ -17,6 +17,10 @@ define(['d3', 'data-cube', 'util', 'data-manager'], function (d3, dataCube, util
         var regionsList;
         var timeUnit;
         var skeleton;
+        var dmLoadIndicators = true;
+        var _changedState = undefined;
+        var statsLoaded = false;
+        var things = {};
 
         var colorScale = d3.scale.category20();
         var colors = {
