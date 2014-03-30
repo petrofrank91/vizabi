@@ -63,12 +63,12 @@ define([
         }
 
         function yearHeights(data) {
-            for (var year in data) {
-                if (data.hasOwnProperty(year)) {
-                    data[year].maxHeight = 0;
-                    for (var i = 0; i < data[year].length; i++) {
-                        data[year].maxHeight = Math.max(data[year][i].height,
-                            data[year].maxHeight);
+            for (var prop in data) {
+                if (data.hasOwnProperty(prop) && prop !== 'geoMaxHeight') {
+                    data[prop].maxHeight = 0;
+                    for (var i = 0; i < data[prop].length; i++) {
+                        data[prop].maxHeight = Math.max(data[prop][i].height,
+                            data[prop].maxHeight);
                     }
                 }
             }
