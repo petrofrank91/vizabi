@@ -107,14 +107,13 @@ define(['d3', 'data-cube', 'util', 'data-manager'], function (d3, dataCube, util
             }
         };
 
-        var loadData = function (model, changedState, callback) {
+        var loadData = function (model, _changedState, callback) {
             dataIsReadyCallback = callback;
             dataHelperModel = model;
+            changedState = _changedState;
             var dataPath = model.get("dataPath");
             var indicatorsToLoad = getIndicatorsToLoad(model);
-            console.log("Indicators to Load ", indicatorsToLoad);
-
-            _dataCube.loadNestedData(model, changedState, dataIsReady, indicatorsToLoad);
+            _dataCube.loadNestedData(model, _changedState, dataIsReady, indicatorsToLoad);
         };
 
         var getEntityLayerObject = function () {
