@@ -1,4 +1,4 @@
-define(['d3', 'data-cube', 'util'], function (d3, dataCube, util) {
+define(['d3', 'data-cube', 'util', 'data-manager'], function (d3, dataCube, util, dataManager) {
 
     // supposed to be available at window.vizabi.data.bubbleChartDataHelper
     var bubbleChartDataHelper = function (fileFormat, entityName, fileName, dataPathUri) {
