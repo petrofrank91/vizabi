@@ -1,4 +1,4 @@
-define(['d3', 'data-cube', 'util'], function (d3, dataCube, util) {
+define(['d3', 'data-cube', 'util', 'data-manager'], function (d3, dataCube, util, dataManager) {
 
     // supposed to be available at window.vizabi.data.bubbleChartDataHelper
     var bubbleChartDataHelper = function (fileFormat, entityName, fileName, dataPathUri) {
@@ -17,6 +17,10 @@ define(['d3', 'data-cube', 'util'], function (d3, dataCube, util) {
         var regionsList;
         var timeUnit;
         var skeleton;
+        var dmLoadIndicators = true;
+        var _changedState = undefined;
+        var statsLoaded = false;
+        var things = {};
 
         var colorScale = d3.scale.category20();
         var colors = {
@@ -103,14 +107,13 @@ define(['d3', 'data-cube', 'util'], function (d3, dataCube, util) {
             }
         };
 
-        var loadData = function (model, changedState, callback) {
+        var loadData = function (model, _changedState, callback) {
             dataIsReadyCallback = callback;
             dataHelperModel = model;
+            changedState = _changedState;
             var dataPath = model.get("dataPath");
             var indicatorsToLoad = getIndicatorsToLoad(model);
-            console.log("Indicators to Load ", indicatorsToLoad);
-
-            _dataCube.loadNestedData(model, changedState, dataIsReady, indicatorsToLoad);
+            _dataCube.loadNestedData(model, _changedState, dataIsReady, indicatorsToLoad);
         };
 
         var getEntityLayerObject = function () {
@@ -135,10 +138,68 @@ define(['d3', 'data-cube', 'util'], function (d3, dataCube, util) {
                 regionsList = regions;
             }
 
-        setDatasetAndChartInfo(chartInfo);
-        setAxesNameAndInfo();
-        if (typeof dataIsReadyCallback === 'function') {dataIsReadyCallback();}
-    };
+            setDatasetAndChartInfo(chartInfo);
+
+            temporaryDataManagerCaller();
+        };
+
+        var temporaryDataManagerCaller = function() {
+            if (changedState.language) dmLoadIndicators = true;
+
+            var totalReq = 8;
+
+            var action = function() {
+                if (!--totalReq) {
+                    setAxesNameAndInfo();
+                    if (typeof dataIsReadyCallback === 'function') {
+                        dataIsReadyCallback();
+                    }
+                }
+            }
+
+            if (dmLoadIndicators && !statsLoaded) {
+                var lang = changedState.language;
+                
+                dataManager.getIndicator('gdp', lang, action);
+                dataManager.getIndicator('gdp_per_cap', lang, action);
+                dataManager.getIndicator('lex', lang, action);
+                dataManager.getIndicator('pop', lang, action);
+                
+                dataManager.getCategory('unstate', lang, function(resp) {
+                    for (var i = 0; i < resp.things.length; i++) {
+                        things[resp.things[i].id] = resp.things[i].name;
+                    }
+                    action();
+                });
+                
+                dataManager.getStats('pop', action);
+                dataManager.getStats('lex', action);
+                dataManager.getStats('gdp', action);
+                
+                dmLoadIndicators = false;
+                statsLoaded = true;
+            } else if (dmLoadIndicators) {
+                var totalReq = 5;
+                var lang = changedState.language;
+                
+                dataManager.getIndicator('gdp', lang, action);
+                dataManager.getIndicator('gdp_per_cap', lang, action);
+                dataManager.getIndicator('lex', lang, action);
+                dataManager.getIndicator('pop', lang, action);
+                
+                dataManager.getCategory('unstate', lang, function(resp) {
+                    for (var i = 0; i < resp.things.length; i++) {
+                        things[resp.things[i].id] = resp.things[i].name;
+                    }
+                    action();
+                });
+                dmLoadIndicators = false;
+            } else {
+                if (typeof dataIsReadyCallback === 'function') {
+                    dataIsReadyCallback();
+                }
+            }
+        }
 
         var setTimeUnit = function () {
             for (var unit in indicators) {
@@ -267,20 +328,23 @@ define(['d3', 'data-cube', 'util'], function (d3, dataCube, util) {
             var currentEntities = [];
             var category = dataHelperModel.get("entity") || dataHelperModel.get("category");
 
-
             for (var entityId in entityMeta) {
                 if (entityMeta.hasOwnProperty(entityId)) {
                     currentEntities[entityId] = [];
                     var entityCategory = entityMeta[entityId][0].parent;
                     if (category.indexOf(entityCategory) >= 0) {
-                        var o = {};
-                        o.id = entityId;
-                        o.x = get(dataHelperModel.get("xIndicator"), entityId, year, dataHelperModel, entityCategory);
-                        o.y = get(dataHelperModel.get("yIndicator"), entityId, year, dataHelperModel, entityCategory);
-                        o.size = get(dataHelperModel.get("sizeIndicator"), entityId, year, dataHelperModel, entityCategory);
-                        o.color = getColor(entityId, "fill", entityCategory);
-                        o.year = year;
-                        o.category = entityCategory;
+                        var o = {
+                            id: entityId,
+                            x: dataManager.retrieve('gdp', entityId, year) / dataManager.retrieve('pop', entityId, year),
+                            //get(dataHelperModel.get("xIndicator"), entityId, year, dataHelperModel, entityCategory),
+                            y: dataManager.retrieve('lex', entityId, year),
+                            //get(dataHelperModel.get("yIndicator"), entityId, year, dataHelperModel, entityCategory),
+                            size: dataManager.retrieve('pop', entityId, year),
+                            //get(dataHelperModel.get("sizeIndicator"), entityId, year, dataHelperModel, entityCategory),
+                            color: getColor(entityId, "fill", entityCategory),
+                            year: year,
+                            category: entityCategory
+                        };
 
                         if (o.x && o.y && o.size) {
                             currentEntities[entityId].push(o);
@@ -367,8 +431,8 @@ define(['d3', 'data-cube', 'util'], function (d3, dataCube, util) {
         };
 
         var getName = function (id, category) {
-            //return entityMeta[category][id][0].name;
-            return entityMeta[id][0].name;
+            //return entityMeta[id][0].name;
+            return things[id.toLowerCase()];
         };
 
         var setDatasetAndChartInfo = function (chartInfo) {
@@ -381,17 +445,19 @@ define(['d3', 'data-cube', 'util'], function (d3, dataCube, util) {
         var setAxesNameAndInfo = function () {
             var xIndicator = dataHelperModel.get("xIndicator");
             var yIndicator = dataHelperModel.get("yIndicator");
+            //var yIndicator = dataManager.cache.definitions.indicators['lex'];
+            //console.log(yIndicator);
 
             for (var entity in indicators[timeUnit]) {
                 if (indicators[timeUnit].hasOwnProperty(entity)) {
                     for (var indicatorName in indicators[timeUnit][entity]) {
                         if (indicators[timeUnit][entity].hasOwnProperty(indicatorName) && indicatorName == xIndicator) {
                             xAxisInfo = indicators[timeUnit][entity][indicatorName]["info"].info;
-                            xAxisName = indicators[timeUnit][entity][indicatorName]["info"].name;
+                            xAxisName = dataManager.cache.definitions.indicators['gdp_per_cap'].name;
                         }
                         else if (indicators[timeUnit][entity].hasOwnProperty(indicatorName) && indicatorName == yIndicator) {
                             yAxisInfo = indicators[timeUnit][entity][indicatorName]["info"].info;
-                            yAxisName = indicators[timeUnit][entity][indicatorName]["info"].name;
+                            yAxisName = dataManager.cache.definitions.indicators['lex'].name;
                         }
                     }
                 }

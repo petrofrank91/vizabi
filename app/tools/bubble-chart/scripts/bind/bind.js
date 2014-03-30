@@ -79,8 +79,8 @@ define([
                         if (direction === 'right') {
                             var new_year = state.year + change;
 
-                            if (new_year > 2100) {
-                                new_year = 2100;
+                            if (new_year > 2018) {
+                                new_year = 2018;
                             }
 
                             for (var x = state.year; x <= new_year; x++) {

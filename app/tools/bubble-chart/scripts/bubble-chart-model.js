@@ -59,8 +59,6 @@ define(['bubble-chart-model-validator'], function (bubbleChartModelValidator) {
         };
 
         var setInit = function (changedState, modelAndDataReadyCallback) {
-            console.log("BUBBLE MODEL SET STATE: ", changedState);
-
             var changedStateAttr = {};
             var dataNeedsToBeLoaded = false;
             for (var attr in changedState) {
@@ -77,14 +75,11 @@ define(['bubble-chart-model-validator'], function (bubbleChartModelValidator) {
                 }
             }
 
-            console.log("What changed: ", changedStateAttr);
             initialize([this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback]);
         };
 
 
         var set = function (changedState, modelAndDataReadyCallback) {
-            console.log("BUBBLE MODEL SET STATE: ", changedState);
-
             var changedStateAttr = {};
             var dataNeedsToBeLoaded = false;
             for (var attr in changedState) {
@@ -101,7 +96,6 @@ define(['bubble-chart-model-validator'], function (bubbleChartModelValidator) {
                 }
             }
 
-            console.log("What changed: ", changedStateAttr);
             validator.validate(this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback);
         };
 

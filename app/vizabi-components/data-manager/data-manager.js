@@ -2,8 +2,17 @@ define([
         'd3'
     ],
     function(d3) {
+        var cache = {
+            definitions: {
+                indicators: {},
+                categories: {}
+            },
+            stats: {}
+        };
+
         var dataManager = {};
-        var waffleUrl = 'http://oven.gapminder.org:9990/waffle/lang/';
+        dataManager.cache = cache;
+        var waffleUrl = 'http://localhost:9990/waffle/lang/';
 
         dataManager.getIMShapes = function(o, callback) {
             var url = waffleUrl + 'en/shapes/income-mountain/' +
@@ -53,6 +62,45 @@ define([
                         callback(json);
                     }
                 });
+            }
+        }
+
+        dataManager.getIndicator = function(indicator, lang, callback) {
+            var url = waffleUrl + lang + '/indicator/' + indicator;
+            d3.json(url, function(json) {
+                cache.definitions.indicators[indicator] = json;
+                if (typeof callback === 'function') {
+                    callback(json);
+                }
+            });
+        }
+
+        dataManager.getCategory = function(category, lang, callback) {
+            var url = waffleUrl + lang + '/category/' + category;
+            d3.json(url, function(json) {
+                cache.definitions.categories[category] = json;
+                if (typeof callback === 'function') {
+                    callback(json);
+                }
+            });
+        }
+
+        dataManager.getStats = function(indicator, callback) {
+            var url = waffleUrl + 'en/indicator/' + indicator + '/stats';
+            d3.json(url, function(json) {
+                cache.stats[indicator] = json;
+                if (typeof callback === 'function') {
+                    callback(json);
+                }
+            });
+        }
+
+        dataManager.retrieve = function(indicator, item, year) {
+            if (cache.stats[indicator] && cache.stats[indicator][item.toLowerCase()]
+                && cache.stats[indicator][item.toLowerCase()][year]) {
+                return cache.stats[indicator][item.toLowerCase()][year].v;
+            } else {
+                return undefined;
             }
         }
 

@@ -19,6 +19,14 @@ define([], function() {
 			text = t || '';
 		};
 
+		var setText = function(t) {
+			text = t;
+			g.selectAll('rect').remove();
+			g.selectAll('path').remove();
+			g.selectAll('text').remove();
+			render();
+		}
+
 		// from wikicommons
 		var magnifyingGlass = function() {
 			magnifier = g.append('path')
@@ -55,6 +63,7 @@ define([], function() {
 
 		return {
 			init: init,
+			setText: setText,
 			render: render,
 			getGroup: getGroup
 		};
