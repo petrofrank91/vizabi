@@ -24,6 +24,11 @@ define([], function() {
 			font.attr('y', fontSize);
 		};
 
+		var redraw = function() {
+			g.selectAll('text').remove();
+			render();
+		};
+
 		var render = function() {
 			createLabelText();
 			createLabel();
@@ -38,6 +43,7 @@ define([], function() {
 		return {
 			render: render,
 			init: init,
+			redraw: redraw,
 			getGroup: getGroup
 		};
 	};

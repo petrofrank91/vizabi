@@ -25,6 +25,11 @@ define(['d3'], function(d3) {
 			font.attr('y', fontSize);
 		};
 
+		var redraw = function() {
+			g.selectAll('text').remove();
+			render();
+		};
+
 		var render = function() {
 			createLabelText();
 			createLabel();
@@ -39,6 +44,7 @@ define(['d3'], function(d3) {
 		return {
 			render: render,
 			init: init,
+			redraw: redraw,
 			getGroup: getGroup
 		};
 
