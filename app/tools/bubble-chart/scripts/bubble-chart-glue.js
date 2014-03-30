@@ -111,8 +111,17 @@ define([
             };
 
             var setLanguage = function(lang, callback) {
-                var filename = 0;
-                _i18n.setLanguage(lang, filename, callback);
+                var filename = 3;
+                _i18n.setLanguage(lang, filename, function() {
+                    components.get().searchBox.setText(_i18n.translate('', 'Find country...'));
+                    model.set({language: lang}, function() {
+                        components.get().xLabel.redraw();
+                        components.get().yLabel.redraw();
+                    });
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                });
             };
 
             var setUpModelAndUpdate = function() {
@@ -128,14 +137,11 @@ define([
                 _vizBubble.update(model, chartScales, availableFrame);
             };
 
-
             var setUpSubviews = function() {
                 initializeLayers(scatterChartModelUpdate);
                 initializeScatterChart(renderDiv);
                 initializeTimeSlider(isInteractive);
-
             };
-
 
             var initializeScatterChart = function(svg, renderDiv) {
                 var _vizBubblePrint;
@@ -162,7 +168,6 @@ define([
                     _timeSlider.setupListeners();
                 }
             };
-
 
             var scatterChartModelUpdate = function(state) {
                 model.set(state, function() {
