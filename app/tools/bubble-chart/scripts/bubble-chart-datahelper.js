@@ -138,10 +138,68 @@ define(['d3', 'data-cube', 'util', 'data-manager'], function (d3, dataCube, util
                 regionsList = regions;
             }
 
-        setDatasetAndChartInfo(chartInfo);
-        setAxesNameAndInfo();
-        if (typeof dataIsReadyCallback === 'function') {dataIsReadyCallback();}
-    };
+            setDatasetAndChartInfo(chartInfo);
+
+            temporaryDataManagerCaller();
+        };
+
+        var temporaryDataManagerCaller = function() {
+            if (changedState.language) dmLoadIndicators = true;
+
+            var totalReq = 8;
+
+            var action = function() {
+                if (!--totalReq) {
+                    setAxesNameAndInfo();
+                    if (typeof dataIsReadyCallback === 'function') {
+                        dataIsReadyCallback();
+                    }
+                }
+            }
+
+            if (dmLoadIndicators && !statsLoaded) {
+                var lang = changedState.language;
+                
+                dataManager.getIndicator('gdp', lang, action);
+                dataManager.getIndicator('gdp_per_cap', lang, action);
+                dataManager.getIndicator('lex', lang, action);
+                dataManager.getIndicator('pop', lang, action);
+                
+                dataManager.getCategory('unstate', lang, function(resp) {
+                    for (var i = 0; i < resp.things.length; i++) {
+                        things[resp.things[i].id] = resp.things[i].name;
+                    }
+                    action();
+                });
+                
+                dataManager.getStats('pop', action);
+                dataManager.getStats('lex', action);
+                dataManager.getStats('gdp', action);
+                
+                dmLoadIndicators = false;
+                statsLoaded = true;
+            } else if (dmLoadIndicators) {
+                var totalReq = 5;
+                var lang = changedState.language;
+                
+                dataManager.getIndicator('gdp', lang, action);
+                dataManager.getIndicator('gdp_per_cap', lang, action);
+                dataManager.getIndicator('lex', lang, action);
+                dataManager.getIndicator('pop', lang, action);
+                
+                dataManager.getCategory('unstate', lang, function(resp) {
+                    for (var i = 0; i < resp.things.length; i++) {
+                        things[resp.things[i].id] = resp.things[i].name;
+                    }
+                    action();
+                });
+                dmLoadIndicators = false;
+            } else {
+                if (typeof dataIsReadyCallback === 'function') {
+                    dataIsReadyCallback();
+                }
+            }
+        }
 
         var setTimeUnit = function () {
             for (var unit in indicators) {
