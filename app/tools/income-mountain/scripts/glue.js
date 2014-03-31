@@ -131,7 +131,7 @@ define([
             } else {
                 _i18n = i18n.instance();
                 _i18n.setPath({url: properties.languagePath});
-                if (properties.language !== 'dev') {
+                if (properties.language !== 'en') {
                     setLanguage(properties.language);
                 }
             }
@@ -146,9 +146,14 @@ define([
             _i18n.setPath(path);
             properties.languagePath = path;
         }
-
+        
+        var setLanguageCount = 0;
+        
         function setLanguage(lang, callback) {
+            setLanguageCount++;
+            (function(count) {
             _i18n.setLanguage(lang, properties.languageFilename, function() {
+                if (count < setLanguageCount) return;
                 properties.language = lang;
 
                 components.get().header.setText(
@@ -165,6 +170,7 @@ define([
                     callback();
                 }
             });
+            })(setLanguageCount);
         }
 
         function initLayoutManager() {

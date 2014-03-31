@@ -109,10 +109,15 @@ define([
                     setLanguage(language);
                 }
             };
-
+            
+            var setLanguageCount = 0;
+            
             var setLanguage = function(lang, callback) {
                 var filename = 3;
+                setLanguageCount++;
+                (function(count) {
                 _i18n.setLanguage(lang, filename, function() {
+                    if (count < setLanguageCount) return;
                     components.get().searchBox.setText(_i18n.translate('', 'Find country...'));
                     model.set({language: lang}, function() {
                         components.get().xLabel.redraw();
@@ -122,6 +127,7 @@ define([
                         callback();
                     }
                 });
+                })(setLanguageCount);
             };
 
             var setUpModelAndUpdate = function() {
