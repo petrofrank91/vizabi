@@ -47,13 +47,10 @@ define([
             };
 
             var drawSvgLayer = function() {
-                div = d3.select("#" + renderDiv)
-                    .append('div')
-                    .attr('class', 'vizabi-bubble-chart');
-
-                svg = div
+                svg = d3.select("#" + renderDiv)
                     .append("svg")
                     .attr("id", chartRenderDiv)
+                    .attr('class', 'vizabi-bubble-chart')
                     .attr("xmlns", "http://www.w3.org/2000/svg")
                     .attr("version", "1.1")
                     .classed("chart", true)
