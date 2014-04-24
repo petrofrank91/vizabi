@@ -14,15 +14,21 @@
     <script type="text/javascript" src="tools/bubble-chart/scripts/start.js" charset="utf-8"></script>
     <script type="text/javascript" src="common/scripts/helpers/util.js" charset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-model.js" charset="utf-8"></script>
+    <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-model-validator.js"
+            charset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-glue.js" charset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/bubble-chart-datahelper.js" charset="utf-8"></script>
     <script type="text/javascript" src="tools/bubble-chart/scripts/viz/viz-bubble.js" chartset="utf-8"></script>
 
     <script type="text/javascript" src="vizabi-components/data-cube/data-cube.js" charset="utf-8"></script>
-    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multiple-json.js" charset="utf-8"></script>
-    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-single-csv.js" charset="utf-8"></script>
-    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multiple-csv.js" charset="utf-8"></script>
-    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multi-csv.js" charset="utf-8"></script>
+    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multiple-json.js"
+            charset="utf-8"></script>
+    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-single-csv.js"
+            charset="utf-8"></script>
+    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multiple-csv.js"
+            charset="utf-8"></script>
+    <script type="text/javascript" src="vizabi-components/data-cube/loader/reader-multi-csv.js"
+            charset="utf-8"></script>
     <script type="text/javascript" src="vizabi-components/data-cube/loader-factory.js" charset="utf-8"></script>
     <script type="text/javascript" src="vizabi-components/data-cube/data-cube-i18n-layer.js" charset="utf-8"></script>
 
@@ -32,17 +38,21 @@
 
 </head>
 <body>
-<div id="chartInfo"></div><div id="chartFooter"></div>
-<div style="font-family: 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;" align="center">Description: Vizabi Test Pages: Two instances of Vizabi will be rendered with the same data. Just to make sure, they do not spoil one-another</div>
+<div id="chartInfo"></div>
+<div id="chartFooter"></div>
+<div style="font-family: 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;"
+     align="center">Description: Vizabi Test Pages: Two instances of Vizabi will be rendered with the same data. Just to
+    make sure, they do not spoil one-another
+</div>
 <div id="container-chart-1"></div>
 <script>
     var chartState = {
         dataPath: "data/",
         year: 1960,
-        xIndicator : "tfr1",
-        yIndicator : "mort",
-        sizeIndicator : "pop",
-        entity : "unstates",
+        xIndicator: "tfr1",
+        yIndicator: "mort",
+        sizeIndicator: "pop",
+        entity: "unstates",
         isInteractive: true,
         fileFormat: "multipleJSON"
     };
@@ -54,39 +64,39 @@
     var renderDiv2 = "chart-2";
 
     /*setTimeout(function () {
-        var renderDiv2 = "chart-2";
+     var renderDiv2 = "chart-2";
 
-        var chartState2 = {
-            dataPath: "data/",
-            year: 1980,
-            xIndicator : "tfr1",
-            yIndicator : "mort",
-            sizeIndicator : "pop",
-            entity : "unstates",
-            fileFormat: "multipleJSON",
-            isInteractive: true
-        };
+     var chartState2 = {
+     dataPath: "data/",
+     year: 1980,
+     xIndicator : "tfr1",
+     yIndicator : "mort",
+     sizeIndicator : "pop",
+     entity : "unstates",
+     fileFormat: "multipleJSON",
+     isInteractive: true
+     };
 
-        var app2 = new gapminder.bubbleChart(renderDiv2, chartState2);
-    }, 100);*/
+     var app2 = new gapminder.bubbleChart(renderDiv2, chartState2);
+     }, 100);*/
     /*var renderDiv2 = "chart-2";
 
-    setTimeout(function () {
-        var renderDiv2 = "chart-2";
+     setTimeout(function () {
+     var renderDiv2 = "chart-2";
 
-        var chartState2 = {
-            dataPath: "data/",
-            year: 1980,
-            xIndicator : "tfr1",
-            yIndicator : "mort",
-            sizeIndicator : "pop",
-            entity : "unstates",
-            fileFormat: "multipleJSON",
-            isInteractive: true
-        };
+     var chartState2 = {
+     dataPath: "data/",
+     year: 1980,
+     xIndicator : "tfr1",
+     yIndicator : "mort",
+     sizeIndicator : "pop",
+     entity : "unstates",
+     fileFormat: "multipleJSON",
+     isInteractive: true
+     };
 
-        var app2 = new gapminder.bubbleChart(renderDiv2, chartState2);
-    }, 10000);*/
+     var app2 = new gapminder.bubbleChart(renderDiv2, chartState2);
+     }, 10000);*/
 </script>
 </body>
 </html>

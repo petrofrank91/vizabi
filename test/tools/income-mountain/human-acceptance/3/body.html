@@ -1,0 +1,29 @@
+<div id="income-mountain"></div>
+<!-- @@vizabi.js-script-tag -->
+<script>
+
+    function initialize() {
+
+        var renderDiv = '#income-mountain';
+        var state;
+        var properties;
+        var app;
+
+        state = {
+            year: 2000,
+            geo: ['UGA', 'BRA', 'IRN', 'DEU']
+        };
+
+        properties = {
+            language: 'sv'
+        };
+
+        i18n.clearPath();
+        i18n.addPath('data/i18n/%(lang)s/%(filename)s');
+
+        app = vizabi.incomeMountain(renderDiv, state, properties);
+    }
+
+    vizabi.ready(initialize);
+
+</script>

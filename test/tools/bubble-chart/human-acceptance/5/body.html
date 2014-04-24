@@ -1,0 +1,74 @@
+<div id="chartInfo"></div>
+<div id="chartFooter"></div>
+<div id="chart-1"></div>
+<!-- @@vizabi.js-script-tag -->
+<script>
+    function initialize() {
+        var renderDiv = "chart-1";
+        var chartState;
+        var app;
+
+        if (!window.history.state) {
+            var URL = window.location.href.toString();
+            // When a new tab is opened
+            if (URL.indexOf("#?") !== -1) {
+                console.log("URL contains the character");
+                var model = JSON.parse(URL.substr(URL.indexOf("#?") + 2, URL.length));
+                history.pushState(model, "", "#?" + JSON.stringify(model));
+                chartState = model;
+            }
+            else {
+                chartState = {
+                    isInteractive: true,
+                    dataPath: "data/",
+                    year: 2013,
+                    fileFormat: "multiCSV",
+                    category: ["country"],
+                    xAxisScale: "log",
+                    yAxisTickValues: [40, 60, 80],
+                    xAxisTickValues : [500, 5000, 50000],
+                    language : "en",
+                    speed: 0.1,
+                    minYValue: 35,
+                    maxYValue: 85,
+                    minXValue: 150,
+                    maxXValue: 150000,
+                    autoZoom: true
+                };
+            }
+        }
+        else {
+            chartState = window.history.state;
+        }
+
+        app = new vizabi.bubbleChart(renderDiv, chartState);
+
+        window.loppis = app;
+
+        app.registerStateBindCallback(function(model) {
+            var currentState = window.history.state;
+
+            if (!currentState) {
+                history.pushState(model, "", "#?" + JSON.stringify(model));
+            }
+            else {
+                history.replaceState(model, "", "#?" + JSON.stringify(model));
+            }
+        });
+
+        var loadSubnational = function () {
+            app.setState({category: ["country","adm1"], isSplitMode: true});
+        };
+
+        var unloadSubnational = function() {
+            app.setState({category: ["country"]});
+        };
+
+        var reloadIMR = function () {
+            app.setState({yIndicator: "imr"});
+        };
+    }
+
+    vizabi.ready(initialize);
+
+</script>

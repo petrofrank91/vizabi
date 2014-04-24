@@ -12,11 +12,11 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
     var bubbleSizeScale;
     var fontSizeScale;
 
-    var addLabels = function(year) {
+    var addLabels = function (year) {
         var labelsData = [];
         var entitiesMeta = vizState.getDataHelper().getEntityMeta();
 
-        $.each(entitiesMeta, function(index, geoName) {
+        $.each(entitiesMeta, function (index, geoName) {
             var entityCategory = geoName[0].parent;
             var o = {};
 
@@ -25,7 +25,7 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
             o.y = vizState.getDataHelper().get(vizState.get("yIndicator"), index, year, vizState, entityCategory);
             o.size = vizState.getDataHelper().get(vizState.get("sizeIndicator"), index, year, vizState, entityCategory);
 
-            o.labelPosition =  labelPosition;
+            o.labelPosition = labelPosition;
             o.labelPos = setLabelPos(o);
 
             //o.name = vizState.getDataHelper().getName(id, entity);
@@ -40,13 +40,13 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
 
     var dragEndPrint = function (d) {
         var label;
-        
+
         if (isDrag) {
             var dragId = d3.select("#" + d.id + "label").attr("id");
 
             label = d3.select("#" + d.id + "label");
 
-            positions[d.id] = {x: parseFloat(d3.select("#" + d.id + "label").attr("x")).toFixed(2), y: parseFloat(d3.select("#" + d.id+ "label").attr("y")).toFixed(2), anchor: d3.select("#" + d.id+ "label").attr("text-anchor")};
+            positions[d.id] = {x: parseFloat(d3.select("#" + d.id + "label").attr("x")).toFixed(2), y: parseFloat(d3.select("#" + d.id + "label").attr("y")).toFixed(2), anchor: d3.select("#" + d.id + "label").attr("text-anchor")};
             vizStateChangeCallback({positions: positions});
 
             d3.select("#" + dragId).attr("fill", defaultFontColor);
@@ -62,9 +62,9 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
                 d3.select("#" + selectedLabel).attr("fill", defaultFontColor);
 
                 label = d3.select("#" + selectedLabel);
-                positions[selectedLabel.substring(0, selectedLabel.indexOf("label"))] = {x: parseFloat(label.attr("x")).toFixed(2) , y: parseFloat(label.attr("y")).toFixed(2) , anchor:label.attr("text-anchor")};
+                positions[selectedLabel.substring(0, selectedLabel.indexOf("label"))] = {x: parseFloat(label.attr("x")).toFixed(2), y: parseFloat(label.attr("y")).toFixed(2), anchor: label.attr("text-anchor")};
 
-                vizStateChangeCallback({positions:positions});
+                vizStateChangeCallback({positions: positions});
                 d3.select("#" + chartRenderDiv).selectAll(".highlightNode").remove();
 
                 labelClicked(d.id + "label");
@@ -97,7 +97,7 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
 
         var highlight = overNode.node().cloneNode(true);
         var highlightNode = d3.select(highlight)
-            .attr("pointer-events","none")
+            .attr("pointer-events", "none")
             .attr("class", "highlightNode")
             .attr("fill", "none")
             .attr("r", nodeR + 5)
@@ -108,7 +108,7 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
 
         overNode.node().parentNode.insertBefore(highlightNode.node(), overNode.node().nextSibling);
 
-        positions[d.id] = {x: parseFloat(d3.select("#" + d.id + "label").attr("x")).toFixed(2), y: parseFloat(d3.select("#" + d.id+ "label").attr("y")).toFixed(2), anchor: d3.select("#" + d.id+ "label").attr("text-anchor")};
+        positions[d.id] = {x: parseFloat(d3.select("#" + d.id + "label").attr("x")).toFixed(2), y: parseFloat(d3.select("#" + d.id + "label").attr("y")).toFixed(2), anchor: d3.select("#" + d.id + "label").attr("text-anchor")};
     };
 
     var dragStartPrint = function (d, i) {
@@ -125,27 +125,29 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
 
         var labelsData = addLabels(year);
 
-        if(labelsData.length === 0) {
+        if (labelsData.length === 0) {
             return;
         }
 
         var labels = d3.select("#" + chartRenderDiv)
             .select(".labelLayer")
             .selectAll(".labelNode")
-            .data(labelsData, function(d){return d.id;});
+            .data(labelsData, function (d) {
+                return d.id;
+            });
 
 
         var labelContainer = labels.enter()
             .append("g")
             .attr("class", "labelNode")
-            .attr("cursor","pointer");
+            .attr("cursor", "pointer");
 
         var positions = vizState.get("positions");
 
         var labelText = labelContainer
             .append("text")
             .attr("class", "labelText")
-            .attr("text-anchor", function(d) {
+            .attr("text-anchor", function (d) {
                 if (typeof positions[d.id] === "undefined") {
                     if (labelPosition.indexOf("right") !== -1) {
                         return "end";
@@ -161,13 +163,15 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
                     return positions[d.id].anchor;
                 }
             })
-            .attr("dominant-baseline","central")
-            .attr("font-family","'Helvetica', sans-serif")
-            .attr("id", function (d) {return d.id + "label";});
+            .attr("dominant-baseline", "central")
+            .attr("font-family", "'Helvetica', sans-serif")
+            .attr("id", function (d) {
+                return d.id + "label";
+            });
 
         d3.selectAll(".labelNode")
             .selectAll(".labelText")
-            .attr("text-anchor", function(d) {
+            .attr("text-anchor", function (d) {
                 if (typeof positions[d.id] === "undefined") {
                     if (labelPosition.indexOf("right") !== -1) {
                         return "start";
@@ -183,7 +187,7 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
                     return positions[d.id].anchor;
                 }
             })
-            .style("font-size",function(d) {
+            .style("font-size", function (d) {
                 return Math.floor(fontSizeScale(d.size)) + "px";
             });
 
@@ -209,7 +213,7 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
             }
         }
 
-        labels.each(function(d) {
+        labels.each(function (d) {
             d3.select(this).select(".labelText")
                 .attr("x", function (d) {
                     if (positions[d.id]) {
@@ -228,7 +232,9 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
 
                     }
                 })
-                .text(function(d) {return d.name;});
+                .text(function (d) {
+                    return d.name;
+                });
 
             var bbox = d3.select(this).select(".labelText").node().getBBox();
             var a = {};
@@ -241,7 +247,7 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
             a.x4 = a.x1 + bbox.width;
             a.y4 = a.y2 - bbox.height;
 
-            d.neighbourhood = {x1: a.x1, y1:a.y1, x2:a.x2, y2:a.y2, x3:a.x3, y3:a.y3, x4:a.x4, y4:a.y4};
+            d.neighbourhood = {x1: a.x1, y1: a.y1, x2: a.x2, y2: a.y2, x3: a.x3, y3: a.y3, x4: a.x4, y4: a.y4};
 
         });
 
@@ -264,10 +270,10 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
             labelPos = [xScale(entityObj.x) + bubbleSizeScale(entityObj.size), yScale(entityObj.y)];
         }
         if (entityObj.labelPosition === "top-right") {
-            labelPos = [xScale(entityObj.x)  + bubbleSizeScale(entityObj.size), yScale(entityObj.y) - bubbleSizeScale(entityObj.size)];
+            labelPos = [xScale(entityObj.x) + bubbleSizeScale(entityObj.size), yScale(entityObj.y) - bubbleSizeScale(entityObj.size)];
         }
         else if (entityObj.labelPosition === "top-left") {
-            labelPos = [xScale(entityObj.x)  - bubbleSizeScale(entityObj.size), yScale(entityObj.y) - bubbleSizeScale(entityObj.size)];
+            labelPos = [xScale(entityObj.x) - bubbleSizeScale(entityObj.size), yScale(entityObj.y) - bubbleSizeScale(entityObj.size)];
         }
         else if (entityObj.labelPosition === "bottom-left") {
             labelPos = [xScale(entityObj.x) - bubbleSizeScale(entityObj.size), yScale(entityObj.y) + bubbleSizeScale(entityObj.size)];
@@ -301,7 +307,7 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
                 alignButton.button("refresh");
             }
 
-            var textPos =  $("#" + id).offset();
+            var textPos = $("#" + id).offset();
             var width = d3.select("#" + id).node().getBBox();
 
             var overNode = d3.select("#" + id.substring(0, id.indexOf("label"))).select("circle");
@@ -312,7 +318,7 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
 
             var highlight = overNode.node().cloneNode(true);
             var highlightNode = d3.select(highlight)
-                .attr("pointer-events","none")
+                .attr("pointer-events", "none")
                 .attr("class", "highlightNode")
                 .attr("fill", "none")
                 .attr("r", nodeR + 4)
@@ -332,7 +338,7 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
 
     var registerClickEventListerners = function () {
         d3.select("body")
-            .on("mousedown", function() {
+            .on("mousedown", function () {
                 var target = d3.select(d3.event.target);
 
                 if (target.attr("class") === "chart scatter" && selectedLabel !== "") {
@@ -340,20 +346,20 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
 
                     var selected = selectedLabel.substring(0, selectedLabel.indexOf("label"));
 
-                    positions[selectedLabel.substring(0, selectedLabel.indexOf("label"))] = {x: parseFloat(label.attr("x")).toFixed(2), y: parseFloat(label.attr("y")).toFixed(2) , anchor:label.attr("text-anchor")};
-                    vizStateChangeCallback({positions:positions});
+                    positions[selectedLabel.substring(0, selectedLabel.indexOf("label"))] = {x: parseFloat(label.attr("x")).toFixed(2), y: parseFloat(label.attr("y")).toFixed(2), anchor: label.attr("text-anchor")};
+                    vizStateChangeCallback({positions: positions});
 
                     d3.select("#" + chartRenderDiv).selectAll(".highlightNode").remove();
                     label.attr("fill", defaultFontColor);
 
                     $("#alignButtons").hide();
-                    $("#languageSelect").css({"position":"relative", "top": "20px","left":"30px"}).appendTo("#selectBox");
+                    $("#languageSelect").css({"position": "relative", "top": "20px", "left": "30px"}).appendTo("#selectBox");
 
                     selectedLabel = "";
                 }
 
             })
-            .on("keydown", function() {
+            .on("keydown", function () {
                 if (selectedLabel !== "" && vizState.get("editMode")) {
                     var label = d3.select("#" + selectedLabel);
                     var textPos = $("#" + selectedLabel).offset();
@@ -382,20 +388,20 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
     };
 
     var registerAlignButtonsEventListeners = function () {
-        $("input:radio[name=setting]").change(function() {
-            if($('input:radio[name="setting"]:checked').val() === "leftAlign") {
+        $("input:radio[name=setting]").change(function () {
+            if ($('input:radio[name="setting"]:checked').val() === "leftAlign") {
                 d3.select("#" + selectedLabel).attr("text-anchor", "start");
             }
             else if ($('input:radio[name="setting"]:checked').val() === "rightAlign") {
                 d3.select("#" + selectedLabel).attr("text-anchor", "end");
             }
-            else if($('input:radio[name="setting"]:checked').val() === "midAlign") {
+            else if ($('input:radio[name="setting"]:checked').val() === "midAlign") {
                 d3.select("#" + selectedLabel).attr("text-anchor", "middle");
             }
         });
     };
 
-    var bubbleClickHandlerPrint = function(d,i) {
+    var bubbleClickHandlerPrint = function (d, i) {
         var overNode = d3.select("#" + d.id).select("circle");
         var nodeX = parseInt(overNode.attr("cx"));
         var nodeY = parseInt(overNode.attr("cy"));
@@ -404,7 +410,7 @@ gapminder.viz.vizBubblePrint = function (chartRenderDiv, vizState, vizStateChang
 
         var highlight = overNode.node().cloneNode(true);
         var highlightNode = d3.select(highlight)
-            .attr("pointer-events","none")
+            .attr("pointer-events", "none")
             .attr("class", "highlightNode")
             .attr("fill", "none")
             .attr("r", nodeR + 4)

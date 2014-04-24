@@ -8,8 +8,19 @@
     "jquery-ui": "~1.10.3",
     "queue-async": "~1.0.4",
     "d3": "~3.3.13",
+    "d3-geo-projection": "https://github.com/d3/d3-geo-projection.git#~0.2.8",
+    "picker": "git@github.com:Gapminder/smart-picker.git#ce9a24c1c6c3e9771d21bd8120a1dbe186a4651a",
+    "i18n-js": "git@github.com:Gapminder/i18n-js.git#def23f6096dd9bc3119474277cbb807e696224fa",
+    "touchSwipe": "https://github.com/mattbryson/TouchSwipe-Jquery-Plugin.git#48c15305f096d80b2bca2122876d44a6a1d48df4",
     "select2": "~3.4.5",
-    "rm-jstat": "master"
+    "rm-jstat": "master",
+    "almond": "~0.2.9",
+    "requirejs": "~2.1.10",
+    "jed": "~0.5.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "sprintf": "*",
+    "zepto": "~1.1.2",
+    "underscore": "~1.6.0"
+  }
 }

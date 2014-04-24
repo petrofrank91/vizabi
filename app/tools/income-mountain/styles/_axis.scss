@@ -1,0 +1,11 @@
+.axis {
+    @include font-size(20px);
+    @include user-select-none;
+    font-family: $fontFamily;
+    fill: $colorTSdarkBlue;
+
+    line {
+        fill: $colorTSdarkBlue;
+        stroke: $colorTSdarkBlue;
+    }
+}

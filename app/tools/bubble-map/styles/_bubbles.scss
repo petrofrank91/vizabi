@@ -1,0 +1,10 @@
+.bubbles {
+    font-family: $fontFamily;
+    @include font-size(40px);
+    text-anchor: middle;
+
+    .border {
+        stroke: #0A0A0A;
+        stroke-width: 4px;
+    }
+}

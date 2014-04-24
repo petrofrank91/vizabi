@@ -1,4 +1,0 @@
-id,name,info,data,unit,note
-gdppc_gapm,GDP per capita adjusted,GDP per capita adjusted by Gapminder,geo,US Dollars,
-imr_gapm,Infant Mortality Rate adjusted,IMR per capita adjusted by Gapminder,geo,Deaths per 1000 births,
-pop,Population,"Number of inhabitants, including migrant workers",geo,People,

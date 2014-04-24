@@ -1,0 +1,22 @@
+<div><p>Shows a bubble map</p></div>
+<div id="income-mountain"></div>
+<!-- @@vizabi.js-script-tag -->
+<script>
+
+    function initialize() {
+
+        var renderDiv = '#income-mountain';
+        var state;
+        var app;
+
+        state = {
+            year: 2000,
+            geo: ['SWE', 'BRA', 'IRN', 'DEU']
+        };
+
+        app = vizabi.incomeMountain(renderDiv, state);
+
+    }
+    vizabi.ready(initialize);
+
+</script>

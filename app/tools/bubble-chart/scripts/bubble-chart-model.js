@@ -1,24 +1,27 @@
-gapminder.bubbleChartModel =  function () {
+define(['bubble-chart-model-validator'], function (bubbleChartModelValidator) {
 
-    var dataHelper;
+    var bubbleChartModel = function () {
+
+        var dataHelper;
+        var validator;
 
     var stateAttributes = {
-        s : {},
-        opacity : 0.5,
-        speed : 0.1,
-        zoom : {},
-        trails : "none",
-        tSpeed : 300,
-        action : "multi",
-        enableHistory : true,
+        s: {},
+        opacity: 0.5,
+        speed: 0.1,
+        zoom: {},
+        trails: "standard",
+        tSpeed: 300,
+        action: "multi",
+        enableHistory: true,
         year: undefined,
-        xIndicator : undefined,
-        yIndicator : undefined,
-        sizeIndicator : undefined,
+        xIndicator: undefined,
+        yIndicator: undefined,
+        sizeIndicator: undefined,
         entity: undefined,
-        fraction : undefined,
-        prevYear : undefined,
-        nextYear : undefined,
+        fraction: undefined,
+        prevYear: undefined,
+        nextYear: undefined,
         dataPath: undefined,
         fileFormat: undefined,
         fileName: undefined,
@@ -26,148 +29,169 @@ gapminder.bubbleChartModel =  function () {
         maxXValue: undefined,
         minYValue: undefined,
         maxYValue: undefined,
+        updatedMinXValue: undefined,
+        updatedMaxXValue: undefined,
+        updatedMinYValue: undefined,
+        updatedMaxYValue: undefined,
         xAxisScale: "linear",
-        yAxisScale:"linear",
+        yAxisScale: "linear",
         isInteractive: false,
         xAxisTickValues: undefined,
         yAxisTickValues: undefined,
         language: undefined,
-        minFontSize :undefined,
+        i18nfn: undefined,
+        minFontSize: undefined,
         maxFontSize: undefined,
         minBubbleSize: undefined,
         maxBubbleSize: undefined,
-        positions : {},
+        positions: {},
         editMode: false,
-        category: []
+        category: [],
+        autoZoom: false,
+        manualZoom: false
     };
 
 
-    var initialize = function(callback, args) {
-        dataHelper = new gapminder.data.bubbleChartDataHelper(get("fileFormat"), get("entity"), get("fileName"), get("dataPath"));
-        dataHelper.initialize(callback, args);
-    };
+        var initialize = function (args) {
+            validator = new bubbleChartModelValidator();
+            validator.initialize(get("fileFormat"), get("entity"),
+                get("fileName"), get("dataPath"), args);
+        };
 
+        var setInit = function (changedState, modelAndDataReadyCallback) {
+            var changedStateAttr = {};
+            var dataNeedsToBeLoaded = false;
+            for (var attr in changedState) {
+                if (changedState.hasOwnProperty(attr) && (stateAttributes[attr]) !== changedState[attr]) {
+                    stateAttributes[attr] = changedState[attr];
+                    changedStateAttr[attr] = changedState[attr];
 
-    var setInit = function(changedState, modelAndDataReadyCallback) {
-        console.log("BUBBLE MODEL SET STATE: ", changedState);
-
-        var changedStateAttr = {};
-        var dataNeedsToBeLoaded = false;
-        for (var attr in changedState) {
-            if (changedState.hasOwnProperty(attr) && (stateAttributes[attr]) !== changedState[attr]) {
-                stateAttributes[attr] = changedState[attr];
-                changedStateAttr[attr] = changedState[attr];
-
-                if (attr.indexOf("Indicator") >= 0 || attr.indexOf("language") || attr.indexOf("dataPath") || attr.indexOf("entity") || attr.indexOf("category")) {
-                    dataNeedsToBeLoaded = true;
-                }
-                if (attr === "year") {
-                    updateFraction();
-                }
-            }
-        }
-
-        console.log("What changed: ",  changedStateAttr);
-        initialize(processWithCallback, [this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback]);
-    };
-
-
-
-    var set = function(changedState, modelAndDataReadyCallback) {
-        console.log("BUBBLE MODEL SET STATE: ", changedState);
-
-        var changedStateAttr = {};
-        var dataNeedsToBeLoaded = false;
-        for (var attr in changedState) {
-            if (changedState.hasOwnProperty(attr) && (stateAttributes[attr]) !== changedState[attr]) {
-                stateAttributes[attr] = changedState[attr];
-                changedStateAttr[attr] = changedState[attr];
-
-                if (attr.indexOf("Indicator") >= 0 || attr.indexOf("language") || attr.indexOf("dataPath") || attr.indexOf("entity") || attr.indexOf("category")) {
-                    dataNeedsToBeLoaded = true;
-                }
-                if (attr === "year") {
-                    updateFraction();
+                    if (attr.indexOf("Indicator") >= 0 || attr.indexOf("language") || attr.indexOf("dataPath") || attr.indexOf("entity") || attr.indexOf("category")) {
+                        dataNeedsToBeLoaded = true;
+                    }
+                    if (attr === "year") {
+                        updateFraction();
+                    }
                 }
             }
+
+            initialize([this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback]);
+        };
+
+
+        var set = function (changedState, modelAndDataReadyCallback) {
+            var changedStateAttr = {};
+            var dataNeedsToBeLoaded = false;
+            for (var attr in changedState) {
+                if (changedState.hasOwnProperty(attr) && (stateAttributes[attr]) !== changedState[attr]) {
+                    stateAttributes[attr] = changedState[attr];
+                    changedStateAttr[attr] = changedState[attr];
+
+                    if (attr.indexOf("Indicator") >= 0 || attr.indexOf("language") || attr.indexOf("dataPath") || attr.indexOf("entity") || attr.indexOf("category")) {
+                        dataNeedsToBeLoaded = true;
+                    }
+                    if (attr === "year") {
+                        updateFraction();
+                    }
+                }
+            }
+
+            validator.validate(this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback);
+        };
+
+
+        var get = function (state) {
+            return stateAttributes[state];
+        };
+
+        var updateFraction = function () {
+            var year = stateAttributes.year;
+
+            stateAttributes.fraction = year - Math.floor(year);
+            stateAttributes.prevYear = Math.floor(year);
+            stateAttributes.nextYear = Math.ceil(year);
+        };
+
+        var getDataHelper = function () {
+            return validator.getDataHelper();
+        };
+
+        var getAttributes = function () {
+            return stateAttributes;
+        };
+
+        var setIndicatorsForMissingIndicatorsState = function (changedState, x, y, size) {
+            stateAttributes.xIndicator = x;
+            stateAttributes.yIndicator = y;
+            stateAttributes.sizeIndicator = size;
+
+            return {
+                xIndicator: x,
+                yIndicator: y,
+                sizeIndicator: size
+            };
+        };
+
+    var setUpdatedMiXValue = function (minX) {
+        if  (typeof minX === 'number') {
+            stateAttributes.updatedMinXValue = minX;
         }
-
-        console.log("What changed: ",  changedStateAttr);
-        processWithCallback(this, dataNeedsToBeLoaded, changedStateAttr, modelAndDataReadyCallback);
     };
 
-    var processWithCallback = function (model, dataNeedsToBeLoaded, changedStateAttributes, modelAndDataIsReadyCallback) {
-        var isStateValid = isValidState();
-
-        if (dataNeedsToBeLoaded && typeof modelAndDataIsReadyCallback === 'function') {
-            dataHelper.validateState(model, changedStateAttributes, modelAndDataIsReadyCallback, isStateValid);
-        }
-        else if (typeof modelAndDataIsReadyCallback === 'function' ) {
-            modelAndDataIsReadyCallback();
+    var setUpdatedMaxXValue = function (maxX) {
+        if  (typeof maxX === 'number') {
+            stateAttributes.updatedMaxXValue = maxX;
         }
     };
 
-
-    var get = function (state) {
-        return stateAttributes[state];
+    var setUpdatedMinYValue = function (minY) {
+        if  (typeof minY === 'number') {
+            stateAttributes.updatedMinYValue = minY;
+        }
     };
 
-    var updateFraction = function() {
-        var year = stateAttributes.year;
-
-        stateAttributes.fraction = year - Math.floor(year);
-        stateAttributes.prevYear = Math.floor(year);
-        stateAttributes.nextYear = Math.ceil(year);
+    var setUpdatedMaxYValue = function (maxY) {
+        if  (typeof maxY === 'number') {
+            stateAttributes.updatedMaxYValue = maxY;
+        }
     };
 
-    var getDataHelper = function () {
-        return dataHelper;
+    var setMinXValue = function (value) {
+        stateAttributes.minXValue = value;
     };
 
-    var getAttributes = function() {
-        return stateAttributes;
+    var setMaxXValue = function (value) {
+        stateAttributes.maxXValue = value;
     };
 
-    var isValidState = function () {
-       var xIndicator = get("xIndicator");
-       var yIndicator = get("yIndicator");
-       var sizeIndicator = get("sizeIndicator");
-       var dataPath = get("dataPath");
-
-       if (xIndicator && yIndicator && sizeIndicator && dataPath) {
-           return true;
-       }
-        else {
-           return false;
-       }
+    var setMinYValue = function (value) {
+        stateAttributes.minYValue = value;
     };
 
-
-    var setIndicatorForInvalidState = function (changedState, x, y, size) {
-        stateAttributes.xIndicator = x;
-        stateAttributes.yIndicator = y;
-        stateAttributes.sizeIndicator = size;
-
-        return {xIndicator: x, yIndicator: y, sizeIndicator:size};
+    var setMaxYValue = function (value) {
+        stateAttributes.maxYValue = value;
     };
 
-    //initialize();
 
     return {
         set: set,
         get: get,
         getDataHelper: getDataHelper,
         getAttributes: getAttributes,
-        setIndicatorForInvalidState: setIndicatorForInvalidState,
+        setIndicatorForInvalidState: setIndicatorsForMissingIndicatorsState,
         initialize: initialize,
-        setInit: setInit
+        setInit: setInit,
+        setUpdatedMiXValue: setUpdatedMiXValue,
+        setUpdatedMaxXValue: setUpdatedMaxXValue,
+        setUpdatedMinYValue: setUpdatedMinYValue,
+        setUpdatedMaxYValue: setUpdatedMaxYValue,
+        setMinXValue: setMinXValue,
+        setMaxXValue: setMaxXValue,
+        setMinYValue: setMinYValue,
+        setMaxYValue: setMaxYValue
     };
 
-};
+    };
 
-
-
-
-
-
-
+    return bubbleChartModel;
+});

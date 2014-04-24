@@ -1,0 +1,29 @@
+<div><p>Shows a bubble map</p></div>
+<div id="bubble-map"></div>
+<br>
+<!-- @@vizabi.js-script-tag -->
+<script>
+
+    function initialize() {
+
+        var renderDiv = '#bubble-map';
+        var state;
+        var app;
+
+        state = {
+            geo: ['SWE', 'PAN', 'UGA', 'CHN']
+        };
+
+        app = vizabi.bubbleMap(renderDiv, state);
+
+        i18n.clearPath();
+        i18n.addPath('data/i18n/%(lang)s/%(filename)s');
+
+        setTimeout(function() {
+            app.setLanguage('pt_BR');
+        }, 2000);
+    }
+
+    vizabi.ready(initialize);
+
+</script>

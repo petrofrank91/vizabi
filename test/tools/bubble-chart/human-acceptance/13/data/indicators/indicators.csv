@@ -1,5 +1,0 @@
-id,name,info,availability,data,time,unit,note
-gni_unstates,Gross national income adjusted,GDP per capita adjusted by Gapminder,unstates,unstates,yearly,US Dollars,
-lex_unstates,Life expectancy, IMR per capita adjusted by Gapminder,unstates,unstates,yearly,Deaths per 1000 births,
-pop_unstates,Population,"Number of inhabitants, including migrant workers",unstates,unstates,yearly,People,
-gdp_unstates,GDP per capita adjusted,GDP per capita adjusted by Gapminder,unstates,unstates,yearly,US Dollars,

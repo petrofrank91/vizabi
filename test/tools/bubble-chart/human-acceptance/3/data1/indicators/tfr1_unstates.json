@@ -1,18 +1,16 @@
- {
-    "info":
-    {
+{
+    "info": {
         "measure_id": "tfr1",
         "measure_name": "total fertility rate 1"
     },
-    "trends":
-    {
-        "Iran":
-        {
-            "1960": 1, "1980": 1
+    "trends": {
+        "Iran": {
+            "1960": 1,
+            "1980": 1
         },
-        "Sweden":
-        {
-            "1960": 1, "1980": 1
+        "Sweden": {
+            "1960": 1,
+            "1980": 1
         }
     }
 }
