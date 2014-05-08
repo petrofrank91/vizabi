@@ -32,7 +32,7 @@ require.config({
         'smart-picker': '../../bower_components/picker/dist/smart-picker.min',
 
         // sprintf
-        'sprintf': '../../bower_components/sprintf/src/sprintf.min',
+        'sprintf': '../../bower_components/sprintf/src/sprintf',
 
         // bubble chart
         'bubble-chart': '../../tools/bubble-chart/scripts',
