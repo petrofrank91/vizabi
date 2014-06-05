@@ -540,6 +540,8 @@ module.exports = function (grunt) {
         // merge the gruntConfig with the app-specific config
         var _ = require('lodash');
         gruntConfig = _.merge(gruntConfig, componentConfig);
+    } else {
+        grunt.log.warn('The grunt-config.js file for project `'+project+'` was not found at `'+configPath+'` and thus not included.');
     }
 
 	// uncomment to output merged config for debugging
