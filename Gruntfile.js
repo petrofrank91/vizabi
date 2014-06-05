@@ -10,7 +10,12 @@
 module.exports = function (grunt) {
     // show elapsed time at the end
     require('time-grunt')(grunt);
-    // load all grunt tasks
+    /*
+     * load all grunt tasks, instead of loading each one like this:
+     * grunt.loadNpmTasks('grunt-concurrent'); ...
+     * This reads the file package.json
+     * More info here: https://github.com/sindresorhus/load-grunt-tasks
+     */
     require('load-grunt-tasks')(grunt);
 
     // which component to work with (component variable is called project for better consistency with go grunt config)
@@ -65,6 +70,13 @@ module.exports = function (grunt) {
 
     var gruntConfig = {
         yeoman: paths,
+
+        /*
+         * Run predefined tasks whenever watched file patterns are added,
+         * changed or deleted.
+         * More here: https://github.com/gruntjs/grunt-contrib-watch
+         */
+
         watch: {
             compass: {
                 files: ['<%= yeoman.app.common %>/styles/{,*/}*.{scss,sass}','<%= yeoman.app.project %>/styles/{,*/}*.{scss,sass}'],
@@ -140,6 +152,12 @@ module.exports = function (grunt) {
                 }
             }
         },
+
+        /*
+         * Clean files and folders if they exist (useful to avoid conflicts)
+         * More here: https://github.com/gruntjs/grunt-contrib-clean
+         */
+
         clean: {
             dist: {
                 files: [
@@ -187,8 +205,15 @@ module.exports = function (grunt) {
                 }
             }
         },
+
+        /*
+         * This allows us to use the compass library and compile Sass into CSS
+         * More here: https://github.com/gruntjs/grunt-contrib-compass
+         */
+
         compass: {
             options: {
+				// the paths config assume that sass work entirely within the project folder (thus not the common folder)
                 sassDir: '<%= yeoman.app.base %>/vizabi.js/styles',
                 cssDir: '<%= yeoman.tmp.base %>/styles',
                 generatedImagesDir: '<%= yeoman.app.project %>/images/generated',
