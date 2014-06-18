@@ -5,3 +5,5 @@ app/bower_components
 test/bower_components
 main-processed.js
 app/index.html
+config.js.erb
+app/vizabi-config.js

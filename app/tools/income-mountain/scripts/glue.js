@@ -39,7 +39,7 @@ define([
             endYear: 2018,
             language: 'en',
             languageFilename: '3',
-            languagePath: 'http://stage.cms.gapminder.org/api/i18nCatalog/poJson?id=%(filename)s&lang=%(lang)s'
+            languagePath: CONFIG.BASE_CMS_API + 'i18nCatalog/poJson?id=%(filename)s&lang=%(lang)s'
         };
 
         var _i18n;

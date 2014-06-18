@@ -7,6 +7,7 @@ window.vizabi = window.vizabi || {};
     }
 
     var loadScriptTime = (new Date).getTime();
+    getScript('{{vizabi-config-path}}');
     getScript('{{vizabi-script-tag-attributes}}');
 
     function addEvent(evnt, func) {

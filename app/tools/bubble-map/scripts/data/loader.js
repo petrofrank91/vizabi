@@ -12,7 +12,7 @@ define([
         }
 
         function load(indicator, callback) {
-            d3.json('http://vizabi-dev.gapminder.org.s3.amazonaws.com/data/bubble_map/' + indicator + '.json',
+            d3.json(CONFIG.VIZABI_DATA_URL + 'bubble-map/' + indicator + '.json',
                 function(d) {
                     cache[indicator] = d;
                     if (typeof callback === 'function') {
@@ -23,7 +23,7 @@ define([
         }
 
         function loadMap(callback) {
-            d3.json('http://vizabi-dev.gapminder.org.s3.amazonaws.com/data/bubble_map/world-countries.json',
+            d3.json(CONFIG.VIZABI_DATA_URL + 'bubble-map/world-countries.json',
                 function(d) {
                     cache.map = d;
                     if (typeof callback === 'function') {

@@ -316,6 +316,7 @@ module.exports = function (grunt) {
 				options: {
 					variables: {
 						'{{vizabi-script-tag-attributes}}': 'data-main="common/scripts/main-processed" src="bower_components/requirejs/require.js"',
+                        '{{vizabi-config-path}}': 'src="../../../../build/scripts/vizabi-config.js"'
 					},
 					prefix: ''
 				},
@@ -327,6 +328,7 @@ module.exports = function (grunt) {
 				options: {
 					variables: {
 						'{{vizabi-script-tag-attributes}}': 'src="../../../../build/scripts/vizabi-amd.js"',
+                        '{{vizabi-config-path}}': 'src="../../../../build/scripts/vizabi-config.js"'
 					},
 					prefix: ''
 				},
@@ -467,6 +469,16 @@ module.exports = function (grunt) {
 						dest: '<%= yeoman.dist.base %>',
                         src: [
                             'data/**',
+                        ]
+                    },
+                    //TODO: Improve this workaround in the concat task
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= yeoman.app.base %>',
+                        dest: '<%= yeoman.dist.base %>/scripts',
+                        src: [
+                           'vizabi-config.js'
                         ]
                     },
                 ]
