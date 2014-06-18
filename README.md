@@ -67,6 +67,43 @@ Here is a table regarding the names and the associated component types in Vizabi
 
     ./generate-all-hats.sh
 
+##Deploying to S3
+
+**Set environment variables**
+
+Go to the webapp-framework folder and set the following variables:
+```
+export BASE_CMS_API=http://release_0_3-cms.gapminder.org/api/
+export VIZABI_DATA_URL=http://vizabi-dev.gapminder.org.s3.amazonaws.com/data/
+export VIZABI_WAFFLE_URL=http://oven.gapminder.org:9990/waffle/lang/
+```
+
+**Generate config file**
+
+Run erb to generate the config file:
+```
+erb config.js.erb > app/vizabi-config.js 
+```
+
+**Build the project or copy ```config.js``` into the ```dist``` folder**
+
+Build the project and the newly created config.js file will be placed correctly:
+```
+grunt build
+```
+
+Alternatively, if you just want to change the config file, copy it to the dist folder:
+```
+cp app/vizabi-config.js dist/build/scripts/vizabi-config.js 
+```
+
+**Upload the contents of the dist-folder to S3**
+
+Upload the ```dist``` folder to S3:
+```
+s3cmd put --recursive dist/ s3://vizabi-dev.gapminder.org/vizabi/
+```
+
 ## Code Conventions
 * When creating files, the convention is to use dashes instead of underscore or camel case notation.
 ```
