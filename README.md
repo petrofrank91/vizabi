@@ -1,4 +1,7 @@
-Gapminder Vizabi
+(Legacy code)
+
+Not being developed or maintained anymore. Check out the new repo: [https://github.com/Gapminder/vizabi](Gapminder Vizabi)
+
 ==============
 
 ## Overview
