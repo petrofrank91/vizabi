@@ -1,0 +1,9 @@
+@import '../_tool.scss';
+
+.pop-slider {
+	@extend .vizabi-tool;
+
+	@import '../../components/year-display/_year-display.scss';
+	@import '../../components/indicator-display/_indicator-display.scss';
+	@import '../../components/timeslider2/_timeslider2.scss';
+}
