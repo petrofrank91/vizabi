@@ -9,8 +9,12 @@ define([
     var container,
         timeslider,
         range,
-        value;
-        //handle;
+        value,
+        data,
+        minValue,
+        maxValue,
+        playing,
+        playInterval;
 
 
     var TimeTimeslider = Component.extend({
@@ -22,11 +26,34 @@ define([
         },
 
         postRender: function() {
+            var _this = this;
+            playing = false;
+
             this.placeholder = utils.d3ToJquery(this.placeholder);
             container = utils.d3ToJquery(this.element);
 
             range = container.find(".input-range");
             value = $('.range-value');
+
+            play = container.find("#play-button-play"),
+            pause = container.find("#play-button-pause");
+
+            play.click(function() {
+                _this.play();
+            });
+
+            pause.click(function() {
+                _this.pause();
+            });
+
+            this.events.bind('timeslider:dragging', function() {
+                _this.pause();
+            });
+
+            range.on('input', function(){
+                _this.setYear(parseFloat(this.value));
+            });
+
             this.update();
         },
 
@@ -39,7 +66,7 @@ define([
             var _this = this,
                 year = this.model.getState("time");
 
-            var data = this.model.getData()[0],
+            data = this.model.getData()[0],
                 minValue = d3.min(data, function(d) {
                     return +d.time;
                 }),
@@ -47,19 +74,13 @@ define([
                     return +d.time;
                 });
             
-            range.attr("value", year);
-            value.html(year);
-
-            range.on('input', function(){
-                value.html(this.value);
-                //_this.setYear(this.value);
-                console.log("Setting range");
-            });
-
             range.attr("min", minValue)
-                     .attr("max", maxValue);
+                 .attr("max", maxValue)
+                 .attr("data-year", year)
+                 .val(year);        
+                 
 
-            range.attr("data-year", year);
+            value.html(year);
         },
 
         getYear: function() {
@@ -68,7 +89,6 @@ define([
 
         setYear: function(year, silent) {
             //update state
-
             this.model.setState({
                 time: year
             }, silent);
@@ -76,6 +96,30 @@ define([
             this.update();
         },
 
+       play: function() {
+            //return if already playing
+            if (playing) return;
+
+            container.addClass("playing");
+
+            var _this = this,
+                year = this.model.getState("time");
+
+            playInterval = setInterval(function() {
+                if (year > maxValue) {
+                    _this.pause();
+                    return;
+                } else {
+                    year++;
+                    _this.setYear(year);
+                }
+            }, 100);
+        },
+
+        pause: function() {
+            container.removeClass("playing");
+            clearInterval(playInterval);
+        }
     });
 
     return TimeTimeslider;
