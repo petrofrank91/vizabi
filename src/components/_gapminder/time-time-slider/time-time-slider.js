@@ -14,12 +14,14 @@ define([
         minValue,
         maxValue,
         playing,
-        playInterval;
+        playInterval,
+        hidePlayButton;
 
 
     var TimeTimeslider = Component.extend({
         init: function(parent, options) {
             this.template = "components/_gapminder/time-time-slider/time-time-slider";
+            hidePlayButton = options.hidePlayButton || false;
 
             // Same constructor as the superclass
             this._super(parent, options);
@@ -29,7 +31,6 @@ define([
             var _this = this;
             playing = false;
 
-            this.placeholder = utils.d3ToJquery(this.placeholder);
             container = utils.d3ToJquery(this.element);
 
             range = container.find(".input-range");
@@ -59,6 +60,7 @@ define([
 
 
         resize: function() {
+            if (hidePlayButton == true) container.addClass("hide-play-button");
             this.update();
         },
 
@@ -81,6 +83,7 @@ define([
                  
 
             value.html(year);
+            this.setYearPosition();
         },
 
         getYear: function() {
@@ -106,7 +109,7 @@ define([
                 year = this.model.getState("time");
 
             playInterval = setInterval(function() {
-                if (year > maxValue) {
+                if (year >= maxValue) {
                     _this.pause();
                     return;
                 } else {
@@ -119,6 +122,16 @@ define([
         pause: function() {
             container.removeClass("playing");
             clearInterval(playInterval);
+        },
+
+        setYearPosition: function () {
+            var inputWidth = container.find(".input-range").width() - 16,
+                timeRange = maxValue - minValue,
+                currentYear = this.model.getState("time") - minValue,
+                newPosition = Math.round(inputWidth * currentYear / timeRange);
+
+            value.css("left", newPosition + "px");
+
         }
     });
 
