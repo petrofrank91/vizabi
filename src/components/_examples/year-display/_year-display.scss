@@ -1,0 +1,30 @@
+//general styles
+#year-display {
+    color: $colorGreen;
+    font-family: $fontFamily;
+    font-weight: 700;
+    font-size: 5em;
+    padding: 20px;
+}
+
+//large specific styles
+&.large, &.medium {
+    #year-display {
+     	@include absolute(0, 50%, auto, 0);
+        font-size: 8em;
+    }
+}
+
+//medium specific styles
+&.large {
+    #year-display {
+        font-size: 10em;
+    }
+}
+
+//small specific styles
+&.small {
+    #year-display {
+        //...
+    }
+}
