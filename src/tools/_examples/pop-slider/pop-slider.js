@@ -23,7 +23,7 @@ define([
                 placeholder: '.vizabi-tool-display'
             });
 
-            this.addComponent('_gapminder/time-time-slider', {
+            this.addComponent('_gapminder/timeslider', {
                 placeholder: '.vizabi-tool-timeslider',
                 step: 0.1
             });
