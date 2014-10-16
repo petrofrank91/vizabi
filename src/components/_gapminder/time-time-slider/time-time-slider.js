@@ -15,13 +15,15 @@ define([
         maxValue,
         playing,
         playInterval,
-        hidePlayButton;
+        hidePlayButton,
+        step;
 
 
     var TimeTimeslider = Component.extend({
         init: function(parent, options) {
             this.template = "components/_gapminder/time-time-slider/time-time-slider";
             hidePlayButton = options.hidePlayButton || false;
+            step = options.step || 1;
 
             // Same constructor as the superclass
             this._super(parent, options);
@@ -79,6 +81,7 @@ define([
             range.attr("min", minValue)
                  .attr("max", maxValue)
                  .attr("data-year", year)
+                 .attr("step", step)
                  .val(year);        
                  
 
@@ -107,13 +110,13 @@ define([
 
             var _this = this,
                 year = this.model.getState("time");
-
+                
             playInterval = setInterval(function() {
                 if (year >= maxValue) {
                     _this.pause();
                     return;
                 } else {
-                    year++;
+                    year = year + step;
                     _this.setYear(year);
                 }
             }, 100);
