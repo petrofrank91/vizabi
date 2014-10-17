@@ -16,7 +16,8 @@ define([
         playing,
         playInterval,
         hidePlayButton,
-        step;
+        step,
+        stepDecimals;
 
 
     var TimeTimeslider = Component.extend({
@@ -24,6 +25,8 @@ define([
             this.template = "components/_gapminder/timeslider/timeslider";
             hidePlayButton = options.hidePlayButton || false;
             step = options.step || 1;
+            //TODO: can be improved
+            stepDecimals = (step.toString().split('.')[1] || []).length;
 
             // Same constructor as the superclass
             this._super(parent, options);
@@ -117,7 +120,7 @@ define([
                     return;
                 } else {
                     year = year + step;
-                    _this.setYear(year);
+                    _this.setYear(year.toFixed(stepDecimals));
                 }
             }, 100);
         },
