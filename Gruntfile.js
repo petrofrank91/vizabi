@@ -18,15 +18,6 @@ module.exports = function(grunt) {
         'build' //by default, just build
     ]);
 
-    //build task: grunt
-    // grunt.registerTask('build', [
-    //     'clean:dist', //clean dist folder
-    //     'copy:templates', //copy js and template files
-    //     'uglify', //uglify js files
-    //     'sass:dist', //compile scss
-    //     'preview_pages', //build preview_pages
-    // ]);
-
     //developer task: grunt dev
     grunt.registerTask('dev', [
 
@@ -42,6 +33,7 @@ module.exports = function(grunt) {
         'copy:preview_pages', //copies preview_page assets
         'copy:waffles', //copies waffles
         'copy:assets', //copies assets
+        'copy:fonts', //copies fonts (font awesome)
         'connect', //run locally
         'watch' //watch for code changes
     ]);
@@ -61,6 +53,7 @@ module.exports = function(grunt) {
         'copy:preview_pages', //copies preview_page assets
         'copy:waffles', //copies waffles
         'copy:assets', //copies assets
+        'copy:fonts', //copies fonts (font awesome)
 
     ]);
 
@@ -101,6 +94,12 @@ module.exports = function(grunt) {
                 cwd: 'src',
                 src: ['assets/imgs/**/*'],
                 dest: 'dist/',
+                expand: true
+            },
+            fonts: {
+                cwd: 'lib/font-awesome',
+                src: ['fonts/*'],
+                dest: 'dist/assets/',
                 expand: true
             },
             scripts: {
@@ -162,6 +161,10 @@ module.exports = function(grunt) {
             scripts: {
                 files: ['src/**/*.js'],
                 tasks: ['copy:scripts', 'copy:templates']
+            },
+            templates: {
+                files: ['src/**/*.html'],
+                tasks: ['copy:templates']
             },
             options: {
                 livereload: {
@@ -271,7 +274,7 @@ module.exports = function(grunt) {
             if (typeof dir !== 'undefined' && file.indexOf('.html') !== -1) {
                 file = file.replace(".html", "");
                 var link = dir + '/' + file;
-                var preview_page = "<li><a onclick=\"goToExample('"+link+"');\">"+link+"</a></li>";
+                var preview_page = "<li><a onclick=\"goToExample('" + link + "');\">" + link + "</a></li>";
                 contents += preview_page;
             }
         });
@@ -295,12 +298,11 @@ module.exports = function(grunt) {
 
         grunt.file.recurse(tools_folder, function(abs, root, dir, file) {
             var clean_abs;
-            if (typeof dir !== 'undefined' && file.indexOf('.js') !== -1) {
+            if (typeof dir !== 'undefined' && /\.js$/.test(file)) {
                 // src/tools/_examples/bar-chart/bar-chart.js --> tools/_examples/bar-chart/bar-chart 
                 clean_abs = abs.replace(".js", "").replace("src/", "");
                 contents.push('"' + clean_abs + '"');
-            }
-            else if (typeof dir !== 'undefined' && file.indexOf('.html') !== -1) {
+            } else if (typeof dir !== 'undefined' && /\.html$/.test(file)) {
                 clean_abs = abs.replace("src/", "");
                 contents.push('"text!' + clean_abs + '"');
             }
@@ -308,11 +310,10 @@ module.exports = function(grunt) {
 
         grunt.file.recurse(components_folder, function(abs, root, dir, file) {
             var clean_abs;
-            if (typeof dir !== 'undefined' && file.indexOf('.js') !== -1) {
+            if (typeof dir !== 'undefined' && /\.js$/.test(file)) {
                 clean_abs = abs.replace(".js", "").replace("src/", "");
                 contents.push('"' + clean_abs + '"');
-            }
-            else if (typeof dir !== 'undefined' && file.indexOf('.html') !== -1) {
+            } else if (typeof dir !== 'undefined' && /\.html$/.test(file)) {
                 clean_abs = abs.replace("src/", "");
                 contents.push('"text!' + clean_abs + '"');
             }
@@ -324,7 +325,7 @@ module.exports = function(grunt) {
         grunt.log.writeln("All tools and components have been included in the AMD module.");
     });
 
-/*
+    /*
      * ---------
      * Include all tool styles into vizabi.scss
      */
@@ -345,7 +346,7 @@ module.exports = function(grunt) {
         });
 
         for (var i = 0; i < includes.length; i++) {
-            contents += '@import "'+includes[i]+'";\n';
+            contents += '@import "' + includes[i] + '";\n';
         };
 
         grunt.file.write(scss_file, contents);
