@@ -19,6 +19,9 @@ define([
         step,
         stepDecimals;
 
+    var class_playing = "vzb-playing",
+        class_hide_play = "vzb-hide-play-button";
+
 
     var TimeTimeslider = Component.extend({
         init: function(parent, options) {
@@ -38,11 +41,10 @@ define([
 
             container = utils.d3ToJquery(this.element);
 
-            range = container.find(".input-range");
-            value = $('.range-value');
-
-            play = container.find("#play-button-play"),
-            pause = container.find("#play-button-pause");
+            range = container.find(".vzb-ts-slider");
+            value = container.find('.vzb-ts-slider-value');
+            play = container.find(".vzb-ts-btn-play"),
+            pause = container.find(".vzb-ts-btn-pause");
 
             play.click(function() {
                 _this.play();
@@ -65,7 +67,7 @@ define([
 
 
         resize: function() {
-            if (hidePlayButton == true) container.addClass("hide-play-button");
+            if (hidePlayButton == true) container.addClass(class_hide_play);
             this.update();
         },
 
@@ -109,7 +111,7 @@ define([
             //return if already playing
             if (playing) return;
 
-            container.addClass("playing");
+            container.addClass(class_playing);
 
             var _this = this,
                 year = this.model.getState("time");
@@ -126,18 +128,17 @@ define([
         },
 
         pause: function() {
-            container.removeClass("playing");
+            container.removeClass(class_playing);
             clearInterval(playInterval);
         },
 
         setYearPosition: function () {
-            var inputWidth = container.find(".input-range").width() - 16,
+            var inputWidth = range.width() - 16,
                 timeRange = maxValue - minValue,
                 currentYear = this.model.getState("time") - minValue,
                 newPosition = Math.round(inputWidth * currentYear / timeRange);
-
+                
             value.css("left", newPosition + "px");
-
         }
     });
 
