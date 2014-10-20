@@ -1,17 +1,18 @@
 //general styles
-#indicator-display {
-    $indicatorColor: #666;
+.vzb-indicator-display {
+    $indicatorColor: $vzb-color-grey;
+
     @include absolute(130px, 0, 10px, 0);
     color: $indicatorColor;
     text-align: left;
     padding: 10px 30px;
-    font-family: $fontFamily;
+    font-family: $vzb-font-family;
     overflow: hidden;
     overflow-y: scroll;
 }
 //large specific styles
-&.large, &.medium {
-    #indicator-display {
+&.vzb-large, &.vzb-medium {
+    .vzb-indicator-display {
         @include absolute(0, 0, 10px, 50%);
     }
 }

@@ -12,24 +12,24 @@ define([
             this.state = options.state;
 
             this.addComponent('_gapminder/header', {
-                placeholder: '.vizabi-tool-title'
+                placeholder: '.vzb-tool-title'
             });
 
             this.addComponent('_examples/year-display', {
-                placeholder: '.vizabi-tool-year'
+                placeholder: '.vzb-tool-year'
             });
 
             this.addComponent('_examples/indicator-display', {
-                placeholder: '.vizabi-tool-display'
+                placeholder: '.vzb-tool-display'
             });
 
             this.addComponent('_gapminder/timeslider', {
-                placeholder: '.vizabi-tool-timeslider',
+                placeholder: '.vzb-tool-timeslider',
                 step: 0.1
             });
 
             this.addComponent('_gapminder/buttonlist', {
-                placeholder: '.vizabi-tool-buttonlist',
+                placeholder: '.vzb-tool-buttonlist',
                 buttons: [{
                             id: "geo",
                             title: "Country",
