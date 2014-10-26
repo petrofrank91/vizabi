@@ -5,6 +5,8 @@ define([
     'base/component'
 ], function(d3, _, Component) {
 
+    var countries;
+
     var IndicatorDisplay = Component.extend({
 
 		/*
@@ -35,18 +37,42 @@ define([
          * Ideally, it contains only operations related to data events
          */
         update: function() {
-            var indicator = this.model.getState("indicator"),
+            var _this = this,
+                indicator = this.model.getState("indicator"),
+                year = this.model.getState("time"),
                 countries = this.model.getData()[0],
-                year = this.model.getState("time");
-            
-            var countriesCurr = countries.filter(function(d) {
-                return (d.time == year);
-            });
+                currCountries = {},
+                step = (year.toString().split('.')[1] || []);
+
+
+            var countriesByname = d3.nest().key(function(d) {
+                return d['geo.name'];
+            })
+            .entries(countries);
+
+            var currCountries = [] ;
+            for (var i=0; i < countriesByname.length; i++) {
+                var prev, next, cur = {};
+                cur['geo.name'] = countriesByname[i].key;
+                for (var j=0; j < countriesByname[i].values.length; j++) {
+                    if (countriesByname[i].values[j].time == Math.floor(year)) {
+                        prev = countriesByname[i].values[j][indicator];
+                    }
+                    if (countriesByname[i].values[j].time == Math.round(year)) {
+                        next = countriesByname[i].values[j][indicator];
+                    }
+                }
+                cur[indicator] = _this.model.interpolate(prev, next, step);                
+                cur.time = year;
+
+                currCountries.push(cur);
+            }
+
 
             this.element.selectAll("p").remove();
 
             this.element.selectAll("p")
-                .data(countriesCurr)
+                .data(currCountries)
                 .enter()
                 .append("p");
             
@@ -74,8 +100,7 @@ define([
                     return d["geo.name"] + ": " + d[indicator]; 
                 });
             }
-        },
-
+        }
 
     });
 
