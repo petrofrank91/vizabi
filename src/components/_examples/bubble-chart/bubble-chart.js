@@ -4,7 +4,6 @@ define([
     'base/component'
 ], function($, d3, Component) {
 
-    var DURATION_FAST = 100; //ms
     
     function order(a, b) {
         return radius(b) - radius(a);
@@ -75,6 +74,7 @@ define([
             this.scale = this.model.show.scale;
             this.units = this.model.show.unit || [1, 1, 1];
             this.time = +this.model.time.value;
+            this.duration = +this.model.time.speed;
             
             //TODO: #32 run only if data or show models changed
             this.updateShow();
@@ -166,7 +166,7 @@ define([
                 });
             
             //update selection
-            this.bubbles.transition().duration(DURATION_FAST).ease("linear")            
+            this.bubbles.transition().duration(this.duration).ease("linear")            
                 .attr("cy", function(d) {
                     return _this.yScale(d[_this.indicator[0]]);
                 })
