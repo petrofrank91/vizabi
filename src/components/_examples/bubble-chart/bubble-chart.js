@@ -198,12 +198,12 @@ define([
                 case "medium":
                     margin = {top: 30, right: 60, left: 60, bottom: 40};
                     tick_spacing = 80;
-                    maxRadius = 30;
+                    maxRadius = 40;
                     break;
                 case "large":
                     margin = {top: 30, right: 60, left: 60, bottom: 40};
                     tick_spacing = 100;
-                    maxRadius = 50;
+                    maxRadius = 80;
                     break;
             }
 
