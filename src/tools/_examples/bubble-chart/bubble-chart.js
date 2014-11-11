@@ -62,6 +62,45 @@ define([
             if (state.time.end > dateMax) {
                 state.time.end = dateMax;
             }
+            
+            
+            
+            
+            
+            //TODO: preprocessing should go somewhere else, when the data is loaded
+            //it should be called only once, and i haven't yet found the right place
+            if(!data.isProcessed){
+                console.log(model.data.isProcessed)
+                var items = data.getItems();
+                var remapped = [];
+                
+                var nested = d3.nest()
+                    .key(function(d){return d["geo.name"]})
+                    .key(function(d){return d["time"]})
+                    .rollup(function(leaves){
+                        var merged;
+                        leaves.forEach(function(l){
+                            merged = _.merge({},merged,l);
+                        });
+                        remapped.push(merged);
+                    })
+                    .entries(items);
+                
+                console.log(remapped);
+                
+                remapped.forEach(function(d){
+                    d.name = d["geo.name"]; 
+                    d.region = d["geo.category"] || "world";
+                    //_this.model.show.indicator.forEach(function(ind) { d[ind] = +d[ind]; });
+                });
+                
+
+                data.isProcessed = true;
+            }
+            
+            
+            
+            
         },
 
         /**
@@ -79,7 +118,9 @@ define([
                 "where": {
                     "geo": state.show.geo,
                     "geo.category": state.show.geo_category,
-                    "time": [time_start + "-" + time_end]
+                    "time": "*"//[time_start + "-" + time_end]
+                    //"timeFormat": state.time.format,
+                    //"time": [state.time.start, state.time.end],
                 }
             }];
         }
