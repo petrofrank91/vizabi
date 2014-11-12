@@ -61,6 +61,9 @@ $vzb-bc-year-size:300px;
         font-size: 300%;
         @include opacity(0.3);
     }
+    .vzb-bc-axis-r-title{
+        @include opacity(0.1);
+    }
 }
 &.vzb-medium {
     .vzb-bubble-chart {
