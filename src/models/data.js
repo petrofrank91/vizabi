@@ -51,13 +51,22 @@ define([
             if (this._items.length === 1) return this._items[0];
             return this._items;
         },
+        
+        /**
+         * Sets a new collection
+         * @param name - name of the property to store values in
+         * @param arg - the values to store
+         */
+        setItems: function(name, arg) {
+            this[name] = arg;
+        },
 
         /**
          * Gets limits
          * @returns {Object} time limits
          */
         //todo: this only works for int
-        getLimits: function(attr) {
+        getLimits: function(attr, format) {
             if (_.isArray(this._items) && this._items.length === 1) {
                 this._items = this._items[0];
             }
@@ -68,15 +77,17 @@ define([
                 };
             
             //FIXME: i need state.time.format to be available here
-            // or data model time_formats[state.time.unit]
-            var timeFormat = d3.time.format("%Y-%m-%d");
-            var filtered = _.map(this._items, function(d) {
-                    if(attr == 'time'){
+            var timeFormat = d3.time.format(format);
+            var filtered = [];
+            if(attr == 'time'){
+                var filtered = _.map(this._items, function(d) {
                         return timeFormat.parse(d.time).getTime();
-                    }else{
+                    });
+            }else{
+                var filtered = _.map(this._items, function(d) {
                         return parseInt(d[attr], 10);
-                    }
-                });
+                    });
+            }
             if (filtered.length > 0) {
                 limits.min = _.min(filtered);
                 limits.max = _.max(filtered);

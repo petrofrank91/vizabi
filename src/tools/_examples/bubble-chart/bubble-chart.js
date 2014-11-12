@@ -47,15 +47,14 @@ define([
 
             var state = model.state;
             var data = model.data;
-            indicator = model.state.show.indicator;
 
             //don't validate anything if data hasn't been loaded
             if(!data.getItems() || data.getItems().length < 1) {
                 return;
             }
             
-            var dateMin = new Date(data.getLimits('time').min),
-                dateMax = new Date(data.getLimits('time').max);
+            var dateMin = new Date(data.getLimits('time', state.time.format).min),
+                dateMax = new Date(data.getLimits('time', state.time.format).max);
 
             if (state.time.start < dateMin) {
                 state.time.start = dateMin;
@@ -64,69 +63,76 @@ define([
                 state.time.end = dateMax;
             }
             
-
-            
             
             //TODO: preprocessing should go somewhere else, when the data is loaded
             //it should be called only once, and i haven't yet found the right place
             if(!state.show.dataIsProcessed){
                 var items = data.getItems();
-                var remapped = [];
-                
+           
+                var indicator = model.state.show.indicator;
                 var nested = d3.nest()
                     .key(function(d){return d["geo.name"]})
-                    .key(function(d){return d["time"]})
                     .rollup(function(leaves){
-                        var merged;
-                        leaves.forEach(function(l){
-                            merged = _.merge({},merged,l);
+                        var collect = [];
+                        var times = _.uniq(leaves.map(function(d){return d.time})).sort(d3.ascending);
+                          
+                        times.forEach(function(t){
+                            var merged = {};
+                            merged.name = leaves[0]["geo.name"]; 
+                            merged.category = leaves[0]["geo.category"][0];
+                            merged.region = merged.name.split("-")[0]; 
+                            merged.time = t; 
+
+                            leaves.filter(function(l){return l.time == t})
+                            .forEach(function(dd){
+                                indicator.forEach(function(ind) { 
+                                    if(dd[ind]) merged[ind] = +dd[ind];
+                                });
+                            });
+                            
+                            collect.push(merged);
+                        
                         });
-                        remapped.push(merged);
+                        
+                        return collect;
                     })
                     .entries(items.filter(function(d){
                         return state.show.geo_category.indexOf(d["geo.category"][0]) >= 0;
                     }));
                 
-                
-                remapped.forEach(function(d){
-                    d.name = d["geo.name"]; 
-                    d.category = d["geo.category"][0];
-                    d.region = d.name.split("-")[0];
-                    indicator.forEach(function(ind) { 
-                        d[ind] = d[ind]? +d[ind]: 0; 
-                    });
-                });
-                
-//                var nested = d3.nest()
-//                    .key(function(d){return d["geo.name"]})
-//                    .rollup(function(leaves){
-//                        var collect = [];
-//                        var times = _.uniq(leaves.map(function(d){return d.time})).sort(d3.ascending);
-//
-//                        times.forEach(function(t){
-//                            var merged;
-//
-//                            leaves.filter(function(d){return d.time = t})                            
-//                            .forEach(function(d){
-//                                d.name = d["geo.name"]; 
-//                                d.category = d["geo.category"][0];
-//                                d.region = d.name.split("-")[0];
-//                                merged = _.merge({},merged,d);
-//                                indicator.forEach(function(ind) { 
-//                                    d[ind] = d[ind]? +d[ind]: 0; 
-//                                });
-//                            });
-//                            
-//                            collect.push(merged);
-//                        
-//                        });
-//                        
-//                        return collect;
-//                    })
-//                    .entries(items);
+                //                var remapped = [];
 //                
+//                nested = d3.nest()
+//                    .key(function(d){return d["geo.name"]})
+//                    .key(function(d){return d["time"]})
+//                    .rollup(function(leaves){
+//                        var merged;
+//                        leaves.forEach(function(l){
+//                            merged = _.merge({},merged,l);
+//                        });
+//                        remapped.push(merged);
+//                        return merged;
+//                    })
+//                    .entries(items.filter(function(d){
+//                        return state.show.geo_category.indexOf(d["geo.category"][0]) >= 0;
+//                    }));
+//                
+//                
+//                remapped.forEach(function(d){
+//                    d.name = d["geo.name"]; 
+//                    d.category = d["geo.category"][0];
+//                    d.region = d.name.split("-")[0];
+//                    indicator.forEach(function(ind) { 
+//                        d[ind] = d[ind]? +d[ind]: null; 
+//                    });
+//                });
+                
 
-                test = remapped;
+                //var entities = _.uniq(remapped.map(function(d){return d.name}));
+                
+                test = nested;
+                data.setItems("nested", nested);
+                //data.setItems("entities", entities);
                 state.show.dataIsProcessed = true;
             }
             
@@ -140,19 +146,25 @@ define([
          * @param model the tool model will be received
          */
         getQuery: function(model) {
-            var state = model.state,
-                time_start = d3.time.format("%Y")(state.time.start),
-                time_end = d3.time.format("%Y")(state.time.end);
+            var state = model.state;
+            // FIXME why not using same as imput format here?
+            var time_start = d3.time.format(state.time.format)(state.time.start);
+            var time_end = d3.time.format(state.time.format)(state.time.end);
+            
             return [{
                 "from": "data",
                 //FIXME not sure if we need union here. barchart doesn't have it
                 "select": _.union(["geo", "geo.name", "time", "geo.region", state.show.indicator]),
                 "where": {
                     "geo": state.show.geo,
+                    //FIXME: if we select geo_category here wi are not able 
+                    //to switch it later using options dropdown
                     "geo.category": "*",//state.show.geo_category,
-                    "time": "*"//[time_start + "-" + time_end]
+                    //FIXME: suggest transition to the below format
+                    // why would you compile it to a string and then parce back?
                     //"timeFormat": state.time.format,
-                    //"time": [state.time.start, state.time.end],
+                    "time": "*" [time_start + "-" + time_end]
+                    //"time": [state.time.start, state.time.end]
                 }
             }];
         }

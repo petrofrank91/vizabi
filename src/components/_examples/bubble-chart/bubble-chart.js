@@ -59,13 +59,17 @@ define([
          * Updates the component as soon as the model/models change
          */
         update: function() {
-            this.data = test; //this.model.data.getItems();
+            var _this = this;
+            this.dataFlat = this.model.data.getItems().filter(function(d){
+                        return _this.model.show.geo_category.indexOf(d["geo.category"][0]) >= 0;
+                    });
+            this.dataNested = this.model.data.nested;
             this.indicator = this.model.show.indicator;
             this.scale = this.model.show.scale;
             this.units = this.model.show.unit || [1, 1, 1];
             this.time = this.model.time.value;
             this.duration = +this.model.time.speed;
-            this.names = _.uniq(this.data.map(function(d){return d.name}))
+            //this.names = this.model.data.entities;
             
             //TODO: #32 run only if data or show models changed
             this.updateShow();
@@ -84,12 +88,12 @@ define([
             var _this = this;
             
             var minValue = this.indicator.map(function(ind) {
-                    return d3.min(_this.data, function(d) {
+                    return d3.min(_this.dataFlat, function(d) {
                         return +d[ind];
                     });
                 });
             var maxValue = this.indicator.map(function(ind) {
-                    return d3.max(_this.data, function(d) {
+                    return d3.max(_this.dataFlat, function(d) {
                         return +d[ind];
                     });
                 });
@@ -135,7 +139,31 @@ define([
             this.yearEl.text(timeFormat(this.time));
             
             this.bubbles = this.bubbleContainer.selectAll('.vzb-bc-bubble')
-                .data(this.names);
+                .data(
+                this.interpolate(this.dataNested, _this.time, _this.indicator)
+                );
+        },
+        
+        
+        interpolate: function(dataNested, time, indicator){
+            var timeFormat = d3.time.format("%Y-%m-%d");
+
+            dataNested.forEach(function(d){
+                if (d.now==null) d.now = {};
+                
+                var filtered = d.values.filter(function(dd){
+                    return dd.time === timeFormat(time);
+                })[0]; 
+                                
+                if(filtered){
+                    d["now"][indicator[0]] = filtered[indicator[0]];
+                    d["now"][indicator[1]] = filtered[indicator[1]];
+                    d["now"][indicator[2]] = filtered[indicator[2]];
+                }else{
+                
+                }
+            })
+            return dataNested;
         },
         
         
@@ -146,70 +174,29 @@ define([
         redrawDataPoints: function() {
             var _this = this;
             
-            var timeFormat = d3.time.format("%Y-%m-%d");
-
             //exit selection
             this.bubbles.exit().remove();
             
             //enter selection -- init circles
-            this.bubbles.enter().append("circle")            
-                .attr("class", "vzb-bc-bubble")
-                .style("fill", function(d) {
-                    return _this.cScale(d.split("-")[0]);
+            this.bubbles.enter().append("circle").attr("class", "vzb-bc-bubble");
+            
+            this.bubbles.style("fill", function(d) {
+                    return _this.cScale(d.key.split("-")[0]);
                 })
                 .attr("data-tooltip", function(d) {
-                    return d;
+                    return d.key;
                 });
             
             //update selection
             this.bubbles.transition().duration(this.duration).ease("linear")
                 .attr("cy", function(d) {
-                    
-                    var filtered = _this.data.filter(function(dd){
-                        return dd.name == d 
-                            && timeFormat.parse(dd.time).getTime() === _this.time.getTime();
-                    });
-                    
-                    if(filtered.length==0){
-                        return d3.select(this).attr("cy");
-                    }else{
-                        filtered = filtered[0];
-                        return _this.yScale(filtered[_this.indicator[0]]);
-                    }
-                
-                    
+                    return _this.yScale(d.now[_this.indicator[0]]||1);
                 })
                 .attr("cx", function(d) {
-                
-                    var filtered = _this.data.filter(function(dd){
-                        return dd.name == d 
-                            && timeFormat.parse(dd.time).getTime() === _this.time.getTime();
-                    });
-                    
-                    if(filtered.length==0){
-                        return d3.select(this).attr("cx");
-                    }else{
-                        filtered = filtered[0];
-                        return _this.xScale(filtered[_this.indicator[1]]);
-                    }
-                
-                
+                    return _this.xScale(d.now[_this.indicator[1]]||1);
                 })
                 .attr("r", function(d) {
-                
-                                    var filtered = _this.data.filter(function(dd){
-                        return dd.name == d 
-                            && timeFormat.parse(dd.time).getTime() === _this.time.getTime();
-                    });
-                    
-                    if(filtered.length==0){
-                        return d3.select(this).attr("r");
-                    }else{
-                        filtered = filtered[0];
-                        return _this.rScale(filtered[_this.indicator[2]]);
-                    }
-                
-                
+                    return _this.rScale(d.now[_this.indicator[2]]||1);
                 });
         },
         
