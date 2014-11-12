@@ -68,6 +68,7 @@ define([
             this.scale = this.model.show.scale;
             this.units = this.model.show.unit || [1, 1, 1];
             this.time = this.model.time.value;
+            this.playing = this.model.time.playing;
             this.duration = +this.model.time.speed;
             //this.names = this.model.data.entities;
             
@@ -188,7 +189,7 @@ define([
                 });
             
             //update selection
-            this.bubbles.transition().duration(this.duration).ease("linear")
+            this.bubbles.transition().duration(this.playing?this.duration:0).ease("linear")
                 .attr("cy", function(d) {
                     return _this.yScale(d.now[_this.indicator[0]]||1);
                 })
