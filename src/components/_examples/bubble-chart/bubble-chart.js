@@ -58,23 +58,13 @@ define([
          * Updates the component as soon as the model/models change
          */
         update: function() {
-            //TODO: preprocessing should go somewhere else, when the data is loaded
-            var _this = this;
-            if(!this.isDataPreprocessed){                  
-                _this.model.data.getItems().forEach(function(d){
-                    d.name = d["geo.name"]; 
-                    d.region = d["geo.region"] || "world";
-                    _this.model.show.indicator.forEach(function(ind) { d[ind] = +d[ind]; });
-                });
-                this.isDataPreprocessed = true;
-            }
-            
-            this.data = this.model.data.getItems();
+            this.data = test; //this.model.data.getItems();
             this.indicator = this.model.show.indicator;
             this.scale = this.model.show.scale;
             this.units = this.model.show.unit || [1, 1, 1];
             this.time = this.model.time.value;
             this.duration = +this.model.time.speed;
+            this.names = _.uniq(this.data.map(function(d){return d.name}))
             
             //TODO: #32 run only if data or show models changed
             this.updateShow();
@@ -141,15 +131,10 @@ define([
             
             var timeFormat = d3.time.format("%Y-%m-%d");
 
-            this.yearEl.text(this.time);
+            this.yearEl.text(timeFormat(this.time));
+            
             this.bubbles = this.bubbleContainer.selectAll('.vzb-bc-bubble')
-                .data(this.data.filter(function(d){
-                return timeFormat.parse(d.time).getTime() 
-                                    === _this.time.getTime()
-                && d["Cases"] != null
-                && d["Suspected cases"] != null
-                && d["Confirmed cases"] != null
-                ;}));
+                .data(this.names);
         },
         
         
@@ -159,6 +144,8 @@ define([
          */     
         redrawDataPoints: function() {
             var _this = this;
+            
+            var timeFormat = d3.time.format("%Y-%m-%d");
 
             //exit selection
             this.bubbles.exit().remove();
@@ -167,27 +154,61 @@ define([
             this.bubbles.enter().append("circle")            
                 .attr("class", "vzb-bc-bubble")
                 .style("fill", function(d) {
-                    return _this.cScale(d.region);
+                    return _this.cScale(d);
                 })
                 .attr("data-tooltip", function(d) {
-                    return d.name;
+                    return d;
                 });
             
             //update selection
-<<<<<<< HEAD
-            this.bubbles.transition().duration(this.duration).ease("linear")            
-=======
-            var speed = this.model.time.speed;
-            this.bubbles.transition().duration(speed).ease("linear")            
->>>>>>> upstream/feature/ebola-integration
+            this.bubbles.transition().duration(this.duration).ease("linear")
                 .attr("cy", function(d) {
-                    return _this.yScale(d[_this.indicator[0]]);
+                    
+                    var filtered = _this.data.filter(function(dd){
+                        return dd.name == d 
+                            && timeFormat.parse(dd.time).getTime() === _this.time.getTime();
+                    });
+                    
+                    if(filtered.length==0){
+                        return d3.select(this).attr("cy");
+                    }else{
+                        filtered = filtered[0];
+                        return _this.yScale(filtered[_this.indicator[0]]);
+                    }
+                
+                    
                 })
                 .attr("cx", function(d) {
-                    return _this.xScale(d[_this.indicator[1]]);
+                
+                    var filtered = _this.data.filter(function(dd){
+                        return dd.name == d 
+                            && timeFormat.parse(dd.time).getTime() === _this.time.getTime();
+                    });
+                    
+                    if(filtered.length==0){
+                        return d3.select(this).attr("cx");
+                    }else{
+                        filtered = filtered[0];
+                        return _this.xScale(filtered[_this.indicator[1]]);
+                    }
+                
+                
                 })
                 .attr("r", function(d) {
-                    return _this.rScale(d[_this.indicator[2]] || 1);
+                
+                                    var filtered = _this.data.filter(function(dd){
+                        return dd.name == d 
+                            && timeFormat.parse(dd.time).getTime() === _this.time.getTime();
+                    });
+                    
+                    if(filtered.length==0){
+                        return d3.select(this).attr("r");
+                    }else{
+                        filtered = filtered[0];
+                        return _this.rScale(filtered[_this.indicator[2]]);
+                    }
+                
+                
                 });
         },
         

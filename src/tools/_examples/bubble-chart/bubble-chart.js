@@ -47,6 +47,7 @@ define([
 
             var state = model.state;
             var data = model.data;
+            indicator = model.state.show.indicator;
 
             //don't validate anything if data hasn't been loaded
             if(!data.getItems() || data.getItems().length < 1) {
@@ -87,12 +88,43 @@ define([
                 
                 remapped.forEach(function(d){
                     d.name = d["geo.name"]; 
-                    d.region = d["geo.category"] || "world";
-                    //_this.model.show.indicator.forEach(function(ind) { d[ind] = +d[ind]; });
+                    d.category = d["geo.category"][0];
+                    d.region = d.name.split("-")[0];
+                    indicator.forEach(function(ind) { 
+                        d[ind] = d[ind]? +d[ind]: 0; 
+                    });
                 });
                 
+//                var nested = d3.nest()
+//                    .key(function(d){return d["geo.name"]})
+//                    .rollup(function(leaves){
+//                        var collect = [];
+//                        var times = _.uniq(leaves.map(function(d){return d.time})).sort(d3.ascending);
+//
+//                        times.forEach(function(t){
+//                            var merged;
+//
+//                            leaves.filter(function(d){return d.time = t})                            
+//                            .forEach(function(d){
+//                                d.name = d["geo.name"]; 
+//                                d.category = d["geo.category"][0];
+//                                d.region = d.name.split("-")[0];
+//                                merged = _.merge({},merged,d);
+//                                indicator.forEach(function(ind) { 
+//                                    d[ind] = d[ind]? +d[ind]: 0; 
+//                                });
+//                            });
+//                            
+//                            collect.push(merged);
+//                        
+//                        });
+//                        
+//                        return collect;
+//                    })
+//                    .entries(items);
+//                
 
-                console.log(remapped);
+                test = remapped;
                 data.isProcessed = true;
             }
             
