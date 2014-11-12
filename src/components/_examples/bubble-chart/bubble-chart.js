@@ -73,7 +73,7 @@ define([
             this.indicator = this.model.show.indicator;
             this.scale = this.model.show.scale;
             this.units = this.model.show.unit || [1, 1, 1];
-            this.time = +this.model.time.value;
+            this.time = this.model.time.value;
             this.duration = +this.model.time.speed;
             
             //TODO: #32 run only if data or show models changed
@@ -138,10 +138,18 @@ define([
          */
         updateTime: function(){
             var _this = this;
+            
+            var timeFormat = d3.time.format("%Y-%m-%d");
 
             this.yearEl.text(this.time);
             this.bubbles = this.bubbleContainer.selectAll('.vzb-bc-bubble')
-                .data(this.data.filter(function(d){return (+d.time === _this.time);}));
+                .data(this.data.filter(function(d){
+                return timeFormat.parse(d.time).getTime() 
+                                    === _this.time.getTime()
+                && d["Cases"] != null
+                && d["Suspected cases"] != null
+                && d["Confirmed cases"] != null
+                ;}));
         },
         
         
@@ -166,7 +174,12 @@ define([
                 });
             
             //update selection
+<<<<<<< HEAD
             this.bubbles.transition().duration(this.duration).ease("linear")            
+=======
+            var speed = this.model.time.speed;
+            this.bubbles.transition().duration(speed).ease("linear")            
+>>>>>>> upstream/feature/ebola-integration
                 .attr("cy", function(d) {
                     return _this.yScale(d[_this.indicator[0]]);
                 })
