@@ -28,11 +28,11 @@
         <div id="dropdown-options" class="wrapper-dropdown" tabindex="1">
             <span>OPTIONS</span>
             <ul class="dropdown">
-                <li><a onclick="manyCountries()">Many Countries</a>
+                <li><a onclick="byCountries()">Countries in Total</a>
                 </li>
-                <li><a onclick="setState()">WORLD - 2000 </a>
+                <li><a onclick="changeIndicator1()">X=susp., Y=prob.</a>
                 </li>
-                <li><a onclick="changeIndicator()">SWE, NOR, ZAF</a>
+                <li><a onclick="changeIndicator2()">X=susp., Y=conf.</a>
                 </li>
             </ul>
         </div>
@@ -74,7 +74,7 @@ $(function() {
             show: {
                 geo: ['*'],
                 geo_category: ['county'],
-                indicator: ['Suspected cases', 'Confirmed cases', 'Cases', 'Probable cases', 'Deaths'],
+                indicator: ['Suspected cases', 'Deaths', 'Cases', 'Probable cases', 'Confirmed cases'],
                 scale: ['linear', 'linear', 'sqrt'],
                 unit: [1, 1, 1]
             },
@@ -135,15 +135,15 @@ $(function() {
     myVizabi = new Vizabi("_examples/bubble-chart", "#bubble-chart", options);
 });
 
-function setState() {
+function changeIndicator1() {
     var newOption = {
         state: {
             show: {
-                geo: ['world'],
-                geo_category: ['planet'],
-                indicator: ['lex', 'gdp', 'pop'],
+                geo: ['*'],
+                geo_category: ['country'],
+                indicator: ['Suspected cases', 'Probable cases', 'Cases', 'Confirmed cases', 'Deaths'],
                 scale: ['linear', 'linear', 'sqrt'],
-                unit: [1, 1000000, 1000]
+                unit: [1, 1, 1]
             },
             time: {
                 value: 2000
@@ -153,36 +153,30 @@ function setState() {
     myVizabi.setOptions(newOption);
 }
 
-function changeIndicator() {
+function changeIndicator2() {
     var newOption = {
         state: {
             show: {
-                geo: ['swe', 'nor', 'zaf'],
+                geo: ['*'],
                 geo_category: ['country'],
-                indicator: ['pop', 'lex', 'gdp'],
+                indicator: ['Suspected cases', 'Confirmed cases', 'Cases', 'Probable cases', 'Deaths'],
                 scale: ['linear', 'linear', 'sqrt'],
-                unit: [100000, 1, 1000000]
-            },
-            time: {
-                value: 2007
+                unit: [1, 1, 1]
             }
         }
     };
     myVizabi.setOptions(newOption);
 }
 
-function manyCountries() {
+function byCountries() {
     var newOption = {
         state: url.state || {
             show: {
-                geo: ['swe','nor','fin','bra','usa', 'chn', 'jpn', 'zaf', 'ind', 'ago'],
+                geo: ['*'],
                 geo_category: ['country'],
-                indicator: ['lex', 'gdp', 'pop'],
+                indicator: ['Suspected cases', 'Deaths', 'Cases', 'Probable cases', 'Confirmed cases'],
                 scale: ['linear', 'linear', 'sqrt'],
-                unit: [1, 1000000000, 1000]
-            },
-            time: {
-                value: 2007
+                unit: [1, 1, 1]
             }
         }
     };

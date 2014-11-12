@@ -155,7 +155,7 @@ define([
             this.bubbles.enter().append("circle")            
                 .attr("class", "vzb-bc-bubble")
                 .style("fill", function(d) {
-                    return _this.cScale(d);
+                    return _this.cScale(d.split("-")[0]);
                 })
                 .attr("data-tooltip", function(d) {
                     return d;
@@ -287,8 +287,8 @@ define([
                 .attr("text-anchor", "end")
                 .attr("dy", "-0.5em");
             this.rTitleEl.text("Size: " + this.indicator[2])
-                .attr("transform", "translate(" + width + "," + height/3 + ") rotate(-90)")
-                .attr("text-anchor", "middle")
+                .attr("transform", "translate(" + width + "," + 0 + ") rotate(-90)")
+                .attr("text-anchor", "end")
                 .attr("dy", "0.3em");
 
             this.redrawDataPoints();
