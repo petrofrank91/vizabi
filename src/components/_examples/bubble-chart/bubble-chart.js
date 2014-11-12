@@ -156,9 +156,9 @@ define([
                 })[0]; 
                                 
                 if(filtered){
-                    d["now"][indicator[0]] = filtered[indicator[0]];
-                    d["now"][indicator[1]] = filtered[indicator[1]];
-                    d["now"][indicator[2]] = filtered[indicator[2]];
+                    indicator.forEach(function(ind){
+                        if(filtered[ind]) d["now"][ind] = filtered[ind];
+                    });                    
                 }else{
                 
                 }
