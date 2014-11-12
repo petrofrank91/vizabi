@@ -53,7 +53,7 @@ define([
             if(!data.getItems() || data.getItems().length < 1) {
                 return;
             }
-
+            
             var dateMin = new Date(data.getLimits('time').min),
                 dateMax = new Date(data.getLimits('time').max);
 
