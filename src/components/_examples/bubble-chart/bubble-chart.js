@@ -47,6 +47,7 @@ define([
             this.xAxisEl = this.graph.select('.vzb-bc-axis-x');
             this.yTitleEl = this.graph.select('.vzb-bc-axis-y-title');
             this.xTitleEl = this.graph.select('.vzb-bc-axis-x-title');
+            this.rTitleEl = this.graph.select('.vzb-bc-axis-r-title');
             this.yearEl = this.graph.select('.vzb-bc-year');
             this.bubbleContainer = this.graph.select('.vzb-bc-bubbles');
             this.bubbles = null;
@@ -129,7 +130,7 @@ define([
         updateTime: function(){
             var _this = this;
             
-            var timeFormat = d3.time.format("%Y-%m-%d");
+            var timeFormat = d3.time.format("%d %b");
 
             this.yearEl.text(timeFormat(this.time));
             
@@ -277,6 +278,18 @@ define([
 
             this.yAxisEl.call(this.yAxis);
             this.xAxisEl.call(this.xAxis);
+                                    
+            this.yTitleEl.text(this.indicator[1])
+                .attr("dx", "0.5em")
+                .attr("dy", "0.3em");
+            this.xTitleEl.text(this.indicator[0])
+                .attr("transform", "translate(" + width + "," + height + ")")
+                .attr("text-anchor", "end")
+                .attr("dy", "-0.5em");
+            this.rTitleEl.text("Size: " + this.indicator[2])
+                .attr("transform", "translate(" + width + "," + height/3 + ") rotate(-90)")
+                .attr("text-anchor", "middle")
+                .attr("dy", "0.3em");
 
             this.redrawDataPoints();
         }

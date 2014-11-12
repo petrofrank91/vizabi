@@ -52,11 +52,20 @@ $vzb-bc-year-size:300px;
         -ms-user-select: none;
         user-select: none;
     }
+    .vzb-bc-axis-y-title, .vzb-bc-axis-x-title, .vzb-bc-axis-r-title{
+        font-family: Calibri;
+        font-weight: bolder;
+        font-size: 300%;
+        @include opacity(0.3);
+    }
 }
 &.vzb-medium {
     .vzb-bubble-chart {
         .vzb-bc-year {
             @include font-size($vzb-bc-year-size / 3 * 2);
+        }
+        .vzb-bc-axis-y-title, .vzb-bc-axis-x-title, .vzb-bc-axis-r-title{
+            font-size: 200%;
         }
     }
 }
@@ -67,6 +76,9 @@ $vzb-bc-year-size:300px;
         }
         .vzb-bc-year {
             @include font-size($vzb-bc-year-size / 3);
+        }
+        .vzb-bc-axis-y-title, .vzb-bc-axis-x-title, .vzb-bc-axis-r-title{
+            font-size: 150%;
         }
     }
 }
