@@ -65,9 +65,17 @@ define([
             var limits = {
                     min: 0,
                     max: 0
-                },
-                filtered = _.map(this._items, function(d) {
-                    return parseInt(d[attr], 10);
+                };
+            
+            //FIXME: i need state.time.format to be available here
+            // or data model time_formats[state.time.unit]
+            var timeFormat = d3.time.format("%Y-%m-%d");
+            var filtered = _.map(this._items, function(d) {
+                    if(attr == 'time'){
+                        return timeFormat.parse(d.time).getTime();
+                    }else{
+                        return parseInt(d[attr], 10);
+                    }
                 });
             if (filtered.length > 0) {
                 limits.min = _.min(filtered);

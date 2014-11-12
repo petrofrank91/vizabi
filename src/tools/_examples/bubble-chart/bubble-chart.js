@@ -1,7 +1,11 @@
+//FIXME: refactor hardcoded dates
+//FIXME: remove date formatting from here
+
 define([
     'lodash',
+    'd3',
     'base/tool'
-], function(_, Tool) {
+], function(_, d3, Tool) {
 
     var bubbleChart = Tool.extend({
         /**
@@ -48,12 +52,53 @@ define([
             if(!data.getItems() || data.getItems().length < 1) {
                 return;
             }
-            if (state.time.start < data.getLimits('time').min) {
-                state.time.start = data.getLimits('time').min;
+
+            var dateMin = new Date(data.getLimits('time').min),
+                dateMax = new Date(data.getLimits('time').max);
+
+            if (state.time.start < dateMin) {
+                state.time.start = dateMin;
             }
-            if (state.time.end > data.getLimits('time').max) {
-                state.time.end = data.getLimits('time').max;
+            if (state.time.end > dateMax) {
+                state.time.end = dateMax;
             }
+            
+
+            
+            
+            //TODO: preprocessing should go somewhere else, when the data is loaded
+            //it should be called only once, and i haven't yet found the right place
+            if(!data.isProcessed){
+                var items = data.getItems();
+                var remapped = [];
+                
+                var nested = d3.nest()
+                    .key(function(d){return d["geo.name"]})
+                    .key(function(d){return d["time"]})
+                    .rollup(function(leaves){
+                        var merged;
+                        leaves.forEach(function(l){
+                            merged = _.merge({},merged,l);
+                        });
+                        remapped.push(merged);
+                    })
+                    .entries(items);
+                
+                
+                remapped.forEach(function(d){
+                    d.name = d["geo.name"]; 
+                    d.region = d["geo.category"] || "world";
+                    //_this.model.show.indicator.forEach(function(ind) { d[ind] = +d[ind]; });
+                });
+                
+
+                console.log(remapped);
+                data.isProcessed = true;
+            }
+            
+            
+            
+            
         },
 
         /**
@@ -61,7 +106,9 @@ define([
          * @param model the tool model will be received
          */
         getQuery: function(model) {
-            var state = model.state;
+            var state = model.state,
+                time_start = d3.time.format("%Y")(state.time.start),
+                time_end = d3.time.format("%Y")(state.time.end);
             return [{
                 "from": "data",
                 //FIXME not sure if we need union here. barchart doesn't have it
@@ -69,7 +116,9 @@ define([
                 "where": {
                     "geo": state.show.geo,
                     "geo.category": state.show.geo_category,
-                    "time": [state.time.start + "-" + state.time.end]
+                    "time": "*"//[time_start + "-" + time_end]
+                    //"timeFormat": state.time.format,
+                    //"time": [state.time.start, state.time.end],
                 }
             }];
         }
