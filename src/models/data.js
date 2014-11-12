@@ -65,29 +65,20 @@ define([
          * Gets limits
          * @returns {Object} time limits
          */
-        //todo: this only works for int
-        getLimits: function(attr, format) {
+        //TODO: this only works for acceptable formats for new Date()
+        getLimits: function(attr) {
             if (_.isArray(this._items) && this._items.length === 1) {
                 this._items = this._items[0];
             }
-            if(!attr) attr = 'time'; //fallback in case no attr is provided
+            if (!attr) attr = 'time'; //fallback in case no attr is provided
             var limits = {
                     min: 0,
                     max: 0
-                };
-            
-            //FIXME: i need state.time.format to be available here
-            var timeFormat = d3.time.format(format);
-            var filtered = [];
-            if(attr == 'time'){
-                var filtered = _.map(this._items, function(d) {
-                        return timeFormat.parse(d.time).getTime();
-                    });
-            }else{
-                var filtered = _.map(this._items, function(d) {
-                        return parseInt(d[attr], 10);
-                    });
-            }
+                },
+                filtered = _.map(this._items, function(d) {
+                    //TODO: Move this up to readers ?
+                    return new Date(d[attr]);
+                });
             if (filtered.length > 0) {
                 limits.min = _.min(filtered);
                 limits.max = _.max(filtered);

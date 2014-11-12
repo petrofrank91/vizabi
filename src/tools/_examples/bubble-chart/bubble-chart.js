@@ -52,9 +52,9 @@ define([
             if(!data.getItems() || data.getItems().length < 1) {
                 return;
             }
-            
-            var dateMin = new Date(data.getLimits('time', state.time.format).min),
-                dateMax = new Date(data.getLimits('time', state.time.format).max);
+
+            var dateMin = data.getLimits('time').min,
+                dateMax = data.getLimits('time').max;
 
             if (state.time.start < dateMin) {
                 state.time.start = dateMin;
