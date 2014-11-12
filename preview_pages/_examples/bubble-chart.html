@@ -30,9 +30,9 @@
             <ul class="dropdown">
                 <li><a onclick="byCountries()">Countries in Total</a>
                 </li>
-                <li><a onclick="changeIndicator1()">X=susp., Y=prob.</a>
+                <li><a onclick="changeIndicator1()">Y=suspected cases</a>
                 </li>
-                <li><a onclick="changeIndicator2()">X=susp., Y=conf.</a>
+                <li><a onclick="changeIndicator2()">log scales</a>
                 </li>
             </ul>
         </div>
@@ -74,7 +74,7 @@ $(function() {
             show: {
                 geo: ['*'],
                 geo_category: ['county'],
-                indicator: ['Suspected cases', 'Deaths', 'Cases', 'Probable cases', 'Confirmed cases'],
+                indicator: ['Probable cases', 'Confirmed cases', 'Deaths', 'Suspected cases'],
                 scale: ['linear', 'linear', 'sqrt'],
                 unit: [1, 1, 1],
                 dataIsProcessed: false
@@ -143,7 +143,7 @@ function changeIndicator1() {
             show: {
                 geo: ['*'],
                 geo_category: ['county'],
-                indicator: ['Suspected cases', 'Probable cases', 'Cases', 'Confirmed cases', 'Deaths'],
+                indicator: ['Probable cases', 'Suspected cases', 'Deaths', 'Cases'],
                 scale: ['linear', 'linear', 'sqrt'],
                 unit: [1, 1, 1]
             }
@@ -158,8 +158,8 @@ function changeIndicator2() {
             show: {
                 geo: ['*'],
                 geo_category: ['county'],
-                indicator: ['Suspected cases', 'Confirmed cases', 'Cases', 'Probable cases', 'Deaths'],
-                scale: ['linear', 'linear', 'sqrt'],
+                indicator: ['Probable cases', 'Confirmed cases', 'Deaths', 'Suspected cases'],
+                scale: ['log', 'log', 'sqrt'],
                 unit: [1, 1, 1]
             }
         }
@@ -173,7 +173,7 @@ function byCountries() {
             show: {
                 geo: ['*'],
                 geo_category: ['country'],
-                indicator: ['Suspected cases', 'Deaths', 'Cases', 'Probable cases', 'Confirmed cases'],
+                indicator: ['Probable cases', 'Confirmed cases', 'Deaths', 'Suspected cases'],
                 scale: ['linear', 'linear', 'sqrt'],
                 unit: [1, 1, 1],
                 dataIsProcessed: false

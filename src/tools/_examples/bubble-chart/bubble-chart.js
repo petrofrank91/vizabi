@@ -86,7 +86,7 @@ define([
                             leaves.filter(function(l){return l.time == t})
                             .forEach(function(dd){
                                 indicator.forEach(function(ind) { 
-                                    if(dd[ind]) merged[ind] = +dd[ind];
+                                    if(dd[ind])merged[ind] = +dd[ind];
                                 });
                             });
                             
