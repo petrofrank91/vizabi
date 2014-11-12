@@ -76,7 +76,8 @@ $(function() {
                 geo_category: ['county'],
                 indicator: ['Suspected cases', 'Deaths', 'Cases', 'Probable cases', 'Confirmed cases'],
                 scale: ['linear', 'linear', 'sqrt'],
-                unit: [1, 1, 1]
+                unit: [1, 1, 1],
+                dataIsProcessed: false
             },
 
             //time properties
@@ -97,7 +98,8 @@ $(function() {
         //data properties
         data: {
             reader: 'local-json',
-            path: '../../data-waffles/ebola_data/{{LANGUAGE}}/ebolaMockData-v3.json'
+            path: '../../data-waffles/ebola_data/{{LANGUAGE}}/ebolaMockData-v3.json',
+            isProcessed: false
         },
 
         //language properties
@@ -140,13 +142,10 @@ function changeIndicator1() {
         state: {
             show: {
                 geo: ['*'],
-                geo_category: ['country'],
+                geo_category: ['county'],
                 indicator: ['Suspected cases', 'Probable cases', 'Cases', 'Confirmed cases', 'Deaths'],
                 scale: ['linear', 'linear', 'sqrt'],
                 unit: [1, 1, 1]
-            },
-            time: {
-                value: 2000
             }
         }
     };
@@ -158,7 +157,7 @@ function changeIndicator2() {
         state: {
             show: {
                 geo: ['*'],
-                geo_category: ['country'],
+                geo_category: ['county'],
                 indicator: ['Suspected cases', 'Confirmed cases', 'Cases', 'Probable cases', 'Deaths'],
                 scale: ['linear', 'linear', 'sqrt'],
                 unit: [1, 1, 1]
@@ -176,7 +175,8 @@ function byCountries() {
                 geo_category: ['country'],
                 indicator: ['Suspected cases', 'Deaths', 'Cases', 'Probable cases', 'Confirmed cases'],
                 scale: ['linear', 'linear', 'sqrt'],
-                unit: [1, 1, 1]
+                unit: [1, 1, 1],
+                dataIsProcessed: false
             }
         }
     };

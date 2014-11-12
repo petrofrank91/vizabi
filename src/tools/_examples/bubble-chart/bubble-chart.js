@@ -69,7 +69,7 @@ define([
             
             //TODO: preprocessing should go somewhere else, when the data is loaded
             //it should be called only once, and i haven't yet found the right place
-            if(!data.isProcessed){
+            if(!state.show.dataIsProcessed){
                 var items = data.getItems();
                 var remapped = [];
                 
@@ -83,7 +83,9 @@ define([
                         });
                         remapped.push(merged);
                     })
-                    .entries(items);
+                    .entries(items.filter(function(d){
+                        return state.show.geo_category.indexOf(d["geo.category"][0]) >= 0;
+                    }));
                 
                 
                 remapped.forEach(function(d){
@@ -125,7 +127,7 @@ define([
 //                
 
                 test = remapped;
-                data.isProcessed = true;
+                state.show.dataIsProcessed = true;
             }
             
             
@@ -147,7 +149,7 @@ define([
                 "select": _.union(["geo", "geo.name", "time", "geo.region", state.show.indicator]),
                 "where": {
                     "geo": state.show.geo,
-                    "geo.category": state.show.geo_category,
+                    "geo.category": "*",//state.show.geo_category,
                     "time": "*"//[time_start + "-" + time_end]
                     //"timeFormat": state.time.format,
                     //"time": [state.time.start, state.time.end],
