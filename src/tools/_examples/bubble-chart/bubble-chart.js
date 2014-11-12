@@ -53,8 +53,8 @@ define([
                 return;
             }
 
-            var dateMin = new Date(data.getLimits('time').min.toString()),
-                dateMax = new Date(data.getLimits('time').max.toString());
+            var dateMin = new Date(data.getLimits('time').min),
+                dateMax = new Date(data.getLimits('time').max);
 
             if (state.time.start < dateMin) {
                 state.time.start = dateMin;
@@ -63,14 +63,12 @@ define([
                 state.time.end = dateMax;
             }
             
-            
-            
+
             
             
             //TODO: preprocessing should go somewhere else, when the data is loaded
             //it should be called only once, and i haven't yet found the right place
             if(!data.isProcessed){
-                console.log(model.data.isProcessed)
                 var items = data.getItems();
                 var remapped = [];
                 
@@ -86,7 +84,6 @@ define([
                     })
                     .entries(items);
                 
-                console.log(remapped);
                 
                 remapped.forEach(function(d){
                     d.name = d["geo.name"]; 
@@ -95,6 +92,7 @@ define([
                 });
                 
 
+                console.log(remapped);
                 data.isProcessed = true;
             }
             
