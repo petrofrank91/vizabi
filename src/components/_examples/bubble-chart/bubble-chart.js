@@ -175,21 +175,23 @@ define([
         redrawDataPoints: function() {
             var _this = this;
             
-            //exit selection
+            //exit selection, removes circles that don't have data objects
             this.bubbles.exit().remove();
             
-            //enter selection -- init circles
+            //enter selection, creates new circles
             this.bubbles.enter().append("circle").attr("class", "vzb-bc-bubble");
             
-            this.bubbles.style("fill", function(d) {
+            //update selection
+            this.bubbles
+                .style("fill", function(d) {
                     return _this.cScale(d.key.split("-")[0]);
                 })
                 .attr("data-tooltip", function(d) {
                     return d.key;
-                });
-            
-            //update selection
-            this.bubbles.transition().duration(this.playing?this.duration:0).ease("linear")
+                })
+                .transition()
+                .duration(this.playing?this.duration:0)
+                .ease("linear")
                 .attr("cy", function(d) {
                     return _this.yScale(d.now[_this.indicator[0]]||1);
                 })
@@ -199,7 +201,11 @@ define([
                 .attr("r", function(d) {
                     return _this.rScale(d.now[_this.indicator[2]]||1);
                 });
-        },
+            
+            // Call flush() after any zero-duration transitions to synchronously flush the timer queue
+            // and thus make transition instantaneous. See https://github.com/mbostock/d3/issues/1951
+            d3.timer.flush();
+        }, 
         
 
         /*
