@@ -28,12 +28,10 @@
         <div id="dropdown-options" class="wrapper-dropdown" tabindex="1">
             <span>OPTIONS</span>
             <ul class="dropdown">
-                <li><a onclick="byCountries()">Countries in Total</a>
-                </li>
-                <li><a onclick="changeIndicator1()">Y=suspected cases</a>
-                </li>
-                <li><a onclick="changeIndicator2()">log scales</a>
-                </li>
+                <li><a onclick="byCountries()">Countries in Total</a></li>
+                <li><a onclick="changeIndicator1()">Y=suspected cases</a></li>
+                <li><a onclick="changeIndicator2()">log scales</a></li>
+                <li><a onclick="byCounties()">◄ Initial view</a></li>
             </ul>
         </div>
 
@@ -175,6 +173,22 @@ function byCountries() {
             show: {
                 geo: ['*'],
                 geo_category: ['country'],
+                indicator: ['Probable cases', 'Confirmed cases', 'Deaths', 'Suspected cases'],
+                scale: ['linear', 'linear', 'sqrt'],
+                unit: [1, 1, 1],
+                dataIsProcessed: false
+            }
+        }
+    };
+    myVizabi.setOptions(newOption);
+}
+    
+function byCounties() {
+    var newOption = {
+        state: url.state || {
+            show: {
+                geo: ['*'],
+                geo_category: ['county'],
                 indicator: ['Probable cases', 'Confirmed cases', 'Deaths', 'Suspected cases'],
                 scale: ['linear', 'linear', 'sqrt'],
                 unit: [1, 1, 1],
