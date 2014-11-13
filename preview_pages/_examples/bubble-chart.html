@@ -145,7 +145,8 @@ function changeIndicator1() {
                 geo_category: ['county'],
                 indicator: ['Probable cases', 'Suspected cases', 'Deaths', 'Cases'],
                 scale: ['linear', 'linear', 'sqrt'],
-                unit: [1, 1, 1]
+                unit: [1, 1, 1],
+                dataIsProcessed: false
             }
         }
     };
@@ -160,7 +161,8 @@ function changeIndicator2() {
                 geo_category: ['county'],
                 indicator: ['Probable cases', 'Confirmed cases', 'Deaths', 'Suspected cases'],
                 scale: ['log', 'log', 'sqrt'],
-                unit: [1, 1, 1]
+                unit: [1, 1, 1],
+                dataIsProcessed: false
             }
         }
     };

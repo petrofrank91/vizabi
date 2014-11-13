@@ -261,20 +261,16 @@ define([
             this.yAxis.scale(this.yScale)
                 .orient("left")
                 .tickSize(6, 0)
-                .ticks(Math.max(height / tick_spacing, 2));
-            
-            if(this.scale[1] == "log"){
-                this.yAxis.tickValues([1, 5, 10, 50, 100, 500, 1000]);
-            }
+                .ticks(Math.max(height / tick_spacing, 2))
+                .tickValues(this.scale[1] == "log"?[1, 5, 10, 50, 100, 500, 1000]:null);
+
 
             this.xAxis.scale(this.xScale)
                 .orient("bottom")
                 .tickSize(6, 0)
-                .ticks(Math.max(width / tick_spacing, 2));
+                .ticks(Math.max(width / tick_spacing, 2))
+                .tickValues(this.scale[0] == "log"?[1, 5, 10, 50, 100, 500, 1000]:null);
             
-            if(this.scale[0] == "log"){
-                this.xAxis.tickValues([1, 5, 10, 50, 100, 500, 1000]);
-            }
 
             this.xAxisEl.attr("transform", "translate(0," + height + ")");
 
