@@ -29,9 +29,7 @@ define([
             this.cScale = d3.scale.category10();
 
             this.xAxis = d3.svg.axis();
-            this.yAxis = d3.svg.axis();
-            
-            this.isDataPreprocessed = false;            
+            this.yAxis = d3.svg.axis();         
         },
 
         
@@ -60,9 +58,7 @@ define([
          */
         update: function() {
             var _this = this;
-            this.dataFlat = this.model.data.getItems().filter(function(d){
-                        return _this.model.show.geo_category.indexOf(d["geo.category"][0]) >= 0;
-                    });
+            this.dataFlat = this.model.data.getItems();
             this.dataNested = this.model.data.nested;
             this.indicator = this.model.show.indicator;
             this.scale = this.model.show.scale;
@@ -70,6 +66,8 @@ define([
             this.time = this.model.time.value;
             this.playing = this.model.time.playing;
             this.duration = +this.model.time.speed;
+            this.minValue = this.model.data.minValue;
+            this.maxValue = this.model.data.maxValue;
             //this.names = this.model.data.entities;
             
             //TODO: #32 run only if data or show models changed
@@ -88,23 +86,12 @@ define([
         updateShow: function(){
             var _this = this;
             
-            var minValue = this.indicator.map(function(ind) {
-                    return d3.min(_this.dataFlat, function(d) {
-                        return +d[ind];
-                    });
-                });
-            var maxValue = this.indicator.map(function(ind) {
-                    return d3.max(_this.dataFlat, function(d) {
-                        return +d[ind];
-                    });
-                });
-
             //10% difference margin in min and max
             var min = this.scale.map(function(scale, i) {
-                    return ((scale === "log") ? 1 : (minValue[i] - (maxValue[i] - minValue[i]) / 10));
+                    return ((scale === "log") ? 1 : (_this.minValue[i] - (_this.maxValue[i] - _this.minValue[i]) / 10));
                 });
             var max = this.scale.map(function(scale, i) {
-                    return maxValue[i] + (maxValue[i] - minValue[i]) / 10;
+                    return _this.maxValue[i] + (_this.maxValue[i] - _this.minValue[i]) / 10;
                 });
 
             //scales
@@ -135,51 +122,11 @@ define([
         updateTime: function(){
             var _this = this;
             
-            var timeFormat = d3.time.format("%d %b");
-
-            this.yearEl.text(timeFormat(this.time));
-            
+            this.yearEl.text(d3.time.format("%d %b")(this.time));
             this.bubbles = this.bubbleContainer.selectAll('.vzb-bc-bubble')
-                .data(
-                this.interpolate(this.dataNested, _this.time, _this.indicator)
-                );
+                .data(interpolate(this.dataNested, _this.time, _this.indicator));
         },
-        
-        
-        interpolate: function(dataNested, time, indicator){
-            dataNested.forEach(function(d){
-                if (d.now==null) d.now = {};
-                                
-                var times = d.values.map(function(dd){return dd.time.valueOf();});
-                var found = times.indexOf(time.valueOf());
-                
-                if(found>=0){
-                    d.now = d.values[found];
-                }else{
 
-                    var prev = 0;
-                    var next = 0;
-                    
-                    for(var i = 0; i<times.length; i++){
-                        if(times[i]>time.valueOf()){
-                            next = i; prev = i-1;
-                            break;
-                        }
-                    };
-                    if(prev<0)prev=0;
-                    
-                    var fraction = (time.valueOf() - d.values[prev].time.valueOf())/(d.values[next].time.valueOf() - d.values[prev].time.valueOf())
-                    
-                    indicator.forEach(function(ind){
-                        d.now[ind]=d.values[prev][ind] + fraction*(d.values[next][ind]-d.values[prev][ind]);
-                    });
-                    
-                }
-                
-            });
-            return dataNested;
-        },
-        
         
         /*
          * REDRAW DATA POINTS:
@@ -197,11 +144,12 @@ define([
             //update selection
             this.bubbles
                 .style("fill", function(d) {
-                    return _this.cScale(d.key.split("-")[0]);
+                    return _this.cScale(d.region);
                 })
                 .attr("data-tooltip", function(d) {
                     return d.key;
                 })
+                // these properties are updated with transition:
                 .transition()
                 .duration(this.playing?this.duration:0)
                 .ease("linear")
@@ -275,13 +223,14 @@ define([
                 .orient("left")
                 .tickSize(6, 0)
                 .ticks(Math.max(height / tick_spacing, 2))
+                //FIXME: for some reason .ticks() is not working for log scales. maybe d3 bug
                 .tickValues(this.scale[1] == "log"?[1, 5, 10, 50, 100, 500, 1000]:null);
-
 
             this.xAxis.scale(this.xScale)
                 .orient("bottom")
                 .tickSize(6, 0)
                 .ticks(Math.max(width / tick_spacing, 2))
+                //FIXME: for some reason .ticks() is not working for log scales. maybe d3 bug
                 .tickValues(this.scale[0] == "log"?[1, 5, 10, 50, 100, 500, 1000]:null);
             
 
@@ -303,11 +252,58 @@ define([
                 .attr("dy", "0.3em");
 
             this.redrawDataPoints();
-        }
-
+        },
+        
     });
 
     
+    
+    /*
+     * INTERPOLATE:
+     * Executed whenever the container is resized
+     */
+    var interpolate = function(dataNested, time, indicator){
+            time = time.valueOf();
+        
+            dataNested.forEach(function(d){
+                if (d.now==null) d.now = {};
+                
+                //try to find the requested time among the times we have
+                var times = d.values.map(function(dd){return dd.time.valueOf();});
+                var found = times.indexOf(time);
+                
+                //if the time point exists in data
+                if(found>=0){
+                    //save what we found to a shortcut
+                    d.now = d.values[found];
+                }else{
+
+                    //otherwise need to interpolate the point of now{}
+                    var prev = 0;
+                    var next = 0;
+                    
+                    //search for 2 reference points, time should be in between
+                    for(var i = 0; i<times.length; i++){
+                        if(times[i]>time){
+                            next = i; prev = i-1;
+                            break;
+                        }
+                    };
+                    
+                    //boundary protection
+                    if(prev<0)prev=0;
+                    
+                    //interpolate the point of now using the two known points
+                    var fraction = (time - times[prev])/(times[next] - times[prev]);
+                    indicator.forEach(function(ind){
+                        d.now[ind]=d.values[prev][ind] + fraction*(d.values[next][ind]-d.values[prev][ind]);
+                    });
+                    
+                }
+                
+            });
+            return dataNested;
+        }
     
 
     //tooltip plugin (hotfix)
