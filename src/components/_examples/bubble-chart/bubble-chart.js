@@ -147,23 +147,36 @@ define([
         
         
         interpolate: function(dataNested, time, indicator){
-            var timeFormat = d3.time.format("%Y-%m-%d");
-
             dataNested.forEach(function(d){
                 if (d.now==null) d.now = {};
-                
-                var filtered = d.values.filter(function(dd){
-                    return dd.time === timeFormat(time);
-                })[0]; 
                                 
-                if(filtered){
-                    indicator.forEach(function(ind){
-                        if(filtered[ind]) d["now"][ind] = filtered[ind];
-                    });                    
-                }else{
+                var times = d.values.map(function(dd){return dd.time.valueOf();});
+                var found = times.indexOf(time.valueOf());
                 
+                if(found>=0){
+                    d.now = d.values[found];
+                }else{
+
+                    var prev = 0;
+                    var next = 0;
+                    
+                    for(var i = 0; i<times.length; i++){
+                        if(times[i]>time.valueOf()){
+                            next = i; prev = i-1;
+                            break;
+                        }
+                    };
+                    if(prev<0)prev=0;
+                    
+                    var fraction = (time.valueOf() - d.values[prev].time.valueOf())/(d.values[next].time.valueOf() - d.values[prev].time.valueOf())
+                    
+                    indicator.forEach(function(ind){
+                        d.now[ind]=d.values[prev][ind] + fraction*(d.values[next][ind]-d.values[prev][ind]);
+                    });
+                    
                 }
-            })
+                
+            });
             return dataNested;
         },
         

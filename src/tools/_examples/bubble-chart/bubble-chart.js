@@ -63,6 +63,7 @@ define([
                 state.time.end = dateMax;
             }
             
+            fillGaps = model.data.fillGaps;
             
             //TODO: preprocessing should go somewhere else, when the data is loaded
             //it should be called only once, and i haven't yet found the right place
@@ -81,7 +82,8 @@ define([
                             merged.name = leaves[0]["geo.name"]; 
                             merged.category = leaves[0]["geo.category"][0];
                             merged.region = merged.name.split("-")[0]; 
-                            merged.time = t; 
+                            merged.time = new Date(t); 
+                            merged.time.setHours(0); 
 
                             leaves.filter(function(l){return l.time == t})
                             .forEach(function(dd){
@@ -94,7 +96,7 @@ define([
                         
                         });
                         
-                        return collect;
+                        return fillGaps(collect,indicator);
                     })
                     .entries(items.filter(function(d){
                         return state.show.geo_category.indexOf(d["geo.category"][0]) >= 0;
