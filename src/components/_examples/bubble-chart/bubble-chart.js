@@ -29,7 +29,7 @@ define([
             this.cScale = d3.scale.category10();
 
             this.xAxis = d3.svg.axis();
-            this.yAxis = d3.svg.axis();         
+            this.yAxis = d3.svg.axis();     
         },
 
         
@@ -149,7 +149,10 @@ define([
                 .attr("data-tooltip", function(d) {
                     return d.key;
                 })
-                // these properties are updated with transition:
+                .attr("r", function(d) {
+                    return _this.rScale(d.now[_this.indicator[2]]||1);
+                })
+                // the following properties are updated with transition. radius can go down too
                 .transition()
                 .duration(this.playing?this.duration:0)
                 .ease("linear")
@@ -158,9 +161,6 @@ define([
                 })
                 .attr("cx", function(d) {
                     return _this.xScale(d.now[_this.indicator[1]]||1);
-                })
-                .attr("r", function(d) {
-                    return _this.rScale(d.now[_this.indicator[2]]||1);
                 });
             
             // Call flush() after any zero-duration transitions to synchronously flush the timer queue
@@ -263,6 +263,8 @@ define([
      * Executed whenever the container is resized
      */
     var interpolate = function(dataNested, time, indicator){
+        
+            var bisect = d3.bisector(function(d){return d}).left;
             time = time.valueOf();
         
             dataNested.forEach(function(d){
@@ -279,19 +281,12 @@ define([
                 }else{
 
                     //otherwise need to interpolate the point of now{}
-                    var prev = 0;
-                    var next = 0;
-                    
-                    //search for 2 reference points, time should be in between
-                    for(var i = 0; i<times.length; i++){
-                        if(times[i]>time){
-                            next = i; prev = i-1;
-                            break;
-                        }
-                    };
-                    
+                    var next = bisect(times, time);
+                    var prev = next-1;
+
                     //boundary protection
-                    if(prev<0)prev=0;
+                    if(next==times.length)next = times.length-1;
+                    if(next==0)prev = 0;
                     
                     //interpolate the point of now using the two known points
                     var fraction = (time - times[prev])/(times[next] - times[prev]);
