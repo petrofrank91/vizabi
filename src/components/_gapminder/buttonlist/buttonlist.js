@@ -26,6 +26,10 @@ define([
                 title: "buttons/size",
                 icon: "circle"
             },
+            'select': {
+                title: 'buttons/select',
+                icon: 'hand-o-up'
+            },
             '_default': {
                 title: "Button",
                 icon: "asterisk"
