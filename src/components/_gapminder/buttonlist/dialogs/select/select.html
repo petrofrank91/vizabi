@@ -12,6 +12,17 @@
         <!-- <div data-click="closeDialog" class="vzb-dialog-button">
             CANCEL
         </div> -->
+        <div>
+           <input list='entity_selector' class='vzb-entity-picker'>
+           <datalist id='entity_selector'>
+           <% _.each(options, function(opt) { %>
+                <option value='<%= opt.value %>' 
+                    <%= (opt.selected) ? 'selected' : '' %>>
+                    <%= opt.name %>
+                </option>
+            <% }); %>
+            </datalist>
+        </div>
         <div data-click="closeDialog" class="vzb-dialog-button vzb-label-primary">
             OK
         </div>
