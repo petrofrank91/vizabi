@@ -82,7 +82,6 @@ $(function() {
                     visible: true
                 }
             },
-            indicators: ['lex', 'gdp_per_cap', 'pop'],
             scale: ['linear', 'linear', 'sqrt'],
             unit: [1, 1000000000, 1000],
             size: 50,
@@ -99,7 +98,7 @@ $(function() {
         //data properties
         data: {
             reader: 'local-json',
-            path: '../../data-waffles/examples/{{LANGUAGE}}/response.json'
+            path: '../../data-waffles/examples/{{LANGUAGE}}/response_entity_picker.json'
         },
 
         //language properties
@@ -160,7 +159,6 @@ function setState() {
                     visible: true
                 }
             },
-            indicator: ['lex', 'gdp_per_cap', 'pop'],
             scale: ['linear', 'linear', 'sqrt'],
             unit: [1, 1000000, 1000],
             time: {
@@ -191,7 +189,6 @@ function changeIndicator() {
             time: {
                 value: 2007
             },
-            indicator: ['pop', 'lex', 'gdp_per_cap'],
             scale: ['linear', 'linear', 'sqrt'],
             unit: [100000, 1, 1000000]
         }
@@ -216,7 +213,6 @@ function manyCountries() {
                     visible: true
                 }
             },
-            indicator: ['lex', 'gdp_per_cap', 'pop'],
             scale: ['linear', 'linear', 'sqrt'],
             unit: [1, 1000000000, 1000],
             time: {
