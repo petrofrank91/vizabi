@@ -3,8 +3,7 @@ define([
     'lodash'
 ], function(Dialog, _) {
 
-    var selector,
-        data_list;
+    var selector;
 
     var SelectDialog = Dialog.extend({
 
@@ -23,21 +22,21 @@ define([
         },
 
         postRender: function() {
-            selector = this.element.select("vzb-entity-picker"),
-                data_list = this.element.select("entity_selector");
+            selector = this.element.select("vzb-entity-picker");
 
             this._super();
         },
 
         update: function() {
             var _this = this,
-                data = this.model.data.getItems();
+                data = this.model.data.getItems(),
+                entities = this.model.state.entities.selected;
 
             _.each(data, function(element) {
                 _this.template_data.options.push({
                     'name': element['geo'],
                     'value': element['geo.name'],
-                    'selected': false
+                    'selected': (entities.indexOf(element['geo'])>= 0 ? true : false)
                 });
             });
 

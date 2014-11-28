@@ -13,15 +13,14 @@
             CANCEL
         </div> -->
         <div>
-           <input list='entity_selector' class='vzb-entity-picker'>
-           <datalist id='entity_selector'>
+           <select multiple class='vzb-entity-picker'>
            <% _.each(options, function(opt) { %>
-                <option value='<%= opt.value %>' 
+                <option value='<%= opt.value %>'  
                     <%= (opt.selected) ? 'selected' : '' %>>
                     <%= opt.name %>
                 </option>
             <% }); %>
-            </datalist>
+            </select>
         </div>
         <div data-click="closeDialog" class="vzb-dialog-button vzb-label-primary">
             OK
