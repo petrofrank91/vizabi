@@ -1,7 +1,8 @@
 define([
     'components/_gapminder/buttonlist/dialogs/dialog',
-    'lodash'
-], function(Dialog, _) {
+    'lodash',
+    'jquery'
+], function(Dialog, _, $) {
 
     var selector;
 
@@ -23,6 +24,31 @@ define([
 
         postRender: function() {
             selector = this.element.select("vzb-entity-picker");
+            
+            $(".dropdown dd ul li a").on('click', function() {
+                $(".dropdown dd ul").hide();
+            });
+
+            function getSelectedValue(id) {
+                return $("#" + id).find("dt a span.value").html();
+            }
+
+            $('.mutliSelect input[type="checkbox"]').on('click', function() {
+
+                var title = $(this).closest('.mutliSelect').find('input[type="checkbox"]').val(),
+                    title = $(this).attr('data') + ",";
+
+                if ($(this).is(':checked')) {
+                    var html = '<span title="' + title + '">' + title + '</span>';
+                    $('.multiSel').append(html);
+                    $(".hida").hide();
+                } else {
+                    $('span[title="' + title + '"]').remove();
+                    var ret = $(".hida");
+                    $('.dropdown dt a').append(ret);
+
+                }
+            });
 
             this._super();
         },
@@ -34,9 +60,9 @@ define([
 
             _.each(data, function(element) {
                 _this.template_data.options.push({
-                    'name': element['geo'],
-                    'value': element['geo.name'],
-                    'selected': (entities.indexOf(element['geo'])>= 0 ? true : false)
+                    'id': element['geo'],
+                    'name': element['geo.name'],
+                    'selected': (entities.indexOf(element['geo']) >= 0 ? true : false)
                 });
             });
 

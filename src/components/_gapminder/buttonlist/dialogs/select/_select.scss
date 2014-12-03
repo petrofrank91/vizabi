@@ -1,0 +1,70 @@
+.vzb-dialog-modal {
+    .vzb-dialog-content {
+        .dropdown {
+            dd, dt {
+                margin: 0px;
+                padding: 0px;
+            }
+            ul {
+                margin: -1px 0 0 0;
+            }
+            dd {
+                position: relative;
+            }
+            a {
+                color: #fff;
+                text-decoration: none;
+                outline: none;
+                font-size: 12px;
+                &:visited {
+                    color: #fff;
+                    text-decoration: none;
+                    outline: none;
+                    font-size: 12px;
+                }
+            }
+            dt a {
+                background-color: #4F6877;
+                display: block;
+                padding: 2px 15px 2px 0px;
+                min-height: 25px;
+                line-height: 70%;
+                overflow: hidden;
+                border: 0;
+                width: 100%;
+                span {
+                    cursor: pointer;
+                    display: inline-block;
+                    padding: 0 3px 2px 0;
+                }
+            }
+            dd ul {
+                background-color: #4F6877;
+                border: 0;
+                color: #fff;
+                display: block;
+                left: 0px;
+                padding: 2px 15px 2px 0px;
+                top: 2px;
+                width: 100%;
+                list-style: none;
+                margin-top: 3px;
+            }
+            span.value {
+                display: none;
+            }
+            dd ul li a {
+                padding: 5px;
+                display: block;
+                &:hover {
+                    background-color: #fff;
+                }
+            }
+        }
+        .multiSel span {
+            cursor: pointer;
+            display: inline-block;
+            padding: 0 3px 2px 0;
+        }
+    }
+}

@@ -5,23 +5,31 @@
     </div>
 
     <div class="vzb-dialog-content">
-        
+        <div>
+            <dl class= 'dropdown'>
+                <dt>
+                    <a href="#">
+                        <span class="hida"></span>
+                        <p class="multiSel"></p>
+                    </a>
+                </dt>
+                <dd>
+                    <div class="mutliSelect">
+                        <ul>
+                            <% _.each(options, function(opt) { %>
+                                <li>
+                                    <input type='checkbox' value='<%= opt.id %>' data='<%= opt.name %>' />
+                                    <%= opt.name %>
+                                </li>
+                            <% }); %>
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+        </div>
     </div>
 
     <div class="vzb-dialog-buttons">
-        <!-- <div data-click="closeDialog" class="vzb-dialog-button">
-            CANCEL
-        </div> -->
-        <div>
-           <select multiple class='vzb-entity-picker'>
-           <% _.each(options, function(opt) { %>
-                <option value='<%= opt.value %>'  
-                    <%= (opt.selected) ? 'selected' : '' %>>
-                    <%= opt.name %>
-                </option>
-            <% }); %>
-            </select>
-        </div>
         <div data-click="closeDialog" class="vzb-dialog-button vzb-label-primary">
             OK
         </div>
