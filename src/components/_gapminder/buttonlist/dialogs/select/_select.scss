@@ -1,6 +1,6 @@
 .vzb-dialog-modal {
     .vzb-dialog-content {
-        .dropdown {
+        .vzb-select {
             dd, dt {
                 margin: 0px;
                 padding: 0px;
@@ -27,8 +27,8 @@
                 background-color: #4F6877;
                 display: block;
                 padding: 2px 15px 2px 0px;
-                min-height: 25px;
-                line-height: 70%;
+                min-height: 35px;
+                line-height: 80%;
                 overflow: hidden;
                 border: 0;
                 width: 100%;
@@ -36,6 +36,11 @@
                     cursor: pointer;
                     display: inline-block;
                     padding: 0 3px 2px 0;
+                }
+                p {
+                    font-size: 12px;
+                    //margin-top: 13px;
+                    margin-left: 10px;
                 }
             }
             dd ul {
@@ -61,7 +66,7 @@
                 }
             }
         }
-        .multiSel span {
+        .vzb-selected-entities span {
             cursor: pointer;
             display: inline-block;
             padding: 0 3px 2px 0;

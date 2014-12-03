@@ -25,27 +25,27 @@ define([
         postRender: function() {
             selector = this.element.select("vzb-entity-picker");
             
-            $(".dropdown dd ul li a").on('click', function() {
-                $(".dropdown dd ul").hide();
+            $(".vzb-select dd ul li a").on('click', function() {
+                $(".vzb-select dd ul").hide();
             });
 
             function getSelectedValue(id) {
                 return $("#" + id).find("dt a span.value").html();
             }
 
-            $('.mutliSelect input[type="checkbox"]').on('click', function() {
+            $('.vzb-select-list input[type="checkbox"]').on('click', function() {
 
-                var title = $(this).closest('.mutliSelect').find('input[type="checkbox"]').val(),
+                var title = $(this).closest('.vzb-select-list').find('input[type="checkbox"]').val(),
                     title = $(this).attr('data') + ",";
 
                 if ($(this).is(':checked')) {
                     var html = '<span title="' + title + '">' + title + '</span>';
-                    $('.multiSel').append(html);
+                    $('.vzb-selected-entities').append(html);
                     $(".hida").hide();
                 } else {
                     $('span[title="' + title + '"]').remove();
                     var ret = $(".hida");
-                    $('.dropdown dt a').append(ret);
+                    $('.vzb-select dt a').append(ret);
 
                 }
             });
