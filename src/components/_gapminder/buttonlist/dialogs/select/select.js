@@ -7,7 +7,6 @@ define([
     var selector;
 
     var SelectDialog = Dialog.extend({
-
         /**
          * Initializes the dialog component
          * @param config component configuration
@@ -23,30 +22,23 @@ define([
         },
 
         postRender: function() {
-            selector = this.element.select("vzb-entity-picker");
-            
-            $(".vzb-select dd ul li a").on('click', function() {
-                $(".vzb-select dd ul").hide();
-            });
+            var _this = this,
+                selector = this.element.select("vzb-entity-picker"),
+                entities_selector = d3.select(".vzb-select-list").selectAll('input');
 
-            function getSelectedValue(id) {
-                return $("#" + id).find("dt a span.value").html();
-            }
+            entities_selector.on('click', function() {
+                var selected_element = d3.select(this);
+                var title = selected_element.attr('data');
 
-            $('.vzb-select-list input[type="checkbox"]').on('click', function() {
-
-                var title = $(this).closest('.vzb-select-list').find('input[type="checkbox"]').val(),
-                    title = $(this).attr('data') + ",";
-
-                if ($(this).is(':checked')) {
-                    var html = '<span title="' + title + '">' + title + '</span>';
-                    $('.vzb-selected-entities').append(html);
-                    $(".hida").hide();
+                if (this.checked) {
+                    d3.select('.vzb-selected-entities')
+                        .append('span')
+                        .attr('title', title)
+                        .html(title + ",");
                 } else {
-                    $('span[title="' + title + '"]').remove();
-                    var ret = $(".hida");
-                    $('.vzb-select dt a').append(ret);
-
+                    d3.select('.vzb-selected-entities').selectAll('span').filter(function() {
+                        return this.title === title;
+                    }).remove();
                 }
             });
 

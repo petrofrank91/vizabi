@@ -12,19 +12,19 @@
                 position: relative;
             }
             a {
-                color: #fff;
+                color: #919197;
                 text-decoration: none;
                 outline: none;
                 font-size: 12px;
                 &:visited {
-                    color: #fff;
+                    color: #4B98AA;
                     text-decoration: none;
                     outline: none;
                     font-size: 12px;
                 }
             }
             dt a {
-                background-color: #4F6877;
+                background-color: #F6F8FA;
                 display: block;
                 padding: 2px 15px 2px 0px;
                 min-height: 35px;
@@ -42,18 +42,26 @@
                     //margin-top: 13px;
                     margin-left: 10px;
                 }
+                &:hover {
+                    border: 1px solid #a1a1a1;
+                }
             }
             dd ul {
-                background-color: #4F6877;
+                background-color: #FFFFFF;
                 border: 0;
-                color: #fff;
+                color: #919191;
                 display: block;
                 left: 0px;
                 padding: 2px 15px 2px 0px;
                 top: 2px;
                 width: 100%;
                 list-style: none;
-                margin-top: 3px;
+                margin-top: 7px;
+                li {
+                    &:hover {
+                        color: #4B98AA;
+                    }
+                }
             }
             span.value {
                 display: none;
