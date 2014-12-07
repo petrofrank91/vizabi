@@ -3,80 +3,55 @@ define([
     'base/component'
 ], function(d3, Component) {
 
-    var _this = null;
-//
-//    // Various accessors that specify the dimensions of data to visualize
-//    function mean(d, indicator) {
-//        // TODO figure out where should the data pre-processing go
-//        if(indicator==null) return d.mean;
-//        return d[indicator];
-//    }
-//
-//    function stdev(d, indicator) {
-//        // TODO figure out where should the data pre-processing go
-//        if(indicator==null) return Math.sqrt(d.variance);
-//        return d[indicator];
-//    }
-//
-//    function peak(d, indicator) {
-//        // TODO figure out where should the data pre-processing go
-//        if(indicator==null) return d.pop;
-//        return d[indicator];
-//    }
-//
-//    function key(d) {
-//        return d.name;
-//    }
-//
-//    function color(d) {
-//        return d.region;
-//    }
-
-    //constants
-    var DISTRIBUTIONS_NORMAL = "normal distribution",
-        DISTRIBUTIONS_LOGNORMAL = "lognormal distribution";
 
     // this function returns PDF values for a specified distribution
     // TODO this is in fact a universal utility function and thus it can go somewhere else
-    function pdf(x, mu, sigma, type) {
-        if (type==null) type = DISTRIBUTIONS_NORMAL;
-        switch(type){
-            case DISTRIBUTIONS_NORMAL:
-            return Math.exp(
-                - 0.5 * Math.log(2 * Math.PI)
-                - Math.log(sigma)
-                - Math.pow(x - mu, 2) / (2 * sigma * sigma)
-                );
+    var pdf = {
+        //constants
+        DISTRIBUTIONS_NORMAL: "normal distribution",
+        DISTRIBUTIONS_LOGNORMAL: "lognormal distribution",
+        
+        y: function(x, mu, variance, type){
+            if (type==null) type = this.DISTRIBUTIONS_NORMAL;
+            switch(type){
+                case this.DISTRIBUTIONS_NORMAL:
+                return Math.exp(
+                    - 0.5 * Math.log(2 * Math.PI)
+                    - Math.log(variance)/2
+                    - Math.pow(x - mu, 2) / (2 * variance)
+                    );
 
-            case DISTRIBUTIONS_LOGNORMAL:
-            return Math.exp(
-                - 0.5 * Math.log(2 * Math.PI) - Math.log(x)
-                - Math.log(sigma)
-                - Math.pow(Math.log(x) - mu, 2) / (2 * sigma * sigma)
-                );
+                case this.DISTRIBUTIONS_LOGNORMAL:
+                return Math.exp(
+                    - 0.5 * Math.log(2 * Math.PI) - Math.log(x)
+                    - Math.log(variance)/2
+                    - Math.pow(Math.log(x) - mu, 2) / (2 * variance)
+                    );
+            }
         }
     };
 
-    function log(d){console.log(d)};
 
-    function populateDistributionsInto(d){
-        // we need to generate the distributions based on mu, sigma and scale
+    function populateDistributionsInto(d, context){
+        var _this = context;
+        // we need to generate the distributions based on mu, variance and scale
         // we span a uniform range of 'points' across the entire X scale,
         // resolution: 1 point per pixel. If width not defined assume it equal 500px
         var rangeFrom = Math.log(_this.xScale.domain()[0]);
         var rangeTo = Math.log(_this.xScale.domain()[1]);
         var rangeStep = (rangeTo - rangeFrom)/500;//(width?500:width);
 
-        var peak = _this.model.marker.axis_y.getValue(d);
+        var scale = _this.model.marker.axis_y.getValue(d);
         var mean = _this.model.marker.axis_x.getValue(d);
-        var stdev = _this.model.marker.size.getValue(d);
+        var variance = _this.model.marker.size.getValue(d);
+        
         
         d.points = d3.range(rangeFrom, rangeTo, rangeStep)
             .map(function(dX){
                 // get Y value for every X
                 return {x: Math.exp(dX),
                         y0: 0, // the initial base of areas is at zero
-                        y:peak * pdf(Math.exp(dX), Math.log(mean), stdev, DISTRIBUTIONS_LOGNORMAL)}
+                        y:scale * pdf.y(Math.exp(dX), Math.log(mean), variance, pdf.DISTRIBUTIONS_LOGNORMAL)}
             });
         return d;
     }
@@ -93,7 +68,7 @@ define([
         init: function(config, context) {
             
             //TODO: remove global
-            _this = this;
+            var _this = this;
             this.name = 'mountain-chart';
             this.template = 'components/_examples/' + this.name + '/' + this.name;
             
@@ -224,7 +199,7 @@ define([
             
             //TODO remove magic constant
             this.yScale
-                .domain([0, 10]);
+                .domain([0, 20000]);
             this.xScale
                 .domain(this.model.marker.axis_x.scale == "log" ? [0.01,1000] : [0,20]);
         },
@@ -238,18 +213,16 @@ define([
             var _this = this;
 
             this.time = parseInt(d3.time.format(this.model.time.formatInput)(this.model.time.value), 10);
-            this.data = this.model.marker.label.getItems({ time: this.time });
+            this.data = this.model.marker.label.getItems({ time: this.time.toString() });
             this.stackingIsOn = this.model.marker.stack;
             
             this.yearEl.text(this.time);
 
-
-            this.mountains = this.mountainContainer.selectAll('.vzb-bc-bubble')
+            this.mountains = this.mountainContainer.selectAll('.vzb-bc-mountain')
                 .data(function(){
                     var result = _this.data
-                        .map(function(dd){return populateDistributionsInto(dd)});
+                        .map(function(dd){return populateDistributionsInto(dd, _this)});
 
-                a = result;
                     return _this.stackingIsOn?_this.stack(result):result;
                 });
             
@@ -356,7 +329,7 @@ define([
                 })
                 //.transition().duration(speed).ease("linear")
                 .attr("d", function(d) { return _this.area(d.points); })
-                .sort(this.order);
+                //.sort(this.order);
 
             /* TOOLTIP */
             //TODO: improve tooltip

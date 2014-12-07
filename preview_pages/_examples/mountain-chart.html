@@ -83,7 +83,7 @@ $(function() {
             time: {
                 start: 1970,
                 end: 2006,
-                value: 1970,
+                value: 1970, 
                 step: 1,
                 speed: 100,
                 formatInput: "%Y"
@@ -94,7 +94,7 @@ $(function() {
                 show: [{
                     dim: "geo",
                     filter: {
-                        "geo": ['swe','nor','fin','bra','usa', 'chn', 'jpn', 'zaf', 'ind', 'ago'],
+                        "geo": ['swe', 'nor', 'fin', 'bra', 'usa', 'chn', 'jpn', 'zaf', 'ind', 'ago'],
                         "geo.category": ["country"]
                     }
                 }]
@@ -119,13 +119,13 @@ $(function() {
                     use: "indicator",
                     value: "mean",
                     scale: 'log',
-                    unit: 100
+                    unit: 1
                 },
                 size: {
                     use: "indicator",
                     value: "variance",
                     scale: 'linear',
-                    unit: 100
+                    unit: 1
                 },
                 color: {
                     use: "property",
