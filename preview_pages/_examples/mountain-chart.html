@@ -61,55 +61,109 @@
     <p>Current State:</p>
     <pre id="state" class="json_box" contentEditable="true"></pre>
     <button onclick="setCurrentState()">SET STATE</button>
-    <p>Current Query:</p>
-    <pre id="query" class="json_box"></pre>
+    <p>Change Language:</p>
+    <button id="language_button" onclick="language('pt')">SET LANGUAGE: PT</button>
+    <p>Play Bubbles</p>
+    <button id="play_button" onclick="play()">PLAY</button>
 </div>
 </body>
 <script>
 var myVizabi;
+    
 $(function() {
+    
+    var playButton = $("#play_button");
+    var languageButton = $("#language_button");
+        
     var options = {
         //state
         state: url.state || {
-            //what to show
-            show: {
-                geo: ['swe','nor','fin','bra','usa', 'chn', 'jpn', 'zaf', 'ind', 'ago'],
-                geo_category: ['country'],
-                indicator: ['variance', 'mean', 'pop'],
-                scale: ['linear', 'log', 'linear'],
-                unit: [1, 1, 1000],
-                stack: true
-            },
-            //time properties
+            
+            //timespan of the visualization
             time: {
                 start: 1970,
                 end: 2006,
                 value: 1970,
                 step: 1,
-                speed: 100
+                speed: 100,
+                formatInput: "%Y"
+            },
+
+            //entities we want to show
+            entities: {
+                show: [{
+                    dim: "geo",
+                    filter: {
+                        "geo": ['swe','nor','fin','bra','usa', 'chn', 'jpn', 'zaf', 'ind', 'ago'],
+                        "geo.category": ["country"]
+                    }
+                }]
+            },
+
+            //how we show it
+            marker: {
+                type: "geometry",
+                shape: "mountain",
+                stack: true,
+                label: {
+                    use: "property",
+                    value: "geo.name"
+                },
+                axis_y: {
+                    use: "indicator",
+                    value: "pop",
+                    scale: 'linear',
+                    unit: 1000
+                },
+                axis_x: {
+                    use: "indicator",
+                    value: "mean",
+                    scale: 'log',
+                    unit: 100
+                },
+                size: {
+                    use: "indicator",
+                    value: "variance",
+                    scale: 'linear',
+                    unit: 100
+                },
+                color: {
+                    use: "property",
+                    value: "geo.region", 
+                    domain: ['#F77481', '#E1CE00', '#B4DE79', '#62CCE3']
+                }
             }
-        },
-        //data properties
+        },            
+            
+        
+        //where do we get data from?
         data: {
             reader: 'local-json',
-            path: '../../data-waffles/hello-world/{{LANGUAGE}}/response-mountains.json'
+            path: '../../data-waffles/examples/{{LANGUAGE}}/mountains.json'
         },
+        
         //language properties
         language: url.lang || {
             id: "en",
             strings: {
                 en: {
                     "title": "Income distribution chart",
-                    "timeslider/play": "Play",
-                    "timeslider/pause": "Pause"
+                    "buttons/find": "Find",
+                    "buttons/colors": "Colors",
+                    "buttons/size": "Size",
+                    "buttons/more_options": "Options"
                 },
                 pt: {
                     "title": "Gráfico de distribuição de renda",
-                    "timeslider/play": "Iniciar",
-                    "timeslider/pause": "Parar"
+                    "buttons/find": "Encontre",
+                    "buttons/colors": "Cores",
+                    "buttons/size": "Tamanho",
+                    "buttons/more_options": "Opções"
                 }
             }
         },
+        
+        //bind these events to external page
         bind: {
             'ready': function() {
                 parseURL();
@@ -117,14 +171,80 @@ $(function() {
             'change:state': function(evt, vals) {
                 showState(vals.state);
             },
-            'change:query': function(query) {
-                showQuery(query);
+            'change:state:time': function(evt, vals) {
+                if (vals.state.time.playing) {
+                    playButton.attr('onclick', 'pause()');
+                    playButton.text("PAUSE");
+                } else {
+                    playButton.attr('onclick', 'play()');
+                    playButton.text("PLAY");
+                }
+            },
+            'change:language': function(evt, vals) {
+                if (vals.language.id === "en") {
+                    languageButton.attr('onclick', "language('pt')");
+                    languageButton.text("SET LANGUAGE: PT");
+                } else {
+                    languageButton.attr('onclick', "language('en')");
+                    languageButton.text("SET LANGUAGE: EN");
+                }
             }
         }
     };
-    showState(options.state);
+    
+    
     myVizabi = new Vizabi("_examples/mountain-chart", "#mountain-chart", options);
+    
+    showState(options.state);
 });
+    
+function play() {
+    var options = {
+        state: {
+            time: {
+                playing: true
+            }
+        }
+    };
+    myVizabi.setOptions(options);
+}
+
+function pause() {
+    var options = {
+        state: {
+            time: {
+                playing: false
+            }
+        }
+    };
+    myVizabi.setOptions(options);
+}
+
+function language(lang) {
+    var options = {
+        language: {
+            id: lang
+        }
+    };
+    myVizabi.setOptions(options);
+}
+
+function hook(hook, use, value, domain) {
+    var options = {
+        state: {
+            marker: {}
+        }
+    };
+    options.state.marker[hook] = {
+        use: use,
+        value: value
+    };
+
+    //for color only
+    if (domain) options.state.marker[hook].domain = domain;
+
+    myVizabi.setOptions(options);
+}
 </script>
 
 <!-- @@include('../assets/_footer.tpl') -->

@@ -22,7 +22,7 @@ define([
             }, {
                 component: '_examples/mountain-chart',
                 placeholder: '.vzb-tool-viz', //div to render
-                model: ["state.show", "data", "state.time"]
+                model: ["state.time", "state.entities", "state.marker", "data"]
             }, {
                 component: '_gapminder/timeslider',
                 placeholder: '.vzb-tool-timeslider', //div to render
@@ -30,12 +30,8 @@ define([
             }, {
                 component: '_gapminder/buttonlist',
                 placeholder: '.vzb-tool-buttonlist',
-                buttons: [{
-                    id: "geo",
-                    title: "Country",
-                    icon: "globe"
-                }],
-                data: options.data
+                model: ['state', 'data', 'language'],
+                buttons: ['colors', 'size', 'more-options']
             }];
 
             this._super(config, options);
@@ -48,39 +44,23 @@ define([
          */
         toolModelValidation: function(model) {
 
-            var state = model.state,
-                data = model.data;
+            var time = model.state.time,
+                markers = model.state.marker.label;
 
             //don't validate anything if data hasn't been loaded
-            if(!data.getItems() || data.getItems().length < 1) {
+            if (!markers.getItems() || markers.getItems().length < 1) {
                 return;
             }
-            if (state.time.start < data.getLimits('time').min) {
-                state.time.start = data.getLimits('time').min;
+
+            var dateMin = markers.getLimits('time').min,
+                dateMax = markers.getLimits('time').max;
+
+            if (time.start < dateMin) {
+                time.start = dateMin;
             }
-            if (state.time.end > data.getLimits('time').max) {
-                state.time.end = data.getLimits('time').max;
+            if (time.end > dateMax) {
+                time.end = dateMax;
             }
-        },
-
-
-        /**
-         * Returns the query (or queries) to be performed by this tool
-         * @param model the tool model will be received
-         */
-        getQuery: function(model) {
-            var state = model.state;
-            return [{
-                'from': 'data',
-                //FIXME not sure if we need union here. barchart doesn't have it
-                'select': _.union(["geo", "geo.name", "time", "geo.region", "geo.category", state.show.indicator]),
-                'where': {
-                    'geo': state.show.geo,
-                    'geo.category': state.show.geo_category,
-                    'time': [state.time.start + "-" + state.time.end]
-                }
-            }];
-
         }
     });
 
