@@ -84,9 +84,8 @@ define([
             
             this.xAxis = d3.svg.axis();
             
-            this.isDataPreprocessed = false;
-            this.timeUpdatedOnce = false;
-            this.sizeUpdatedOnce = false;
+            this.loadReadyCount = 0;
+            this.firstLoad = true;
             
             
             // define path generator
@@ -124,38 +123,55 @@ define([
             //model events
             this.model.on({
                 "change": function(evt) {
-                    console.log("Changed!", evt);
+//                    console.log("Changed!", evt);
                 },
                 "load_start": function(evt) {
-                    console.log("Started to load!", evt);
+//                    console.log("Started to load!", evt);
                 },
                 "load_end":  function() {
-                    console.log("Finished loading!");
-                    _this.updateShow();
-                    _this.redrawDataPoints();
+                    _this.loadReadyCount++;
+                    if(_this.loadReadyCount >= 
+                       _this.model.marker.getIndicators().length+
+                       _this.model.marker.getProperties().length
+                      ){
+                        console.log("acting on model.load_end");
+                        if(_this.firstLoad){
+//TODO: put this to ready and remove it from "load_end"
+                            _this.preprocessData();
+                            _this.updateShow();
+                            _this.updateSize();
+                            _this.updateTime();
+                            _this.redrawDataPoints();
+                        
+                        _this.firstLoad = false;
+                        }else{
+                            _this.updateShow();
+                            _this.redrawDataPoints();
+                        }
+                    }
                 },
                 "ready": function() {
-                    console.log("Model ready!");
-//TODO: put here the following and remove it from "load_end" and from redrawDataPoints()
-//                    _this.preprocessData();
-//                    _this.updateShow();
-//                    _this.updateTime();
-//                    _this.redrawDataPoints();
+                    console.log("acting on load_end.ready");
                 }
             });
             
             this.model.time.on({
                 'change:value': function() {
-                    _this.updateTime();
-                    _this.redrawDataPoints();
+                    if(!_this.firstLoad){
+                        console.log("acting on model.time.change.value");
+                        _this.updateTime();
+                        _this.redrawDataPoints();
+                    }
                 }
             });
 
             //component events
             this.on("resize", function() {
-                console.log("Ops! Gotta resize...");
-                _this.updateSize();
-                _this.redrawDataPoints();
+                    if(!_this.firstLoad){
+                        console.log("acting on resize");
+                        _this.updateSize();
+                        _this.redrawDataPoints();
+                    }
             })
 
             
@@ -174,9 +190,9 @@ define([
         /*
          * Updates the component as soon as the model/models change
          */
-        modelReady: function(evt) {
-            if (!this.isDataPreprocessed) this.preprocessData();
+        modelReady: function() {
         },
+        
 
         
         
@@ -199,7 +215,7 @@ define([
             
             //TODO remove magic constant
             this.yScale
-                .domain([0, 20000]);
+                .domain([0, this.model.marker.stack?50000:20000]);
             this.xScale
                 .domain(this.model.marker.axis_x.scale == "log" ? [0.01,1000] : [0,20]);
         },
@@ -225,8 +241,7 @@ define([
 
                     return _this.stackingIsOn?_this.stack(result):result;
                 });
-            
-            this.timeUpdatedOnce = true;
+
         },
 
 
@@ -298,8 +313,7 @@ define([
             this.xAxisEl
                 .attr("transform", "translate(0," + height + ")")
                 .call(this.xAxis);
-
-            this.sizeUpdatedOnce = true;            
+          
         },
 
 
@@ -310,8 +324,6 @@ define([
          */
         redrawDataPoints: function() {                
             var _this = this;
-            if(!this.timeUpdatedOnce) this.updateTime();
-            if(!this.sizeUpdatedOnce) this.updateSize();
 
             //exit selection
             this.mountains.exit().remove();
