@@ -113,11 +113,6 @@ define([
                     _this.openDialog(id);
                 }
             });
-
-            close_buttons = d3.selectAll("[data-click='closeDialog']");
-            close_buttons.on('click', function() {
-                _this.closeAllDialogs();
-            });
         },
 
         /*
