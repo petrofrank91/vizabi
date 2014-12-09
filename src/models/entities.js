@@ -30,7 +30,7 @@ define([
                 index_element = select_array.indexOf(d['geo']) ;
             
             if (index_element >= 0) {
-                elect_array = _.without(select_array, d)
+                select_array.splice(index_element, 1);
             } else {
                 select_array.push(d['geo']);
             }
