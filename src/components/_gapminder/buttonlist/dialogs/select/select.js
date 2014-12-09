@@ -22,6 +22,7 @@ define([
 
         postRender: function() {
             this.selector = this.element.select("vzb-entity-picker");
+            this._super();
         },
 
         //TODO: check why update is being called multiple times
@@ -39,7 +40,7 @@ define([
                 .append('li')
                 .append('label')
                 .on('click', function(d, i) {
-                    //_this.model.state.entities.selectEntity(this.value);
+                    _this.model.state.entities.selectEntity(d);
                     var label = _this.element.select('.vzb-selected-entities'),
                         input = d3.select(this).select('input'),
                         span = d3.select(this).selectAll('span');
@@ -55,10 +56,10 @@ define([
                     }
                 })
                 .on('mouseover', function(d, i) {
-                    //_this.model.state.entities.hoverEntity(d);
+                    _this.model.state.entities.hoverEntity(d);
                 })
-                .on('mouseover', function(d, i) {
-                    //_this.model.state.entities.hoverEntity(d);
+                .on('mouseout', function(d, i) {
+                    _this.model.state.entities.hoverEntity(d);
                 });
 
 
