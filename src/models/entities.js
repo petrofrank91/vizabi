@@ -26,23 +26,28 @@ define([
         },
 
         selectEntity: function(d) {
-            var select_array = this.selected;
-            if (select_array.indexOf(d) >= 0) {
+            var select_array = this.selected,
+                index_element = select_array.indexOf(d['geo']) ;
+            
+            if (index_element >= 0) {
                 elect_array = _.without(select_array, d)
             } else {
-                select_array.push(d);
+                select_array.push(d['geo']);
             }
+            
             this.set("selected", select_array);
         },
 
         hoverEntity: function(d) {
-            var hover_array = this.hover;
-            if (hover_array.indexOf(d) >= 0) {
-                hover_array = _.without(hover_array, d)
-            } else {
-                hover_array.push(d);
-            }
+            var hover_array = this.hover,
+                index_element = hover_array.indexOf(d['geo']) ;
             
+            if (index_element >= 0) {
+                hover_array.splice(index_element, 1);
+            } else {
+                hover_array.push(d['geo']);
+            }
+
             this.set("hover", hover_array);
         },
 
