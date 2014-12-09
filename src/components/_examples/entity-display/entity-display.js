@@ -15,14 +15,12 @@ define([
             this._super(options, context);
         },
 
-        postRender: function() {
-
-        },
 
         update: function() {
             var _this = this,
                 entities = this.model.entities.selected,
-                data = this.model.data.getItems();
+                data = this.model.data.getItems(),
+                hover = this.model.entities.hover;
 
             this.element.selectAll("p").remove();
 
@@ -33,6 +31,9 @@ define([
                 .text(function(d) {
                     // find the name of selected entities in data
                     return _.find(data, {'geo': d})['geo.name'];
+                })
+                .style('color', function(d) {
+                    return hover.indexOf(d) >= 0 ? '#F77481' : '#4B98AA';
                 });
         }
 
