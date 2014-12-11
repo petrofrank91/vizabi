@@ -152,7 +152,7 @@ function parseURL() {
         var placeholder = $(".placeholder").attr("id");
 
 
-        console.error('FIXME: parse attempt throws error when options.state is empty')
+        console.error('TODO: parse attempt throws error when options.state is empty')
         console.error('see related issues #20 and #24')
         var state = ""; //should be JSON.parse(options.state);
 
@@ -238,10 +238,9 @@ parseURL();
 
 $(function() {
 
-    var menu = new DropDown($('#dropdown-menu')),
-        size = new DropDown($('#dropdown-size')),
-        language = new DropDown($('#dropdown-language')),
-        options = new DropDown($('#dropdown-options'));
+    $('.wrapper-dropdown').each(function() {
+        new DropDown($(this));
+    });
 
     $('.wrapper-dropdown').click(function() {
         $('.wrapper-dropdown').not(this).each(function() {

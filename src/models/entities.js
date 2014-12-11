@@ -3,56 +3,71 @@ define([
     'base/model'
 ], function(_, Model) {
 
-    var Entities = Model.extend({
-        init: function(values, intervals, bind) {
+    var Entity = Model.extend({
 
-            //NOTE: deep extend is not supported
+        /**
+         * Initializes the entities model.
+         * @param {Object} values The initial values of this model
+         * @param parent A reference to the parent model
+         * @param {Object} bind Initial events to bind
+         */
+        init: function(values, parent, bind) {
+
             values = _.extend({
-                show: {
-                    dim: 'geo',
-                    filter: {
-                        'geo.cat': ['country'],
-                        'geo.region': ['*'],
-                    }
-                },
-                selected: ['swe'],
-                hover: ['arg'],
-                entity_picker: {
-                    visible: true
-                }
-            }, values, true);
+                show: {},
+                select: [],
+                brush: []
+            }, values);
 
-            this._super(values, intervals, bind);
+            this._super(values, parent, bind);
+        },
+
+        /**
+         * Validates the model
+         * @param {boolean} silent Block triggering of events
+         */
+        validate: function(silent) {
+            //TODO: validate if select and brush are a subset of show
+        },
+
+        /**
+         * Gets the dimensions in this entities
+         * @returns {Array} Array of unique values
+         */
+        getDimension: function() {
+            return this.show.dim;
+        },
+
+        /**
+         * Gets the filters in this entities
+         * @returns {Array} Array of unique values
+         */
+        getFilters: function() {
+            return this.show.filter;
         },
 
         selectEntity: function(d) {
-            var select_array = this.selected,
-                index_element = select_array.indexOf(d['geo']) ;
-            
-            if (index_element >= 0) {
-                select_array.splice(index_element, 1);
+            var value = d[this.getDimension()],
+                select_array = this.select;
+            if(this.isSelected(d)) {
+                select_array = _.without(select_array, value);
             } else {
-                select_array.push(d['geo']);
+                select_array.push(value);
             }
-            
-            this.set("selected", select_array);
+            this.set("select", select_array);
         },
 
-        hoverEntity: function(d) {
-            var hover_array = this.hover,
-                index_element = hover_array.indexOf(d['geo']) ;
-            
-            if (index_element >= 0) {
-                hover_array.splice(index_element, 1);
+        isSelected: function(d) {
+            var value = d[this.getDimension()];
+            var select_array = this.select;
+            if(_.indexOf(select_array, value) !== -1) {
+                return true;
             } else {
-                hover_array.push(d['geo']);
+                return false;
             }
-
-            this.set("hover", hover_array);
-        },
-
+        }
 
     });
 
-    return Entities;
+    return Entity;
 });
