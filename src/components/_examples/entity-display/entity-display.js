@@ -1,4 +1,3 @@
-//Indicator Display
 define([
     'd3',
     'lodash',
@@ -11,15 +10,16 @@ define([
         init: function(options, context) {
             this.name = "entity-display";
             this.template = "components/_examples/entity-display/entity-display";
-            
+
+            this.model_expects = ['entities', 'row'];
+
             this._super(options, context);
         },
 
-
-        update: function() {
+        modelReady: function(evt) {
             var _this = this,
-                entities = this.model.entities.selected,
-                data = this.model.data.getItems(),
+                entities = this.model.entities.select,
+                data = this.model.row.label.getItems(),
                 hover = this.model.entities.hover;
 
             this.element.selectAll("p").remove();
@@ -30,7 +30,9 @@ define([
                 .append("p")
                 .text(function(d) {
                     // find the name of selected entities in data
-                    return _.find(data, {'geo': d})['geo.name'];
+                    return _.find(data, {
+                        'geo': d
+                    }).value;
                 })
                 .style('color', function(d) {
                     return hover.indexOf(d) >= 0 ? '#F77481' : '#4B98AA';
