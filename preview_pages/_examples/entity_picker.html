@@ -72,11 +72,11 @@ $(function() {
                 show: {
                     dim: 'geo',
                     filter: {
-                        'geo.cat': ['country'],
+                        'geo.category': ['country'],
                         'geo.region': ['*']
                     }
                 },
-                selected: ['swe', 'nor', 'fin', 'bra', 'usa', 'chn', 'jpn', 'zaf', 'ind', 'ago'],
+                select: ['swe', 'nor', 'fin', 'bra', 'usa', 'chn', 'jpn', 'zaf', 'ind', 'ago'],
                 hover: ['swe'],
                 entity_picker: {
                     visible: true
@@ -91,6 +91,14 @@ $(function() {
                 value: 1990,
                 step: 1,
                 speed: 300
+            },
+
+
+            row: {
+                label: {
+                    use: "property",
+                    value: "geo.name"
+                }
             }
         },
 
@@ -98,7 +106,7 @@ $(function() {
         //data properties
         data: {
             reader: 'local-json',
-            path: '../../data-waffles/examples/{{LANGUAGE}}/response_entity_picker.json'
+            path: '../../data-waffles/examples/{{LANGUAGE}}/basic-indicators.json'
         },
 
         //language properties
@@ -124,7 +132,6 @@ $(function() {
             }
         },
 
-
         bind: {
             'ready': function() {
                 parseURL();
@@ -132,95 +139,66 @@ $(function() {
             'change:state': function(evt, vals) {
                 showState(vals.state);
             },
-            'change:query': function(query) {
-                showQuery(query);
+            'change:language': function(evt, vals) {
+                if (vals.language.id === "en") {
+                    languageButton.attr('onclick', "language('pt')");
+                    languageButton.text("SET LANGUAGE: PT");
+                } else {
+                    languageButton.attr('onclick', "language('en')");
+                    languageButton.text("SET LANGUAGE: EN");
+                }
             }
         }
     };
 
-
+    showState(options.state);
     myVizabi = new Vizabi("_examples/entity-picker", "#entity-picker", options);
 });
 
-function setState() {
-    var newOption = {
+
+function play() {
+    var options = {
         state: {
-            entities: {
-                show: {
-                    dim: 'geo',
-                    filter: {
-                        'geo.cat': ['planet'],
-                        'geo.region': ['*']
-                    }
-                },
-                selected: ['swe', 'nor', 'fin', 'bra', 'usa', 'chn', 'jpn', 'zaf', 'ind', 'ago'],
-                hover: ['arg'],
-                entity_picker: {
-                    visible: true
-                }
-            },
-            scale: ['linear', 'linear', 'sqrt'],
-            unit: [1, 1000000, 1000],
             time: {
-                value: 2000
+                playing: true
             }
         }
     };
-    myVizabi.setOptions(newOption);
+    myVizabi.setOptions(options);
 }
 
-function changeIndicator() {
-    var newOption = {
+function pause() {
+    var options = {
         state: {
-            entities: {
-                show: {
-                    dim: 'geo',
-                    filter: {
-                        'geo.cat': ['country'],
-                        'geo.region': ['*']
-                    }
-                },
-                selected: ['swe', 'nor', 'zaf'],
-                hover: ['arg'],
-                entity_picker: {
-                    visible: true
-                }
-            },
             time: {
-                value: 2007
-            },
-            scale: ['linear', 'linear', 'sqrt'],
-            unit: [100000, 1, 1000000]
-        }
-    };
-    myVizabi.setOptions(newOption);
-}
-
-function manyCountries() {
-    var newOption = {
-        state: url.state || {
-            entities: {
-                show: {
-                    dim: 'geo',
-                    filter: {
-                        'geo.cat': ['country'],
-                        'geo.region': ['*']
-                    }
-                },
-                selected: ['swe', 'nor', 'fin', 'bra', 'usa', 'chn', 'jpn', 'zaf', 'ind', 'ago'],
-                hover: ['arg'],
-                entity_picker: {
-                    visible: true
-                }
-            },
-            scale: ['linear', 'linear', 'sqrt'],
-            unit: [1, 1000000000, 1000],
-            time: {
-                value: 2007
+                playing: false
             }
         }
     };
-    myVizabi.setOptions(newOption);
+    myVizabi.setOptions(options);
+}
+
+function language(lang) {
+    var options = {
+        language: {
+            id: lang
+        }
+    };
+    myVizabi.setOptions(options);
+}
+
+function hook(hook, use, value, domain) {
+    var options = {
+        state: { row: {} }
+    };
+    options.state.row[hook] = {
+        use: use,
+        value: value
+    };
+
+    if(domain) options.state.row[hook].domain = domain;
+
+    myVizabi.setOptions(options);
 }
 </script>
 
