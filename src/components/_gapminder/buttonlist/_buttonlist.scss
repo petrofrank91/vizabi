@@ -13,6 +13,7 @@ $vzb-button-color-border: #DBE8EB;
     /*TODO: make this automatic! */
     @import 'dialogs/select/select';
     @import '../bubble-size/bubble-size';
+    @import '../../_examples/dropdown/dropdown';
     
     @include box-sizing(border-box);
     @include absoluteAll;
