@@ -19,11 +19,24 @@ define([
             
             this._super(config, parent);
 
+
             //add corresponding component
             this.components.push({
                 component: '_examples/text-display',
                 placeholder: '.vzb-select-display',
                 model: ['state.entities', 'state.row']
+            },
+            {
+                component: '_examples/dropdown',
+                placeholder: '.vzb-dropdown-dim-display',
+                model: ['state.entities', 'state.row'],
+                item: {name: 'filter', id: 'filter'}
+            },
+            {
+                component: '_examples/dropdown',
+                placeholder: '.vzb-dropdown-filter-display',
+                model: ['state.entities', 'state.row'],
+                item: {name: 'dimention', id: 'dim'}
             });
 
         },
