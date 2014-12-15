@@ -117,26 +117,6 @@ $vzb-button-color-border: #DBE8EB;
             }
         }
     }
-    //TODO: remove timeslider style from here //former FIXME
-    .vzb-small {
-        .vzb-timeslider {
-            min-height: 45;
-            .vzb-ts-slider-wrapper {
-                .vzb-ts-slider-axis {
-                    font-size: 9px;
-                }
-                .vzb-ts-slider-axis .domain {
-                    stroke-width: 5px;
-                }
-                .vzb-ts-slider-handle {
-                    stroke-width: 4px;
-                }
-                .vzb-ts-slider-value {
-                    font-size: 11px;
-                }
-            }
-        }
-    }
 }
 //responsiveness
 &.vzb-landscape, &.vzb-large {
