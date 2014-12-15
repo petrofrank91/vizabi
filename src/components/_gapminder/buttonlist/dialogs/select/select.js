@@ -15,30 +15,30 @@ define([
             this.template_data = {
                 options: []
             };
-
+            this.model_expects = ['state', 'data'];
+            
             this._super(config, parent);
-
 
             //add corresponding component
             this.components.push({
                 component: '_examples/text-display',
                 placeholder: '.vzb-select-display',
-                model: ['state', 'data', 'state.entities']
+                model: ['state.entities', 'state.row']
             });
 
         },
 
 
-        postRender: function() {
+        domReady: function() {
             this.selector = this.element.select("vzb-entity-picker");
             this._super();
         },
 
         //TODO: check why update is being called multiple times
-        update: function() {
+        modelReady: function() {
             var _this = this,
-                data = this.model.data.getItems(),
-                entities = this.model.state.entities.selected;
+                data = _.uniq(this.model.state.row.label.getItems(), 'geo'),
+                entities = this.model.state.entities.select;
 
             var list = this.element.select('.vzb-select-list')
                 .select('ul');
@@ -50,19 +50,6 @@ define([
                 .append('label')
                 .on('click', function(d, i) {
                     _this.model.state.entities.selectEntity(d);
-                    /*var label = _this.element.select('.vzb-selected-entities'),
-                        input = d3.select(this).select('input'),
-                        span = d3.select(this).selectAll('span');
-
-                    if (input.property('checked')) {
-                        label.append('span')
-                            .attr('title', d['geo.name'])
-                            .html(d['geo.name'] + ",");
-                    } else {
-                        label.selectAll('span').filter(function() {
-                            return this.title === d['geo.name'];
-                        }).remove();
-                    }*/
                 })
                 .on('mouseover', function(d, i) {
                     _this.model.state.entities.hoverEntity(d);
@@ -75,17 +62,17 @@ define([
             labels.append('input')
                 .attr('type', 'checkbox')
                 .attr('value', function(d)  {
-                    return d['geo'];
+                    return d.geo;
                 })
                 .attr('name', function(d) {
-                    return d['geo.name'];
+                    return d.value;
                 })
                 .attr('data', function(d) {
-                    return d['geo.name'];
+                    return d.value;
                 });
 
             labels.append('span').text(function(d) {
-                return d['geo.name'];
+                return d.value;
             });
 
             this._super();

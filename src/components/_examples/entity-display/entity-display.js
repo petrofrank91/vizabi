@@ -19,7 +19,7 @@ define([
         modelReady: function(evt) {
             var _this = this,
                 entities = this.model.entities.select,
-                data = this.model.row.label.getItems(),
+                data = _.uniq(this.model.row.label.getItems(), 'geo'),
                 hover = this.model.entities.hover;
 
             this.element.selectAll("p").remove();

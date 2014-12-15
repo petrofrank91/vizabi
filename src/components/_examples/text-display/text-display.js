@@ -6,20 +6,22 @@ define([
     'base/component'
 ], function(d3, _, utils, Component) {
 
-    var EntityDisplay = Component.extend({
+    var TextDisplay = Component.extend({
 
         init: function(options, context) {
             this.name = "text-display";
             this.template = "components/_examples/text-display/text-display";
 
+            this.model_expects = ['entities', 'row'];
+
             this._super(options, context);
         },
 
 
-        update: function() {
+        modelReady: function() {
             var _this = this,
-                entities = this.model.entities.selected,
-                data = this.model.data.getItems(),
+                entities = this.model.entities.select,
+                data = _.uniq(this.model.row.label.getItems(), 'geo'),
                 hover = this.model.entities.hover;
 
             var label = _this.element.select('.vzb-selected-entities'),
@@ -37,7 +39,7 @@ define([
                     // find the name of selected entities in data
                     return _.find(data, {
                         'geo': d
-                    })['geo.name'];
+                    }).value;
                 })
                 .style('color', function(d) {
                     return hover.indexOf(d) >= 0 ? '#F77481' : 'white';
@@ -48,6 +50,6 @@ define([
 
     });
 
-    return EntityDisplay;
+    return TextDisplay;
 
 });
