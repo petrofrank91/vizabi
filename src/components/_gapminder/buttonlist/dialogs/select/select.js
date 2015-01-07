@@ -16,29 +16,38 @@ define([
                 options: []
             };
             this.model_expects = ['state', 'data'];
-            
+
             this._super(config, parent);
 
-
-            //add corresponding component
-            this.components.push({
+            //add dynamic components after calling super to have this.components object
+            this.components = [{
                 component: '_examples/text-display',
                 placeholder: '.vzb-select-display',
                 model: ['state.entities', 'state.row']
-            },
-            {
-                component: '_examples/dropdown',
-                placeholder: '.vzb-dropdown-dim-display',
-                model: ['state.entities', 'state.row'],
-                item: {name: 'filter', id: 'filter'}
-            },
-            {
-                component: '_examples/dropdown',
-                placeholder: '.vzb-dropdown-filter-display',
-                model: ['state.entities', 'state.row'],
-                item: {name: 'dimention', id: 'dim'}
-            });
+            }];
 
+            if (config.options && config.options.has === 'dropdown') {
+                this.components.push(
+                {
+                    component: '_examples/dropdown',
+                    placeholder: '.vzb-dropdown-dim-display',
+                    model: ['state.entities', 'state.row'],
+                    item: {
+                        name: 'filter',
+                        id: 'filter'
+                    }
+                }, 
+                {
+                    component: '_examples/dropdown',
+                    placeholder: '.vzb-dropdown-filter-display',
+                    model: ['state.entities', 'state.row'],
+                    item: {
+                        name: 'dimension',
+                        id: 'dim'
+                    }
+                }
+                );
+            }
         },
 
 

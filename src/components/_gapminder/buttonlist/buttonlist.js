@@ -56,9 +56,10 @@ define([
                 buttons: []
             };
 
+
             if(config.buttons && config.buttons.length > 0) {
                 //TODO: Buttons should be a model, not config //former FIXME
-                this._addButtons(config.buttons);
+                this._addButtons(config.buttons);    
             }
 
             this._super(config, context);
@@ -74,13 +75,14 @@ define([
             //add a component for each button
             for (var i = 0; i < button_list.length; i++) {
 
-                var btn = button_list[i];
+                var btn = button_list[i].id;
 
                 //add corresponding component
                 this.components.push({
                     component: '_gapminder/buttonlist/dialogs/' + btn,
                     placeholder: '.vzb-buttonlist-dialog[data-btn="' + btn + '"]',
-                    model: ["state", "data"]
+                    model: ["state", "data"],
+                    options: button_list[i].options
                 });
 
                 //add template data

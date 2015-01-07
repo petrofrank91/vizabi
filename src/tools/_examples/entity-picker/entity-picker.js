@@ -15,8 +15,9 @@ define([
                 component: '_gapminder/buttonlist',
                 placeholder: '.vzb-tool-buttonlist',
                 model: ['state', 'data', 'language'],
-                buttons: ['select']
-            }, {
+                buttons: options.state.buttons
+            }, 
+            {
                 component: '_examples/entity-display',
                 placeholder: '.vzb-tool-entity-display',
                 model: ['state.entities', 'state.row']
