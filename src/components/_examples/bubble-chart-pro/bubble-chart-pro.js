@@ -4,7 +4,6 @@ define([
     'base/component'
 ], function($, d3, Component) {
 
-
     function order(a, b) {
         return radius(b) - radius(a);
     }
@@ -13,14 +12,15 @@ define([
         return d.pop;
     }
 
-
-
     var BubbleChart = Component.extend({
         init: function(context, options) {
             var _this = this;
-            this.name = 'bubble-chart';
+            this.name = 'bubble-chart-pro';
             this.template = 'components/_examples/' + this.name + '/' + this.name;
-            this.tool = context;
+
+            //define expected models for this component
+            this.model_expects = ["time", "entities", "marker", "data"];
+
             this._super(context, options);
 
             this.xScale = null;
@@ -30,14 +30,19 @@ define([
 
             this.xAxis = d3.svg.axis();
             this.yAxis = d3.svg.axis();
+
+            this.isDataPreprocessed = false;
+            this.timeUpdatedOnce = false;
+            this.sizeUpdatedOnce = false;
+
         },
 
 
         /**
-         * POST RENDER
          * Executes right after the template is in place
          */
-        postRender: function() {
+        domReady: function() {
+            var _this = this;
 
             // reference elements
             this.graph = this.element.select('.vzb-bc-graph');
@@ -45,12 +50,86 @@ define([
             this.xAxisEl = this.graph.select('.vzb-bc-axis-x');
             this.yTitleEl = this.graph.select('.vzb-bc-axis-y-title');
             this.xTitleEl = this.graph.select('.vzb-bc-axis-x-title');
-            this.rTitleEl = this.graph.select('.vzb-bc-axis-r-title');
             this.yearEl = this.graph.select('.vzb-bc-year');
             this.bubbleContainer = this.graph.select('.vzb-bc-bubbles');
             this.bubbles = null;
+            this.tooltip = this.element.select('.vzb-tooltip');
+
+            //model events
+            this.model.on({
+                "change": function(evt) {
+                    console.log("Changed!", evt);
+                },
+                "load_start": function(evt) {
+                    console.log("Started to load!", evt);
+                },
+                "load_end":  function() {
+                    console.log("Finished loading!");
+                },
+                "ready": function() {
+                    console.log("Model ready!");
+//TODO: put here the following and remove it from "load_end" and from redrawDataPoints()
+//                    _this.preprocessData();
+//                    _this.updateShow();
+//                    _this.updateTime();
+//                    _this.redrawDataPoints();
+                }
+            });
+
+            this.model.time.on({
+                'change:value': function() {
+                    _this.updateTime();
+                    _this.redrawDataPoints();
+                }
+            });
+
+            //component events
+            this.on("resize", function() {
+                console.log("Ops! Gotta resize...");
+                _this.updateSize();
+                _this.redrawDataPoints();
+            })
+
         },
 
+        preprocessData: function(){
+            this.model.marker.label.getItems().forEach(function(d) {
+                d["geo.region"] = d["geo.region"] || "world";
+            });
+            this.isDataPreprocessed = true;
+        },
+
+
+        /*
+         * Updates the component as soon as the model/models change
+         */
+        modelReady: function(evt) {
+            if (!this.isDataPreprocessed) this.preprocessData();
+            this.updateShow();
+            this.redrawDataPoints();
+        },
+
+
+        /*
+         * UPDATE SHOW:
+         * Ideally should only update when show parameters change or data changes
+         */
+        updateShow: function() {
+
+            //scales
+            this.yScale = this.model.marker.axis_y.getDomain();
+            this.xScale = this.model.marker.axis_x.getDomain();
+            this.rScale = this.model.marker.size.getDomain();
+
+            var _this = this;
+            this.yAxis.tickFormat(function(d) {
+                return _this.model.marker.axis_y.getTick(d);
+            });
+            this.xAxis.tickFormat(function(d) {
+                return _this.model.marker.axis_x.getTick(d);
+            });
+
+        },
 
         /*
          * UPDATE:
