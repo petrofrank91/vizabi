@@ -1,0 +1,203 @@
+<!-- @@include('../assets/_header.tpl', {"title": "Bubble Chart"}) -->
+
+<div class="container">
+    <div class="buttons">
+
+        <!-- @@include('../assets/_menu.tpl') -->
+
+        <label>|</label>
+
+        <div id="dropdown-size" class="wrapper-dropdown" tabindex="1">
+            <span>Size</span>
+            <ul class="dropdown">
+                <li><a onclick="phoneSize('bubble-chart')">Mobile Portrait</a>
+                </li>
+                <li><a onclick="phoneSize('bubble-chart', 'landscape')">Mobile Landscape</a>
+                </li>
+                <li><a onclick="randomSize('bubble-chart')">Random Size</a>
+                </li>
+                <li><a onclick="fullSize('bubble-chart')">Full Screen</a>
+                </li>
+            </ul>
+        </div>
+
+        <button onclick="randomSize('bubble-chart')">RANDOM</button>
+
+        <label>|</label>
+
+        <div id="dropdown-options" class="wrapper-dropdown" tabindex="1">
+            <span>OPTIONS</span>
+            <ul class="dropdown">
+                <li><a onclick="byCountries()">Countries in Total</a></li>
+                <li><a onclick="changeIndicator1()">Y=suspected cases</a></li>
+                <li><a onclick="changeIndicator2()">log scales</a></li>
+                <li><a onclick="byCounties()">Initial view</a></li>
+            </ul>
+        </div>
+
+        <div id="dropdown-language" class="wrapper-dropdown" tabindex="1">
+            <span>Language</span>
+            <ul class="dropdown">
+                <li><a onclick="setLanguage('en')">English</a>
+                </li>
+                <li><a onclick="setLanguage('pt')">Portuguese</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="bubble-chart" class="placeholder"></div>
+
+</div>
+<div class="aux">
+    <button onclick="shareLink()">SHARE LINK</button>
+
+    <p>Current State:</p>
+    <pre id="state" class="json_box" contentEditable="true"></pre>
+    <button onclick="setCurrentState()">SET STATE</button>
+    <p>Current Query:</p>
+    <pre id="query" class="json_box"></pre>
+</div>
+</body>
+<script>
+var myVizabi;
+
+$(function() {
+
+    var options = {
+        //state
+        state: url.state || {
+
+            //what to show
+            show: {
+                geo: ['*'],
+                geo_category: ['county'],
+                indicator: ['Probable cases', 'Confirmed cases', 'Deaths', 'Suspected cases'],
+                scale: ['linear', 'linear', 'sqrt'],
+                unit: [1, 1, 1],
+                dataIsProcessed: false
+            },
+
+            //time properties
+            time: {
+
+                format: "%Y-%m-%d",
+                unit: "day",
+                start: 2014,
+                end: 2015,
+                value: "2014-09-27",
+                step: 2,
+                speed: 200
+
+            }
+        },
+
+
+        //data properties
+        data: {
+            reader: 'local-json',
+            path: '../../data-waffles/ebola_data/{{LANGUAGE}}/ebolaMockData-v3.json',
+            isProcessed: false
+        },
+
+        //language properties
+        language: url.lang || {
+            id: "en",
+            strings: {
+                en: {
+                    "title": "Ebola data",
+                    "timeslider/play": "Play",
+                    "timeslider/pause": "Pause"
+                },
+                pt: {
+                    "title": "Datullo Ebolau",
+                    "timeslider/play": "Iniciar",
+                    "timeslider/pause": "Parar"
+                }
+            }
+        },
+
+
+        bind: {
+            'ready': function() {
+                parseURL();
+            },
+            'change:state': function(evt, vals) {
+                showState(vals.state);
+            },
+            'change:query': function(query) {
+                showQuery(query);
+            }
+        }
+    };
+
+
+    myVizabi = new Vizabi("_examples/bubble-chart", "#bubble-chart", options);
+});
+
+function changeIndicator1() {
+    var newOption = {
+        state: {
+            show: {
+                geo: ['*'],
+                geo_category: ['county'],
+                indicator: ['Probable cases', 'Suspected cases', 'Deaths', 'Cases'],
+                scale: ['linear', 'linear', 'sqrt'],
+                unit: [1, 1, 1],
+                dataIsProcessed: false
+            }
+        }
+    };
+    myVizabi.setOptions(newOption);
+}
+
+function changeIndicator2() {
+    var newOption = {
+        state: {
+            show: {
+                geo: ['*'],
+                geo_category: ['county'],
+                indicator: ['Probable cases', 'Confirmed cases', 'Deaths', 'Suspected cases'],
+                scale: ['log', 'log', 'sqrt'],
+                unit: [1, 1, 1],
+                dataIsProcessed: false
+            }
+        }
+    };
+    myVizabi.setOptions(newOption);
+}
+
+function byCountries() {
+    var newOption = {
+        state: url.state || {
+            show: {
+                geo: ['*'],
+                geo_category: ['country'],
+                indicator: ['Probable cases', 'Confirmed cases', 'Deaths', 'Suspected cases'],
+                scale: ['linear', 'linear', 'sqrt'],
+                unit: [1, 1, 1],
+                dataIsProcessed: false
+            }
+        }
+    };
+    myVizabi.setOptions(newOption);
+}
+
+function byCounties() {
+    var newOption = {
+        state: url.state || {
+            show: {
+                geo: ['*'],
+                geo_category: ['county'],
+                indicator: ['Probable cases', 'Confirmed cases', 'Deaths', 'Suspected cases'],
+                scale: ['linear', 'linear', 'sqrt'],
+                unit: [1, 1, 1],
+                dataIsProcessed: false
+            }
+        }
+    };
+    myVizabi.setOptions(newOption);
+}
+</script>
+
+<!-- @@include('../assets/_footer.tpl') -->
