@@ -37,7 +37,7 @@ define([
             this._items = []; //holds hook items for this hook
 
             //bind initial events
-            if(bind) {
+            if (bind) {
                 this.on(bind);
             }
 
@@ -45,14 +45,6 @@ define([
             if (values) {
                 this.set(values);
             }
-
-            //if it's a hook
-            var _this = this;
-            this.on("change", function() {
-                if (_this.isHook()) {
-                    _this.load();
-                }
-            });
         },
 
         /* ==========================
@@ -112,11 +104,17 @@ define([
                 }
                 //otherwise, just set value :)
                 else {
-                    this._data[a] = vals;
-                    promise = true;
-                    //different events whether it's first time or not
-                    var evt_name = (this._set) ? "change" : "init";
-                    events.push(evt_name + ":" + a);
+
+                    //if it's the same value, do not change anything
+                    if (this._data[a] === vals) {
+                        continue;
+                    } else {
+                        this._data[a] = vals;
+                        //different events whether it's first time or not
+                        var evt_name = (this._set) ? "change" : "init";
+                        events.push(evt_name + ":" + a);
+                        promise = true;
+                    }
                 }
                 promises.push(promise);
             }
@@ -371,7 +369,7 @@ define([
                     lang = "en";
 
                 //get current language
-                if(language_hook) {
+                if (language_hook) {
                     lang = language_hook.id || "en";
                 }
 
@@ -393,6 +391,14 @@ define([
                             promise.resolve();
                         } else {
                             _this._items = _.flatten(data);
+                            
+                            //TODO this is a temporary solution that does preprocessing of data
+                            // data should have time as Dates and be sorted by time
+                            // put me in the proper place please!
+                            _this._items = _this._items
+                                .map(function(d){d.time = new Date(d.time); d.time.setHours(0); return d;})
+                                .sort(function(a,b){return a.time - b.time});
+                            
                             promise.resolve();
                         }
                     });
@@ -549,6 +555,12 @@ define([
                 //hook with the closest prefix to this model
                 this._hooks[name] = this._getClosestModelPrefix(prefix);
             }
+
+            //this is a hook, therefore it needs to reload when date changes
+            var _this = this;
+            this.on("change", function() {
+                _this.load();
+            });
         },
 
         /**
@@ -573,11 +585,9 @@ define([
         _getHookTo: function() {
             if (_.isArray(this.hook_to) && !_.rest(this.hook_to, _.isString).length) {
                 return this.hook_to;
-            }
-            else if (this._parent) {
+            } else if (this._parent) {
                 return this._parent._getHookTo();
-            }
-            else {
+            } else {
                 return ["entities", "time", "data", "language"]; //default
             }
         },
@@ -627,7 +637,7 @@ define([
 
         /**
          * gets the value specified by this hook
-         * @param {Object} filter Reference to the row. e.g: {geo: "swe", time: "1999"}
+         * @param {Object} filter Reference to the row. e.g: {geo: "swe", time: "1999", ... }
          * @returns hooked value
          */
 
@@ -638,14 +648,14 @@ define([
             //(maybe like the commented code above)
             var id_keys = [];
             if (this.getHook("entities")) {
-                id_keys = this.getHook("entities").getDimensions();
+                id_keys.push(this.getHook("entities").getDimension());
             }
             if (this.getHook("time")) {
                 id_keys.push("time");
             }
             //extract id from original filter
             var id = _.pick(filter, id_keys);
-
+            
             return this.mapValue(this._getHookedValue(id));
         },
 
@@ -666,32 +676,28 @@ define([
         getItems: function(filter) {
             if (this.isHook() && this.getHook("data")) {
 
+                //TODO: dirty hack, which angie and arthur did when trying to get the right keys
                 //get all items from data hook
-                var _this = this,
-                    values = _.map(this._items, function(row) {
-                        //if the value is present, map and rename
-                        if (!_.isUndefined(row[_this.value])) {
-                            row.value = _this.mapValue(row[_this.value]);
-                        }
-                        return _.omit(row, _this.value);
-                    });
 
-                //filter only necessary fields
-                if (_.isArray(filter)) {
-                    values = _.map(values, function(r) {
-                        return _.pick(r, filter);
-                    });
-                }
-                //filter only matching results
-                else if (_.isPlainObject(filter)) {
-                    values = _.filter(values, filter);
-                }
+                var dimension = this.getHook("entities").getDimension();
+                return _.map(this.getUnique(dimension), function(dim){
+                    // item is an object similar to the following:
+                    //     { geo: 'usa', time: DateObj }
+                    // or  { geo: 'usa' } if filter.time is not available
+                    var item = {};
+                    item[dimension] = dim;
+                    if(filter && filter.time) {
+                        item.time = filter.time;
+                    }
+                    return item;
+                })
 
                 return values;
             } else {
                 return [];
             }
         },
+        
 
         /**
          * gets query that this model/hook needs to get data
@@ -701,44 +707,43 @@ define([
             //only perform query in these two uses
             var needs_query = ["property", "indicator"];
             //if it's not a hook, property or indicator, no query is necessary
-            if (!this.isHook() || needs_query.indexOf(this.use) === -1 || !this.getHook("entities")) {
+            if (!this.isHook() || needs_query.indexOf(this.use) === -1) {
                 return [];
             }
-
+            //error if there's no entities
+            else if (!this.getHook("entities")) {
+                console.error("Error:", this._id, "can't find the entities");
+                return [];
+            }
             //else, its a hook (indicator or property) and it needs to query
             else {
 
                 var entities = this.getHook("entities"),
                     time = this.getHook("time"),
-                    dimensions = entities.getDimensions(),
-                    filters = entities.getFilters(),
+                    dimension = entities.getDimension(),
+                    filters = entities.getFilters().getObject(),
                     //include time or not
                     select = (time) ? [this.value, "time"] : [this.value],
                     time_filter = {};
 
                 //if there's hooked time, include time in query filter
                 if (time) {
-                    //TODO: support any time format
+
                     var time_start = d3.time.format(time.format || "%Y")(time.start),
                         time_end = d3.time.format(time.format || "%Y")(time.end),
                         time_filter = {
-                            "time": [[time_start, time_end]]
+                            "time": [
+                                [time_start, time_end]
+                            ]
                         };
                 }
 
-                //write queries in array
-                var queries = [];
-                for (var i = 0; i < dimensions.length; i++) {
-                    var dim = dimensions[i],
-                        query = {
-                            "from": "data",
-                            "select": _.union([dim], select),
-                            "where": _.extend(time_filter, filters[i])
-                        };
-
-                    queries.push(query);
-                }
-                return queries;
+                //return query
+                return [{
+                    "from": "data",
+                    "select": _.union([dimension], select),
+                    "where": _.extend(time_filter, filters)
+                }];
             }
         },
 
@@ -852,14 +857,65 @@ define([
                     break;
                 default:
                     if (this.getHook("data")) {
-                        value = _.findWhere(this._items, filter)[this.value];
+                        // search the data point among existing points
+                        existingValue = _.findWhere(this._items, filter);
+
+                        if(existingValue==null){
+                            // if not found then interpolate
+                            value = this._interpolateValue(this._items, filter, this.use);
+                        }else{
+                            // otherwise supply the existing value
+                            value = existingValue[this.value];
+                        }
                     }
                     break;
             }
-
             return value;
         },
 
+
+        /**
+         * interpolates the specific value if missing
+         * @param {Object} filter Id the row. e.g: {geo: "swe", time: "1999"}
+         * filter SHOULD contain time property
+         * @returns interpolated value
+         */
+        _interpolateValue: function(items, filter, use) {
+            if(items==null || items.length == 0) {console.warn("_interpolateValue returning NULL because items array is empty. Might be init problem"); return null;}
+
+            // fetch time from filter object and remove it from there
+            var time = new Date(filter.time);
+            delete filter.time;
+            
+            // filter items so that we only have a dataset for certain keys, like "geo"
+            var items = _.filter(items, filter);
+            
+            // return constant for the use of "values"
+            if(use == "value") return items[0][this.value];
+
+            // search where the desired value should fall between the known points
+            var indexNext = d3.bisectLeft(items.map(function(d){return d.time}), time);
+
+            // zero-order interpolation for the use of properties
+            if(use == "property" && indexNext==0) return items[0][this.value];
+            if(use == "property") return items[indexNext-1][this.value];
+
+            // the rest is for the use of "indicators"
+
+            // check if the desired value is out of range. 0-order extrapolation
+            if(indexNext==0) return items[0][this.value];
+            if(indexNext==items.length) return items[items.length-1][this.value];
+            
+            // perform a simple linear interpolation
+            var fraction = 
+                (time - items[indexNext-1].time)
+                /(items[indexNext].time - items[indexNext-1].time);
+            var value = 
+                + items[indexNext-1][this.value] 
+                + (items[indexNext][this.value] - items[indexNext-1][this.value])*fraction;
+
+            return value;
+        },
 
         /**
          * gets closest prefix model moving up the model tree
@@ -870,8 +926,7 @@ define([
             var model = this._findSubmodelPrefix(prefix);
             if (model) {
                 return model;
-            }
-            else if (this._parent) {
+            } else if (this._parent) {
                 return this._parent._getClosestModelPrefix(prefix);
             }
         },

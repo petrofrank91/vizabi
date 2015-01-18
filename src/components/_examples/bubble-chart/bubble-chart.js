@@ -65,8 +65,6 @@ define([
                 },
                 "load_end":  function() {
                     console.log("Finished loading!");
-                    _this.updateShow();
-                    _this.redrawDataPoints();
                 },
                 "ready": function() {
                     console.log("Model ready!");
@@ -107,6 +105,8 @@ define([
          */
         modelReady: function(evt) {
             if (!this.isDataPreprocessed) this.preprocessData();
+            this.updateShow();
+            this.redrawDataPoints();
         },
 
 
@@ -138,11 +138,14 @@ define([
          */
         updateTime: function() {
             var _this = this;
-
-            this.time = parseInt(d3.time.format(this.model.time.formatInput)(this.model.time.value), 10);
-            this.data = this.model.marker.label.getItems({ time: this.time.toString() });
+            //TLDR
+            //this.time = parseInt(d3.time.format(this.model.time.formatInput)(this.model.time.value), 10);
+            this.time = this.model.time.value;
             
-            this.yearEl.text(this.time);
+            this.data = this.model.marker.label.getItems({ time: this.time });
+            
+            
+            this.yearEl.text(this.time.getFullYear().toString());
             this.bubbles = this.bubbleContainer.selectAll('.vzb-bc-bubble')
                 .data(this.data);
             
@@ -257,24 +260,25 @@ define([
                 .attr("class", "vzb-bc-bubble");
 
             //update selection
-            var speed = this.model.time.speed;
+            var speed = (this.model.time.playing) ? this.model.time.speed : 0;
+
             var some_selected = (_this.model.entities.select.length > 0);
 
             this.bubbles
                 .style("fill", function(d) {
-                    return _this.model.marker.color.getValue(d);
+                    return _this.model.marker.color.getValue(d)||this.model.marker.color.domain[0];
                 })
                 .transition().duration(speed).ease("linear")
                 .attr("cy", function(d) {
-                    var value = _this.model.marker.axis_y.getValue(d);
+                    var value = _this.model.marker.axis_y.getValue(d)||_this.yScale.domain()[0];
                     return _this.yScale(value);
                 })
                 .attr("cx", function(d) {
-                    var value = _this.model.marker.axis_x.getValue(d);
+                    var value = _this.model.marker.axis_x.getValue(d)||_this.xScale.domain()[0];
                     return _this.xScale(value);
                 })
                 .attr("r", function(d) {
-                    var value = _this.model.marker.size.getValue(d);
+                    var value = _this.model.marker.size.getValue(d)||_this.rScale.domain()[0];
                     return Math.sqrt(_this.rScale(value) / Math.PI) * 10;
                 });
 
