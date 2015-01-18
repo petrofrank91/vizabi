@@ -396,7 +396,11 @@ define([
                             // data should have time as Dates and be sorted by time
                             // put me in the proper place please!
                             _this._items = _this._items
+                                //convert time to Date objects
                                 .map(function(d){d.time = new Date(d.time); d.time.setHours(0); return d;})
+                                //try to restore "geo" from "geo.name" if missing
+                                .map(function(d){if(d["geo"]==null){d["geo"] = d["geo.name"];} return d})
+                                //sort entries by time
                                 .sort(function(a,b){return a.time - b.time});
                             
                             promise.resolve();
