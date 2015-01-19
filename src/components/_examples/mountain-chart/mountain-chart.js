@@ -170,6 +170,7 @@ define([
                     if(!_this.firstLoad){
                         console.log("acting on resize");
                         _this.updateSize();
+                        _this.updateTime();
                         _this.redrawDataPoints();
                     }
             })
