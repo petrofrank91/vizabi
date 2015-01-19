@@ -1,2 +1,4 @@
-name,info,link
-Example Dataset showing multicsv,This dataset was created to show the multicsv format using devinfo_afghaninfo as an example,www.url.com
+name, Multi CSV Example Dataset 1
+info, This is a mock-dataset to show how to define multiple dimensions and indicators as csv files stored in a folder to be read by Vizabi's multi csv data reader.
+link, www.url.com
+lang, en
