@@ -1,8 +1,7 @@
 id,main-category,name,info,parent,parent
-geo,,Gegraphies,,,
+geo,world,Gegraphies,Geo dimension,,
 planet,geo,World,The whole world,,
 region,geo,Regions,The world divided in four regions,planet,
 un_state,geo,UN States,States recognized by the uN,region,
 bra1,geo,Brazilian States,,un_state,
-bra2,geo,Brazilian Municipalities,,bra1,
-age-groups,,age-groups,,,
+bra2,geo,Brazilian Municipalities,,un_state,

@@ -1,4 +1,4 @@
-id,name,unstate,note
-bra001001,Rio Centro,bra001,As defined in 2011
-bra001002,Favela Grando,bra001,As defined in 2011
-bra002001,Belo Horizonte Centro,bra001,As defined in 2012
+id,name,un_state,note
+bra001001,Rio Centro,bra,As defined in 2011
+bra001002,Favela Grando,bra,As defined in 2011
+bra002001,Belo Horizonte Centro,bra,As defined in 2012

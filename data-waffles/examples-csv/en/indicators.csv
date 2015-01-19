@@ -1,5 +1,3 @@
 id,name,info,data,unit,note
-gdp_per_cap,GDP per capita,On state level this is actualy Gross State Product,bra1,US Dollars,"bra1:braStat
-bra2:braStat"
-imr,Infant Mortality Rate,"The number of deaths of children before age 1, per 10000 live births",bra1,Deaths per 1000 births,
-pop,Population,"Number of inhabitants, including migrant workers.",bra1,People,
+death_rate,death rate,Death Rate (Crude),per 1000 people,taken from world bank
+pop,population,all residents regardless of legal status,per person,taken from world bank
