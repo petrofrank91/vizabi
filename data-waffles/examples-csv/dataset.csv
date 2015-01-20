@@ -1,4 +1,2 @@
-name, Multi CSV Example Dataset 1
-info, This is a mock-dataset to show how to define multiple dimensions and indicators as csv files stored in a folder to be read by Vizabi's multi csv data reader.
-link, www.url.com
-lang, en
+name,info,link,lang
+Multi CSV Example Dataset 1, This is a mock-dataset to show how to define multiple dimensions and indicators as csv files stored in a folder to be read by Vizabi's multi csv data reader, www.url.com, en
