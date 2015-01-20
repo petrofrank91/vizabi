@@ -36,6 +36,7 @@
     "grunt-include-replace": "~2.0.0",
     "generator-vizabi": "*",
     "grunt-aws-s3": "~0.9.4",
-    "grunt-gitinfo": "~0.1.6"
+    "grunt-gitinfo": "~0.1.6",
+    "queue-async":"~1.0.7"
   }
 }

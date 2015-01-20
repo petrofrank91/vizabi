@@ -28,7 +28,9 @@ require.config({
         jqueryui_slider: '../lib/jqueryui/ui/minified/jquery.ui.slider.min',
         jqueryui_core: '../lib/jqueryui/ui/minified/jquery.ui.core.min',
         jqueryui_mouse: '../lib/jqueryui/ui/minified/jquery.ui.mouse.min',
-        jqueryui_widget: '../lib/jqueryui/ui/minified/jquery.ui.widget.min'
+        jqueryui_widget: '../lib/jqueryui/ui/minified/jquery.ui.widget.min',
+
+        queue: '../node_modules/queue-async/queue'
     },
     shim: {
         d3: {
