@@ -45,6 +45,7 @@ define([
                                         q.defer(function(callback) {
                                             d3.csv(path + '/' + select + '__' + category + '.csv',
                                                 function(error, data) {
+                                                    data = _this.filter(query, data);
                                                     _.each(data, function(datum) {
                                                         console.log("this in closure" + _this + _this._data);
                                                         _this._data[order][row] = datum;
@@ -58,10 +59,13 @@ define([
                                 });
                             });
                         });
-                        
+
                         // all files loaded, continue.  
                         q.await(function(error, result) {
                             promise.resolve();
+                            // Filter
+                            // change files
+                            // 
                         });
 
                         // if corresponding files cannot be found -> empty data
@@ -84,6 +88,31 @@ define([
 
         getData: function() {
             return this._data;
+        },
+
+        filter: function(query, data) {
+            for (var filter in query.where) {
+                var wanted = query.where[filter];
+
+                if (wanted[0] === "*") {
+                    continue;
+                }
+
+                if (filter === "time") {
+                    var timeRange = wanted[0],
+                        min = timeRange[0],
+                        max = timeRange[1] || min;
+
+                    data = _.filter(data, function(row) {
+                        var val = row[filter]
+                        return val >= min && val <= max;
+                    });
+                }
+
+                //TODO: more filtering
+            }
+
+            return data;
         }
     });
 
