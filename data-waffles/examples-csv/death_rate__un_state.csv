@@ -1,4 +1,4 @@
-id,name,death_rate, note
-ir,Iran,1231313, fake data
-br,Brazil,4324242, fake data
-sw, Sweden,54353, fake data
+geo,geo.name,death_rate,time, note
+ir,Iran,1231313,1990,fake data
+br,Brazil,4324242,1990,fake data
+sw, Sweden,54353,1990,fake data

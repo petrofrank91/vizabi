@@ -1,4 +1,4 @@
-id,name,death_rate,note
+geo,geo.name,death_rate,note
 bra001001,Rio Centro,1234567,As defined in 2011
 bra001002,Favela Grando,231234567,As defined in 2011
 bra002001,Belo Horizonte Centro,76234567,As defined in 2012

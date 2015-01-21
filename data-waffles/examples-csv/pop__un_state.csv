@@ -1,4 +1,4 @@
-id,name,pop,note
-irn,Iran,70000000,fake data
-bra,Brazil,120000000,fake data
-swe, Sweden, 7000000,fake data
+geo,geo.name,pop,time,note
+ir,Iran,70000000,1990,fake data
+br,Brazil,120000000,1990,fake data
+sw, Sweden, 7000000,1990,fake data
