@@ -6,6 +6,8 @@ define([
     'queue'
 ], function($, _, Class, d3, queue) {
 
+
+    //TOOD: make it compatible with non-hook queries
     var MultiCSVReader = Class.extend({
 
         init: function(reader_info) {
@@ -16,59 +18,70 @@ define([
 
         read: function(queries, language) {
             var _this = this,
-                defer = $.Deferred(),
-                q = queue(1);
+                defer = $.Deferred();
 
             this._data = [];
 
-            //Loops through each query
             for (var i = 0; i < queries.length; i++) {
 
                 this._data[i] = {};
-                var path = this._basepath;
+                var path = this._basepath,
+                    promises = [];
 
-                (function(order) {
-                    var query = queries[i];
-                    //IN a loop
+                (function(order, query) {
+                    var promise = $.Deferred(),
+                        row = 0,
+                        q = queue();
 
-                    var q_load = queue(),
-                        q_indicator = queue()
-                            .defer(d3.csv, path + 'indicators' + '.csv');
-
-                    q_indicator.await(function(error, indicators) {
+                    d3.csv(path + 'indicators' + '.csv', function(error, indicators) {
+                        file_not_found = true;
                         _.each(query.where['geo.category'], function(category) {
-                            var data = {};
-                            console.log(query.select);
                             _.each(query.select, function(select) {
                                 _.each(indicators, function(indicator) {
+                                    // for each select statement, check if theres indicator available
                                     if (indicator.id === select) {
-                                        var q_indicator_for_category = queue()
-                                        .defer(d3.csv, path + '/' + select + '__' + category  + '.csv');
-                                        q_indicator_for_category.await(function(error, data) {
-                                            //TODO: Investigate why the reader is called twice ...
+                                        file_not_found = false;
+                                        // stack csv loading functions into a bazillian asynchronous task
+                                        q.defer(function(callback) {
+                                            d3.csv(path + '/' + select + '__' + category + '.csv',
+                                                function(error, data) {
+                                                    _.each(data, function(datum) {
+                                                        console.log("this in closure" + _this + _this._data);
+                                                        _this._data[order][row] = datum;
+                                                        row++;
+                                                    });
+
+                                                    callback();
+                                                });
                                         });
                                     }
                                 });
                             });
-
+                        });
+                        
+                        // all files loaded, continue.  
+                        q.await(function(error, result) {
+                            promise.resolve();
                         });
 
+                        // if corresponding files cannot be found -> empty data
+                        if (file_not_found) {
+                            promise.resolve();
+                        }
                     });
 
-                })(i);
+                    promises.push(promise);
+
+                })(i, queries[i]);
             }
 
-            q.awaitAll(function(error, results) {
+            $.when.apply(null, promises).done(function() {
                 defer.resolve();
             });
 
             return defer;
         },
 
-        /**
-         * Gets the data
-         * @returns all data
-         */
         getData: function() {
             return this._data;
         }
