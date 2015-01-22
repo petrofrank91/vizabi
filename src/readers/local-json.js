@@ -2,18 +2,18 @@ define([
     'jquery',
     'lodash',
     'base/class',
-], function($, _, Class) {
+    'base/reader'
+], function($, _, Class, Reader) {
 
-    var LocalJSONReader = Class.extend({
+    var LocalJSONReader = Reader.extend({
 
         /**
          * Initializes the reader.
          * @param {Object} reader_info Information about the reader
          */
         init: function(reader_info) {
-            this._name = 'local-json';
-            this._data = [];
-            this._basepath = reader_info.path;
+            this._super('local-json', 
+                [], reader_info.path);
         },
 
         /**
@@ -42,49 +42,7 @@ define([
 
                             //TODO: Improve local json filtering
                             var data = res[0];
-
-                            for (var filter in query.where) {
-                                var wanted = query.where[filter];
-
-                                if (wanted[0] === "*") {
-                                    continue;
-                                }
-
-                                //if not time, normal filtering
-                                if (filter !== "time") {
-                                    data = _.filter(data, function(row) {
-                                        var val = row[filter],
-                                            found = -1;
-                                        //normalize
-                                        if (!_.isArray(val)) {
-                                            val = [val];
-                                        }
-                                        //find first occurence
-                                        var found = _.findIndex(val, function(j) {
-                                            return wanted.indexOf(j) !== -1;
-                                        });
-
-                                        //if found, include
-                                        return found !== -1;
-                                    });
-                                }
-                                //in case it's time, special filtering
-                                else {
-                                    var timeRange = wanted[0],
-                                        min = timeRange[0],
-                                        max = timeRange[1] || min;
-
-                                    data = _.filter(data, function(row) {
-                                        var val = row[filter]
-                                        return val >= min && val <= max;
-                                    });
-                                }
-                            }
-
-                            //only selected items get returned
-                            data = _.map(data, function(row) {
-                                return _.pick(row, query.select);
-                            })
+                            data = _this.filter(query,data);
 
                             _this._data[order] = data;
                         })

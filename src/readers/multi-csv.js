@@ -2,18 +2,18 @@ define([
     'jquery',
     'lodash',
     'base/class',
+    'base/reader',
     'd3',
     'queue'
-], function($, _, Class, d3, queue) {
+], function($, _, Class, Reader, d3, queue) {
 
 
     //TOOD: make it compatible with non-hook queries
-    var MultiCSVReader = Class.extend({
+    var MultiCSVReader = Reader.extend({
 
         init: function(reader_info) {
-            this._name = 'multi-jcsv';
-            this._data = [];
-            this._basepath = reader_info.path + '/';
+            this._super('multi-jcsv', [],
+                reader_info.path + '/');
         },
 
         read: function(queries, language) {
@@ -91,28 +91,7 @@ define([
         },
 
         filter: function(query, data) {
-            for (var filter in query.where) {
-                var wanted = query.where[filter];
 
-                if (wanted[0] === "*") {
-                    continue;
-                }
-
-                if (filter === "time") {
-                    var timeRange = wanted[0],
-                        min = timeRange[0],
-                        max = timeRange[1] || min;
-
-                    data = _.filter(data, function(row) {
-                        var val = row[filter]
-                        return val >= min && val <= max;
-                    });
-                }
-
-                //TODO: more filtering
-            }
-
-            return data;
         }
     });
 
