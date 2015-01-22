@@ -77,7 +77,15 @@ define([
                 var r = new Reader(reader);
                 r.read(query, lang).then(function() {
                     var queryId = _this._idQuery(query, lang, reader);
-                    _this._data[queryId] = r.getData();
+                    var data = r.getData();
+                    
+                    if (_.isEmpty(data[0])) {
+                        console.error('there is no data for query you made. Check your Hooks/Models and try again.')
+                    }
+                    else {
+                        _this._data[queryId] = data;
+                    }
+                    
                     defer.resolve(queryId);
                 });
             });
