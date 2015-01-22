@@ -33,12 +33,7 @@ define([
                             val = [val];
                         }
                         //find first occurence
-                        var found = _.findIndex(val, function(j) {
-                            return wanted.indexOf(j) !== -1;
-                        });
-
-                        //if found, include
-                        return found !== -1;
+                        return _.intersection(wanted, val).length > 0;
                     });
                 }
                 //in case it's time, special filtering
