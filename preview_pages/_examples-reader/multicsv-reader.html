@@ -192,7 +192,7 @@ $(function() {
                 show: {
                     dim: "geo",
                     filter: {
-                        "geo": ['ir', 'swe', 'bra001'],
+                        "geo": ['ir', 'sw', 'bra001'],
                         "geo.category": ["un_state", "bra1"]
                     }
                 }
@@ -203,18 +203,13 @@ $(function() {
                     use: "property",
                     value: "geo.name"
                 },
-                population: {
+                number: {
                     use: "indicator",
                     value: "pop"
                 },
                 deathrate: {
                     use: "indicator",
                     value: "death_rate"
-                },
-                color: {
-                    use: "property",
-                    value: "geo.region",
-                    domain: ["#F77481", "#E1CE00", "#B4DE79", "#62CCE3"]
                 }
             }
         },
