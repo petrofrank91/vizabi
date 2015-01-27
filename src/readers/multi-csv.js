@@ -14,12 +14,14 @@ define([
         init: function(reader_info) {
             this._super('multi-jcsv', [],
                 reader_info.path + '/');
+
+            // load meta, category, indicators
+
         },
 
         read: function(queries, language) {
             var _this = this,
                 defer = $.Deferred();
-
             this._data = [];
 
             for (var i = 0; i < queries.length; i++) {
@@ -27,51 +29,57 @@ define([
                 this._data[i] = {};
                 var path = this._basepath,
                     promises = [];
+                console.log(queries);
 
                 (function(order, query) {
                     var promise = $.Deferred(),
                         row = 0,
-                        q = queue();
+                        q = queue(),
+                        q_data= queue(),
+                        select = query.select,
+                        //TODO: Remove the hack to decide loading categories or indicators 
+                        query_type = select[1];
 
-                    d3.csv(path + 'indicators' + '.csv', function(error, indicators) {
-                        file_not_found = true;
-                        _.each(query.where['geo.category'], function(category) {
-                            _.each(query.select, function(select) {
-                                _.each(indicators, function(indicator) {
-                                    // for each select statement, check if theres indicator available
-                                    if (indicator.id === select) {
-                                        file_not_found = false;
-                                        // stack csv loading functions into a bazillian asynchronous task
-                                        q.defer(function(callback) {
-                                            d3.csv(path + '/' + select + '__' + category + '.csv',
+                    // for each select statement, check if theres indicator available
+                    q.defer(function(meta_callback) {
+                        d3.csv(path + 'indicators' + '.csv', function(error, indicators) {
+                            d3.csv(path + 'categories' + '.csv', function(error, categories) {
+                                if (query_type === 'geo.name') {
+                                    _(query.where['geo.category']).forEach(function(cat) {
+                                        q_data.defer(function(callback) {
+                                            d3.csv(path + cat + '.csv',
                                                 function(error, data) {
-                                                    data = _this.filter(query, data);
-                                                    _.each(data, function(datum) {
-                                                        console.log("this in closure" + _this + _this._data);
-                                                        _this._data[order][row] = datum;
-                                                        row++;
+                                                    _(query.where.geo).forEach(function(id) {
+                                                        _(data).forEach(function(datum) {
+                                                            if (datum.geo === id) {
+                                                                for (var i = query.where.time[0][0]; i <= query.where.time[0][1]; i++) {
+                                                                    _this._data[order][row] = {};
+                                                                    _this._data[order][row]['geo'] = datum.geo;
+                                                                    _this._data[order][row]['geo.name'] = datum['geo.name'];
+                                                                    _this._data[order][row]['geo.name'] = datum['geo.name'];
+                                                                    _this._data[order][row]['time'] = i;
+                                                                    row++;
+                                                                }
+                                                            }
+                                                        });
                                                     });
-
+                                                
                                                     callback();
                                                 });
                                         });
-                                    }
-                                });
+                                    });
+                                    
+                                    q_data.await(function(error, result) {
+                                        meta_callback();
+                                    });
+                                }
                             });
                         });
+                    });
 
-                        // all files loaded, continue.  
-                        q.await(function(error, result) {
-                            promise.resolve();
-                            // Filter
-                            // change files
-                            // 
-                        });
-
-                        // if corresponding files cannot be found -> empty data
-                        if (file_not_found) {
-                            promise.resolve();
-                        }
+                    // all files loaded, continue.  
+                    q.await(function(error, result) {
+                        promise.resolve();
                     });
 
                     promises.push(promise);
@@ -88,10 +96,6 @@ define([
 
         getData: function() {
             return this._data;
-        },
-
-        filter: function(query, data) {
-
         }
     });
 
