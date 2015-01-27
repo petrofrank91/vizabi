@@ -39,12 +39,8 @@ define([
                 (function(order) {
                     var query = queries[i];
                     var promise = $.getJSON(path, function(res) {
-
                             //TODO: Improve local json filtering
-                            var data = res[0];
-                            data = _this.filter(query,data);
-
-                            _this._data[order] = data;
+                            _this._data[order] = _this.filter(query,res[0]);
                         })
                         .error(function() {
                             console.log("Error Happened While Loading File: " + fakeResponsePath);
