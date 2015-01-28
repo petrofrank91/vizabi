@@ -1,3 +1,3 @@
 geo,geo.name,time,pop,note
-bra001,Rio,1234567,1990,Fake data
-bra002,Belo-Horizonte,1234567,1990,Fake data
+bra001,Rio,1990,1234567,Fake data
+bra002,Belo-Horizonte,1990,1234567,Fake data

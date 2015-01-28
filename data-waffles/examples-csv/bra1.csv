@@ -1,3 +1,3 @@
-id,geo,geo.name,un_state,note
-bra001,bra,Rio Grn,bra,As defined in 2011
-bra002,Belo Horizonte,ind,As defined in 2011
+geo,geo.name,un_state,note
+bra001,Rio Grn,bra,As defined in 2011
+bra002,Belo Horizonte,bra,As defined in 2011
