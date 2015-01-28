@@ -1,6 +1,3 @@
-//TODO: refactor hardcoded dates //former FIXME
-//TODO: remove date formatting from here //former FIXME
-
 define([
     'lodash',
     'd3',
@@ -33,7 +30,7 @@ define([
             }, {
                 component: '_gapminder/buttonlist',
                 placeholder: '.vzb-tool-buttonlist',
-                model: ['state', 'data', 'language'],
+                model: ['state', 'data'],
                 buttons: ['colors', 'size', 'more-options']
             }];
 
