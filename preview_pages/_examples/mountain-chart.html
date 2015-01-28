@@ -102,33 +102,34 @@ $(function() {
 
             //how we show it
             marker: {
+                hook_to: ["entities", "time", "data", "language"],
                 type: "geometry",
                 shape: "mountain",
                 stack: true,
                 label: {
-                    use: "property",
+                    hook: "property",
                     value: "geo.name"
                 },
                 axis_y: {
-                    use: "indicator",
+                    hook: "indicator",
                     value: "pop",
                     scale: 'linear',
                     unit: 1000
                 },
                 axis_x: {
-                    use: "indicator",
+                    hook: "indicator",
                     value: "mean",
                     scale: 'log',
                     unit: 1
                 },
                 size: {
-                    use: "indicator",
+                    hook: "indicator",
                     value: "variance",
                     scale: 'linear',
                     unit: 1
                 },
                 color: {
-                    use: "property",
+                    hook: "property",
                     value: "geo.region", 
                     domain: ['#F77481', '#E1CE00', '#B4DE79', '#62CCE3']
                 }

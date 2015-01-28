@@ -73,7 +73,51 @@ define([
             this.template = 'components/_examples/' + this.name + '/' + this.name;
             
             //define expected models for this component
-            this.model_expects = ["time", "entities", "marker", "data"];
+            this.model_expects = [{name: "time", type: "time"},
+                                  {name: "entities", type: "entities"},
+                                  {name: "marker", type: "model"},
+                                  {name: "data", type: "data"}];
+
+            this.model_binds = {
+                "change": function(evt) {
+                    //if it's not about time
+                    if(evt.indexOf('change:time') === -1) {
+                        console.log("changing something else than time");
+                         _this.updateShow();
+                         _this.redrawDataPoints();
+                    }
+                },
+                "ready":  function(evt) {
+                    console.log("ready");
+                    _this.preprocessData();
+                    _this.updateShow();
+                    _this.updateSize();
+                    _this.updateTime();
+                    _this.redrawDataPoints();
+                },
+                'change:time:value': function() {
+                    console.log("change time value");
+                    _this.updateTime();
+                    _this.redrawDataPoints();
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             
             this._super(config, context);
 
@@ -120,59 +164,15 @@ define([
             this.mountains = null;
             this.tooltip = this.element.select('.vzb-tooltip');
 
-            //model events
-            this.model.on({
-                "change": function(evt) {
-//                    console.log("Changed!", evt);
-                },
-                "load_start": function(evt) {
-//                    console.log("Started to load!", evt);
-                },
-                "load_end":  function() {
-                    _this.loadReadyCount++;
-                    if(_this.loadReadyCount >= 
-                       _this.model.marker.getIndicators().length+
-                       _this.model.marker.getProperties().length
-                      ){
-                        console.log("acting on model.load_end");
-                        if(_this.firstLoad){
-//TODO: put this to ready and remove it from "load_end"
-                            _this.preprocessData();
-                            _this.updateShow();
-                            _this.updateSize();
-                            _this.updateTime();
-                            _this.redrawDataPoints();
-                        
-                        _this.firstLoad = false;
-                        }else{
-                            _this.updateShow();
-                            _this.redrawDataPoints();
-                        }
-                    }
-                },
-                "ready": function() {
-                    console.log("acting on load_end.ready");
-                }
-            });
-            
-            this.model.time.on({
-                'change:value': function() {
-                    if(!_this.firstLoad){
-                        console.log("acting on model.time.change.value");
-                        _this.updateTime();
-                        _this.redrawDataPoints();
-                    }
-                }
-            });
+
 
             //component events
             this.on("resize", function() {
-                    if(!_this.firstLoad){
                         console.log("acting on resize");
                         _this.updateSize();
                         _this.updateTime();
                         _this.redrawDataPoints();
-                    }
+
             })
 
             
@@ -186,17 +186,9 @@ define([
             });
             this.isDataPreprocessed = true;
         },
-        
-        
-        /*
-         * Updates the component as soon as the model/models change
-         */
-        modelReady: function() {
-        },
-        
 
-        
-        
+
+
         /*
          * UPDATE SHOW:
          * Ideally should only update when show parameters change or data changes
