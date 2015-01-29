@@ -28,7 +28,7 @@ define([
             //Loops through each query
             for (var i = 0; i < queries.length; i++) {
 
-                this._data[i] = {};
+                this._data[i] = [];
 
                 (function(order) {
                     var query = queries[i];

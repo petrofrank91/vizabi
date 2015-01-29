@@ -27,7 +27,7 @@ define([
 
             for (var i = 0; i < queries.length; i++) {
 
-                this._data[i] = {};
+                this._data[i] = [];
                 var path = this._basepath,
                     promises = [];
 
