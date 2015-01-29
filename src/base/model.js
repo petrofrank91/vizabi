@@ -462,26 +462,6 @@ define([
                         } else {
                             _this._items = _.flatten(data);
 
-                            //TODO this is a temporary solution that does preprocessing of data
-                            // data should have time as Dates and be sorted by time
-                            // put me in the proper place please!
-                            _this._items = _this._items
-                                // try to restore "geo" from "geo.name" if it's missing (ebola data has that problem)
-                                .map(function(d){
-                                    if(d["geo"] == null) d["geo"] = d["geo.name"];
-                                    return d
-                                })
-                                // convert time to Date()
-                                .map(function(d) {
-                                    d.time = new Date(d.time);
-                                    d.time.setHours(0);
-                                    return d;
-                                })
-                                // sort records by time
-                                .sort(function(a, b) {
-                                    return a.time - b.time
-                                });
-
                             console.timeStamp("Vizabi Model: Data loaded: " + _this._id);
 
                             promise.resolve();
@@ -999,7 +979,7 @@ define([
          * @returns interpolated value
          */
         _interpolateValue: function(items, filter, hook) {
-            if (items == null || items.length == 0) {
+            if (items == null || items.length === 0) {
                 console.warn("_interpolateValue returning NULL because items array is empty. Might be init problem");
                 return null;
             }
@@ -1010,6 +990,11 @@ define([
 
             // filter items so that we only have a dataset for certain keys, like "geo"
             var items = _.filter(items, filter);
+
+            if (items.length === 0) {
+                console.warn("_interpolateValue could not find any items for", filter);
+                return null;
+            }
 
             // return constant for the hook of "values"
             if (hook == "value") return items[0][this.value];

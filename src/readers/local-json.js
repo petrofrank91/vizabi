@@ -81,9 +81,39 @@ define([
                                 }
                             }
 
+                            //TODO this is a temporary solution that does preprocessing of data
+                            // data should have time as Dates and be sorted by time
+                            // put me in the proper place please!
+                            data = data
+                                // try to restore "geo" from "geo.name" if it's missing (ebola data has that problem)
+                                .map(function(d) {
+                                    if (d["geo"] == null) d["geo"] = d["geo.name"];
+                                    return d
+                                })
+                                // convert time to Date()
+                                .map(function(d) {
+                                    d.time = new Date(d.time);
+                                    d.time.setHours(0);
+                                    return d;
+                                })
+                                // sort records by time
+                                .sort(function(a, b) {
+                                    return a.time - b.time
+                                });
+
                             //only selected items get returned
-                            data = _.map(data, function(row) {
-                                return _.pick(row, query.select);
+                            data = _.map(data, function(d) {
+                                return _.pick(d, query.select);
+                            })
+
+                            //filter based on items that do not have the requested properties
+                            data = _.filter(data, function(d) {
+                                for (var i = 0; i < query.select.length; i++) {
+                                    if (_.isUndefined(d[query.select[i]])) {
+                                        return false;
+                                    }
+                                };
+                                return true;
                             })
 
                             _this._data[order] = data;
