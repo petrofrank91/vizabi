@@ -61,7 +61,7 @@ define([
          */
         modelReady: function() {
 
-            var time = parseInt(d3.time.format("%Y")(this.model.time.value), 10),
+            var time = this.model.time.value,
                 rows = this.model.rows.label.getItems(),
                 countriesCurr = [];
 

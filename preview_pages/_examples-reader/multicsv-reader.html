@@ -182,9 +182,12 @@ $(function() {
 
             //timespan of the visualization
             time: {
-                start: 1990,
-                end: 1990,
-                value: 1990,
+                unit: "year",
+                start: "1990",
+                end: "1991",
+                step: 1,
+                speed: 300,
+                value: "1990"
             },
 
             //entities we want to show
@@ -207,9 +210,11 @@ $(function() {
                     use: "indicator",
                     value: "pop"
                 },
-                deathrate: {
+                color: {
                     use: "indicator",
-                    value: "death_rate"
+                    value: "death_rate",
+                    //red, yellow, green, blue
+                    domain: ["#F77481", "#E1CE00", "#B4DE79", "#62CCE3"]
                 }
             }
         },
@@ -218,6 +223,19 @@ $(function() {
         data: {
             reader: 'multi-csv',
             path: '../../data-waffles/examples-csv'
+        },
+
+        //language properties
+        language: {
+            id: "en",
+            strings: {
+                "en": {
+                    "intro_text": "This example shows the tool Pop Slider with model adaptations and data support"
+                },
+                "pt": {
+                    "intro_text": "Esse exemplo mostra a Pop Slider com adaptações em model and suporte a dados"
+                }
+            }
         },
 
         //bind these events to external page
