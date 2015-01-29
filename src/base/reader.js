@@ -5,16 +5,41 @@ define([
 ], function(_, Events, Class) {
 
     var Reader = Class.extend({
+        
+        /**
+         * intials reader name, data object and its corresponding data path
+         * @param  {String} reader_name - name of the reader
+         * @param  {Object} data - data object
+         * @param  {String} base_path - path to data
+         * @return {[type]}
+         */
         init: function(reader_name, data, base_path) {
             this._name = reader_name;
             this._data = data;
             this._basepath = base_path;
         },
 
+
+        /**
+         * Reads the csv files based on number of queries and a language 
+         * @param  {array} queries - a set of queries  
+         * @param  {String} language - language that result needs to be returned 
+         * @return {Object} deferred - a jQuery deferred object
+         */
         read: function(queries, language) {},
 
+        /**
+         * gets data object to data manager
+         * @return {Object} the data object
+         */
         getData: function() {},
 
+        /**
+         * perform basic filtering based on query on data object
+         * @param  {Object} query - array of queries 
+         * @param  {Object} data - data object
+         * @return {Object} data - filtered data
+         */
         filter: function(query, data) {
             for (var filter in query.where) {
                 var wanted = query.where[filter];
