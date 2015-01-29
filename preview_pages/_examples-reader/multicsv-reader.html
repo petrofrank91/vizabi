@@ -202,16 +202,17 @@ $(function() {
             },
 
             row: {
+                hook_to: ["entities", "time", "data", "language"],
                 label: {
-                    use: "property",
+                    hook: "property",
                     value: "geo.name"
                 },
                 number: {
-                    use: "indicator",
+                    hook: "indicator",
                     value: "pop"
                 },
                 color: {
-                    use: "indicator",
+                    hook: "indicator",
                     value: "death_rate",
                     //red, yellow, green, blue
                     domain: ["#F77481", "#E1CE00", "#B4DE79", "#62CCE3"]
@@ -222,7 +223,7 @@ $(function() {
         //where do we get data from?
         data: {
             reader: 'multi-csv',
-            path: '../../data-waffles/examples-csv'
+            path: '../../local_data/examples-csv'
         },
 
         //language properties
