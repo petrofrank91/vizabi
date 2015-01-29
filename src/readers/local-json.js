@@ -16,12 +16,6 @@ define([
                 [], reader_info.path);
         },
 
-        /**
-         * Reads from source
-         * @param {Array} queries Queries to be performed
-         * @param {String} language language
-         * @returns a promise that will be resolved when data is read
-         */
         read: function(queries, language) {
             var _this = this,
                 defer = $.Deferred(),
@@ -49,6 +43,7 @@ define([
                 })(i);
             }
 
+            // all queries loaded, proceed
             $.when.apply(null, promises).done(function() {
                 defer.resolve();
             });
@@ -56,10 +51,6 @@ define([
             return defer;
         },
 
-        /**
-         * Gets the data
-         * @returns all data
-         */
         getData: function() {
             return this._data;
         }
