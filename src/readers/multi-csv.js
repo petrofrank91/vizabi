@@ -84,7 +84,7 @@ define([
         isQueryIndicator: function(indicators, select) {
             return _.findIndex(indicators, {
                 id: select
-            }) > 0;
+            }) >= 0;
         },
 
         /**
