@@ -158,7 +158,7 @@ define([
 
             _(query.where['geo.category']).forEach(function(cat) {
                 q_data.defer(function(callback) {
-                    d3.csv(path + '/' + indicator + '__' + cat + '.csv',
+                    d3.csv(path + indicator + '__' + cat + '.csv',
                         function(error, data) {
                             _(query.where.geo).forEach(function(id) {
                                 _(data).forEach(function(datum) {
