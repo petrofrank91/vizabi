@@ -53,7 +53,7 @@ module.exports = function(grunt) {
         'copy:scripts',
         'copy:templates',
         'copy:preview_pages', //copies preview_page assets
-        'copy:waffles', //copies waffles
+        'copy:local_data', //copies local_data
         'copy:assets', //copies assets
         'copy:fonts', //copies fonts (font awesome)
         'connect', //run locally
@@ -73,7 +73,7 @@ module.exports = function(grunt) {
         'includereplace:preview_pages_build', //preview_pages folder
         'preview_pages_index', //build preview_pages
         'copy:preview_pages', //copies preview_page assets
-        'copy:waffles', //copies waffles
+        'copy:local_data', //copies local_data
         'copy:assets', //copies assets
         'copy:fonts', //copies fonts (font awesome)
 
@@ -110,15 +110,23 @@ module.exports = function(grunt) {
         // Copy all js and template files to dist folder
         copy: {
             preview_pages: {
-                cwd: 'preview_pages',
-                src: ['assets/scripts.js', 'assets/style.css'],
-                dest: 'dist/preview_pages/',
-                expand: true
+                files: [{
+                    cwd: 'preview_pages',
+                    src: ['assets/scripts.js', 'assets/style.css'],
+                    dest: 'dist/preview_pages/',
+                    expand: true
+                },
+                {
+                    cwd: 'lib/jquery/dist/',
+                    src: ['jquery.min.js'],
+                    dest: 'dist/preview_pages/assets/',
+                    expand: true
+                }]
             },
-            waffles: {
-                cwd: 'data-waffles',
+            local_data: {
+                cwd: 'local_data',
                 src: ['**/*'],
-                dest: 'dist/data-waffles/',
+                dest: 'dist/local_data/',
                 expand: true
             },
             assets: {
@@ -182,11 +190,11 @@ module.exports = function(grunt) {
         // Make sure necessary files are built when changes are made
         watch: {
             styles: {
-                files: ['src/**/*.scss'],
+                files: ['src/**/*.scss', 'preview_pages/assets/*.scss'],
                 tasks: ['sass:dev']
             },
             preview_pages: {
-                files: ['preview_pages/**/*.html', '!preview_pages/index.html', 'preview_pages/assets/scripts.js'],
+                files: ['preview_pages/**/*.html', '!preview_pages/index.html', 'preview_pages/assets/scripts.js', 'preview_pages/assets/style.css'],
                 tasks: ['includereplace:preview_pages_dev', 'preview_pages_index', 'copy:preview_pages']
             },
             scripts: {
@@ -408,7 +416,7 @@ module.exports = function(grunt) {
 
         var tools_folder = 'src/tools/',
             scss_file = 'src/assets/style/vizabi.scss',
-            includes = ['_vizabi.scss'],
+            includes = ['_vizabi.scss', '../../tools/_tool.scss'],
             contents = '',
             current_dir;
 

@@ -19,7 +19,39 @@ define([
             this.template = 'components/_examples/' + this.name + '/' + this.name;
 
             //define expected models for this component
-            this.model_expects = ["time", "entities", "marker", "data"];
+            this.model_expects = [{
+                name: "time",
+                type: "time"
+            }, {
+                name: "entities",
+                type: "entities"
+            }, {
+                name: "marker",
+                type: "model"
+            }, {
+                name: "data",
+                type: "data"
+            }];
+
+            this.model_binds = {
+                "change": function(evt) {
+                    //if it's not about time
+                    if(evt.indexOf('change:time') === -1) {
+                         _this.updateShow();
+                         _this.redrawDataPoints();
+                    }
+                },
+                "ready":  function(evt) {
+                    _this.preprocessData();
+                    _this.updateShow();
+                    _this.updateTime();
+                    _this.redrawDataPoints();
+                },
+                'change:time:value': function() {
+                    _this.updateTime();
+                    _this.redrawDataPoints();
+                }
+            }
 
             this._super(context, options);
 
@@ -55,40 +87,11 @@ define([
             this.bubbles = null;
             this.tooltip = this.element.select('.vzb-tooltip');
 
-            //model events
-            this.model.on({
-                "change": function(evt) {
-                    console.log("Changed!", evt);
-                },
-                "load_start": function(evt) {
-                    console.log("Started to load!", evt);
-                },
-                "load_end":  function() {
-                    console.log("Finished loading!");
-                    _this.updateShow();
-                    _this.redrawDataPoints();
-                },
-                "ready": function() {
-                    console.log("Model ready!");
-//TODO: put here the following and remove it from "load_end" and from redrawDataPoints()
-//                    _this.preprocessData();
-//                    _this.updateShow();
-//                    _this.updateTime();
-//                    _this.redrawDataPoints();
-                }
-            });
-            
-            this.model.time.on({
-                'change:value': function() {
-                    _this.updateTime();
-                    _this.redrawDataPoints();
-                }
-            });
-
             //component events
             this.on("resize", function() {
                 console.log("Ops! Gotta resize...");
                 _this.updateSize();
+                _this.updateTime();
                 _this.redrawDataPoints();
             })
 
@@ -99,14 +102,6 @@ define([
                 d["geo.region"] = d["geo.region"] || "world";
             });
             this.isDataPreprocessed = true;
-        },
-
-
-        /*
-         * Updates the component as soon as the model/models change
-         */
-        modelReady: function(evt) {
-            if (!this.isDataPreprocessed) this.preprocessData();
         },
 
 
@@ -138,11 +133,14 @@ define([
          */
         updateTime: function() {
             var _this = this;
-
-            this.time = parseInt(d3.time.format(this.model.time.formatInput)(this.model.time.value), 10);
-            this.data = this.model.marker.label.getItems({ time: this.time.toString() });
+            //TLDR
+            //this.time = parseInt(d3.time.format(this.model.time.formatInput)(this.model.time.value), 10);
+            this.time = this.model.time.value;
             
-            this.yearEl.text(this.time);
+            this.data = this.model.marker.label.getItems({ time: this.time });
+            
+            
+            this.yearEl.text(this.time.getFullYear().toString());
             this.bubbles = this.bubbleContainer.selectAll('.vzb-bc-bubble')
                 .data(this.data);
             
@@ -257,24 +255,25 @@ define([
                 .attr("class", "vzb-bc-bubble");
 
             //update selection
-            var speed = this.model.time.speed;
+            var speed = (this.model.time.playing) ? this.model.time.speed : 0;
+
             var some_selected = (_this.model.entities.select.length > 0);
 
             this.bubbles
                 .style("fill", function(d) {
-                    return _this.model.marker.color.getValue(d);
+                    return _this.model.marker.color.getValue(d)||this.model.marker.color.domain[0];
                 })
                 .transition().duration(speed).ease("linear")
                 .attr("cy", function(d) {
-                    var value = _this.model.marker.axis_y.getValue(d);
+                    var value = _this.model.marker.axis_y.getValue(d)||_this.yScale.domain()[0];
                     return _this.yScale(value);
                 })
                 .attr("cx", function(d) {
-                    var value = _this.model.marker.axis_x.getValue(d);
+                    var value = _this.model.marker.axis_x.getValue(d)||_this.xScale.domain()[0];
                     return _this.xScale(value);
                 })
                 .attr("r", function(d) {
-                    var value = _this.model.marker.size.getValue(d);
+                    var value = _this.model.marker.size.getValue(d)||_this.rScale.domain()[0];
                     return Math.sqrt(_this.rScale(value) / Math.PI) * 10;
                 });
 
