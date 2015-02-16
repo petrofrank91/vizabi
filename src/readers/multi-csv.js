@@ -43,7 +43,7 @@ define([
                     q.defer(function(meta_callback) {
                         d3.csv(path + 'indicators' + '.csv', function(error, indicators) {
                             d3.csv(path + 'categories' + '.csv', function(error, categories) {
-                                
+
                                 if (query_type === 'geo.name') {
                                     _this.selectCategories(query, path, query_num, meta_callback);
                                 } else if (_this.isQueryIndicator(indicators, query_type)) {
@@ -91,7 +91,7 @@ define([
          * reads categories from multiple CSV files and once all of them are read, executes a callback
          * @param  {Object} query - the query object
          * @param  {String} path - path to data files
-         * @param  {Number} query_num - query number (used as key to store data for each query) 
+         * @param  {Number} query_num - query number (used as key to store data for each query)
          * @param  {Object} outer_callback - callback to execute after all files are loaded
          * @return {null}
          */
@@ -106,7 +106,7 @@ define([
                         function(error, data) {
                             _(query.where.geo).forEach(function(id) {
                                 _(data).forEach(function(datum) {
-                                    row = _this.addCategory(datum,id, query.where.time[0][0], query.where.time[0][1], query_num, row);
+                                    row = _this.addCategory(datum, id, query.where.time[0][0], query.where.time[0][1], query_num, row);
                                 });
                             });
 
@@ -119,11 +119,11 @@ define([
                 outer_callback();
             });
         },
-        
+
         /**
          * Adds the category if it is in select clause of the query
          * @param {Object} datum - data row object
-         * @param {String} id - select clause id 
+         * @param {String} id - select clause id
          * @param {Number} minYear - minimum year requested in query
          * @param {Number} maxYear - maximum year requested in query
          * @param {Number} query_num - query number (used as key to store data for each query)
@@ -147,7 +147,7 @@ define([
          * reads indicators from multiple CSV files and once all of them are read, executes a callback
          * @param  {Object} query - the query object
          * @param  {String} path - path to data files
-         * @param  {Number} query_num - query number (used as key to store data for each query) 
+         * @param  {Number} query_num - query number (used as key to store data for each query)
          * @param  {Object} outer_callback - callback to execute after all files are loaded
          * @return {null}
          */
@@ -160,11 +160,18 @@ define([
                 q_data.defer(function(callback) {
                     d3.csv(path + indicator + '__' + cat + '.csv',
                         function(error, data) {
-                            _(query.where.geo).forEach(function(id) {
-                                _(data).forEach(function(datum) {
-                                    row = _this.addIndicator(datum, id, query.where.time[0][0], query.where.time[0][1], query_num, indicator, row);
+                                _(query.where.geo).forEach(function(id) {
+                                    _(data).forEach(function(datum) {
+                                        if (!_.isUndefined(data[0][indicator])) {
+                                        row = _this.addIndicatorRow(datum, id, query.where.time[0][0], query.where.time[0][1], query_num, indicator, row);
+                                        }
+                                        else {
+                                           row = _this.addIndicatorCol(datum, id, query.where.time[0][0], query.where.time[0][1], query_num, indicator, row); 
+                                        }
+                                    });
                                 });
-                            });
+                            
+
 
                             callback();
                         });
@@ -179,21 +186,52 @@ define([
 
         /**
          * Adds the indicator if it is in select clause of the query
+         * when csv header includes columns with indicator/time pairs
          * @param {Object} datum - data row object
-         * @param {String} id - select clause id 
+         * @param {String} id - select clause id
          * @param {Number} minYear - minimum year requested in query
          * @param {Number} maxYear - maximum year requested in query
          * @param {Number} query_num - query number (used as key to store data for each query)
-         * * @param {Number} indicator - indicator name 
+         * * @param {Number} indicator - indicator name
          * @param {Number} row - row number (as key in the data object)
          */
-        addIndicator: function(datum, id, minYear, maxYear, query_num, indicator, row) {
+        addIndicatorRow: function(datum, id, minYear, maxYear, query_num, indicator, row) {
             if (datum.geo === id && datum.time >= minYear && datum.time <= maxYear) {
                 this._data[query_num][row] = {};
                 this._data[query_num][row]['geo'] = datum.geo;
                 this._data[query_num][row][indicator] = datum[indicator];
                 this._data[query_num][row]['time'] = datum.time;
                 row++;
+            }
+
+            return row;
+        },
+
+        /**
+         * Adds the indicator if it is in select clause of the query
+         * when csv header includes columns with time range columns
+         * @param {Object} datum - data row object
+         * @param {String} id - select clause id
+         * @param {Number} minYear - minimum year requested in query
+         * @param {Number} maxYear - maximum year requested in query
+         * @param {Number} query_num - query number (used as key to store data for each query)
+         * * @param {Number} indicator - indicator name
+         * @param {Number} row - row number (as key in the data object)
+         */
+        addIndicatorCol: function(datum, id, minYear, maxYear, query_num, indicator, row) {
+            var _this = this;
+
+            if (datum.geo === id) {
+                _.forIn(datum, function(value, key) {
+                    if (typeof parseFloat(key) === 'number' && parseFloat(key) >= minYear && parseFloat(key) <= maxYear) {
+                        _this._data[query_num][row] = {};
+                        _this._data[query_num][row]['geo'] = datum.geo;
+                        _this._data[query_num][row][indicator] = value;
+                        _this._data[query_num][row]['time'] = key;
+                        row++;
+                    }
+                })
+                
             }
 
             return row;
