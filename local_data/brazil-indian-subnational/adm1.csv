@@ -1,0 +1,65 @@
+geo,geo.name,region
+BRA,brazil,bra
+BRA001011,Rondonia,bra
+BRA001012,Acre,bra
+BRA001013,Amazonas,bra
+BRA001014,Roraima,bra
+BRA001015,Para,bra
+BRA001016,Amapa,bra
+BRA001017,Tocantins,bra
+BRA002021,Maranhao,bra
+BRA002022,Piaui,bra
+BRA002023,Ceara,bra
+BRA002024,Rio Grande do Norte,bra
+BRA002025,Paraiba,bra
+BRA002026,Pernambuco,bra
+BRA002027,Alagoas,bra
+BRA002028,Sergipe,bra
+BRA002029,Bahia,bra
+BRA003031,Minas Gerais,bra
+BRA003032,Espirito Santo,bra
+BRA003033,Rio de Janeiro,bra
+BRA003035,Sao Paulo,bra
+BRA004041,Parana,bra
+BRA004042,Santa Catarina,bra
+BRA004043,Rio Grande do Sul,bra
+BRA005050,Mato Grosso do Sul,bra
+BRA005051,Mato Grosso,bra
+BRA005052,Goias,bra
+BRA005053,Distrito Federal,bra
+IND,India,ind
+IND001,Jammu & Kashmir,ind
+IND002,Himachal Pradesh,ind
+IND003,Punjab,ind
+IND004,Chandigarh,ind
+IND005,Uttarakhand,ind
+IND006,Haryana,ind
+IND007,Delhi,ind
+IND008,Rajasthan,ind
+IND009,Uttar Pradesh,ind
+IND010,Bihar,ind
+IND011,Sikkim,ind
+IND012,Arunachal Pradesh,ind
+IND013,Nagaland,ind
+IND014,Manipur,ind
+IND015,Mizoram,ind
+IND016,Tripura,ind
+IND017,Meghalaya,ind
+IND018,Assam,ind
+IND019,West Bengal,ind
+IND020,Jharkhand,ind
+IND021,Orissa,ind
+IND022,Chhattisgarh,ind
+IND023,Madhya Pradesh,ind
+IND024,Gujarat,ind
+IND025,Daman & Diu,ind
+IND026,Dadra & Nagar Haveli,ind
+IND027,Maharashtra,ind
+IND028,Andhra Pradesh,ind
+IND029,Karnataka,ind
+IND030,Goa,ind
+IND031,Lakshadweep,ind
+IND032,Kerala,ind
+IND033,Tamil Nadu,ind
+IND034,Pondicherry,ind
+IND035,Andaman & Nicobar Islands,ind

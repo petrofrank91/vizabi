@@ -1,0 +1,5 @@
+id,name,info,parent
+bra,Brazil,Brazil country average;region
+bra1,Brazilian states and federal district,First administrative divisions of Brazil,region
+ind,India,India country average,region
+ind1,Indian states and union territories,First administrative divisions of India,region
