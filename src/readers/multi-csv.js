@@ -135,7 +135,7 @@ define([
                     this._data[query_num][row] = {};
                     this._data[query_num][row]['geo'] = datum.geo;
                     this._data[query_num][row]['geo.name'] = datum['geo.name'];
-                    this._data[query_num][row]['time'] = i;
+                    this._data[query_num][row]['time'] = i.toString();
                     row++;
                 }
             }
@@ -163,7 +163,7 @@ define([
                                 _(query.where.geo).forEach(function(id) {
                                     _(data).forEach(function(datum) {
                                         if (!_.isUndefined(data[0][indicator])) {
-                                        row = _this.addIndicatorRow(datum, id, query.where.time[0][0], query.where.time[0][1], query_num, indicator, row);
+                                            row = _this.addIndicatorRow(datum, id, query.where.time[0][0], query.where.time[0][1], query_num, indicator, row);
                                         }
                                         else {
                                            row = _this.addIndicatorCol(datum, id, query.where.time[0][0], query.where.time[0][1], query_num, indicator, row); 
