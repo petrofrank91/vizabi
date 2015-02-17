@@ -1011,6 +1011,9 @@ define([
             // filter items so that we only have a dataset for certain keys, like "geo"
             var items = _.filter(items, filter);
 
+            // interpolate only if there are items after filter
+            if (items.length === 0) return;
+
             // return constant for the hook of "values"
             if (hook == "value") return items[0][this.value];
 
