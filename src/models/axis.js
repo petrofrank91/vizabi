@@ -4,6 +4,17 @@ define([
     'models/hook'
 ], function(d3, _, Hook) {
 
+    //constant time formats
+    var time_formats = {
+        "year": d3.time.format("%Y"),
+        "month": d3.time.format("%Y-%m"),
+        "week": d3.time.format("%Y-W%W"),
+        "day": d3.time.format("%Y-%m-%d"),
+        "hour": d3.time.format("%Y-%m-%d %H"),
+        "minute": d3.time.format("%Y-%m-%d %H:%M"),
+        "second": d3.time.format("%Y-%m-%d %H:%M:%S")
+    };
+
     var Axis = Hook.extend(   {
 
         /**
@@ -25,32 +36,34 @@ define([
         /**
          * Validates a color hook
          */
-        validate: function(silent) {
+        validate: function() {
 
-            var possibleScales = ["log", "linear", "pow"];
-            if (!this.scale || (this.hook === "indicator" && possibleScales.indexOf(this.scale) === -1)) {
-                this.set("scale", "linear" , silent, true);
+            var possibleScales = ["log", "linear", "time", "pow"];
+            if (!this.scale || (this.use === "indicator" && possibleScales.indexOf(this.scale) === -1)) {
+                this.scale = 'linear'; 
             }
 
-            if (!this.unit && this.hook === "indicator") {
-                this.set("unit", 1 , silent, true);
+            if (!this.unit && this.use === "indicator") {
+                this.unit = 1;
             }
 
-            if (this.hook !== "indicator") {
-                this.set("scale", "ordinal" , silent, true);
+            if (this.use !== "indicator" && this.scale !== "ordinal") {
+                this.scale = "ordinal";
             }
 
             //TODO: add min and max to validation
 
         },
-
         /**
          * Gets tick values for this hook
          * @returns {Number|String} value The value for this tick
          */
         getTick: function(tick_value) {
             var value = tick_value;
-            if (this.hook == "indicator") {
+            if(_.isDate(tick_value)) {
+                //TODO: generalize for any time unit
+                value = time_formats["year"](tick_value);
+            }else if (this.use == "indicator") {
                 value = parseFloat(value) / this.unit;
             }
             return value;
@@ -64,7 +77,12 @@ define([
             var domain,
                 scale = this.scale || "linear";
 
-            switch (this.hook) {
+            if(this.value=="time"){
+                var limits = this.getLimits(this.value);
+                return d3.time.scale().domain([limits.min, limits.max]);
+            }
+            
+            switch (this.use) {
                 case "indicator":
                     var limits = this.getLimits(this.value),
                         margin = (limits.max - limits.min) / 10;

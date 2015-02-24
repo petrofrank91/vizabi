@@ -13,7 +13,7 @@ define([
          * @param {Object} options Options such as state, data, etc
          */
         init: function(config, options) {
-
+            
             this.name = "data-loading-1-file";
             this.template = "tools/_examples-data-loading/data-loading-1-file/data-loading-1-file";
 
@@ -21,7 +21,7 @@ define([
             this.components = [{
                 component: '_examples/display-json',
                 placeholder: '.vzb-display-json-wrapper',
-                model: ['data']
+                model: ['data'] 
             }];
 
             //constructor is the same as any tool
@@ -30,15 +30,16 @@ define([
 
         /**
          * Validating the tool model
-         * @param model the current tool model to be validated
          */
-        toolModelValidation: function(model) {
+        validate: function() {
+
+            var dataModel = this.model.data;
 
             //if mydata is not there and if it's not loading mydata
-            if (!model.data.profits && !model.data.isLoading("profits")) {
-
+            if (!dataModel.profits && !dataModel.isLoading("profits")) {
+                
                 //set loading of model
-                model.data.setLoading("profits");
+                dataModel.setLoading("profits");
 
                 d3.json("../../local_data/myfile.json", function(err, data) {
 
@@ -46,10 +47,10 @@ define([
                     setTimeout(function() {
                         console.log("LOADED JSON");
                         console.log(data);
-                        model.data.profits = data;
+                        dataModel.profits = data;
 
                         //loading of external data is done
-                        model.data.setLoadingDone("profits");
+                        dataModel.setLoadingDone("profits");
 
                     }, 1000);
                 });

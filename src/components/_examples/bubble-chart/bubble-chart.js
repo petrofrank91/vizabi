@@ -46,6 +46,9 @@ define([
                     _this.updateShow();
                     _this.updateTime();
                     _this.redrawDataPoints();
+                    //TODO: dirty hack to avoid duplicate bubbles in the beginning (drawing twice)
+                    _this.updateTime();
+                    _this.redrawDataPoints();
                 },
                 'change:time:value': function() {
                     _this.updateTime();
@@ -89,7 +92,6 @@ define([
 
             //component events
             this.on("resize", function() {
-                console.log("Ops! Gotta resize...");
                 _this.updateSize();
                 _this.updateTime();
                 _this.redrawDataPoints();
