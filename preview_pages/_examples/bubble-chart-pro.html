@@ -195,30 +195,30 @@ $(function() {
 
             //how we show it
             marker: {
-                hook_to: ["entities", "time", "data", "language"],
+                dimensions: ["entities", "time", "data", "language"],
                 type: "geometry",
                 shape: "circle",
                 label: {
-                    hook: "property",
+                    use: "property",
                     value: "geo.name"
                 },
                 axis_y: {
-                    hook: "indicator",
+                    use: "indicator",
                     value: 'Probable cases',
                     scale: 'linear'
                 },
                 axis_x: {
-                    hook: "indicator",
+                    use: "indicator",
                     value: 'Confirmed cases',
                     scale: 'linear'
                 },
                 size: {
-                    hook: "indicator",
+                    use: "indicator",
                     value: 'Deaths',
                     scale: 'linear'
                 },
                 color: {
-                    hook: "indicator",
+                    use: "indicator",
                     value: 'Suspected cases',
                     domain: ['#F77481', '#E1CE00', '#B4DE79']
                 }
