@@ -58,6 +58,8 @@
                 </li>
                 <li><a onclick="hook('axis_y', 'property', 'geo')">Prop: geo</a>
                 </li>
+                <li><a onclick="hook('axis_y', 'indicator', 'time')">Ind: time</a>
+                </li>
                 <li><a onclick="hook('axis_y', 'property', 'geo.category')">Prop: geo.category</a>
                 </li>
                 <li><a onclick="hook('axis_y', 'indicator', 'lex')">Ind: lex</a>
@@ -77,6 +79,8 @@
                 <li><a onclick="hook('axis_x', 'property', 'geo.region')">Prop: geo.region</a>
                 </li>
                 <li><a onclick="hook('axis_x', 'property', 'geo')">Prop: geo</a>
+                </li>
+                <li><a onclick="hook('axis_x', 'indicator', 'time')">Ind: time</a>
                 </li>
                 <li><a onclick="hook('axis_x', 'property', 'geo.category')">Prop: geo.category</a>
                 </li>
@@ -337,6 +341,9 @@ function hook(hook, use, value, domain) {
         hook: use,
         value: value
     };
+    
+    // for time only
+    if(value=="time") options.state.marker[hook].scale = "time";
 
     //for color only
     if (domain) options.state.marker[hook].domain = domain;
