@@ -67,7 +67,6 @@ define([
         */
         init: function(config, context) {
             
-            //TODO: remove global
             var _this = this;
             this.name = 'mountain-chart';
             this.template = 'components/_examples/' + this.name + '/' + this.name;
@@ -76,7 +75,7 @@ define([
             this.model_expects = [{name: "time", type: "time"},
                                   {name: "entities", type: "entities"},
                                   {name: "marker", type: "model"},
-                                  {name: "data", type: "data"}];
+                                  {name: "language", type: "language"}];
 
             this.model_binds = {
                 "change": function(evt) {
@@ -126,7 +125,7 @@ define([
             this.rScale = null;
             this.cScale = d3.scale.category10();
             
-            this.xAxis = d3.svg.axis();
+            this.xAxis = d3.svg.axisSmart();
             
             this.loadReadyCount = 0;
             this.firstLoad = true;
@@ -156,11 +155,11 @@ define([
             var _this = this;
             
             // reference elements
-            this.graph = this.element.select('.vzb-bc-graph');
-            this.xAxisEl = this.graph.select('.vzb-bc-axis-x');
-            this.xTitleEl = this.graph.select('.vzb-bc-axis-x-title');
-            this.yearEl = this.graph.select('.vzb-bc-year');
-            this.mountainContainer = this.graph.select('.vzb-bc-mountains');
+            this.graph = this.element.select('.vzb-mc-graph');
+            this.xAxisEl = this.graph.select('.vzb-mc-axis-x');
+            this.xTitleEl = this.graph.select('.vzb-mc-axis-x-title');
+            this.yearEl = this.graph.select('.vzb-mc-year');
+            this.mountainContainer = this.graph.select('.vzb-mc-mountains');
             this.mountains = null;
             this.tooltip = this.element.select('.vzb-tooltip');
 
@@ -195,6 +194,14 @@ define([
          */
         updateShow: function() {
 
+            this.translator = this.model.language.getTFunction();
+            
+            
+            var xTitle = this.xTitleEl.selectAll("text").data([0]);
+            xTitle.enter().append("text");
+            xTitle.text("$/" + this.translator("axistitle/day"));
+            
+            
             //scales
             this.yScale = this.model.marker.axis_y.getDomain();
             this.xScale = this.model.marker.axis_x.getDomain();
@@ -227,7 +234,7 @@ define([
             
             this.yearEl.text(this.time.getFullYear().toString());
 
-            this.mountains = this.mountainContainer.selectAll('.vzb-bc-mountain')
+            this.mountains = this.mountainContainer.selectAll('.vzb-mc-mountain')
                 .data(function(){
                     var result = _this.data
                         .map(function(dd){return populateDistributionsInto(dd, _this)});
@@ -283,7 +290,7 @@ define([
                 this.yScale.rangePoints([height, 0], padding).range();
             }
             if (this.model.marker.axis_x.scale !== "ordinal") {
-                this.xScale.range([0, width]).nice();
+                this.xScale.range([0, width]);
             } else {
                 this.xScale.rangePoints([0, width], padding).range();
             }
@@ -292,21 +299,21 @@ define([
             this.xAxis.scale(this.xScale)
                 .orient("bottom")
                 .tickSize(6, 0)
-                //TODO: ticks() not working in log scale. why?
-                .ticks(Math.max(width / tick_spacing, 2))
-                .tickValues([0.1, 1, 10, 100])
-                .tickFormat(function(d) {
-                    if(d==0.1)return "$/day";
-                    // throw away all ticks except of the few
-                    if(d==0.1||d==1||d==10||d==100)return d;
-                    return "";
+                .tickSizeMinor(3, 0)
+                .labelerOptions({
+                    scaleType: this.model.marker.axis_x.scale,
+                    toolMargin: margin
                 });
 
 
             this.xAxisEl
                 .attr("transform", "translate(0," + height + ")")
                 .call(this.xAxis);
-          
+            
+            this.xTitleEl
+                .attr("transform", "translate(0," + height + ")")
+                .select("text")
+                .attr("dy", "-0.36em")
         },
 
 
@@ -323,7 +330,7 @@ define([
 
             //enter selection -- init circles
             this.mountains.enter().append("path")
-                .attr("class", "vzb-bc-mountain");
+                .attr("class", "vzb-mc-mountain");
 
             //update selection
             //var speed = this.model.time.speed;

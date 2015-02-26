@@ -25,21 +25,6 @@
 
         <label>|</label>
 
-        <div id="dropdown-options" class="wrapper-dropdown" tabindex="1">
-            <span>OPTIONS</span>
-            <ul class="dropdown">
-                <li><a>Options removed for now</a>
-                </li>
-<!--
-                <li><a onclick="manyCountries()">Many Countries</a>
-                </li>
-                <li><a onclick="setState()">WORLD - 2000 </a>
-                </li>
-                <li><a onclick="changeIndicator()">SWE, NOR, ZAF</a>
-                </li>
--->
-            </ul>
-        </div>
 
         <div id="dropdown-language" class="wrapper-dropdown" tabindex="1">
             <span>Language</span>
@@ -61,10 +46,6 @@
     <p>Current State:</p>
     <pre id="state" class="json_box" contentEditable="true"></pre>
     <button onclick="setCurrentState()">SET STATE</button>
-    <p>Change Language:</p>
-    <button id="language_button" onclick="language('pt')">SET LANGUAGE: PT</button>
-    <p>Play Bubbles</p>
-    <button id="play_button" onclick="play()">PLAY</button>
 </div>
 </body>
 <script>
@@ -152,14 +133,16 @@ $(function() {
                     "buttons/find": "Find",
                     "buttons/colors": "Colors",
                     "buttons/size": "Size",
-                    "buttons/more_options": "Options"
+                    "buttons/more_options": "Options",
+                    "axistitle/day": "day"
                 },
                 pt: {
                     "title": "Gráfico de distribuição de renda",
                     "buttons/find": "Encontre",
                     "buttons/colors": "Cores",
                     "buttons/size": "Tamanho",
-                    "buttons/more_options": "Opções"
+                    "buttons/more_options": "Opções",
+                    "axistitle/day": "dia"
                 }
             }
         },
@@ -195,33 +178,10 @@ $(function() {
     
     
     myVizabi = new Vizabi("_examples/mountain-chart", "#mountain-chart", options);
-    
     showState(options.state);
 });
-    
-function play() {
-    var options = {
-        state: {
-            time: {
-                playing: true
-            }
-        }
-    };
-    myVizabi.setOptions(options);
-}
 
-function pause() {
-    var options = {
-        state: {
-            time: {
-                playing: false
-            }
-        }
-    };
-    myVizabi.setOptions(options);
-}
-
-function language(lang) {
+function setLanguage(lang) {
     var options = {
         language: {
             id: lang
@@ -230,22 +190,6 @@ function language(lang) {
     myVizabi.setOptions(options);
 }
 
-function hook(hook, use, value, domain) {
-    var options = {
-        state: {
-            marker: {}
-        }
-    };
-    options.state.marker[hook] = {
-        use: use,
-        value: value
-    };
-
-    //for color only
-    if (domain) options.state.marker[hook].domain = domain;
-
-    myVizabi.setOptions(options);
-}
 </script>
 
 <!-- @@include('../assets/_footer.tpl') -->
