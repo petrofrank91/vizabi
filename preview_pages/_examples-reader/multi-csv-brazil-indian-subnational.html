@@ -195,7 +195,12 @@ $(function() {
                 show: {
                     dim: "geo",
                     filter: {
-                        "geo": ["IND001", "BRA"],
+                        "geo": [
+                            "IND001", 
+                            "BRA002025", 
+                            "BRA001013", 
+                            "BRA004041"
+                        ],
                         "geo.category": ["adm1"]
                     }
                 }
@@ -219,7 +224,7 @@ $(function() {
                     hook: "indicator",
                     value: "gdp_per_cap_gapm",
                     scale: 'linear',
-                    unit: 100
+                    unit: 1
                 },
                 size: {
                     hook: "indicator",
