@@ -144,11 +144,11 @@ $(function() {
             //time properties
             time: {
                 unit: "year",
-                start: "1800",
+                start: "2014",
                 end: "2014",
                 step: 1,
                 speed: 300,
-                value: "1995"
+                value: "2014"
             },
             //entities we want to show
             entities: {
@@ -182,8 +182,10 @@ $(function() {
 
         //data properties
         data: {
-            reader: "local-json",
-            path: "../../local_data/waffles/{{LANGUAGE}}/basic-indicators.json"
+            reader: 'waffle-server',
+            path: 'https://waffle-server-amir.herokuapp.com/api/v1/query',
+            from: 'examples/humnum_custom_scripts',
+            version: '2015-3-9T10:43:37Z'
         },
 
         //language properties

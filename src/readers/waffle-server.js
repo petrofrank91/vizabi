@@ -14,6 +14,8 @@ define([
             this._name = 'waffle-reader';
             this._data = [];
             this._basepath = reader_info.path || "https://waffle.gapminder.org/api/v1/query";
+            this._from = reader_info.from;
+            this._version = reader_info.version;
         },
 
         /**
@@ -50,7 +52,8 @@ define([
                 formatted[i] = {
                     "SELECT": queries[i].select,
                     "WHERE": where,
-                    "FROM": "humnum"
+                    "FROM": _this._from,
+                    "VERSION": _this._version
                 };
             };
 
