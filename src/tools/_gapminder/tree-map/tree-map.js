@@ -134,7 +134,60 @@ define([
 							}
 						}
 					}
+				},
+
+				data: {
+					_type_: "model",
+					_defs_: {
+						reader: {
+							_type_: "string",
+							_defs_: "waffle-server"
+						}
+					}
+				},
+
+				ui: {
+					_type_: "model",
+					_defs_: {
+						'vzb-tool-tree-map': {
+							_type_: "object",
+							_defs_: {}
+						}
+					}
+				},
+				//language properties
+				language: {
+					_type_: "model",
+					_defs_: {
+						id: {
+							_type_: "string",
+							_defs_: "en"
+						},
+						strings: {
+							_type_: "object",
+							_defs_: {
+								en: {
+									"title": "",
+									"buttons/expand": "Full screen",
+									"buttons/unexpand": "Leave full screen",
+									"buttons/lock": "Lock",
+									"buttons/find": "Find",
+									"buttons/colors": "Colors",
+									"buttons/size": "Size",
+									"buttons/more_options": "Options",
+									"indicator/lex": "Life expectancy",
+									"indicator/gdp_per_cap": "GDP per capita",
+									"indicator/pop": "Population",
+									"indicator/geo.region": "Region",
+									"indicator/geo": "Geo code",
+									"indicator/time": "",
+									"indicator/geo.category": "Geo category"
+								}
+							}
+						}
+					}
 				}
+
 			};
 
 			//constructor is the same as any tool
