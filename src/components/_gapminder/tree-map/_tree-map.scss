@@ -1,0 +1,25 @@
+//general styles
+.vzb-tree-map {
+    //...
+}
+
+//large specific styles
+&.vzb-large {
+    .vzb-tree-map {
+     	//...
+    }
+}
+
+//medium specific styles
+&.vzb-medium {
+    .vzb-tree-map {
+        //...
+    }
+}
+
+//small specific styles
+&.vzb-small {
+    .vzb-tree-map {
+        //...
+    }
+}

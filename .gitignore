@@ -9,3 +9,5 @@ preview/
 /src/plugins.js
 .grunt/
 test.html
+.idea
+.DS_Store
