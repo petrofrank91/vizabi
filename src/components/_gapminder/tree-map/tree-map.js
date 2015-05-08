@@ -39,15 +39,19 @@ define([
 			var _this = this;
 			this.model_binds = {
 				"change:time": function (evt) {
-					console.log("Event triggered - change:time");
+					_this.update();
 				},
 				//"change:items": function(evt) {
 				//    console.log("Event triggered - change:items");
 				//},
+				"change:entities:show": function(evt) {
+					_this.update();
+				},
 				//"readyOnce": function(evt) {
 				//    console.log("Event triggered - change:items - all models are ready for the first time");
 				//},
 				"ready": function (evt) {
+					_this.resize();
 					_this.update();
 				}
 			};
@@ -59,8 +63,6 @@ define([
 			this.yScale = null;
 			this.cScale = d3.scale.category20c();
 
-			//this.xAxis = d3.svg.axisSmart();
-			//this.yAxis = d3.svg.axisSmart();
 		},
 
 		/**
@@ -70,13 +72,11 @@ define([
 		 */
 		domReady: function () {
 			this.graph = this.element.select('.vzb-tm-graph');
-			//this.yAxisEl = this.graph.select('.vzb-bc-axis-y');
-			//this.xAxisEl = this.graph.select('.vzb-bc-axis-x');
-			//this.yTitleEl = this.graph.select('.vzb-bc-axis-y-title');
-			this.bars = this.graph.select('.vzb-tm-bars');
+			this.cells = this.graph.select('.vzb-tm-cells');
 
 			var _this = this;
 			this.on("resize", function () {
+				_this.resize();
 				_this.update();
 			});
 		},
@@ -88,8 +88,15 @@ define([
 		 * See model_binds above
 		 */
 		update: function () {
-			//E.g: var year = this.model.get('value');
+
 			var _this = this;
+
+			var treemap = d3.layout.treemap()
+				.size([this.width, this.height])
+				.value(function (d) {
+					return d.size;
+				});
+
 			var time = this.model.time;
 			var currTime = time.value;
 			var duration = (time.playing) ? time.speed : 0;
@@ -98,35 +105,92 @@ define([
 				time: currTime
 			});
 
-			this.entityBars = this.bars.selectAll('.vzb-tm-bar')
-				.data(items);
+			var svg = d3.select(".vzb-tree-map").append("svg")
+				.attr("width", this.width)
+				.attr("height", this.height)
+				.append("g")
+				.attr("transform", "translate(-.5,-.5)");
 
-			//exit selection
-			this.entityBars.exit().remove();
+			var cell = svg.data(items).selectAll("g")
+				.data(treemap.nodes).enter()
+				.append("g")
+				.attr("class", "cell")
+				.attr("transform", function (d) {
+					return "translate(" + d.x + "," + d.y + ")";
+				});
 
-			//enter selection -- init circles
-			this.entityBars.enter().append("rect")
-				.attr("class", "vzb-tm-bar");
-
-			//todo: get right sizes;
-			this.bars.selectAll('.vzb-tm-bar')
-				.attr("width", 30)
-				.attr("fill", function (d) {
-					return _this.model.marker.color.getValue(d);
-				})
-				.attr("x", function (d) {
-					return 30;
-					//return _this.xScale(_this.model.marker.axis_x.getValue(d));
-				})
-				.transition().duration(duration).ease("linear")
-				.attr("y", function (d) {
-					return 30;
-					//return _this.yScale(_this.model.marker.axis_y.getValue(d));
+			cell.append("rect")
+				.attr("width", function (d) {
+					return d.dx;
 				})
 				.attr("height", function (d) {
-					return 30;
-					//return _this.height - _this.yScale(_this.model.marker.axis_y.getValue(d));
+					return d.dy;
+				})
+				.style("fill", function (d) {
+					return _this.model.marker.color.getValue(d);
 				});
+
+			cell.append("text")
+				.attr("x", function (d) {
+					return d.dx / 2;
+				})
+				.attr("y", function (d) {
+					return d.dy / 2;
+				})
+				.attr("dy", ".35em")
+				.attr("text-anchor", "middle")
+				.text(function (d) {
+					return _this.model.marker.label.getValue(d) + ' (' + _this.model.marker.size.getValue(d) + ')';
+				});
+
+			/*
+
+			 var _this = this;
+			 var time = this.model.time;
+			 var currTime = time.value;
+			 var duration = (time.playing) ? time.speed : 0;
+
+			 var items = this.model.marker.label.getItems({
+			 time: currTime
+			 });
+
+			 this.entityCells = this.cells.selectAll('.vzb-tm-cell')
+			 .data(items);
+
+			 //exit selection
+			 this.entityCells.exit().remove();
+
+			 var n = 0;
+			 //enter selection -- init cell
+			 var cell = this.entityCells.enter()
+			 .append("g")
+			 .attr("class", "vzb-tm-cell")
+			 .attr("transform", function(d) {
+			 n=n+40;
+			 return "translate(" + n + "," + n + ")";
+			 });
+
+			 cell.append("rect")
+			 .attr("width", function(d) { return n; })
+			 .attr("height", function(d) { return n; })
+			 .style("fill", function(d) {
+			 return _this.model.marker.color.getValue(d);
+			 });
+
+			 cell.append("text")
+			 //.attr("x", function(d) { return 40 / 2; })
+			 //.attr("y", function(d) { return 40 / 2; })
+			 .attr("dy", ".35em")
+			 .attr("text-anchor", "middle")
+			 .text(function(d) {
+
+			 //console.log(_this.model.marker.size.getValue(d));
+
+			 return _this.model.marker.label.getValue(d);
+			 });
+
+			 */
+
 		},
 
 		/**
@@ -134,8 +198,10 @@ define([
 		 * Ideally,it contains only operations related to size
 		 */
 		resize: function () {
-			//E.g: var height = this.placeholder.style('height');
-		},
+			//this.height = parseInt(this.element.style("height"));
+			this.height = 270;
+			this.width = parseInt(this.element.style("width"));
+		}
 
 
 	});
