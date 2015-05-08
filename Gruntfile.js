@@ -84,7 +84,8 @@ module.exports = function(grunt) {
         'copy:preview_pages', //copies preview_page assets
         'copy:local_data', //copies local_data
         'copy:assets', //copies assets
-        'jshint:all'
+        'copy:datas', //copies datas
+        'jshint:all',
     ]);
 
     //developer task: grunt dev
@@ -110,6 +111,7 @@ module.exports = function(grunt) {
         'copy:preview_pages', //copies preview_page assets
         'copy:local_data', //copies local_data
         'copy:assets', //copies assets
+        'copy:datas', //copies datas
     ]);
 
     //build task without uglifying: grunt build-pretty
@@ -126,6 +128,7 @@ module.exports = function(grunt) {
         'copy:preview_pages', //copies preview_page assets
         'copy:local_data', //copies local_data
         'copy:assets', //copies assets
+        'copy:datas', //copies datas
     ]);
 
     //default task with connect
@@ -231,6 +234,15 @@ module.exports = function(grunt) {
                 cwd: 'preview',
                 src: ['vizabi.js', 'vizabi.css'],
                 dest: 'dist/',
+                expand: true
+            },
+            /*
+             * copy files from build to dist
+             */
+            datas: {
+                cwd: 'src',
+                src: ['**/*.json','**/*.csv'],
+                dest: 'preview/',
                 expand: true
             }
         },

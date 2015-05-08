@@ -1,0 +1,20 @@
+<div class="vzb-bubble-map">
+    <div id="world-map"></div>
+    <svg class="vzb-bubble-map-svg">
+        <g class="vzb-bc-graph">
+            <text class="vzb-bc-year"></text>
+            
+            <svg class="vzb-bc-map-area"><g></g></svg>
+
+            <svg class="vzb-bc-bubbles-crop">
+                <g class="vzb-bc-trails"></g>
+                <g class="vzb-bc-bubbles"></g>
+            </svg>
+        </g>
+        <filter id="vzb-bc-blur-effect">
+            <feGaussianBlur stdDeviation="2" />
+        </filter>
+    </svg>
+    <!-- This could possibly be another component -->
+    <div class="vzb-tooltip vzb-hidden"></div>
+</div>

@@ -19,7 +19,8 @@ require.config({
         text: '../lib/requirejs-text/text',
         stacktrace: '../lib/stacktrace-js/dist/stacktrace',
         q: '../lib/q/q',
-        req: '../lib/reqwest/reqwest.min'
+        req: '../lib/reqwest/reqwest.min',
+        topojson: '../lib/topojson/topojson'
     },
     shim: {
         d3: {

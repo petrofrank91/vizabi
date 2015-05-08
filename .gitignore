@@ -9,3 +9,5 @@ preview/
 /src/plugins.js
 .grunt/
 test.html
+.idea/
+npm-debug.log
